@@ -21,5 +21,5 @@ Route::get('/lang/{locale}',function($locale){
     return redirect()->route('home');
 });
 Route::group(['prefix'=>'inscription'],function(){
-   Route::get('new','InscriptionController@getNewInscription');
+    Route::get('new','InscriptionController@getNewInscription');
 });

@@ -39,6 +39,21 @@ return [
             'prefix' => '',
         ],
 
+        'db4free'=>[
+            'driver' => 'mysql',
+            'host' => 'db4free.net',
+            'port' => '3306',
+            'database' => 'acmev_db',
+            'username' => 'webmaster',
+            'password' => 'group16*',
+            'unix_socket' => '',
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ],
+
         'mysql' => [
             'driver' => 'mysql',
             'host' => env('DB_HOST', '127.0.0.1'),
