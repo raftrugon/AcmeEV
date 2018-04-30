@@ -1,50 +1,49 @@
-<!-- Side Header - Right -->
+<nav id="sidebar" class="bg-dark text-light d-flex flex-column">
+    <!-- Sidebar Header -->
+    <h3 class="mb-4 mt-4">
+        AcmEv
+    </h3>
 
-<div class="side-header left active">
-    <div class="side-header-container">
-        <div class="side-header-inner-container">
-            <div class="side-header-top">
-                <div class="side-header-top-content">
-                    <img alt="image" class="side-header-logo img-responsive" src="images/logo.png">
-                </div>
-                <div class="side-header-top-content">
-                    <a class="side-header-close" href="#"><span class="pe-7s-close pe-3x"></span></a>
-                </div>
+    <!-- Sidebar Links -->
+    <ul class="list-unstyled">
+        <li>
+            <a class="text-light nav-link" href="#"><i class="fa fa-2x fa-home d-block text-primary"></i>{{__('menu.home')}}</a>
+        </li>
+        <li>
+            <a class="text-light nav-link" href="#"><i class="fa fa-2x fa-graduation-cap d-block text-primary"></i>{{__('menu.degrees')}}</a>
+        </li>
+        <li>
+            <a class="text-light nav-link" href="#"><i class="fas fa-2x fa-address-book d-block text-primary"></i>{{__('menu.departments')}}</a>
+        </li>
+    </ul>
+
+    <ul class="list-unstyled mt-auto">
+        <hr class="border-light">
+
+        <li class="btn-group" role="group">
+            <button id="btnGroupDrop1" type="button" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+               @if(App::isLocale('en')) English @else Español @endif
+            </button>
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                @if(App::isLocale('en'))
+                <a class="dropdown-item" href="{{URL::to('lang')}}/es">Español</a>
+                @else
+                <a class="dropdown-item" href="{{URL::to('lang')}}/en">English</a>
+                @endif
             </div>
-            <ul class="side-header-nav">
-                <li><a href="index.html">Home</a></li>
-                <li><a href="about-us-2.html">About</a></li>
-                <li><a href="services-1.html">Services</a></li>
-                <li><a href="portfolio-single-3.html">Portfolio</a></li>
-                <li><a href="blog-style-3.html">Blog</a></li>
-                <li><a href="pricing-1.html">Pricing</a></li>
-                <li><a href="contact-us-5.html">Contact</a></li>
-                <li class="with-dropdown">
-                    <a href="#" class="menu-dropdown-link" data-toggle="collapse" aria-expanded="true">Work <span class="dropdown-icon"></span></a>
-                    <ul class="menu-dropdown collapse">
-                        <li><a href="portfolio-single-1.html">Portfolio 1</a></li>
-                        <li><a href="portfolio-single-2.html">Portfolio 2</a></li>
-                        <li><a href="portfolio-single-2.html">Portfolio 3</a></li>
-                    </ul>
-                </li>
-            </ul>
-            <ul class="side-header-secondary-nav">
-                <li><a href="#">Free Quote</a></li>
-                <li><a href="login-register.html">Login / Signup</a></li>
-                <li><a href="#">Terms</a></li>
-                <li><a href="#">Privacy Policy</a></li>
-            </ul>
-            <ul class="side-header-secondary-nav side-header-bottom">
-                <li class="no-padding">
-                    <ul class="social-icons sm si-light si-solid circle color list-inline list-unstyled">
-                        <li><a class="facebook" href="#"><i class="fa fa-facebook"></i></a></li>
-                        <li><a class="youtube" href="#"><i class="fa fa-youtube"></i></a></li>
-                        <li><a class="twitter" href="#"><i class="fa fa-twitter"></i></a></li>
-                        <li><a class="linkedin" href="#"><i class="fa fa-linkedin"></i></a></li>
-                    </ul>
-                </li>
-                <li class="no-padding"><h5 class="side-header-copyright">© Minth Inc. - 2015</h5></li>
-            </ul>
-        </div>
-    </div>
-</div>
+        </li>
+
+        <hr class="border-light">
+
+        @if(Auth::check())
+            <li>
+                <a class="text-light nav-link" href="{{route('logout')}}"><i class="fas fa-2x fa-sign-out-alt d-block text-warning"></i>{{__('auth.logout')}}</a>
+            </li>
+        @else
+            <li>
+                <a class="text-light nav-link" href="{{route('login')}}"><i class="fas fa-2x fa-sign-in-alt d-block text-success"></i>{{__('auth.login')}}</a>
+            </li>
+        @endif
+
+    </ul>
+</nav>

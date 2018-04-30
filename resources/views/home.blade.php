@@ -1,23 +1,9 @@
 @extends('layouts.default')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
-        </div>
+<div class="container pt-3">
+    <div class="alert alert-success" role="alert">
+        <strong> ¡Plazos de nuevo ingreso abiertos! </strong> &emsp; Pulse <a href="{{URL::to('inscription/new')}}" class="alert-link">aquí</a> para rellenar su solicitud.
     </div>
 </div>
 @endsection

@@ -1,13 +1,15 @@
-@extends('layouts.app')
+<div class="modal fade" id="loginModal">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
 
-@section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Login') }}</div>
+            <!-- Modal Header -->
+            <div class="modal-header">
+                <h4 class="modal-title">{{ __('Login') }}</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
 
-                <div class="card-body">
+            <!-- Modal body -->
+            <div class="modal-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
 
@@ -61,9 +63,13 @@
                             </div>
                         </div>
                     </form>
-                </div>
             </div>
+
+            <!-- Modal footer -->
+            <div class="modal-footer">
+                <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+
         </div>
     </div>
 </div>
-@endsection

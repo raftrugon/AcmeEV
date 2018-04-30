@@ -1,6 +1,1 @@
-/********************************
-
-Minth's JavaScript Document for Custom Scripts
-Created By: Amazyne Themes
-
-*********************************/
+$('#sidebarCollapse').on('click', function () {    $('#sidebar').toggleClass('active');});

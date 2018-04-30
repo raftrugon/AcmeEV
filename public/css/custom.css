@@ -1,6 +1,18 @@
-/* -------------------------------------------------------------
-	
-    Minth's Stylesheet for Custom Styles
-    Created By: Amazyne Themes
-    
----------------------------------------------------------------- */
+#main-wrapper{
+    display:flex;
+    min-height:100vh;
+}
+#content{
+    min-height:100vh;
+    width:100%;
+}
+
+#sidebar{
+    width:125px;
+    text-align:center;
+}
+
+#sidebar a{
+    padding-left:0;
+    padding-right:0;
+}
