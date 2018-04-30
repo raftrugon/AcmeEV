@@ -47,9 +47,6 @@
                     markDoneStep: true, // add done css
                     removeDoneStepOnNavigateBack: true
                 },
-                toolbarSettings:{
-                    toolbarPosition:'none'
-                }
             });
             $("#smartwizard").on("leaveStep", function(e, anchorObject, stepNumber, stepDirection) {
                return true;//$('#new-inscription').valid();
@@ -67,8 +64,15 @@
                //Si se ha seleccionado un valor habilitamos el siguiente selectpicker y cargamos por ajax sus options
                 if(this_value !== '') {
                     var nextSelectpicker = $(this).parent().parent().next().find('.selectpicker');
-                    $(nextSelectpicker).prop('disabled', '');
-                    $(nextSelectpicker).selectpicker('refresh');
+                    $.get('{{URL::to('degree/all-but-selected')}}',{ids:prev_ids},function(data){
+                        $(nextSelectpicker).html("");
+                        $(nextSelectpicker).append('<option value="">-Elija un grado-</option>');
+                        $.each(data,function(key,value){
+                            $(nextSelectpicker).append('<option value="'+value['id']+'">'+value['name']+'</option>');
+                            $(nextSelectpicker).prop('disabled', '');
+                            $(nextSelectpicker).selectpicker('refresh');
+                        });
+                    });
                 }else{
                     //Si el selectpicker que ha cambiado se ha seteado a vacío, deshabilitamos los posteriores y reseteamos sus valores
                     $(this).parent().parent().nextAll().find('.selectpicker').each(function (index,element) {
