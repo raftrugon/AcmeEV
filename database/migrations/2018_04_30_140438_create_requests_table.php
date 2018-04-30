@@ -24,8 +24,8 @@ class CreateRequestsTable extends Migration
             $table->index('inscription_id');
             $table->index('degree_id');
 
-            $table->foreign('inscription_id')->references('inscriptions')->on('id')->delete('cascade');
-            $table->foreign('degree_id')->references('degrees')->on('id')->delete('cascade');
+            $table->foreign('inscription_id')->references('id')->on('inscriptions')->delete('cascade');
+            $table->foreign('degree_id')->references('id')->on('degrees')->delete('cascade');
 
             $table->timestamps();
         });
