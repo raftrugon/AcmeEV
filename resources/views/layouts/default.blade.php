@@ -17,8 +17,6 @@
 
     <!-- Custom css -->
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/custom.css')}}">
-    <!-- Sidebar css -->
-    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/sidebar.css')}}">
     <!-- FontAwesome css -->
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/fontawesome-all.min.css')}}">
     <!-- SmartWizard css -->
@@ -26,6 +24,8 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/smartWizard/smart_wizard_theme_arrows.css')}}">
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/smartWizard/smart_wizard_theme_circles.css')}}">
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/smartWizard/smart_wizard_theme_dots.css')}}">
+    <!-- Bootstrap Select css -->
+    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/bootstrap-select.min.css')}}">
 
 
 
@@ -67,6 +67,8 @@
 <script src="{{asset('js/iziToast.min.js')}}"></script>
 <!-- Smart Wizard -->
 <script src="{{asset('js/smartWizard.js')}}"></script>
+<!-- Bootstrap Select -->
+<script src="{{asset('js/bootstrap-select.min.js')}}"></script>
 
 <!-- CUSTOM Scripts -->
 <script src="{{asset('js/custom.js')}}"></script>

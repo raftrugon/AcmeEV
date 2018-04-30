@@ -17,8 +17,12 @@
                 @include('global.input',['type'=>'text','id'=>'email','name'=>'email','label'=>'Email'])
                 @include('global.input',['type'=>'number','id'=>'grade','name'=>'grade','label'=>'Grade','min'=>'0','max'=>'14','step'=>'0.01'])
             </div>
-            <div id="step-2" class="">
-                Step Content
+            <div id="step-2" class="p-2">
+                @include('global.select',['id'=>'1','objects'=>$degrees,'value'=>'id','display'=>'name','label'=>'Option 1','default'=>'-Elija un grado-'])
+                @include('global.select',['id'=>'2','objects'=>$degrees,'value'=>'id','display'=>'name','label'=>'Option 2','default'=>'-Elija un grado-'])
+                @include('global.select',['id'=>'3','objects'=>$degrees,'value'=>'id','display'=>'name','label'=>'Option 3','default'=>'-Elija un grado-'])
+                @include('global.select',['id'=>'4','objects'=>$degrees,'value'=>'id','display'=>'name','label'=>'Option 4','default'=>'-Elija un grado-'])
+                @include('global.select',['id'=>'5','objects'=>$degrees,'value'=>'id','display'=>'name','label'=>'Option 5','default'=>'-Elija un grado-'])
             </div>
             <div id="step-3" class="">
                 Step Content
