@@ -15,4 +15,9 @@ class InscriptionController extends Controller
         $degrees = Degree::all();
         return view('site.inscriptions.create-edit',compact('degrees'));
     }
+
+    public function getDegreesButSelected(Request $request){
+
+    }
+
 }

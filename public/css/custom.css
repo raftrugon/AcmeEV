@@ -1,15 +1,18 @@
 #main-wrapper{
-    display:flex;
     min-height:100vh;
 }
 #content{
-    min-height:100vh;
-    width:100%;
+    min-height: 100vh;
+    right: 0;
+    left: 125px;
+    position: absolute;
 }
 
 #sidebar{
     width:125px;
     text-align:center;
+    height: 100vh;
+    position: fixed;
 }
 
 #sidebar a{

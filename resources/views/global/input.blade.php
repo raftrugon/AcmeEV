@@ -44,12 +44,12 @@
                     >
                     @if(isset($icon))<span class="input-group-addon"><i class="{{$icon}}"></i></span>@endif
                 </div>
-                <span id="{{$id}}-error" class="help-block has-error">{{ $errors->first($name) }} </span>
+                <span id="{{$id}}-error" class="help-block invalid-feedback>{{ $errors->first($name) }} </span>
             </div>
         </div>
     @else
         <div id="@if(isset($block_id)){{$block_id}}@endif"
-             class="form-group  {{ $errors->has($name) ? 'has-error has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif"
+             class="form-group  {{ $errors->has($name) ? 'is-invalid has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif"
              style="margin-bottom:16px !important; @if(isset($hidden))display: none @endif " >
 
                 @if(isset($label))<label  class="control-label {{ $errors->has($name) ? 'state-error' : '' }}">{{ Lang::get($label) }}</label>@endif
@@ -74,7 +74,7 @@
 
                 </div>
 
-                <span id="{{$id}}-error" class="help-block has-error">{{ $errors->first($name) }} </span>
+                <span id="{{$id}}-error" class="help-block invalid-feedback">{{ $errors->first($name) }} </span>
         </div>
 
     @endif
@@ -150,7 +150,7 @@
                 @if(isset($icon))<span class="input-group-addon"><i class="{{$icon}}"></i></span>@endif
             </div>
 
-            <span id="{{$id}}-error" class="help-block has-error">{{ $errors->first($name) }} </span>
+            <span id="{{$id}}-error" class="help-block invalid-feedback">{{ $errors->first($name) }} </span>
         </div>
 
     @endif
@@ -218,7 +218,7 @@
                 @if(isset($icon))<span class="input-group-addon"><i class="{{$icon}}"></i></span>@endif
             </div>
 
-            <span id="{{$id}}-error" class="help-block has-error">{{ $errors->first($name) }} </span>
+            <span id="{{$id}}-error" class="help-block invalid-feedback">{{ $errors->first($name) }} </span>
         </div>
 
     @endif
@@ -285,7 +285,7 @@
                 @if(isset($icon))<span class="input-group-addon"><i class="{{$icon}}"></i></span>@endif
             </div>
 
-            <span id="{{$id}}-error" class="help-block has-error">{{ $errors->first($name) }} </span>
+            <span id="{{$id}}-error" class="help-block invalid-feedback">{{ $errors->first($name) }} </span>
         </div>
 
     @endif
@@ -335,7 +335,7 @@
                     >
                     <span>{{$texto}}</span>
                 </label>
-                <span id="{{$id}}-error" class="help-block has-error">{{ $errors->first($name) }}  </span>
+                <span id="{{$id}}-error" class="help-block invalid-feedback">{{ $errors->first($name) }}  </span>
 
             </div>
         </div>
@@ -370,7 +370,7 @@
                         >
                         <span>{{$texto}}</span>
                     </label>
-                    <span id="{{$id}}-error" class="help-block has-error">{{ $errors->first($name) }}  </span>
+                    <span id="{{$id}}-error" class="help-block invalid-feedback">{{ $errors->first($name) }}  </span>
                 </div>
             </div>
         </div>
@@ -425,7 +425,7 @@
                     >
                     <span>{{$texto}}</span>
                 </label>
-                <span id="{{$id}}-error" class="help-block has-error">{{ $errors->first($name) }}  </span>
+                <span id="{{$id}}-error" class="help-block invalid-feedback">{{ $errors->first($name) }}  </span>
 
             </div>
         </div>
@@ -456,7 +456,7 @@
                         >
                         <span>{{$texto}}</span>
                     </label>
-                    <span id="{{$id}}-error" class="help-block has-error">{{ $errors->first($name) }} </span>
+                    <span id="{{$id}}-error" class="help-block invalid-feedback">{{ $errors->first($name) }} </span>
                 </div>
             </div>
         </div>
@@ -501,7 +501,7 @@
                     @endif
             >{{ old($name, isset($value)?$value:null) }}</textarea>
             </div>
-                <span id="{{$id}}-error" class="help-block has-error">{{ $errors->first($name) }} </span>
+                <span id="{{$id}}-error" class="help-block invalid-feedback">{{ $errors->first($name) }} </span>
 
         </div>
     @else
@@ -522,7 +522,7 @@
                     @endforeach
                     @endif
             >{{ old($name, isset($value)?$value:null) }}</textarea>
-                <span id="{{$id}}-error" class="help-block has-error">{{ $errors->first($name) }} </span>
+                <span id="{{$id}}-error" class="help-block invalid-feedback">{{ $errors->first($name) }} </span>
         </div>
     @endif
 @endif
@@ -534,7 +534,7 @@
     @if(isset($aling) && $aling=='horizontal')
     @else
         <div id="@if(isset($block_id)){{$block_id}}@endif"
-             class="form-group  {{ $errors->has($name) ? 'has-error has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif"
+             class="form-group  {{ $errors->has($name) ? 'is-invalid has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif"
              style="margin-bottom:16px !important; @if(isset($hidden))display: none @endif " >
 
             @if(isset($label))<label  class="control-label {{ $errors->has($name) ? 'state-error' : '' }}">{{ Lang::get($label) }}</label>@endif

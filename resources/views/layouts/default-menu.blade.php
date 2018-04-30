@@ -41,7 +41,7 @@
             </li>
         @else
             <li>
-                <a class="text-light nav-link" href="{{route('login')}}"><i class="fas fa-2x fa-sign-in-alt d-block text-success"></i>{{__('auth.login')}}</a>
+                <a class="text-light nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#loginModal"><i class="fas fa-2x fa-sign-in-alt d-block text-success"></i>{{__('auth.login')}}</a>
             </li>
         @endif
 

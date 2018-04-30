@@ -69,6 +69,10 @@
 <script src="{{asset('js/smartWizard.js')}}"></script>
 <!-- Bootstrap Select -->
 <script src="{{asset('js/bootstrap-select.min.js')}}"></script>
+<!-- jQuery Validator -->
+<script src="{{asset('js/jquery.validate.min.js')}}"></script>
+<!-- jQuery Validator Config-->
+<script src="{{asset('js/global/validator-config.js')}}"></script>
 
 <!-- CUSTOM Scripts -->
 <script src="{{asset('js/custom.js')}}"></script>
