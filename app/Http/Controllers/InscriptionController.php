@@ -7,6 +7,7 @@ use App\Repositories\DegreeRepo;
 use App\Repositories\InscriptionRepo;
 use App\Repositories\RequestRepo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class InscriptionController extends Controller
 {
@@ -24,6 +25,16 @@ class InscriptionController extends Controller
     }
 
     public function postSaveInscription(Request $request){
+
+        $validator = Validator::make($request->all(),[
+            'g-recaptcha-response' => 'required|captcha'
+        ]);
+
+        if($validator->fails()){
+            return redirect()->back()->withErrors($validator)->withInput();
+        }
+
+
         $inscription = array(
            'name'=>$request->input('name'),
            'surname'=>$request->input('surname'),
