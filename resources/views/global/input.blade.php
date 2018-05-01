@@ -30,7 +30,7 @@
 
                 <div class="input-group">
 
-                    <input  id="{{$id}}" name="{{$name}}"  type="text"  placeholder="@if(isset($placeholder)){{ Lang::get($placeholder)  }}@else{{isset($label)?Lang::get($label):null}}@endif"
+                    <input  id="{{$id}}" name="{{$name}}" type="text"  placeholder="@if(isset($placeholder)){{ Lang::get($placeholder)  }}@else{{isset($label)?Lang::get($label):null}}@endif"
                             @if(isset($readonly) && $readonly==true)readonly="readonly" @endif
                             @if(isset($disabled) && $disabled==true)disabled="disabled" @endif
                             class=" form-control @if(isset($class)){{$class}}@endif"
@@ -56,7 +56,7 @@
 
                 <div class="input-group">
 
-                    <input  id="{{$id}}" name="{{$name}}"  type="text"  placeholder="@if(isset($placeholder)){{ Lang::get($placeholder)  }}@else{{isset($label)?Lang::get($label):null}}@endif"
+                    <input  id="{{$id}}" name="{{$name}}" @if(isset($vue)) v-model="{{$name}}" @endif type="text"  placeholder="@if(isset($placeholder)){{ Lang::get($placeholder)  }}@else{{isset($label)?Lang::get($label):null}}@endif"
                             @if(isset($readonly) && $readonly==true)readonly="readonly" @endif
                             @if(isset($disabled) && $disabled==true)disabled="disabled" @endif
                             class=" form-control @if(isset($class)){{$class}}@endif"
@@ -130,7 +130,7 @@
 
             <div class="input-group">
 
-                <input  id="{{$id}}" name="{{$name}}"  type="number"  placeholder="@if(isset($placeholder)){{ Lang::get($placeholder)  }}@else{{isset($label)?Lang::get($label):null}}@endif"
+                <input  id="{{$id}}" name="{{$name}}" @if(isset($vue)) v-model="{{$name}}" @endif  type="number"  placeholder="@if(isset($placeholder)){{ Lang::get($placeholder)  }}@else{{isset($label)?Lang::get($label):null}}@endif"
                         @if(isset($readonly) && $readonly==true)readonly="readonly" @endif
                         @if(isset($disabled) && $disabled==true)disabled="disabled" @endif
                         class=" form-control @if(isset($class)){{$class}}@endif"

@@ -18,11 +18,12 @@ Auth::routes();
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/lang/{locale}',function($locale){
     Session::put('locale',$locale);
-    return redirect()->route('home');
+    return redirect()->back();
 });
 
 Route::group(['prefix'=>'inscription'],function(){
     Route::get('new','InscriptionController@getNewInscription');
+    Route::post('save','InscriptionController@postSaveInscription');
 });
 
 Route::group(['prefix'=>'degree'],function(){
