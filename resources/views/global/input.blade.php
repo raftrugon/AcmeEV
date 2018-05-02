@@ -49,7 +49,7 @@
         </div>
     @else
         <div id="@if(isset($block_id)){{$block_id}}@endif"
-             class="form-group  {{ $errors->has($name) ? 'is-invalid has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif"
+             class="form-group  {{ $errors->has($name) ? 'is-invalid has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif @if(!empty($errors->first($name))) is-invalid @endif"
              style="margin-bottom:16px !important; @if(isset($hidden))display: none @endif " >
 
                 @if(isset($label))<label  class="control-label {{ $errors->has($name) ? 'state-error' : '' }}">{{ Lang::get($label) }}</label>@endif
@@ -59,7 +59,7 @@
                     <input  id="{{$id}}" name="{{$name}}" @if(isset($vue)) v-model="{{$name}}" @endif type="text"  placeholder="@if(isset($placeholder)){{ Lang::get($placeholder)  }}@else{{isset($label)?Lang::get($label):null}}@endif"
                             @if(isset($readonly) && $readonly==true)readonly="readonly" @endif
                             @if(isset($disabled) && $disabled==true)disabled="disabled" @endif
-                            class=" form-control @if(isset($class)){{$class}}@endif"
+                            class=" form-control @if(isset($class)){{$class}}@endif @if(!empty($errors->first($name))) is-invalid @endif"
                             @if(isset($required) && $required==true) required="required" @endif
                            value="{{ old($name, isset($value)?$value:null) }}"
 
@@ -123,7 +123,7 @@
         </div>
     @else
         <div id="@if(isset($block_id)){{$block_id}}@endif"
-             class="form-group  {{ $errors->has($name) ? 'has-error has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif"
+             class="form-group  {{ $errors->has($name) ? 'has-error has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif @if(!empty($errors->first($name))) is-invalid @endif"
              style="margin-bottom:16px !important; @if(isset($hidden))display: none @endif " >
 
             @if(isset($label))<label  class="control-label {{ $errors->has($name) ? 'state-error' : '' }}">{{ Lang::get($label) }}</label>@endif
@@ -133,7 +133,7 @@
                 <input  id="{{$id}}" name="{{$name}}" @if(isset($vue)) v-model="{{$name}}" @endif  type="number"  placeholder="@if(isset($placeholder)){{ Lang::get($placeholder)  }}@else{{isset($label)?Lang::get($label):null}}@endif"
                         @if(isset($readonly) && $readonly==true)readonly="readonly" @endif
                         @if(isset($disabled) && $disabled==true)disabled="disabled" @endif
-                        class=" form-control @if(isset($class)){{$class}}@endif"
+                        class=" form-control @if(isset($class)){{$class}}@endif @if(!empty($errors->first($name))) is-invalid @endif"
                         @if(isset($required) && $required==true) required="required" @endif
                         value="{{ old($name, isset($value)?$value:null) }}"
 
@@ -195,7 +195,7 @@
         </div>
     @else
         <div id="@if(isset($block_id)){{$block_id}}@endif"
-             class="form-group  {{ $errors->has($name) ? 'has-error has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif"
+             class="form-group  {{ $errors->has($name) ? 'has-error has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif @if(!empty($errors->first($name))) is-invalid @endif"
              style="margin-bottom:16px !important; @if(isset($hidden))display: none @endif " >
 
             @if(isset($label))<label  class="control-label {{ $errors->has($name) ? 'state-error' : '' }}">{{ Lang::get($label) }}</label>@endif
@@ -205,7 +205,7 @@
                 <input  id="{{$id}}" name="{{$name}}"  type="password"  placeholder="@if(isset($placeholder)){{ Lang::get($placeholder)  }}@else{{isset($label)?Lang::get($label):null}}@endif"
                         @if(isset($readonly) && $readonly==true)readonly="readonly" @endif
                         @if(isset($disabled) && $disabled==true)disabled="disabled" @endif
-                        class=" form-control @if(isset($class)){{$class}}@endif"
+                        class=" form-control @if(isset($class)){{$class}}@endif @if(!empty($errors->first($name))) is-invalid @endif"
                         @if(isset($required) && $required==true) required="required" @endif
                         value="{{ old($name, isset($value)?$value:null) }}"
 
@@ -262,7 +262,7 @@
         </div>
     @else
         <div id="@if(isset($block_id)){{$block_id}}@endif"
-             class="form-group  {{ $errors->has($name) ? 'has-error has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif"
+             class="form-group  {{ $errors->has($name) ? 'has-error has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif @if(!empty($errors->first($name))) is-invalid @endif"
              style="margin-bottom:16px !important; @if(isset($hidden))display: none @endif " >
 
             @if(isset($label))<label  class="control-label {{ $errors->has($name) ? 'state-error' : '' }}">{{ Lang::get($label) }}</label>@endif
@@ -272,7 +272,7 @@
                 <input  id="{{$id}}" name="{{$name}}"  type="email"  placeholder="@if(isset($placeholder)){{ Lang::get($placeholder)  }}@else{{isset($label)?Lang::get($label):null}}@endif"
                         @if(isset($readonly) && $readonly==true)readonly="readonly" @endif
                         @if(isset($disabled) && $disabled==true)disabled="disabled" @endif
-                        class=" form-control @if(isset($class)){{$class}}@endif"
+                        class=" form-control @if(isset($class)){{$class}}@endif @if(!empty($errors->first($name))) is-invalid @endif"
                         @if(isset($required) && $required==true) required="required" @endif
                         value="{{ old($name, isset($value)?$value:null) }}"
 
@@ -345,7 +345,7 @@
     @else
 
         <div id="@if(isset($block_id)){{$block_id}}@endif"
-             class="form-group  {{ $errors->has($name) ? 'has-error has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif"
+             class="form-group  {{ $errors->has($name) ? 'has-error has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif @if(!empty($errors->first($name))) is-invalid @endif"
              style="margin-bottom:16px !important; @if(isset($hidden))display: none @endif "
         >
 
@@ -356,7 +356,7 @@
                     <label>
                         <input type="checkbox"
                                id="{{$id}}" name="{{$name}}"
-                               class="checkbox style-0 @if(isset($class)){{$class}}@endif"
+                               class="checkbox style-0 @if(isset($class)){{$class}}@endif @if(!empty($errors->first($name))) is-invalid @endif"
                                @if(isset($checked) && $checked) checked="checked" @endif
                                @if(isset($required) && $required==true) required="required" @endif
                                @if(isset($readonly) && $readonly==true) readonly="readonly"  onclick="javascript: return false;" @endif
@@ -433,7 +433,7 @@
     @else
 
         <div id="@if(isset($block_id)){{$block_id}}@endif"
-             class="form-group  {{ $errors->has($name) ? 'has-error has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif"
+             class="form-group  {{ $errors->has($name) ? 'has-error has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif @if(!empty($errors->first($name))) is-invalid @endif"
              style="margin-bottom:16px !important; @if(isset($hidden))display: none @endif "
         >
             @if(isset($label))<label  class=" col-md-12 control-label {{ $errors->has($name) ? 'state-error' : '' }}">{{ Lang::get($label) }}</label>@endif
@@ -442,7 +442,7 @@
                     <label>
                         <input type="radio"
                                id="{{$id}}" name="{{$name}}"
-                               class="radiobox style-0 @if(isset($class)){{$class}}@endif"
+                               class="radiobox style-0 @if(isset($class)){{$class}}@endif @if(!empty($errors->first($name))) is-invalid @endif"
                                @if(isset($checked) && $checked) checked="checked" @endif
                                @if(isset($required) && $required==true) required="required" @endif
                                @if(isset($readonly) && $readonly==true)  readonly="readonly"  onclick="javascript: return false;" @endif
@@ -506,7 +506,7 @@
         </div>
     @else
         <div id="@if(isset($block_id)){{$block_id}}@endif"
-             class="form-group  {{ $errors->has($name) ? 'has-error has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif"
+             class="form-group  {{ $errors->has($name) ? 'has-error has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif @if(!empty($errors->first($name))) is-invalid @endif"
              style="margin-bottom:16px !important; @if(isset($hidden))display: none @endif "
         >
             @if(isset($label))<label  class="control-label {{ $errors->has($name) ? 'state-error' : '' }}">{{ Lang::get($label) }}</label>@endif
@@ -514,7 +514,7 @@
                       id="{{$id}}" name="{{$name}}"  type="number"  placeholder="@if(isset($placeholder)){{ Lang::get($placeholder)  }}@else{{isset($label)?Lang::get($label):null}}@endif"
                       @if(isset($readonly) && $readonly==true)readonly="readonly" @endif
                       @if(isset($disabled) && $disabled==true)disabled="disabled" @endif
-                      class=" form-control @if(isset($class)){{$class}}@endif"
+                      class=" form-control @if(isset($class)){{$class}}@endif @if(!empty($errors->first($name))) is-invalid @endif"
                       @if(isset($required) && $required==true) required="required" @endif
                       @if(isset($data_attributes))
                       @foreach($data_attributes as $attr_name=>$attr_value)

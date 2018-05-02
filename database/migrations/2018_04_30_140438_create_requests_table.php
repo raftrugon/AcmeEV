@@ -18,7 +18,7 @@ class CreateRequestsTable extends Migration
             $table->integer('inscription_id')->unsigned();
             $table->integer('degree_id')->unsigned();
             $table->integer('priority');
-            $table->boolean('accepted');
+            $table->boolean('accepted')->default(0);
 
             $table->index('id');
             $table->index('inscription_id');

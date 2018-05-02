@@ -19,3 +19,7 @@
     padding-left:0;
     padding-right:0;
 }
+
+div.is-invalid span.help-block{
+    display:block!important;
+}

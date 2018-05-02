@@ -226,7 +226,7 @@
 
             },
             messages:{
-                name: "{{__('validation.required',['attribute'=>__('attributes.name')])}}",
+                name: "{{__('validation.required',['attribute'=>'attributes.name'])}}",
                 surname: "{{__('validation.required',['attribute'=>__('attributes.surname')])}}",
                 nif: "{{__('validation.required',['attribute'=>__('attributes.nif')])}}",
                 address: "{{__('validation.required',['attribute'=>__('attributes.address')])}}",
