@@ -35,12 +35,21 @@ Route::group(['prefix'=>'inscription'],function(){
 Route::group(['prefix'=>'degree'],function(){
     Route::get('/all-but-selected','DegreeController@getAllButSelected');
     Route::get('/all','DegreeController@getAll');
+});
+
+Route::group(['prefix'=>'management/degree'],function(){
     Route::get('new','DegreeController@getNewDegree');
     Route::post('save','DegreeController@postSaveDegree');
+    Route::get('{degree}/edit','DegreeController@getEditDegree');
+});
+
+Route::group(['prefix'=>'department'],function(){
+    Route::get('/all','DepartmentController@getAll');
+    Route::get('new','DepartmentController@getNewDepartment');
+    Route::post('save','DepartmentController@postSaveDepartment');
 });
 
 Route::group(['prefix'=>'administration'],function(){
-   Route::get('/calendar','Pas\PasAppointmentsController@getCalendar');
+    Route::get('/calendar','Pas\PasAppointmentsController@getCalendar');
 });
-
 

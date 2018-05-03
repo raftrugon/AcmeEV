@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Degree;
 use App\Repositories\DegreeRepo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class DegreeController extends Controller
 {
@@ -28,8 +30,11 @@ class DegreeController extends Controller
         return view('site.degree.create-edit');
     }
 
+    public function getEditDegree(Degree $degree){
+        return view('site.degree.create-edit', compact('degree'));
+    }
+
     public function postSaveDegree(Request $request){
-        dd('eee');
         $validator = Validator::make($request->all(),[
             'name'=>'required',
             'new_students_limit'=>'required',
@@ -44,15 +49,25 @@ class DegreeController extends Controller
             $degree = array(
                 'name' => $request->input('name'),
                 'new_students_limit' => $request->input('new_students_limit'),
-                'code' => 'AAA000005',
             );
-            $this->degreeRepo->create($degree);
+
+            if ($request->input('id')) {
+                $degreeBD = $this->degreeRepo->findOrFail($request->input('id'));
+                $this->degreeRepo->update($degreeBD, $degree);
+            } else {
+                //Random Code Generation (ABC123456)
+                $random = $random_string = chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(48,57)) . chr(rand(48,57)). chr(rand(48,57)). chr(rand(48,57)). chr(rand(48,57)). chr(rand(48,57));
+                $degree['code'] = $random;
+                $this->degreeRepo->create($degree);
+            }
 
             DB::commit();
         }catch(\Exception $e){
             DB::rollBack();
             throw $e;
         }
-        return view('site.inscriptions.success');
+
+        return redirect()->action('DegreeController@getAll');
     }
+
 }
