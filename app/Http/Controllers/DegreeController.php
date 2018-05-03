@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Degree;
 use App\Repositories\DegreeRepo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class DegreeController extends Controller
 {
@@ -29,7 +31,6 @@ class DegreeController extends Controller
     }
 
     public function postSaveDegree(Request $request){
-        dd('eee');
         $validator = Validator::make($request->all(),[
             'name'=>'required',
             'new_students_limit'=>'required',
@@ -53,6 +54,7 @@ class DegreeController extends Controller
             DB::rollBack();
             throw $e;
         }
-        return view('site.inscriptions.success');
+        $degrees = Degree::all();
+        return view('site.degree.all', compact('degrees'));
     }
 }

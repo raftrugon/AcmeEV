@@ -3,6 +3,7 @@
 @section('content')
 
     <form id="degree_form" action="{{URL::to('degree/save')}}" method="post" novalidate>
+        {{ csrf_field() }}
         <div class="row justify-content-center">
             <div class="col-md-7">
                 <div class="card border-info" >
@@ -10,8 +11,8 @@
                         <Strong>@lang('degrees.new.title')</Strong>
                     </div>
                     <div class="card-body">
-                        @include('global.input',['type'=>'text','id'=>'name','name'=>'name','label'=>__('attributes.name'),'vue'=>true])
-                        @include('global.input',['type'=>'text','id'=>'new_students_limit','name'=>'new_students_limit','label'=>__('attributes.new_students_limit'),'vue'=>true])
+                        @include('global.input',['type'=>'text','id'=>'name','name'=>'name','label'=>__('attributes.name')])
+                        @include('global.input',['type'=>'text','id'=>'new_students_limit','name'=>'new_students_limit','label'=>__('attributes.new_students_limit')])
                         <button>@lang('global.submit')</button>
                     </div>
                 </div>
