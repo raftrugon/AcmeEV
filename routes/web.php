@@ -29,8 +29,13 @@ Route::group(['prefix'=>'inscription'],function(){
 Route::group(['prefix'=>'degree'],function(){
     Route::get('/all-but-selected','DegreeController@getAllButSelected');
     Route::get('/all','DegreeController@getAll');
+});
+
+Route::group(['prefix'=>'management/degree'],function(){
     Route::get('new','DegreeController@getNewDegree');
     Route::post('save','DegreeController@postSaveDegree');
+    Route::get('{degree}/edit','DegreeController@getEditDegree');
 });
+
 
 
