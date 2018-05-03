@@ -15,6 +15,11 @@
         <li>
             <a class="text-light nav-link" href="#"><i class="fas fa-2x fa-address-book d-block text-primary"></i>{{__('menu.departments')}}</a>
         </li>
+        @can('have_appointments')
+            <li>
+                <a class="text-light nav-link" href="{{URL::to('administration/calendar')}}"><i class="fas fa-2x fa-calendar d-block text-primary"></i>{{__('menu.calendar')}}</a>
+            </li>
+        @endcan
     </ul>
 
     <ul class="list-unstyled mt-auto">

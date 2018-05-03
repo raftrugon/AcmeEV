@@ -26,6 +26,8 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/smartWizard/smart_wizard_theme_dots.css')}}">
     <!-- Bootstrap Select css -->
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/bootstrap-select.min.css')}}">
+    <!-- FullCalendar css -->
+    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/fullcalendar.min.css')}}">
 
 
 
@@ -61,6 +63,8 @@
 
 <!-- jQuery -->
     <script src="{{asset('js/jQuery.js')}}"></script>
+<!-- Moment-->
+<script src="{{asset('js/moment.min.js')}}"></script>
 <!-- Bootstrap -->
     <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
 <!-- CUSTOM NOTIFICATION -->
@@ -75,6 +79,8 @@
 <script src="{{asset('js/global/validator-config.js')}}"></script>
 <!-- Vue-->
 <script src="{{asset('js/vue.js')}}"></script>
+<!-- Calendar-->
+<script src="{{asset('js/fullcalendar.min.js')}}"></script>
 
 <!-- CUSTOM Scripts -->
 <script src="{{asset('js/custom.js')}}"></script>

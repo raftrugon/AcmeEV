@@ -1,5 +1,6 @@
 <?php
 
+use App\User;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
@@ -29,6 +30,21 @@ class UsersAndRolesSeeder extends Seeder
         $pcoordinate_subject = Permission::firstOrCreate(['id'=>7,'name'=>'coordinate_subject']);
         $pteach = Permission::firstOrCreate(['id'=>8,'name'=>'teach']);
 
-        $phave_appointments = Permission::firstOrCreate(['id'=>9,'name'=>'have_appoinments']);
+        $phave_appointments = Permission::firstOrCreate(['id'=>9,'name'=>'have_appointments']);
+
+
+        User::firstOrCreate(['id'=>1,
+            'name'=>'Juana',
+            'surname'=>'Vargas Pérez',
+            'email'=>'juavarper@pas.us.es',
+            'nif'=>'44444444A',
+            'address'=>'Calle de la soledad, 11',
+            'phone_number'=>'666666666',
+            'personal_email'=>'juanavargas@gmail.com',
+            'password'=>bcrypt('pas1')
+        ]);
+        $pas1 = User::where('id',1)->first();
+        $pas1->givePermissionTo('have_appointments');
+        $pas1->assignRole('pas');
     }
 }

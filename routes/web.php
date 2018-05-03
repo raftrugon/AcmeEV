@@ -15,6 +15,12 @@ use Illuminate\Support\Facades\Session;
 
 Auth::routes();
 
+//Alternative get logout route
+Route::get('/logout',function(){
+   Auth::logout();
+   return redirect()->route('home');
+});
+
 Route::get('/', 'HomeController@index')->name('home');
 Route::get('/lang/{locale}',function($locale){
     Session::put('locale',$locale);
@@ -31,6 +37,10 @@ Route::group(['prefix'=>'degree'],function(){
     Route::get('/all','DegreeController@getAll');
     Route::get('new','DegreeController@getNewDegree');
     Route::post('save','DegreeController@postSaveDegree');
+});
+
+Route::group(['prefix'=>'administration'],function(){
+   Route::get('/calendar','Pas\PasAppointmentsController@getCalendar');
 });
 
 
