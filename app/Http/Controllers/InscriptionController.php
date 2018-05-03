@@ -21,7 +21,6 @@ class InscriptionController extends Controller
     }
 
     public function getNewInscription(){
-        dd(phpinfo());
         $degrees = Degree::all();
         return view('site.inscriptions.create-edit',compact('degrees'));
     }
