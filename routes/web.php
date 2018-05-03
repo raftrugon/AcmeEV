@@ -42,4 +42,3 @@ Route::group(['prefix'=>'department'],function(){
     Route::get('new','DepartmentController@getNewDepartment');
     Route::post('save','DepartmentController@postSaveDepartment');
 });
-
