@@ -12,4 +12,5 @@ return [
     'password'=>'Password',
     'password.repeat'=>'Repeat your password',
     'new_students_limit'=>'Maximum number of students',
+    'website'=>'Website',
 ];

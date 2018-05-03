@@ -33,4 +33,8 @@ Route::group(['prefix'=>'degree'],function(){
     Route::post('save','DegreeController@postSaveDegree');
 });
 
-
+Route::group(['prefix'=>'department'],function(){
+    Route::get('/all','DepartmentController@getAll');
+    Route::get('new','DepartmentController@getNewDepartment');
+    Route::post('save','DepartmentController@postSaveDepartment');
+});
