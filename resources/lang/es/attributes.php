@@ -12,4 +12,5 @@ return [
     'password'=>'Contraseña',
     'password.repeat'=>'Repita la contraseña',
     'new_students_limit'=>'Número máximo de estudiantes',
+    'website'=>'Página web',
 ];
