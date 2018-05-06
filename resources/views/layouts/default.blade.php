@@ -80,7 +80,8 @@
 <!-- Vue-->
 <script src="{{asset('js/vue.js')}}"></script>
 <!-- Calendar-->
-<script src="{{asset('js/fullcalendar.min.js')}}"></script>
+<script src="{{asset('js/fullcalendar/fullcalendar.min.js')}}"></script>
+<script src="{{asset('js/fullcalendar/es.js')}}"></script>
 
 <!-- CUSTOM Scripts -->
 <script src="{{asset('js/custom.js')}}"></script>

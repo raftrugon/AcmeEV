@@ -51,5 +51,8 @@ Route::group(['prefix'=>'department'],function(){
 
 Route::group(['prefix'=>'administration'],function(){
     Route::get('/calendar','Pas\PasAppointmentsController@getCalendar');
+    Route::get('/calendar/data','Pas\PasAppointmentsController@getCalendarData');
+    Route::post('/calendar/new','Pas\PasAppointmentsController@postNewCalendarDate');
+    Route::post('/calendar/delete','Pas\PasAppointmentsController@postDeleteCalendarDate');
 });
 

@@ -18,12 +18,10 @@ class CreatePeriodTimesTable extends Migration
             $table->enum('day',['L','M','X','J','V','S','D']);
             $table->time('start');
             $table->time('end');
-            $table->integer('group_id')->unsigned()->nullable();
-            $table->integer('pas_id')->unsigned()->nullable();
+            $table->integer('group_id')->unsigned();
 
             $table->index('id');
             $table->foreign('group_id')->references('id')->on('groups')->delete('cascade');
-            $table->foreign('pas_id')->references('id')->on('users')->delete('cascade');
             $table->timestamps();
         });
     }
