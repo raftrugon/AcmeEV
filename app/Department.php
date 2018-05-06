@@ -25,4 +25,11 @@ class Department extends Model
     }
 
 
+    public function getSubjects(){
+        $this->hasMany('App\Subject','department_id','id');
+    }
+
+    public function getPDIs() {
+        $this->hasMany('App\User','department_id','id');
+    }
 }
