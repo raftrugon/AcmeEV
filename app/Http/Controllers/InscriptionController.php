@@ -34,7 +34,7 @@ class InscriptionController extends Controller
             'address'=>'required',
             'phone_number'=>'required',
             'email'=>'required|email|unique:users',
-            'grade'=>'required|min:5|max:14',
+            'grade'=>'required',
             'option1'=>'required',
             'password'=>'required',
             'password_repeat'=>'required|same:password',
@@ -81,7 +81,6 @@ class InscriptionController extends Controller
             DB::commit();
         }catch(\Exception $e){
             DB::rollBack();
-            throw $e;
         }
         return view('site.inscriptions.success');
     }
