@@ -41,6 +41,7 @@ Route::group(['prefix'=>'management/degree'],function(){
     Route::get('new','DegreeController@getNewDegree');
     Route::post('save','DegreeController@postSaveDegree');
     Route::get('{degree}/edit','DegreeController@getEditDegree');
+    route::get('{degree}/add-next-year-subjects','Pdi\ManagementController@getDegreeEditAddNextYearSubjects');
 });
 
 Route::group(['prefix'=>'department'],function(){

@@ -19,10 +19,10 @@ class Subject extends Model
         return $this->code;
     }
     public function getSubjectType(){
-        return $this->subjectType;
+        return $this->subject_type;
     }
     public function getSchoolYear(){
-        return $this->schoolYear;
+        return $this->school_year;
     }
     public function getSemester(){
         return $this->semester;

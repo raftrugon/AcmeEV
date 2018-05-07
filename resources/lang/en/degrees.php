@@ -8,4 +8,5 @@ return[
     'activeEdit'=>'Activate Edition',
     'edit'=>'Edit',
     'delete'=>'Delete',
+    'school_year'=>'School year',
 ];

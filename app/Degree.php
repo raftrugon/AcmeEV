@@ -35,4 +35,8 @@ class Degree extends Model
     public function setNewStudentsLimit($value){
         $this->new_students_limit = $value;
     }
+
+    public function getSubjects(){
+        return $this->hasMany('App\Subject','degree_id','id');
+    }
 }
