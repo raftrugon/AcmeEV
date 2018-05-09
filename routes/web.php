@@ -11,6 +11,7 @@
 |
 */
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 
 Auth::routes();
@@ -19,6 +20,9 @@ Auth::routes();
 Route::get('/logout',function(){
    Auth::logout();
    return redirect()->route('home');
+});
+Route::post('/sidebar',function(Request $request){
+    Session::put('sidebar',$request->input('show'));
 });
 
 Route::get('/', 'HomeController@index')->name('home');

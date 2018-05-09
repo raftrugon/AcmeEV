@@ -93,6 +93,12 @@
             'X-CSRF-TOKEN': '{{ csrf_token() }}'
         }
     });
+
+    function toggleSidebar(){
+        $('#sidebar').toggleClass('show');
+        $('.sidebar-btn').toggleClass('show');
+        $.post('{{URL::to('sidebar')}}',{show: $('#sidebar').hasClass('show')});
+    }
 </script>
 
 @yield('scripts')
