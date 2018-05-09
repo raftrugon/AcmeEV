@@ -55,9 +55,7 @@
 <!-- #PAGE FOOTER -->
 @include('layouts.default-footer')
 <!-- END FOOTER -->
-@if(!Auth::check())
-    @include('auth.login')
-@endif
+@includeWhen(!Auth::check(),'auth.login')
 <!-- End of Page Content -->
 
 
@@ -99,6 +97,35 @@
         $('.sidebar-btn').toggleClass('show');
         $.post('{{URL::to('sidebar')}}',{show: $('#sidebar').hasClass('show')});
     }
+
+    @unless(Auth::check())
+    $(function(){
+        $('#login_form').submit(function(){
+            $.post(
+                '{{route('login')}}',
+                $('#login_form').serialize()
+            ).done(function(data){
+                if(data === 'true'){
+                    location.href = '{{route('home')}}';
+                }
+            }).fail(function(data,textStatus,jqXHR){
+                if(jqXHR === 'Unprocessable Entity'){
+                    error('@lang('global.error')','@lang('auth.failed')');
+                    $('#login-error').html('<strong>@lang('auth.failed')</strong>');
+                    $('#login-email').addClass('is-invalid');
+                    $('#login-password').addClass('is-invalid');
+                }else if(jqXHR === 'Too Many Requests'){
+                    console.log(data);
+                    error('@lang('global.error')',data.responseJSON.errors.email[0]);
+                    $('#login-error').html('<strong>'+data.responseJSON.errors.email[0]+'</strong>');
+                    $('#login-email').addClass('is-invalid');
+                    $('#login-password').addClass('is-invalid');
+                }
+            });
+            return false;
+        });
+    });
+    @endunless
 </script>
 
 @yield('scripts')
