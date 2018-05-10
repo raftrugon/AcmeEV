@@ -12,6 +12,7 @@
 */
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
 Auth::routes();
@@ -41,7 +42,7 @@ Route::group(['prefix'=>'degree'],function(){
     Route::get('/all','DegreeController@getAll');
 });
 
-Route::group(['prefix'=>'management/degree','middleware'=>['permission:manage']],function(){
+Route::group(['prefix'=>'management/degree'/*,'middleware'=>['permission:manage']*/],function(){
     Route::get('new','DegreeController@getNewDegree');
     Route::post('save','DegreeController@postSaveDegree');
     Route::get('{degree}/edit','DegreeController@getEditDegree');
@@ -59,6 +60,13 @@ Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
         Route::get('/data', 'Pas\PasAppointmentsController@getCalendarData');
         Route::post('/new', 'Pas\PasAppointmentsController@postNewCalendarDate');
         Route::post('/delete', 'Pas\PasAppointmentsController@postDeleteCalendarDate');
+    });
+});
+
+Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){
+    Route::group(['prefix'=>'systemconfig'],function() {
+        Route::get('edit', 'Admin\SystemConfigController@getEditSystemConfig');
+        Route::post('save', 'Admin\SystemConfigController@postSaveSystemConfig');
     });
 });
 

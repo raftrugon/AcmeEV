@@ -23,7 +23,7 @@ class SystemConfigSeeder extends Seeder
             'inscriptions_start_date'=>Carbon::create('2018', '07', '01'),
             'first_provisional_inscr_list_date'=>Carbon::create('2018', '07', '18'),
             'second_provisional_inscr_list_date'=>Carbon::create('2018', '08', '15'),
-            'final_provisional_inscr_list_date'=>Carbon::create('2018', '09', '01'),
+            'final_inscr_list_date'=>Carbon::create('2018', '09', '01'),
             'enrolment_start_date'=>Carbon::create('2018', '09', '01'),
             'enrolment_end_date'=>Carbon::create('2018', '09', '31'),
             'provisional_minutes_date'=>Carbon::create('2018', '12', '24'),

@@ -7,12 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class SystemConfig extends Model
 {
 
+    protected $guarded = [];
+
+
     public function getId(){
         return $this->id;
     }
 
     //
-
 
     public function getMaxSummonsNumber(){
         return $this->max_summons_number;

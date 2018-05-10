@@ -5,4 +5,5 @@ return [
     'degrees'=>'Grados',
     'departments'=>'Departamentos',
     'calendar'=>'Calendario',
+    'systemconfig'=>'Conf. Sistema',
 ];
