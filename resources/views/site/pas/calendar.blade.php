@@ -14,6 +14,7 @@
         selectable:true,
         selectOverlap:false,
         eventColor:'#28a745',
+        slotDuration:'01:00:00',
         timeFormat: 'HH:mm',
         select: function(startDate,endDate){
             $.post(

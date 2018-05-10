@@ -13,13 +13,18 @@
             <a class="text-light nav-link" href="{{URL::to('degree/all')}}"><i class="fa fa- fa-graduation-cap d-block text-primary"></i><span>{{__('menu.degrees')}}</span></a>
         </li>
         <li>
-            <a class="text-light nav-link" href="{{URL::to('departments/all')}}"><i class="fas fa- fa-address-book d-block text-primary"></i><span>{{__('menu.departments')}}</span></a>
+            <a class="text-light nav-link" href="{{URL::to('department/all')}}"><i class="fas fa- fa-address-book d-block text-primary"></i><span>{{__('menu.departments')}}</span></a>
         </li>
         @can('have_appointments')
             <li>
                 <a class="text-light nav-link" href="{{URL::to('administration/calendar')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.calendar')}}</span></a>
             </li>
         @endcan
+        @if(!Auth::check() or Auth::user()->can('current'))
+            <li>
+                <a class="text-light nav-link" href="{{URL::to('calendar')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.calendar')}}</span></a>
+            </li>
+        @endif
     </ul>
 
     <ul class="list-unstyled mt-auto">

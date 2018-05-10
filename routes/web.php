@@ -41,7 +41,7 @@ Route::group(['prefix'=>'degree'],function(){
     Route::get('/all','DegreeController@getAll');
 });
 
-Route::group(['prefix'=>'management/degree'],function(){
+Route::group(['prefix'=>'management/degree','middleware'=>['permission:manage']],function(){
     Route::get('new','DegreeController@getNewDegree');
     Route::post('save','DegreeController@postSaveDegree');
     Route::get('{degree}/edit','DegreeController@getEditDegree');
@@ -53,10 +53,19 @@ Route::group(['prefix'=>'department'],function(){
     Route::post('save','DepartmentController@postSaveDepartment');
 });
 
-Route::group(['prefix'=>'administration'],function(){
-    Route::get('/calendar','Pas\PasAppointmentsController@getCalendar');
-    Route::get('/calendar/data','Pas\PasAppointmentsController@getCalendarData');
-    Route::post('/calendar/new','Pas\PasAppointmentsController@postNewCalendarDate');
-    Route::post('/calendar/delete','Pas\PasAppointmentsController@postDeleteCalendarDate');
+Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
+    Route::group(['prefix'=>'calendar','middleware'=>['permission:have_appointments']],function() {
+        Route::get('/', 'Pas\PasAppointmentsController@getCalendar');
+        Route::get('/data', 'Pas\PasAppointmentsController@getCalendarData');
+        Route::post('/new', 'Pas\PasAppointmentsController@postNewCalendarDate');
+        Route::post('/delete', 'Pas\PasAppointmentsController@postDeleteCalendarDate');
+    });
+});
+
+Route::group(['prefix'=>'calendar'],function() {
+    Route::get('', 'AppointmentsController@getCalendar');
+    Route::get('/data', 'AppointmentsController@getCalendarData');
+    Route::post('/new', 'AppointmentsController@postNewAppointment');
+    Route::post('/cancel', 'AppointmentsController@postCancelAppointment');
 });
 

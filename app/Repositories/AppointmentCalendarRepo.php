@@ -25,4 +25,12 @@ class AppointmentCalendarRepo extends BaseRepo
             ->where('pas_id',Auth::user()->getId());
     }
 
+    public function getAvailablePasForStartTime($startTime){
+        return $this->getModel()
+            ->where('start','<=',$startTime)
+            ->where('end','>',$startTime);
+    }
+
+
+
 }

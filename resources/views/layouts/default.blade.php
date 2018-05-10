@@ -45,7 +45,7 @@
 
 <div id="main-wrapper" class="wrapper">
     @include('layouts.default-menu')
-    <div id="content" class="p-4">
+    <div id="content" class="p-4 @if(Session::get('sidebar','true') == 'true') aside @endif">
         <!-- Header -->
             {{--@include('layouts.default-header')--}}
         <!-- END HEADER -->
@@ -93,6 +93,7 @@
     });
 
     function toggleSidebar(){
+        $('#content').toggleClass('aside');
         $('#sidebar').toggleClass('show');
         $('.sidebar-btn').toggleClass('show');
         $.post('{{URL::to('sidebar')}}',{show: $('#sidebar').hasClass('show')});
