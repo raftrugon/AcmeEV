@@ -15,7 +15,10 @@
         selectOverlap:false,
         eventColor:'#28a745',
         slotDuration:'01:00:00',
+        allDaySlot:false,
+        weekends:false,
         timeFormat: 'HH:mm',
+        height:'auto',
         select: function(startDate,endDate){
             $.post(
                 '{{URL::to('administration/calendar/new')}}',

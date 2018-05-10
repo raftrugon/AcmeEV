@@ -60,11 +60,11 @@
 
 
 <!-- jQuery -->
-    <script src="{{asset('js/jQuery.js')}}"></script>
+<script src="{{asset('js/jQuery.js')}}"></script>
 <!-- Moment-->
 <script src="{{asset('js/moment.min.js')}}"></script>
 <!-- Bootstrap -->
-    <script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
+<script src="{{asset('js/bootstrap.bundle.min.js')}}"></script>
 <!-- CUSTOM NOTIFICATION -->
 <script src="{{asset('js/iziToast.min.js')}}"></script>
 <!-- Smart Wizard -->
