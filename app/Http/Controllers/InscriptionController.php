@@ -30,7 +30,7 @@ class InscriptionController extends Controller
         $validator = Validator::make($request->all(),[
             'name'=>'required',
             'surname'=>'required',
-            'nif'=>'required|unique:users',
+            'id_number'=>'required|unique:users',
             'address'=>'required',
             'phone_number'=>'required',
             'email'=>'required|email|unique:users',
@@ -50,7 +50,7 @@ class InscriptionController extends Controller
             $inscription = array(
                 'name' => $request->input('name'),
                 'surname' => $request->input('surname'),
-                'nif' => $request->input('nif'),
+                'id_number' => $request->input('id_number'),
                 'address' => $request->input('address'),
                 'phone_number' => $request->input('phone_number'),
                 'email' => $request->input('email'),

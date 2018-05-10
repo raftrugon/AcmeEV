@@ -65,7 +65,6 @@ Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
 Route::group(['prefix'=>'calendar'],function() {
     Route::get('', 'AppointmentsController@getCalendar');
     Route::get('/data', 'AppointmentsController@getCalendarData');
-    Route::post('/new', 'AppointmentsController@postNewAppointment');
-    Route::post('/cancel', 'AppointmentsController@postCancelAppointment');
+    Route::post('/update', 'AppointmentsController@postUpdateAppointment');
 });
 

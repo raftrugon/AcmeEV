@@ -3,7 +3,7 @@
 return [
     'name'=>'Name',
     'surname'=>'Surnames',
-    'nif'=>'ID Card Number',
+    'id_number'=>'ID Card Number',
     'address'=>'Address',
     'phone_number'=>'Phone Number',
     'email'=>'E-mail',

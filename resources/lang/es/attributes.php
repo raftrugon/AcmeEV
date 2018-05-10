@@ -3,7 +3,7 @@
 return [
     'name'=>'Nombre',
     'surname'=>'Apellidos',
-    'nif'=>'D.N.I.',
+    'id_number'=>'D.N.I.',
     'address'=>'Dirección',
     'phone_number'=>'Nº Teléfono',
     'email'=>'Correo electrónico',

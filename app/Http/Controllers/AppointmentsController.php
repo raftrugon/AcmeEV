@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Repositories\AppointmentRepo;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AppointmentsController extends Controller
 {
@@ -24,8 +25,32 @@ class AppointmentsController extends Controller
         return $this->appointmentRepo->getAvailableDatesForRange($startDate,$endDate);
     }
 
-    public function postNewAppointment(){
-
+    public function postUpdateAppointment(Request $request){
+        $appointment = Auth::check() ? $this->appointmentRepo->getModel()->where('start',$request->input('start'))->where('student_id',Auth::id())->first() : null;
+        if($appointment){
+            try {
+                $this->appointmentRepo->delete($appointment->getId());
+                return 'true';
+            } catch (\Exception $e) {
+                return 'false';
+            }
+        }else {
+            $is_available = $this->appointmentRepo->checkAvailability($request->input('start'));
+            $has_day_appointment = $this->appointmentRepo->hasDayAppointment($request->except('_token'));
+            if ($is_available && !$has_day_appointment) {
+                try {
+                    if (Auth::check()) $request->merge(['student_id' => Auth::user()->getId()]);
+                    $this->appointmentRepo->create($request->except('_token'));
+                    return 'true';
+                } catch (\Exception $e) {
+                    return 'false';
+                }
+            } elseif($has_day_appointment) {
+                return __('calendar.appointment.max-per-day');
+            } else {
+                return __('calendar.appointment.no-availability');
+            }
+        }
     }
 
     public function postCancelAppointment(){

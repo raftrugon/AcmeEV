@@ -14,4 +14,5 @@ return[
     'end'=>'End',
     'error'=>'Error',
     'close'=>'Close',
+    'cancel'=>'Cancel',
 ];

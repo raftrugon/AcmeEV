@@ -15,7 +15,7 @@
             <div id="step-1" class="p-2">
                 @include('global.input',['type'=>'text','id'=>'name','name'=>'name','label'=>__('attributes.name'),'vue'=>true])
                 @include('global.input',['type'=>'text','id'=>'surname','name'=>'surname','label'=>__('attributes.surname'),'vue'=>true])
-                @include('global.input',['type'=>'text','id'=>'nif','name'=>'nif','label'=>__('attributes.nif'),'vue'=>true])
+                @include('global.input',['type'=>'text','id'=>'id_number','name'=>'id_number','label'=>__('attributes.id_number'),'vue'=>true])
                 @include('global.input',['type'=>'text','id'=>'address','name'=>'address','label'=>__('attributes.address'),'vue'=>true])
                 @include('global.input',['type'=>'text','id'=>'phone_number','name'=>'phone_number','label'=>__('attributes.phone_number'),'vue'=>true])
                 @include('global.input',['type'=>'text','id'=>'email','name'=>'email','label'=>__('attributes.email'),'vue'=>true])
@@ -35,7 +35,7 @@
                         <div class="card-body">
                             <p class="card-text"><strong>@lang('attributes.name'):</strong> @{{ name }} </p>
                             <p class="card-text"><strong>@lang('attributes.surname'):</strong> @{{ surname }} </p>
-                            <p class="card-text"><strong>@lang('attributes.nif'):</strong> @{{ nif }} </p>
+                            <p class="card-text"><strong>@lang('attributes.id_number'):</strong> @{{ id_number }} </p>
                             <p class="card-text"><strong>@lang('attributes.address'):</strong> @{{ address }} </p>
                             <p class="card-text"><strong>@lang('attributes.phone_number'):</strong> @{{ phone_number }} </p>
                             <p class="card-text"><strong>@lang('attributes.email'):</strong> @{{ email }} </p>
@@ -56,7 +56,7 @@
                 <div class="card border-info bg-light mt-2">
                     <div class="card-header border-info">@lang('inscription.access_data')</div>
                     <div class="card-body d-inline-flex">
-                        @include('global.input',['type'=>'text','id'=>'user','name'=>'nif','label'=>__('attributes.user'),'col'=>4,'readonly'=>true,'vue'=>true])
+                        @include('global.input',['type'=>'text','id'=>'user','name'=>'id_number','label'=>__('attributes.user'),'col'=>4,'readonly'=>true,'vue'=>true])
                         @include('global.input',['type'=>'password','id'=>'password','label'=>__('attributes.password'),'col'=>4])
                         @include('global.input',['type'=>'password','id'=>'password_repeat','label'=>__('attributes.password.repeat'),'col'=>4])
                     </div>
@@ -170,7 +170,7 @@
                     }
                 },
 
-                nif:{
+                id_number:{
                     required: function(){
                         return $('#smartwizard li:first-child').hasClass('active');
                     }
@@ -228,7 +228,7 @@
             messages:{
                 name: "{{__('validation.required',['attribute'=>'attributes.name'])}}",
                 surname: "{{__('validation.required',['attribute'=>__('attributes.surname')])}}",
-                nif: "{{__('validation.required',['attribute'=>__('attributes.nif')])}}",
+                id_number: "{{__('validation.required',['attribute'=>__('attributes.id_number')])}}",
                 address: "{{__('validation.required',['attribute'=>__('attributes.address')])}}",
                 phone_number: "{{__('validation.required',['attribute'=>__('attributes.phone_number')])}}",
                 email:{
@@ -244,7 +244,7 @@
                 }
             }
         });
-        @include('global.input-v-js',['id'=>'smartwizard','inputs'=>['name','surname','nif','address','phone_number','email','grade']])
+        @include('global.input-v-js',['id'=>'smartwizard','inputs'=>['name','surname','id_number','address','phone_number','email','grade']])
     </script>
     {!! NoCaptcha::renderJs(App::getLocale()) !!}
 @endsection

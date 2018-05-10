@@ -19,7 +19,7 @@ class CreateInscriptionsTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('surname');
-            $table->string('nif');
+            $table->string('id_number');
             $table->string('address');
             $table->string('phone_number');
             $table->double('grade');

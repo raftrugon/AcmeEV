@@ -20,12 +20,12 @@ class Appointment extends Model
         $this->start = $value;
     }
 
-    public function getNif(){
-        return $this->nif;
+    public function getIdNumber(){
+        return $this->id_number;
     }
 
-    public function setNif($value){
-        $this->nif = $value;
+    public function setIdNumber($value){
+        $this->id_number = $value;
     }
 
     public function getStudent(){
