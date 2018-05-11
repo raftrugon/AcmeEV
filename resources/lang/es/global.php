@@ -12,4 +12,7 @@ return[
     'no'=>'No',
     'start'=>'Inicio',
     'end'=>'Fin',
+    'error'=>'Error',
+    'close'=>'Cerrar',
+    'cancel'=>'Cancelar',
 ];

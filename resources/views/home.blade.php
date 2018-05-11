@@ -2,8 +2,10 @@
 
 @section('content')
 <div class="container pt-3">
-    <div class="alert alert-success" role="alert">
-        <strong> ¡Plazos de nuevo ingreso abiertos! </strong> &emsp; Pulse <a href="{{URL::to('inscription/new')}}" class="alert-link">aquí</a> para rellenar su solicitud.
+    @unless(Auth::check())
+    <div class="alert alert-success text-center" role="alert">
+        <strong> @lang('inscription.homealert.title') </strong> &emsp;@lang('inscription.homealert.link')
     </div>
+    @endunless
 </div>
 @endsection

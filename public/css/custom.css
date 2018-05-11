@@ -1,18 +1,33 @@
 #main-wrapper{
     min-height:100vh;
 }
+
 #content{
     min-height: 100vh;
     right: 0;
-    left: 125px;
+    left: 50px;
     position: absolute;
+    top:0;
+    transition: left 0.4s;
 }
 
+#content.aside{
+    left:125px;
+}
+
+
+/*-------Collapsed sidebar-----------*/
 #sidebar{
-    width:125px;
+    width:50px;
     text-align:center;
     height: 100vh;
     position: fixed;
+    transition: width 0.4s;
+}
+
+#sidebar li{
+    margin-top:10px;
+    margin-bottom:10px;
 }
 
 #sidebar a{
@@ -20,6 +35,91 @@
     padding-right:0;
 }
 
+#sidebar a span{
+    display:none;
+}
+#sidebar span.short{
+    display:block;
+}
+#sidebar span.full{
+    display:none;
+}
+
+
+
+/*-------Extended sidebar-----------*/
+#sidebar.show h3{
+    display:block!important;
+}
+
+#sidebar.show li{
+    margin-top:0;
+    margin-bottom:0;
+}
+
+#sidebar.show a span{
+    display:block;
+}
+
+#sidebar.show a i{
+    font-size: 2em;
+}
+
+#sidebar.show{
+    width:125px;
+}
+
+#sidebar.show span.short{
+    display:none;
+}
+
+#sidebar.show span.full{
+    display:inline;
+}
+
+/*--Sidebar Button--*/
+.sidebar-btn{
+    position:relative;
+    width:15px;
+    height:40px;
+    background-color:#343a40!important;
+    color:white;
+    top: 50vh;
+    left: 50px;
+    transform: translate(0,-50%);
+    border-radius: 0 10px 10px 0;
+    cursor:pointer;
+    z-index:1000;
+    transition: left 0.4s;
+}
+
+.sidebar-btn.show{
+    left:125px;
+}
+
+.sidebar-btn i.left{
+    display:none;
+}
+.sidebar-btn.show i.left{
+    display:block;
+}
+.sidebar-btn.show i.right{
+    display:none;
+}
+
+.sidebar-btn i{
+    position: absolute;
+    top: 50%;
+    transform: translate(0,-50%);
+}
+
+/*--Form Errors tweak*/
 div.is-invalid span.help-block{
     display:block!important;
+}
+
+/*--Student Calendar Events--*/
+.student-calendar > .fc-time-grid .fc-bgevent, .fc-time-grid .fc-event{
+    border-color: white!important;
+    border-radius: 0!important;
 }

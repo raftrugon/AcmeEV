@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Session;
 
 Auth::routes();
@@ -19,6 +21,9 @@ Auth::routes();
 Route::get('/logout',function(){
    Auth::logout();
    return redirect()->route('home');
+});
+Route::post('/sidebar',function(Request $request){
+    Session::put('sidebar',$request->input('show'));
 });
 
 Route::get('/', 'HomeController@index')->name('home');
@@ -37,7 +42,7 @@ Route::group(['prefix'=>'degree'],function(){
     Route::get('/all','DegreeController@getAll');
 });
 
-Route::group(['prefix'=>'management/degree'],function(){
+Route::group(['prefix'=>'management/degree'/*,'middleware'=>['permission:manage']*/],function(){
     Route::get('new','DegreeController@getNewDegree');
     Route::post('save','DegreeController@postSaveDegree');
     Route::get('{degree}/edit','DegreeController@getEditDegree');
@@ -50,10 +55,25 @@ Route::group(['prefix'=>'department'],function(){
     Route::post('save','DepartmentController@postSaveDepartment');
 });
 
-Route::group(['prefix'=>'administration'],function(){
-    Route::get('/calendar','Pas\PasAppointmentsController@getCalendar');
-    Route::get('/calendar/data','Pas\PasAppointmentsController@getCalendarData');
-    Route::post('/calendar/new','Pas\PasAppointmentsController@postNewCalendarDate');
-    Route::post('/calendar/delete','Pas\PasAppointmentsController@postDeleteCalendarDate');
+Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
+    Route::group(['prefix'=>'calendar','middleware'=>['permission:have_appointments']],function() {
+        Route::get('/', 'Pas\PasAppointmentsController@getCalendar');
+        Route::get('/data', 'Pas\PasAppointmentsController@getCalendarData');
+        Route::post('/new', 'Pas\PasAppointmentsController@postNewCalendarDate');
+        Route::post('/delete', 'Pas\PasAppointmentsController@postDeleteCalendarDate');
+    });
+});
+
+Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){
+    Route::group(['prefix'=>'systemconfig'],function() {
+        Route::get('edit', 'Admin\SystemConfigController@getEditSystemConfig');
+        Route::post('save', 'Admin\SystemConfigController@postSaveSystemConfig');
+    });
+});
+
+Route::group(['prefix'=>'calendar'],function() {
+    Route::get('', 'AppointmentsController@getCalendar');
+    Route::get('/data', 'AppointmentsController@getCalendarData');
+    Route::post('/update', 'AppointmentsController@postUpdateAppointment');
 });
 

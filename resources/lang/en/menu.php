@@ -5,4 +5,5 @@ return [
     'degrees'=>'Degrees',
     'departments'=>'Departments',
     'calendar'=>'Calendar',
+    'systemconfig'=>'System Conf.',
 ];
