@@ -35,9 +35,9 @@ class AppointmentRepo extends BaseRepo
             $endTime = Carbon::createFromFormat('Y-m-d H:i:s',$availablePeriod->getEnd());
             while($startTime < $endTime){
                 $isAvailable = $this->checkAvailability($startTime);
-                $min = $startTime->minute;
+                $min = $startTime->minute >= 30 ? $startTime->minute - 30 : $startTime->minute;
                 $start = $startTime->copy()->subMinutes($min);
-                $end = $startTime->copy()->addMinutes(60-$min);
+                $end = $startTime->copy()->addMinutes(30-$min);
                 $availableAppointments[] = ['start'=>$start->format('Y-m-d H:i:s'),'end'=>$end->format('Y-m-d H:i:s'),
                     'is_available'=>$isAvailable,'real_start'=>$startTime->format('Y-m-d H:i:s'),
                     'tooltip'=>$startTime->format('H:i'),
@@ -45,7 +45,7 @@ class AppointmentRepo extends BaseRepo
                 $startTime->addMinutes(5);
             }
         }
-
+//        dd(array_unique($availableAppointments,SORT_REGULAR));
         return array_unique($availableAppointments,SORT_REGULAR);
     }
 

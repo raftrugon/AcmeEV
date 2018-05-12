@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Pas;
 
 use App\Repositories\AppointmentCalendarRepo;
 use App\Repositories\AppointmentRepo;
+use App\SystemConfig;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,7 +20,8 @@ class PasAppointmentsController extends Controller
     }
 
     public function getCalendar(){
-        return view('site.pas.calendar');
+        $config = SystemConfig::first();
+        return view('site.pas.calendar',compact('config'));
     }
 
     public function getCalendarData(Request $request){

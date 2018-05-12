@@ -17,10 +17,12 @@
             timeFormat: 'HH:mm',
             displayEventTime: false,
             slotEventOverlap:false,
-            slotDuration:'01:00:00',
+            slotDuration:'00:30:00',
             weekends:false,
             allDaySlot:false,
             height:'auto',
+            minTime: '{{$config->getSecretariatOpenTime()}}',
+            maxTime: '{{$config->getSecretariatCloseTime()}}',
             events: '{{URL::to('calendar/data')}}',
             eventOrder: 'tooltip',
             eventRender: function(event, element) {

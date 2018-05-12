@@ -14,11 +14,13 @@
         selectable:true,
         selectOverlap:false,
         eventColor:'#28a745',
-        slotDuration:'01:00:00',
+        slotDuration:'00:30:00',
         allDaySlot:false,
         weekends:false,
         timeFormat: 'HH:mm',
         height:'auto',
+        minTime: '{{$config->getSecretariatOpenTime()}}',
+        maxTime: '{{$config->getSecretariatCloseTime()}}',
         select: function(startDate,endDate){
             $.post(
                 '{{URL::to('administration/calendar/new')}}',
@@ -66,7 +68,7 @@
                 ]
             });
         },
-        events: '{{URL::to('administration/calendar/data')}}'
+        events: '{{(URL::to('administration/calendar/data')}}'
     });
 </script>
 

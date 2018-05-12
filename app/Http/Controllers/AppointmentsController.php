@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\AppointmentRepo;
+use App\SystemConfig;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,7 +17,8 @@ class AppointmentsController extends Controller
     }
 
     public function getCalendar(){
-        return view('site.calendar');
+        $config = SystemConfig::first();
+        return view('site.calendar',compact('config'));
     }
 
     public function getCalendarData(Request $request){
