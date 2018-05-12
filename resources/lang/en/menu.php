@@ -6,4 +6,5 @@ return [
     'departments'=>'Departments',
     'calendar'=>'Calendar',
     'systemconfig'=>'System Conf.',
+    'appointments-info'=>'Appointments',
 ];

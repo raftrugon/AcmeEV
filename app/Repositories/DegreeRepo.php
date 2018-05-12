@@ -18,7 +18,7 @@ class DegreeRepo extends BaseRepo
     }
 
     public function getAllButSelected($ids){
-        return Degree::whereNotIn('id',$ids);
+        return Degree::whereNotIn('id',$ids)->orderBy('name','asc');
     }
 
 }

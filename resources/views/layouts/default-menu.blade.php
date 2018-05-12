@@ -19,6 +19,9 @@
             <li>
                 <a class="text-light nav-link" href="{{URL::to('administration/calendar')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.calendar')}}</span></a>
             </li>
+            <li>
+                <a class="text-light nav-link" href="{{URL::to('administration/appointment-info')}}"><i class="fas fa- fa-info d-block text-primary"></i><span>{{__('menu.appointments-info')}}</span></a>
+            </li>
         @endcan
         @if(!Auth::check() or Auth::user()->can('current'))
             <li>

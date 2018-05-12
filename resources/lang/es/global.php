@@ -15,4 +15,7 @@ return[
     'error'=>'Error',
     'close'=>'Cerrar',
     'cancel'=>'Cancelar',
+    'anonymous'=>'Anónimo',
+    'new_ingress'=>'Nuevo Ingreso',
+    'student'=>'Estudiante',
 ];

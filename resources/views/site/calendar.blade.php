@@ -40,7 +40,7 @@
                 $('[data-toggle="tooltip"]').tooltip();
             },
             eventClick: function(event){
-                if(!event.is_available @auth && !event.mine @endauth ){
+                if(!event.is_available && !event.mine){
                     return false;
                 }
                 let title,goText,cancelText = '';
@@ -71,6 +71,9 @@
                     @endguest
                     buttons: [
                         ['<button style="color:white"><b>'+goText+'</b></button>', function (instance, toast) {
+                            @guest
+                            if($('#id_number').val() === '') return false;
+                            @endguest
                             instance.hide({ transitionOut: 'fadeOut' }, toast, 'button');
                             $.post(
                                 '{{URL::to('calendar/update')}}',

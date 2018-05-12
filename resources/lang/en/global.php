@@ -15,4 +15,7 @@ return[
     'error'=>'Error',
     'close'=>'Close',
     'cancel'=>'Cancel',
+    'anonymous'=>'Anonymous',
+    'new_ingress'=>'New Ingress',
+    'student'=>'Student',
 ];
