@@ -21,4 +21,8 @@ class DegreeRepo extends BaseRepo
         return Degree::whereNotIn('id',$ids)->orderBy('name','asc');
     }
 
+    public function addNextYearSubjects() {
+
+    }
+
 }

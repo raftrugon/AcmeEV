@@ -8,4 +8,5 @@ return[
     'activeEdit'=>'Activar Edición',
     'edit'=>'Editar',
     'delete'=>'Borrar',
+    'school_year'=>'Curso',
 ];
