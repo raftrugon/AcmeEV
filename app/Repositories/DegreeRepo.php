@@ -3,13 +3,15 @@
 namespace App\Repositories;
 
 use App\Degree;
+use Illuminate\Support\Facades\DB;
 
 class DegreeRepo extends BaseRepo
 {
+    protected $inscriptionRepo;
 
-    public function __construct()
+    public function __construct(InscriptionRepo $inscriptionRepo)
     {
-
+        $this->inscriptionRepo = $inscriptionRepo;
     }
 
     public function getModel()
@@ -23,6 +25,14 @@ class DegreeRepo extends BaseRepo
 
     public function addNextYearSubjects() {
 
+    }
+
+    public function getDegreesWithAcceptedRequests($degree_ids){
+        $result = array();
+        foreach($this->getModel()->whereIn('id',$degree_ids)->orderBy('name','desc')->get() as $degree) {
+            $result[$degree->getName()] = $this->inscriptionRepo->getAcceptedListForDegree($degree)->get();
+        }
+        return $result;
     }
 
 }

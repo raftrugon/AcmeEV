@@ -28,9 +28,16 @@
                 <a class="text-light nav-link" href="{{URL::to('calendar')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.calendar')}}</span></a>
             </li>
         @endif
+        @role('admin')
         <li>
             <a class="text-light nav-link" href="{{URL::to('admin/systemconfig/edit')}}"><i class="fas fa- fa-cogs d-block text-primary"></i><span>{{__('menu.systemconfig')}}</span></a>
         </li>
+        @endrole
+        @role('pas')
+        <li>
+            <a class="text-light nav-link" href="{{URL::to('administration')}}"><i class="fas fa- fa-cogs d-block text-primary"></i><span>{{__('menu.administration')}}</span></a>
+        </li>
+        @endrole
     </ul>
 
     <ul class="list-unstyled mt-auto">

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Repositories\InscriptionRepo;
 use App\Repositories\SystemConfigRepo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -12,9 +13,11 @@ class SystemConfigController extends Controller
 {
 
     protected $systemConfigRepo;
+    protected $inscriptionRepo;
 
-    public function __construct(SystemConfigRepo $systemConfigRepo){
+    public function __construct(SystemConfigRepo $systemConfigRepo, InscriptionRepo $inscriptionRepo){
         $this->systemConfigRepo = $systemConfigRepo;
+        $this->inscriptionRepo = $inscriptionRepo;
     }
 
 
@@ -72,5 +75,10 @@ class SystemConfigController extends Controller
         }
 
         return redirect()->action('Admin\SystemConfigController@getEditSystemConfig');
+    }
+
+    public function postFirstInscriptionBatch(){
+        $this->inscriptionRepo->firstInscriptionBatch();
+        return 'true';
     }
 }

@@ -56,6 +56,7 @@ Route::group(['prefix'=>'department'],function(){
 });
 
 Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
+    Route::get('/','Pas\PasController@getDashboard');
     Route::group(['prefix'=>'calendar','middleware'=>['permission:have_appointments']],function() {
         Route::get('/', 'Pas\PasAppointmentsController@getCalendar');
         Route::get('/data', 'Pas\PasAppointmentsController@getCalendarData');
@@ -63,12 +64,14 @@ Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
         Route::post('/delete', 'Pas\PasAppointmentsController@postDeleteCalendarDate');
     });
     Route::get('/appointment-info','Pas\PasAppointmentsController@getAppointmentsInfo');
+    Route::get('/inscription-list','Pas\PasController@getPrintAllLists');
 });
 
 Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){
     Route::group(['prefix'=>'systemconfig'],function() {
         Route::get('edit', 'Admin\SystemConfigController@getEditSystemConfig');
         Route::post('save', 'Admin\SystemConfigController@postSaveSystemConfig');
+        Route::post('first_inscription_process','Admin\SystemConfigController@postFirstInscriptionBatch')->name('first_inscriptions');
     });
 });
 

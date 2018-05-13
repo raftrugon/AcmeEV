@@ -68,7 +68,7 @@
                 ]
             });
         },
-        events: '{{(URL::to('administration/calendar/data')}}'
+        events: '{{URL::to('administration/calendar/data')}}'
     });
 </script>
 

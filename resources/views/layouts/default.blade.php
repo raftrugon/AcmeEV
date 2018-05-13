@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html class="smart-style-1" lang="es-ES">
 <head>
     <meta charset="utf-8">
     <title> AcmEv </title>
