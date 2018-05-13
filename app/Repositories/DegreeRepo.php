@@ -19,7 +19,7 @@ class DegreeRepo extends BaseRepo
     }
 
     public function getAllButSelected($ids){
-        return Degree::whereNotIn('id',$ids);
+        return Degree::whereNotIn('id',$ids)->orderBy('name','asc');
     }
 
     public function canCreateSubjectInstances(Degree $degree) {

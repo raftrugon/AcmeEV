@@ -63,6 +63,7 @@ Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
         Route::post('/new', 'Pas\PasAppointmentsController@postNewCalendarDate');
         Route::post('/delete', 'Pas\PasAppointmentsController@postDeleteCalendarDate');
     });
+    Route::get('/appointment-info','Pas\PasAppointmentsController@getAppointmentsInfo');
 });
 
 Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){

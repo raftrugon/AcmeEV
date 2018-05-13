@@ -13,4 +13,6 @@ return [
     'appointment.question.new'=>'Coger cita',
     'appointment.question.delete'=>'¿Quiere cancelar su cita?',
     'go'=>'Reservar',
+    'no-info'=>'Sin información',
+    'none-for-now'=>'No hay citas para esta ventana de tiempo',
 ];

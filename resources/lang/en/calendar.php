@@ -12,6 +12,8 @@ return [
     'appointment.error'=>'There was an error processing your apointment',
     'appointment.question.new'=>'Book an appointment',
     'appointment.question.delete'=>'Do you really want to cancel your appointment?',
-    'go'=>'Book'
+    'go'=>'Book',
+    'no-info'=>'No information available',
+    'none-for-now'=>'No appointments for this time window',
 
 ];

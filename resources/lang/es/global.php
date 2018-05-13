@@ -16,4 +16,7 @@ return[
     'success'=>'Éxito',
     'close'=>'Cerrar',
     'cancel'=>'Cancelar',
+    'anonymous'=>'Anónimo',
+    'new_ingress'=>'Nuevo Ingreso',
+    'student'=>'Estudiante',
 ];

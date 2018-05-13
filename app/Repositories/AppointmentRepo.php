@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Appointment;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class AppointmentRepo extends BaseRepo
 {
@@ -63,6 +64,32 @@ class AppointmentRepo extends BaseRepo
            $query->where('id_number', $array['id_number']);
         }
         return $query->count() > 0;
+    }
+
+    public function getAppointmentsForNow($now){
+        $start = $now->copy()->subHour();
+        $end = $now->copy()->addHour();
+        $appointments = array();
+        while($start < $end){
+            $appointments[$start->format('H:i')] = $this->getModel()
+                                                            ->leftJoin('inscriptions','appointments.id_number','=','inscriptions.id_number')
+                                                            ->leftJoin('requests','inscriptions.id','=','requests.inscription_id')
+                                                            ->leftJoin('degrees','requests.degree_id','=','degrees.id')
+                                                            ->where('start',$start->format('Y-m-d H:i:').'00')
+                                                            ->select(
+                                                                'appointments.*',
+                                                                DB::raw("CONCAT(inscriptions.name,' ',inscriptions.surname) as full_name"),
+                                                                'inscriptions.email',
+                                                                'inscriptions.address',
+                                                                'inscriptions.phone_number',
+                                                                'inscriptions.grade',
+                                                                'inscriptions.agreed',
+                                                                DB::raw("GROUP_CONCAT(CONCAT(degrees.id,'<>',degrees.name,'<>',requests.priority) order by requests.priority asc) as degrees ")
+                                                            )->groupBy(DB::raw('appointments.id_number, case when appointments.id_number is null then appointments.id else 0 end'))->get();
+
+            $start->addMinutes(5);
+        }
+        return $appointments;
     }
 
 }

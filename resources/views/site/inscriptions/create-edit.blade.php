@@ -80,7 +80,7 @@
         function submitForm(){
             $('#inscription_form').submit();
         }
-        $(document).ready(function(){
+        $(function(){
             $('#smartwizard').smartWizard({
                 theme:'arrows',
                 useURLhash:false,
