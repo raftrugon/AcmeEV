@@ -7,7 +7,7 @@
                 @lang('degrees.school_year') {{$i}}
             </strong>
         </h1>
-        <ul class="list-group">
+        <ul class="list-group curso">
             @foreach($degree->getSubjects()->where('school_year',$i)->get() as $subject)
                 <li class="list-group-item subject" data-selected=0 data-subject-id="{{$subject->getId()}}">
                     <a>{{$subject->getName()}}</a>
@@ -15,7 +15,7 @@
             @endforeach
         </ul>
     @endfor
-    <button class="btn btn-success"></button>
+    <button class="btn btn-success btn-block mt-3" id="submitButton" >@lang('global.submit')</button>
 @endsection
 
 @section('scripts')
@@ -29,6 +29,27 @@
                 $(this).data('selected',0);
                 $(this).removeClass("active");
             }
+        });
+
+        $('#submitButton').click(function(e){
+            e.preventDefault();
+            let subjects = [];
+            $('.curso').each(function(index){
+                let aux = [];
+                $(this).find('.subject.active').each(function(index2){
+                    aux[index2]=$(this).data('subject-id');
+                });
+                subjects[index]=aux;
+            });
+            $.post('{{route('post_subject_instances')}}',{subjects:subjects},function(data){
+                if(data==='true'){
+                    success('@lang('global.success')','@lang('subjectInstance.successMessage')');
+                    window.location.replace('{{URL::to('degree/all')}}');
+                } else {
+                    error('@lang('global.error')','@lang('subjectInstance.commitError')');
+                }
+            });
+
         });
     </script>
 @endsection

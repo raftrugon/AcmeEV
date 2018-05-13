@@ -9,4 +9,5 @@ return[
     'edit'=>'Editar',
     'delete'=>'Borrar',
     'school_year'=>'Curso',
+    'nextYear'=>'Crear próximo año'
 ];

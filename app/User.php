@@ -52,4 +52,12 @@ class User extends Authenticatable
     public function getFullName(){
         return $this->getName() . ' ' . $this->getSurname();
     }
+
+    public function getDepartment() {
+        return $this->belongsTo('App\Department','department_id','id');
+    }
+
+    public function setDepartment($value) {
+        $this->department_id=$value;
+    }
 }

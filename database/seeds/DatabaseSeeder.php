@@ -17,5 +17,8 @@ class DatabaseSeeder extends Seeder
         $this->call(SystemConfigSeeder::class);
         $this->call(SubjectSeeder::class);
         $this->call(InscriptionSeeder::class);
+        $this->call(SubjectInstanceSeeder::class);
+        $this->call(GroupSeeder::class);
+
     }
 }

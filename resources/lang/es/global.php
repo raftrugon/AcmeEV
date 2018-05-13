@@ -13,6 +13,7 @@ return[
     'start'=>'Inicio',
     'end'=>'Fin',
     'error'=>'Error',
+    'success'=>'Éxito',
     'close'=>'Cerrar',
     'cancel'=>'Cancelar',
     'anonymous'=>'Anónimo',
