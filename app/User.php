@@ -32,4 +32,32 @@ class User extends Authenticatable
     public function getId(){
         return $this->id;
     }
+
+    public function getName(){
+        return $this->name;
+    }
+
+    public function setName($value){
+        $this->name = $value;
+    }
+
+    public function getSurName(){
+        return $this->surname;
+    }
+
+    public function setSurName($value){
+        $this->surname = $value;
+    }
+
+    public function getFullName(){
+        return $this->getName() . ' ' . $this->getSurname();
+    }
+
+    public function getDepartment() {
+        return $this->belongsTo('App\Department','department_id','id');
+    }
+
+    public function setDepartment($value) {
+        $this->department_id=$value;
+    }
 }

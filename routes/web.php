@@ -47,6 +47,7 @@ Route::group(['prefix'=>'management/degree'/*,'middleware'=>['permission:manage'
     Route::post('save','DegreeController@postSaveDegree');
     Route::get('{degree}/edit','DegreeController@getEditDegree');
     route::get('{degree}/add-next-year-subjects','Pdi\ManagementController@getDegreeEditAddNextYearSubjects');
+    route::post('/create-subject-instances','Pdi\ManagementController@createNextYearDegree')->name('post_subject_instances');
 });
 
 Route::group(['prefix'=>'department'],function(){
@@ -77,3 +78,13 @@ Route::group(['prefix'=>'calendar'],function() {
     Route::post('/update', 'AppointmentsController@postUpdateAppointment');
 });
 
+Route::group(['prefix'=>'subject'],function(){
+    Route::get('/coordinator/all','Pdi\SubjectController@getSubjectsForCoordinator');
+    Route::get('{subject}/instances','Pdi\SubjectController@getSubjectInstances');
+    Route::get('{subjectInstance}/groups','Pdi\GroupController@getGroupsForSubjectInstace');
+});
+
+Route::group(['prefix'=>'group'],function(){
+    Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');
+    Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');
+});

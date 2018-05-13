@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Degree extends Model
@@ -38,5 +39,13 @@ class Degree extends Model
 
     public function getSubjects(){
         return $this->hasMany('App\Subject','degree_id','id');
+    }
+
+    public function canCreateSubjectInstances() {
+        return Degree
+                ::join('subjects','degrees.id','=','subjects.degree_id')
+                ->join('subject_instances','subjects.id','=','subject_instances.subject_id')
+                ->where('degrees.id',$this->getId())
+                ->where('academic_year',Carbon::now()->year+1)->count() == 0;
     }
 }

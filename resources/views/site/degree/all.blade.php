@@ -28,7 +28,9 @@
                                 <div class="collapse multi-collapse">
                                     <button onclick="location.href='{{URL::to('management/degree/' . $degree->getId() . '/edit')}}'" class="btn btn-success">@lang('degrees.edit')</button>
                                     <button onclick="location.href='{{URL::to('management/degree/delete')}}'" class="btn btn-danger">@lang('degrees.delete')</button>
-                                    <button onclick="location.href='{{URL::to('management/degree/'. $degree->getId() .'/add-next-year-subjects')}}'" class="btn btn-success">@lang('degrees.nextYear')</button>
+                                    @if ($degree->canCreateSubjectInstances())
+                                        <button onclick="location.href='{{URL::to('management/degree/'. $degree->getId() .'/add-next-year-subjects')}}'" class="btn btn-success">@lang('degrees.nextYear')</button>
+                                    @endif
                                 </div>
                             </div>
                         </div>

@@ -25,6 +25,10 @@ class CreateUsersTable extends Migration
             $table->string('phone_number');
             $table->string('personal_email')->unique();
 
+            $table->integer('department_id')->nullable()->unsigned();
+            $table->index('department_id');
+            $table->foreign('department_id')->references('id')->on('departments');
+
             $table->rememberToken();
             $table->timestamps();
         });

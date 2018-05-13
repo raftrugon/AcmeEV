@@ -16,12 +16,24 @@ class Department extends Model
         return $this->name;
     }
 
+    public function setName($value) {
+        $this->name=$value;
+    }
+
     public function getCode() {
         return $this->code;
     }
 
+    public function setCode($value) {
+        $this->code=$value;
+    }
+
     public function getWebsite() {
         return $this->website;
+    }
+
+    public function setWebsite($value) {
+        $this->website=$value;
     }
 
 

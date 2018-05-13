@@ -15,6 +15,12 @@ class CreateSubjectInstancesTable extends Migration
     {
         Schema::create('subject_instances', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('academic_year');
+            $table->integer('subject_id')->unsigned();
+
+            $table->index('subject_id');
+
+            $table->foreign('subject_id')->references('id')->on('subjects');
             $table->timestamps();
         });
     }
