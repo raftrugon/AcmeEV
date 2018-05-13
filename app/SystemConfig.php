@@ -132,5 +132,13 @@ class SystemConfig extends Model
         $this->academic_year_end_date = $value;
     }
 
+    public function getInscriptionsListStatus(){
+        return $this->inscriptions_list_status;
+    }
+
+    public function setInscriptionsListStatus($value){
+        $this->inscriptions_list_status = $value;
+    }
+
 
 }

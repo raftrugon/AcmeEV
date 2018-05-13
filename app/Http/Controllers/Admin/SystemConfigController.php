@@ -77,8 +77,14 @@ class SystemConfigController extends Controller
         return redirect()->action('Admin\SystemConfigController@getEditSystemConfig');
     }
 
-    public function postFirstInscriptionBatch(){
-        $this->inscriptionRepo->firstInscriptionBatch();
-        return 'true';
+    public function postInscriptionBatch(){
+        try {
+            $this->inscriptionRepo->inscriptionBatch();
+            return 'true';
+        }catch(\Exception $e){
+            return 'false';
+        }catch(\Throwable $t){
+            return 'false';
+        }
     }
 }

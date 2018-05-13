@@ -27,6 +27,10 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/bootstrap-select.min.css')}}">
     <!-- FullCalendar css -->
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/fullcalendar.min.css')}}">
+    <!-- Datatables -->
+    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/datatables/jquery.dataTables.min.css')}}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/datatables/dataTables.bootstrap4.min.css')}}">
+
 
 
 
@@ -79,6 +83,10 @@
 <!-- Calendar-->
 <script src="{{asset('js/fullcalendar/fullcalendar.min.js')}}"></script>
 <script src="{{asset('js/fullcalendar/es.js')}}"></script>
+<!-- Datatables -->
+<script src="{{asset('js/datatables/jquery.dataTables.min.js')}}"></script>
+<script src="{{asset('js/datatables/dataTables.bootstrap4.min.js')}}"></script>
+
 
 <!-- CUSTOM Scripts -->
 <script src="{{asset('js/custom.js')}}"></script>

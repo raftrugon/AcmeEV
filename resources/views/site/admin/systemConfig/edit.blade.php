@@ -106,7 +106,7 @@ messages:{
 <script>
     $(function(){
        $('#first_inscriptions').click(function(){
-           $.post('{{route('first_inscriptions')}}',function(data){
+           $.post('{{route('process_inscriptions')}}',function(data){
                if(data === 'true'){
                    success('asdf','asdf');
                }else{

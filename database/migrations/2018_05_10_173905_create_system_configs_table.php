@@ -35,6 +35,8 @@ class CreateSystemConfigsTable extends Migration
             $table->date('final_minutes_date');
             $table->date('academic_year_end_date');
 
+            $table->integer('inscriptions_list_status')->default(0);
+
             $table->timestamps();
         });
     }

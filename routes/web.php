@@ -35,6 +35,8 @@ Route::get('/lang/{locale}',function($locale){
 Route::group(['prefix'=>'inscription'],function(){
     Route::get('new','InscriptionController@getNewInscription');
     Route::post('save','InscriptionController@postSaveInscription');
+    Route::get('/results','InscriptionController@getResultsInscription');
+    Route::post('/results/data','InscriptionController@getResultsInscriptionData');
 });
 
 Route::group(['prefix'=>'degree'],function(){
@@ -71,7 +73,7 @@ Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){
     Route::group(['prefix'=>'systemconfig'],function() {
         Route::get('edit', 'Admin\SystemConfigController@getEditSystemConfig');
         Route::post('save', 'Admin\SystemConfigController@postSaveSystemConfig');
-        Route::post('first_inscription_process','Admin\SystemConfigController@postFirstInscriptionBatch')->name('first_inscriptions');
+        Route::post('first_inscription_process','Admin\SystemConfigController@postInscriptionBatch')->name('process_inscriptions');
     });
 });
 

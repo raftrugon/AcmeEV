@@ -9,6 +9,7 @@ use App\Repositories\RequestRepo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Yajra\DataTables\Facades\DataTables;
 
 class InscriptionController extends Controller
 {
@@ -83,6 +84,37 @@ class InscriptionController extends Controller
             DB::rollBack();
         }
         return view('site.inscriptions.success');
+    }
+
+    public function getResultsInscription(){
+        return view('site.inscriptions.list');
+    }
+
+    public function getResultsInscriptionData(Request $request){
+        $results = $this->inscriptionRepo->getResultsForUser($request->input('id_number'),$request->input('password'));
+        $priorityOfAccepted = $results->get()->pluck('accepted')->search(true);
+        return DataTables::of($results)
+            ->editColumn('accepted',function($request){
+                if($request->accepted && !$request->agreed) {
+                    return '<button type="button" class="btn btn-light btn-sm">' . __('inscription.agree') . '</button>';
+                }elseif($request->accepted && $request->agreed){
+                    return '<i class="far fa-check-circle" style="font-size:1.5em"></i>';
+                }else{
+                    return '';
+                }
+            })
+            ->rawColumns(['accepted'])
+            ->setRowClass(function ($request) use ($priorityOfAccepted) {
+                if($priorityOfAccepted !== false){
+                    $priorityOfAccepted++;
+                    if($request->priority < $priorityOfAccepted) return 'bg-danger';
+                    elseif ($request->priority == $priorityOfAccepted) return 'bg-success';
+                    else return 'bg-secondary';
+                }else{
+                    return 'bg-danger';
+                }
+            })
+            ->make(true);
     }
 
 
