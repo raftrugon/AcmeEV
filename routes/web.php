@@ -78,6 +78,19 @@ Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){
     });
 });
 
+Route::group(['prefix'=>'logged'/*,'middleware'=>['role:???????']*/],function(){
+    Route::group(['prefix'=>'announcement'],function() {
+        Route::get('list', 'Logged\AnnouncementController@getAll');//@getAllBySubjectInstance
+    });
+});
+
+Route::group(['prefix'=>'pdi'/*,'middleware'=>['role:pdi']*/],function(){
+    Route::group(['prefix'=>'announcement'],function() {
+        Route::get('create', 'Pdi\AnnouncementController@getCreateAnnouncement');
+        Route::post('save', 'Pdi\AnnouncementController@postSaveAnnouncement');
+    });
+});
+
 Route::group(['prefix'=>'calendar'],function() {
     Route::get('', 'AppointmentsController@getCalendar');
     Route::get('/data', 'AppointmentsController@getCalendarData');

@@ -557,7 +557,6 @@
             </div>
             <span class="help-block invalid-feedback">{{ $errors->first($name) }}</span>
         </div>
-
     @endif
 @endif
 {{--Input type  date label up--}}
