@@ -555,7 +555,7 @@
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
             </div>
-            <span class="help-block">{{ $errors->first($name) }}</span>
+            <span class="help-block invalid-feedback">{{ $errors->first($name) }}</span>
         </div>
 
     @endif
