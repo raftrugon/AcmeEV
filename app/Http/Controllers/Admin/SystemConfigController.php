@@ -28,19 +28,19 @@ class SystemConfigController extends Controller
 
     public function postSaveSystemConfig(Request $request){
         $validator = Validator::make($request->all(),[
-            'max_summons_number'=>'required',
-            'max_annual_summons_number'=>'required',
-            'secretariat_open_time'=>'required',
-            'secretariat_close_time'=>'required',
-            'inscriptions_start_date'=>'required',
-            'first_provisional_inscr_list_date'=>'required',
-            'second_provisional_inscr_list_date'=>'required',
-            'final_inscr_list_date'=>'required',
-            'enrolment_start_date'=>'required',
-            'enrolment_end_date'=>'required',
-            'provisional_minutes_date'=>'required',
-            'final_minutes_date'=>'required',
-            'academic_year_end_date'=>'required'
+            'max_summons_number'=>'required|integer|min:1',
+            'max_annual_summons_number'=>'required|integer|min:1',
+            'secretariat_open_time'=>'required|date_format:H:i:s',
+            'secretariat_close_time'=>'required|date_format:H:i:s|after:secretariat_open_time',
+            'inscriptions_start_date'=>'required|date|after:today',
+            'first_provisional_inscr_list_date'=>'required|date|after:today|after:inscriptions_start_date',
+            'second_provisional_inscr_list_date'=>'required|date|after:today|after:first_provisional_inscr_list_date',
+            'final_inscr_list_date'=>'required|date|after:today|after:second_provisional_inscr_list_date',
+            'enrolment_start_date'=>'required|date|after:today',
+            'enrolment_end_date'=>'required|date|after:today|after:enrolment_start_date',
+            'provisional_minutes_date'=>'required|date|after:today',
+            'final_minutes_date'=>'required|date|after:today|after:provisional_minutes_date',
+            'academic_year_end_date'=>'required|date|after:today'
         ]);
 
         if($validator->fails()){
