@@ -107,3 +107,9 @@ Route::group(['prefix'=>'group'],function(){
     Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');
     Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');
 });
+
+Route::group(['prefix'=>'student'],function(){
+    Route::group(['prefix'=>'enrollment'],function() {
+        Route::get('my-enrollments', 'Student\EnrollmentController@getMyEnrollments');
+    });
+});
