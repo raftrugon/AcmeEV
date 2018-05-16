@@ -32,6 +32,7 @@ class UsersAndRolesSeeder extends Seeder
 
         $phave_appointments = Permission::firstOrCreate(['id'=>9,'name'=>'have_appointments']);
 
+        //Usuarios estáticos para pruebas
 
         User::firstOrCreate(['id'=>1,
             'name'=>'Juana',
@@ -60,5 +61,11 @@ class UsersAndRolesSeeder extends Seeder
         $student1 = User::where('id',2)->first();
         $student1->givePermissionTo('current');
         $student1->assignRole('student');
+
+
+        //Usuarios auto-generados para rellenar
+
+        factory(App\User::class,2000);
+
     }
 }

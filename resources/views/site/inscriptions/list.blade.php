@@ -4,7 +4,7 @@
     <div class="container pt-3">
         <div class="card text-center">
             <div class="card-header">
-                @lang('inscriptions.results-title')
+                @lang('inscription.results-title')
             </div>
             <div class="card-body">
                 <table id="results_table">

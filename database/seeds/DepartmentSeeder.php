@@ -18,5 +18,8 @@ class DepartmentSeeder extends Seeder
         Department::firstOrCreate(['name'=>'Ciencias de la Computación e Inteligencia Artificial','code'=>'USDEP00004','website'=>'https://www.cs.us.es/']);
         Department::firstOrCreate(['name'=>'Matemática aplicada','code'=>'USDEP00005','website'=>'http://www.ma1.us.es/']);
 
+        factory(App\Department::class,200);
+
+
     }
 }

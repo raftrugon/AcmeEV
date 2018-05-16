@@ -1,7 +1,9 @@
 <?php
 
 use App\Degree;
+use App\Department;
 use App\Inscription;
+use App\User;
 use Faker\Generator as Faker;
 
 
@@ -16,15 +18,6 @@ use Faker\Generator as Faker;
 |
 */
 
-$factory->define(App\User::class, function (Faker $faker) {
-    return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => '$2y$10$TKh8H1.PfQx37YgCzwiKb.KjNyWgaHb9cbcoQgdIVFlYg7B77UdFm', // secret
-        'remember_token' => str_random(10),
-    ];
-});
-
 $factory->define(App\Inscription::class, function (Faker $faker) {
     $dni = $faker->unique->regexify('[0-9]{8}[A-Z]');
     return [
@@ -33,7 +26,7 @@ $factory->define(App\Inscription::class, function (Faker $faker) {
         'address'=>$faker->address,
         'phone_number'=>$faker->phoneNumber,
         'grade'=>$faker->randomFloat(2,5,14),
-        'email'=>$faker->safeEmail,
+        'email'=>$faker->unique->safeEmail,
         'id_number'=>$dni,
         'password'=>bcrypt($dni),
     ];
@@ -42,5 +35,51 @@ $factory->define(App\Inscription::class, function (Faker $faker) {
 $factory->define(App\Request::class, function (Faker $faker) {
    return [
        'degree_id'=>$faker->randomElement(Degree::all()->pluck('id')->toArray()),
+   ];
+});
+
+$factory->define(App\Subject::class, function (Faker $faker){
+    $department = $faker->randomElement(Department::all()->pluck('id')->toArray());
+   return [
+    'name'=>$faker->words(4,true),
+    'code'=>$faker->unique->regexify('[A-Z]{3}[0-9]{6}'),
+    'subject_type'=>$faker->randomElement(['OBLIGATORY','BASIC','OPTATIVE','EDP']),
+    'school_year'=>$faker->numberBetween(1,4),
+    'semester'=>$faker->boolean(70) ? $faker->boolean() : null,
+    'department_id'=>$department,
+    'degree_id'=>$faker->randomElement(Degree::all()->pluck('id')->toArray()),
+    'coordinator_id'=>$faker->randomElement(User::where('department_id',$department)->get()->toArray()),
+   ];
+});
+
+$factory->define(App\Department::class, function(Faker $faker){
+   return[
+       'name'=>$faker->words(3,true),
+       'code'=>$faker->unique->regexify('[A-Z]{4}[0-9]{5}'),
+       'website'=>$faker->domainName,
+   ];
+});
+
+$factory->define(App\User::class, function(Faker $faker){
+    $dni = $faker->unique->regexify('[0-9]{8}[A-Z]');
+    $name = $faker->firstName;
+    $lastnames = $faker->lastName.' '.$faker->lastName;
+    $fullname = $name.' '.$lastnames;
+    $email = explode(' ',$fullname);
+    array_walk($email,function(&$value,$key){
+       $value = substr($value,0,2);
+    });
+    $email = implode(' ',$email);
+   return[
+       'name'=>$name,
+       'surname'=>$lastnames,
+       'address'=>$faker->address,
+       'phone_number'=>$faker->phoneNumber,
+       'grade'=>$faker->randomFloat(2,5,14),
+       'email'=>$email,
+       'personal_email'=>$faker->safeEmail,
+       'id_number'=>$dni,
+       'password'=>bcrypt($email),
+       'department_id'=>$faker->boolean(30) ? $faker->randomElement(Department::all()->pluck('id')->toArray()) : null,
    ];
 });

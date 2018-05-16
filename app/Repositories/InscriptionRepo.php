@@ -14,11 +14,13 @@ class InscriptionRepo extends BaseRepo
 
     protected $requestRepo;
     protected $systemConfigRepo;
+    protected $userRepo;
 
-    public function __construct(RequestRepo $requestRepo, SystemConfigRepo $systemConfigRepo)
+    public function __construct(RequestRepo $requestRepo, SystemConfigRepo $systemConfigRepo,UserRepo $userRepo)
     {
         $this->requestRepo = $requestRepo;
         $this->systemConfigRepo = $systemConfigRepo;
+        $this->userRepo = $userRepo;
     }
 
     public function getModel()
@@ -42,10 +44,10 @@ class InscriptionRepo extends BaseRepo
             $systemConfig = SystemConfig::first();
             $iteration = $systemConfig->getInscriptionsListStatus();
             //Para el segundo y definitivo listado quitamos las adjudicaciones a los que no las han confirmado(agreed = 0)
-            if ($iteration > 1) DB::table('requests')->join('inscriptions', 'requests.inscription_id', '=', 'inscriptions.id')->where('inscriptions.agreed', 0)->update(['accepted' => 0]);
+            if ($iteration > 0) DB::table('requests')->join('inscriptions', 'requests.inscription_id', '=', 'inscriptions.id')->where('inscriptions.agreed', 0)->update(['accepted' => 0]);
             $inscriptions = Inscription::orderBy('grade', 'desc');
             //Para el segundo y definitivo listado solo iteramos sobre los que no tuvieron adjudicación en los anteriores listados
-            if ($iteration > 1) $inscriptions->whereNull('agreed');
+            if ($iteration > 0) $inscriptions->whereNull('agreed');
             foreach ($inscriptions->get() as $inscription) {
                 //iteramos sobre las requests por orden de prioridad
                 foreach ($inscription->getRequests()->orderBy('priority', 'asc')->get() as $request) {
@@ -67,6 +69,7 @@ class InscriptionRepo extends BaseRepo
             $systemConfig->setInscriptionsListStatus($iteration);
             $this->systemConfigRepo->updateWithoutData($systemConfig);
             DB::commit();
+            if($iteration == 3) $this->userRepo->createBatchFromInscriptions();
         }catch(\Exception $e){
             DB::rollBack();
             throw $e;
@@ -83,10 +86,10 @@ class InscriptionRepo extends BaseRepo
                 return $inscription->getRequests()->join('degrees','requests.degree_id','=','degrees.id')->orderBy('priority','asc')
                     ->select('requests.priority','degrees.name','requests.accepted', DB::Raw(is_null($inscription->getAgreed()) ? 0 : $inscription->getAgreed() . ' as agreed'));
             } else {
-                return [];
+                return Request::where('id',0);
             }
         } else {
-            return [];
+            return Request::where('id',0);
         }
     }
 }

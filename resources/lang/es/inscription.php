@@ -13,4 +13,5 @@ return[
     'access_data'=>'Datos de acceso',
     'homealert.link'=> 'Pulse <a href="'.URL::to('inscription/new').'" class="alert-link">aquí</a> para rellenar su solicitud.',
     'homealert.title'=>'¡Plazos de nuevo ingreso abiertos!',
+    'results-title'=>'Resultados para tu proceso de inscripción',
 ];
