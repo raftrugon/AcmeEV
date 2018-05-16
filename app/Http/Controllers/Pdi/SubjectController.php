@@ -25,14 +25,23 @@ class SubjectController extends Controller {
     }
 
     public function getSubjectInstances(Subject $subject) {
-        $subjectInstances = SubjectInstance
-            ::where('subject_id',$subject->getId())
-            ->where('academic_year',">=",Carbon::now()->year)->get();
-        return view('site.pdi.subject.subject-instances',compact('subjectInstances','subject'));
+        if($subject->getCoordinator==Auth::user()){
+            $subjectInstances = SubjectInstance
+                ::where('subject_id',$subject->getId())
+                ->where('academic_year',">=",Carbon::now()->year)->get();
+            return view('site.pdi.subject.subject-instances',compact('subjectInstances','subject'));
+        } else {
+            return view('home');
+        }
     }
 
     public function getGroupsForSubjectInstance(SubjectInstance $subjectInstance){
-        $groups = Group::where('subject_instance_id',$subjectInstance->getId())->get();
-        return view('site.pdi.subject.groups',compact('groups'));
+
+        if($subjectInstance->getSubject->getCoordinator==Auth::user()) {
+            $groups = Group::where('subject_instance_id', $subjectInstance->getId())->get();
+            return view('site.pdi.subject.groups', compact('groups'));
+        } else {
+            return view('home');
+        }
     }
 }

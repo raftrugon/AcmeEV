@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Degree;
 use App\Repositories\DegreeRepo;
 use App\Subject;
-use App\SubjectInstance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;

@@ -18,6 +18,7 @@ class CreateDegreesTable extends Migration
             $table->string('name');
             $table->string('code');
             $table->integer('new_students_limit');
+            $table->boolean('deleted');
             $table->timestamps();
         });
     }
