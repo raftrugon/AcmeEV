@@ -60,4 +60,12 @@ class User extends Authenticatable
     public function setDepartment($value) {
         $this->department_id=$value;
     }
+
+
+    public function getEnrollments(){
+        return $this->hasMany('App\Enrollment','user_id','id');
+    }
+
+
+
 }

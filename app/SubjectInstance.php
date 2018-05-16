@@ -48,9 +48,9 @@ class SubjectInstance extends Model
             return $this->hasMany('App\Minute','subject_instance_id','id');
     }
 
-    public function getEnrolments(){
-            return $this->hasMany('App\Enrolment','subject_instance_id','id');
-    }
 
+    public function getEnrolments(){
+            return $this->hasMany('App\Enrollment','subject_instance_id','id');
+    }
 
 }
