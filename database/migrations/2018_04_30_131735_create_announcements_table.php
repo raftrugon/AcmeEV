@@ -15,9 +15,15 @@ class CreateAnnouncementsTable extends Migration
     {
         Schema::create('announcements', function (Blueprint $table) {
 
+            //Attributes
             $table->string('title');
             $table->string('body');
             $table->date('creation_moment');
+
+
+            //Relationships
+            $table->integer('subject_instance_id')->unsigned();
+            $table->foreign('subject_instance_id')->references('id')->on('subject_instances');
 
 
 
