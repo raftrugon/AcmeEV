@@ -19,9 +19,9 @@ use Faker\Generator as Faker;
 
 $factory->define(App\Announcement::class, function (Faker $faker) {
     return [
-        'title' => $faker->realText($maxNbChars = 15, $indexSize = 2),
+        'title' => $faker->realText($maxNbChars = 20, $indexSize = 2),
         'body' => $faker->realText($maxNbChars = 80, $indexSize = 2),
-        'creation_moment' => $faker->date($format = 'Y-m-d', $max = 'now'),
+        'creation_moment' => $faker->dateTime($max = 'now', $timezone = null),
         'subject_instance_id'=>$faker->randomElement(SubjectInstance::all()->pluck('id')->toArray()),
     ];
 });

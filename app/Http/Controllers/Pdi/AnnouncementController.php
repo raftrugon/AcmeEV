@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Pdi;
 use App\Http\Controllers\Controller;
 use App\Repositories\AnnouncementRepo;
 use App\SubjectInstance;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -26,9 +27,8 @@ class AnnouncementController extends Controller
 
     public function postSaveAnnouncement(Request $request){
         $validator = Validator::make($request->all(),[
-            'title'=>'required',
-            'body'=>'required',
-            'creation_moment'=>'required|before:now',
+            'title'=>'required|max:40',
+            'body'=>'required|max:500',
             'subject_instance_id'=>'required|integer'
         ]);
 
@@ -41,7 +41,7 @@ class AnnouncementController extends Controller
             $announcement = array(
                 'title' => $request->input('title'),
                 'body' => $request->input('body'),
-                'creation_moment' => $request->input('creation_moment'),
+                'creation_moment' => Carbon::now(),
                 'subject_instance_id' => $request->input('subject_instance_id')
             );
 

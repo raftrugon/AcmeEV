@@ -18,7 +18,7 @@ class CreateAnnouncementsTable extends Migration
             //Attributes
             $table->string('title');
             $table->string('body');
-            $table->date('creation_moment');
+            $table->dateTime('creation_moment');
 
 
             //Relationships
