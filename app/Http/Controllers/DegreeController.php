@@ -23,7 +23,7 @@ class DegreeController extends Controller
     }
 
     public function getAll(){
-        $degrees = Degree::all();
+        $degrees = Degree::where('deleted',0)->get();
         return view('site.degree.all', compact('degrees'));
     }
 
