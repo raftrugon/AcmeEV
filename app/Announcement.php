@@ -45,4 +45,14 @@ class Announcement extends Model
     public function setCreationMoment($value){
         $this->creation_moment = $value;
     }
+
+
+
+    public function getSubjectInstances(){
+        return $this->belongsTo('App\SubjectInstance','subject_instance_id','id');
+    }
+
+    public function setSubjectInstances($value){
+        $this->subject_instance_id=$value;
+    }
 }

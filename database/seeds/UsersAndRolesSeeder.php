@@ -27,7 +27,6 @@ class UsersAndRolesSeeder extends Seeder
 
         $pmanage = Permission::firstOrCreate(['id'=>5,'name'=>'manage']);
         $pdirect_department = Permission::firstOrCreate(['id'=>6,'name'=>'direct_department']);
-        $pcoordinate_subject = Permission::firstOrCreate(['id'=>7,'name'=>'coordinate_subject']);
         $pteach = Permission::firstOrCreate(['id'=>8,'name'=>'teach']);
 
         $phave_appointments = Permission::firstOrCreate(['id'=>9,'name'=>'have_appointments']);
@@ -62,10 +61,24 @@ class UsersAndRolesSeeder extends Seeder
         $student1->givePermissionTo('current');
         $student1->assignRole('student');
 
+        User::firstOrCreate(['id'=>3,
+            'name'=>'Jorge',
+            'surname'=>'Hernandez Rodriguez',
+            'email'=>'jorherrod@alum.us.es',
+            'id_number'=>'11111111A',
+            'address'=>'Calle de la delicia, 6',
+            'phone_number'=>'611222333',
+            'personal_email'=>'jorge.her@gmail.com',
+            'password'=>bcrypt('pdi1')
+        ]);
+        $student1 = User::where('id',3)->first();
+        $student1->givePermissionTo('manage','teach','direct_department');
+        $student1->assignRole('pdi');
+
 
         //Usuarios auto-generados para rellenar
 
-        factory(App\User::class,2000);
+        //factory(App\User::class,2000)->create();
 
     }
 }

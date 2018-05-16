@@ -9,12 +9,14 @@
         <li>
             <a class="text-light nav-link" href="{{URL::to('')}}"><i class="fa fa- fa-home d-block text-primary"></i><span>{{__('menu.home')}}</span></a>
         </li>
+        @guest()
         <li>
             <a class="text-light nav-link" href="{{URL::to('degree/all')}}"><i class="fa fa- fa-graduation-cap d-block text-primary"></i><span>{{__('menu.degrees')}}</span></a>
         </li>
         <li>
             <a class="text-light nav-link" href="{{URL::to('department/all')}}"><i class="fas fa- fa-address-book d-block text-primary"></i><span>{{__('menu.departments')}}</span></a>
         </li>
+        @endguest
         @can('have_appointments')
             <li>
                 <a class="text-light nav-link" href="{{URL::to('administration/calendar')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.calendar')}}</span></a>
@@ -64,7 +66,7 @@
             </li>
         @else
             <li>
-                <a class="text-light nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#loginModal"><i class="fas fa-2x fa-sign-in-alt d-block text-success"></i><span>{{__('logged')}}</span></a>
+                <a class="text-light nav-link" href="javascript:void(0)" data-toggle="modal" data-target="#loginModal"><i class="fas fa-2x fa-sign-in-alt d-block text-success"></i><span>{{__('auth.login')}}</span></a>
             </li>
         @endif
 
