@@ -905,16 +905,16 @@
         },
         {
             "name": "laravel/framework",
-            "version": "v5.6.21",
+            "version": "v5.6.22",
             "source": {
                 "type": "git",
                 "url": "https://github.com/laravel/framework.git",
-                "reference": "458a89b1c5ff73072c27308566f444c790f76f28"
+                "reference": "637fd797a6dde8d24a9f07da77e375ec251c5d24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/laravel/framework/zipball/458a89b1c5ff73072c27308566f444c790f76f28",
-                "reference": "458a89b1c5ff73072c27308566f444c790f76f28",
+                "url": "https://api.github.com/repos/laravel/framework/zipball/637fd797a6dde8d24a9f07da77e375ec251c5d24",
+                "reference": "637fd797a6dde8d24a9f07da77e375ec251c5d24",
                 "shasum": ""
             },
             "require": {
@@ -1040,7 +1040,7 @@
                 "framework",
                 "laravel"
             ],
-            "time": "2018-05-08T13:30:15+00:00"
+            "time": "2018-05-15T13:34:20+00:00"
         },
         {
             "name": "laravel/tinker",
@@ -3004,16 +3004,16 @@
         },
         {
             "name": "yajra/laravel-datatables-oracle",
-            "version": "v8.5.1",
+            "version": "v8.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/yajra/laravel-datatables.git",
-                "reference": "6a44c00800135b3c52742cc7dac3655b2f903f18"
+                "reference": "b2d9df3df9315bc1a5d08ac2b88a1e2a15e5ddcb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/6a44c00800135b3c52742cc7dac3655b2f903f18",
-                "reference": "6a44c00800135b3c52742cc7dac3655b2f903f18",
+                "url": "https://api.github.com/repos/yajra/laravel-datatables/zipball/b2d9df3df9315bc1a5d08ac2b88a1e2a15e5ddcb",
+                "reference": "b2d9df3df9315bc1a5d08ac2b88a1e2a15e5ddcb",
                 "shasum": ""
             },
             "require": {
@@ -3071,7 +3071,7 @@
                 "jquery",
                 "laravel"
             ],
-            "time": "2018-05-12T03:37:37+00:00"
+            "time": "2018-05-15T09:21:17+00:00"
         }
     ],
     "packages-dev": [

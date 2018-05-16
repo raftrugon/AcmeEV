@@ -60,7 +60,8 @@ class DepartmentController extends Controller{
             ::whereNotNull('department_id')
             ->where('department_id', $department->getId())->get();
         $subjects = Subject
-            ::where('department_id', $department->getId())->get();
+            ::where('department_id', $department->getId())
+            ->orderBy('school_year')->get();
         return view('site.department.display',compact('department','pdis','subjects'));
     }
 }

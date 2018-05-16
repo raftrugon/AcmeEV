@@ -9,5 +9,6 @@ return[
     'edit'=>'Edit',
     'delete'=>'Delete',
     'school_year'=>'School year',
-    'nextYear'=>'Create next year'
+    'nextYear'=>'Create next year',
+    'code'=>'Code'
 ];

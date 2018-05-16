@@ -42,6 +42,7 @@ Route::group(['prefix'=>'inscription'],function(){
 Route::group(['prefix'=>'degree'],function(){
     Route::get('/all-but-selected','DegreeController@getAllButSelected');
     Route::get('/all','DegreeController@getAll');
+    Route::get('{degree}/display','DegreeController@displayDegree');
 });
 
 Route::group(['prefix'=>'management/degree'/*,'middleware'=>['permission:manage']*/],function(){
