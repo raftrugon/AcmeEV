@@ -4,5 +4,7 @@
 return[
     'code'=>'Code',
     'url'=>'URL',
-    'new'=>'New department'
+    'new'=>'New department',
+    'subjects'=>'Subjects',
+    'pdis'=>'PDIs'
 ];

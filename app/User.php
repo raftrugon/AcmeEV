@@ -49,6 +49,14 @@ class User extends Authenticatable
         $this->surname = $value;
     }
 
+    public function getEmail() {
+        return $this->email;
+    }
+
+    public function setEmail($value) {
+        $this->email = $value;
+    }
+
     public function getFullName(){
         return $this->getName() . ' ' . $this->getSurname();
     }

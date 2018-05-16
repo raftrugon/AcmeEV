@@ -56,6 +56,7 @@ Route::group(['prefix'=>'department'],function(){
     Route::get('/all','DepartmentController@getAll');
     Route::get('new','DepartmentController@getNewDepartment');
     Route::post('save','DepartmentController@postSaveDepartment');
+    Route::get('{department}/display','DepartmentController@displayDepartment');
 });
 
 Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
