@@ -17,8 +17,8 @@ class AnnouncementRepo extends BaseRepo
         return new Announcement;
     }
 
-    public function getAnnouncementsBySubjectInstanceId($subjectInstance_id){
-        return Announcement::all();
+    public function getAnnouncementsBySubjectInstanceId($subject_instance_id){
+        return Announcement::where('subject_instance_id', $subject_instance_id);
     }
 
 }
