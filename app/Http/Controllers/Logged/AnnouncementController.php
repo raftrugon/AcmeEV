@@ -17,12 +17,7 @@ class AnnouncementController extends Controller
     }
 
     public function getAllBySubjectInstance(SubjectInstance $subjectInstance){
-        $announcements = $this->announcementRepo->getAnnouncementsBySubjectInstanceId($subjectInstance->input('id'))->get();
-        return view('site.logged.announcement.all-for-subject-instance', compact('announcements'));
-    }
-
-    public function getAll(){
-        $announcements = Announcement::all();
+        $announcements = $this->announcementRepo->getAnnouncementsBySubjectInstanceId($subjectInstance->getId())->get();
         return view('site.logged.announcement.all-for-subject-instance', compact('announcements'));
     }
 

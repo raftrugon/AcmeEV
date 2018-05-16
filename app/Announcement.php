@@ -48,11 +48,11 @@ class Announcement extends Model
 
 
 
-    public function getSubjectInstances(){
+    public function getSubjectInstanceId(){
         return $this->belongsTo('App\SubjectInstance','subject_instance_id','id');
     }
 
-    public function setSubjectInstances($value){
+    public function setSubjectInstanceId($value){
         $this->subject_instance_id=$value;
     }
 }
