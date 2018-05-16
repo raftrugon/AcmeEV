@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Degree;
 use App\Repositories\DegreeRepo;
+use App\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -22,7 +23,7 @@ class DegreeController extends Controller
     }
 
     public function getAll(){
-        $degrees = Degree::all();
+        $degrees = Degree::where('deleted',0)->get();
         return view('site.degree.all', compact('degrees'));
     }
 
@@ -70,4 +71,10 @@ class DegreeController extends Controller
         return redirect()->action('DegreeController@getAll');
     }
 
+    public function displayDegree(Degree $degree) {
+        $subjects = Subject
+            ::where('degree_id',$degree->getId())
+            ->orderBy('school_year')->get();
+        return view('site.degree.display',compact('degree','subjects'));
+    }
 }

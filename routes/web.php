@@ -42,9 +42,10 @@ Route::group(['prefix'=>'inscription'],function(){
 Route::group(['prefix'=>'degree'],function(){
     Route::get('/all-but-selected','DegreeController@getAllButSelected');
     Route::get('/all','DegreeController@getAll');
+    Route::get('{degree}/display','DegreeController@displayDegree');
 });
 
-Route::group(['prefix'=>'management/degree'/*,'middleware'=>['permission:manage']*/],function(){
+Route::group(['prefix'=>'management/degree','middleware'=>['permission:manage']],function(){
     Route::get('new','DegreeController@getNewDegree');
     Route::post('save','DegreeController@postSaveDegree');
     Route::get('{degree}/edit','DegreeController@getEditDegree');
@@ -56,6 +57,7 @@ Route::group(['prefix'=>'department'],function(){
     Route::get('/all','DepartmentController@getAll');
     Route::get('new','DepartmentController@getNewDepartment');
     Route::post('save','DepartmentController@postSaveDepartment');
+    Route::get('{department}/display','DepartmentController@displayDepartment');
 });
 
 Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
@@ -84,10 +86,15 @@ Route::group(['prefix'=>'logged'/*,'middleware'=>['role:???????']*/],function(){
     });
 });
 
-Route::group(['prefix'=>'pdi'/*,'middleware'=>['role:pdi']*/],function(){
+Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
     Route::group(['prefix'=>'announcement'],function() {
         Route::get('{subjectInstance}/create', 'Pdi\AnnouncementController@getCreateAnnouncement');
         Route::post('save', 'Pdi\AnnouncementController@postSaveAnnouncement');
+    });
+    Route::group(['prefix'=>'subject'],function() {
+        Route::get('/coordinator/all','Pdi\SubjectController@getSubjectsForCoordinator');
+        Route::get('{subject}/instances','Pdi\SubjectController@getSubjectInstances');
+        Route::get('{subjectInstance}/groups','Pdi\GroupController@getGroupsForSubjectInstace');
     });
 });
 
@@ -98,9 +105,6 @@ Route::group(['prefix'=>'calendar'],function() {
 });
 
 Route::group(['prefix'=>'subject'],function(){
-    Route::get('/coordinator/all','Pdi\SubjectController@getSubjectsForCoordinator');
-    Route::get('{subject}/instances','Pdi\SubjectController@getSubjectInstances');
-    Route::get('{subjectInstance}/groups','Pdi\GroupController@getGroupsForSubjectInstace');
 });
 
 Route::group(['prefix'=>'group'],function(){

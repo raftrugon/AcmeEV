@@ -19,7 +19,7 @@
                     <div class="col-md-6 col-lg-4 col-xl-3" style="padding-bottom: 40px;">
                         <div class="card">
                             <h5 class="card-header">
-                                {{$degree->getName()}}
+                                <a href="{{URL::to('degree/'.$degree->getId().'/display')}}">{{$degree->getName()}}</a>
                             </h5>
                             <div class="card-body">
                                 <p class="card-text">

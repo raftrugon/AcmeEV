@@ -6,7 +6,7 @@
         @foreach($departments as $department)
             <div class="card">
                 <h5 class="card-header">
-                    {{$department->getName()}}
+                    <a href="{{URL::to('department/'.$department->getId().'/display')}}">{{$department->getName()}}</a>
                 </h5>
                 <div class="card-body">
                     <p class="card-text">

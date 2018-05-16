@@ -41,6 +41,14 @@ class Degree extends Model
         return $this->hasMany('App\Subject','degree_id','id');
     }
 
+    public function isDeleted() {
+        return $this->deleted;
+    }
+
+    public function delete() {
+        $this->deleted = false;
+    }
+
     public function canCreateSubjectInstances() {
         return Degree
                 ::join('subjects','degrees.id','=','subjects.degree_id')
