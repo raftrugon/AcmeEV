@@ -19,10 +19,10 @@ class CreateSubjectsTable extends Migration
             $table->string('code');
             $table->enum('subject_type',['OBLIGATORY','BASIC','OPTATIVE','EDP']);
             $table->integer('school_year');
-            $table->boolean('semester');
+            $table->boolean('semester')->nullable();
             $table->integer('department_id')->unsigned();
             $table->integer('degree_id')->unsigned();
-            $table->integer('coordinator_id')->unsigned();
+            $table->integer('coordinator_id')->unsigned()->nullable();
 
 
             $table->index('id');
