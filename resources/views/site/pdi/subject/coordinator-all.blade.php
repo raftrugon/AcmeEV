@@ -35,7 +35,7 @@
                             @endif
                     </p>
                 </div>
-                <button onclick="location.href='{{URL::to('subject/' . $subject->getId() . '/instances')}}'" class="btn btn-success">
+                <button onclick="location.href='{{URL::to('pdi/subject/' . $subject->getId() . '/instances')}}'" class="btn btn-success">
                     @lang('subject.instances')
                 </button>
             </div>

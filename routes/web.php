@@ -108,6 +108,8 @@ Route::group(['prefix'=>'subject'],function(){
 });
 
 Route::group(['prefix'=>'group'],function(){
-    Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');
-    Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');
+    Route::group(['middleware'=>['role:pdi']],function(){
+        Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');
+        Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');
+    });
 });

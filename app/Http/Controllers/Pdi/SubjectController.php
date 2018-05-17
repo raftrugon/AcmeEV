@@ -25,7 +25,7 @@ class SubjectController extends Controller {
     }
 
     public function getSubjectInstances(Subject $subject) {
-        if($subject->getCoordinator==Auth::user()){
+        if($subject->getCoordinator->getId()==Auth::user()->getId()){
             $subjectInstances = SubjectInstance
                 ::where('subject_id',$subject->getId())
                 ->where('academic_year',">=",Carbon::now()->year)->get();
@@ -36,7 +36,6 @@ class SubjectController extends Controller {
     }
 
     public function getGroupsForSubjectInstance(SubjectInstance $subjectInstance){
-
         if($subjectInstance->getSubject->getCoordinator==Auth::user()) {
             $groups = Group::where('subject_instance_id', $subjectInstance->getId())->get();
             return view('site.pdi.subject.groups', compact('groups'));
