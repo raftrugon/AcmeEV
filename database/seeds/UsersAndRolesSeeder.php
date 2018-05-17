@@ -76,6 +76,36 @@ class UsersAndRolesSeeder extends Seeder
         $student1->assignRole('pdi');
 
 
+        User::firstOrCreate(['id'=>4,
+            'name'=>'Cesar',
+            'surname'=>'Garcia Pascual',
+            'email'=>'cesgarpas@alum.us.es',
+            'id_number'=>'32090358X',
+            'address'=>'Avd. del colesterol, 38',
+            'phone_number'=>'676666666',
+            'personal_email'=>'cesgarpas@gmail.com',
+            'password'=>bcrypt('student')
+        ]);
+        $student1 = User::where('id',4)->first();
+        $student1->givePermissionTo('current');
+        $student1->assignRole('student');
+
+
+        User::firstOrCreate(['id'=>5,
+            'name'=>'Jorge',
+            'surname'=>'Puente Zara',
+            'email'=>'jorpuezar@alum.us.es',
+            'id_number'=>'44742618Y',
+            'address'=>'Rotonda cuadrada, Piso 4 no. 21',
+            'phone_number'=>'686666666',
+            'personal_email'=>'jorpuezar@gmail.com',
+            'password'=>bcrypt('student')
+        ]);
+        $student1 = User::where('id',5)->first();
+        $student1->givePermissionTo('current');
+        $student1->assignRole('student');
+
+
         //Usuarios auto-generados para rellenar
 
         //factory(App\User::class,2000)->create();

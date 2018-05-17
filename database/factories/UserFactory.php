@@ -38,19 +38,7 @@ $factory->define(App\Request::class, function (Faker $faker) {
    ];
 });
 
-$factory->define(App\Subject::class, function (Faker $faker){
-    $department = $faker->randomElement(Department::all()->pluck('id')->toArray());
-   return [
-    'name'=>$faker->words(4,true),
-    'code'=>$faker->unique->regexify('[A-Z]{3}[0-9]{6}'),
-    'subject_type'=>$faker->randomElement(['OBLIGATORY','BASIC','OPTATIVE','EDP']),
-    'school_year'=>$faker->numberBetween(1,4),
-    'semester'=>$faker->boolean(70) ? $faker->boolean() : null,
-    'department_id'=>$department,
-    'degree_id'=>$faker->randomElement(Degree::all()->pluck('id')->toArray()),
-    'coordinator_id'=>$faker->randomElement(User::where('department_id',$department)->get()->toArray()),
-   ];
-});
+
 
 $factory->define(App\Department::class, function(Faker $faker){
    return[

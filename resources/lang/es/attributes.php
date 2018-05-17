@@ -26,4 +26,12 @@ return [
     'provisional_minutes_date'=>'Fecha de actas provisionales',
     'final_minutes_date'=>'Fecha fin de actas',
     'academic_year_end_date'=>'Fin del curso académico',
+    'department'=>'Departamento',
+    'school_year'=> 'Año Escolar',
+    'semester' => 'Semestre',
+    'code' => 'Código',
+    'semester_first'=> 'Primero',
+    'semester_second'=> 'Segundo',
+    'semester_annual'=> 'Anual',
+    'academic_year'=> 'Año Académico',
 ];

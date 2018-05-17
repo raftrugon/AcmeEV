@@ -19,6 +19,7 @@ class DatabaseSeeder extends Seeder
         $this->call(SubjectSeeder::class);
         $this->call(SubjectInstanceSeeder::class);
         $this->call(AnnouncementSeeder::class);
+        $this->call(EnrollmentSeeder::class);
         $this->call(GroupSeeder::class);
 
     }
