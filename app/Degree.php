@@ -46,7 +46,7 @@ class Degree extends Model
     }
 
     public function delete() {
-        $this->deleted = false;
+        $this->deleted = true;
     }
 
     public function canCreateSubjectInstances() {

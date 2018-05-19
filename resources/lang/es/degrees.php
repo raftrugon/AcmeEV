@@ -10,5 +10,7 @@ return[
     'delete'=>'Borrar',
     'school_year'=>'Curso',
     'nextYear'=>'Crear próximo año',
-    'code'=>'Código'
+    'code'=>'Código',
+    'successDelete'=>'El grado fue borrad',
+    'deleteFailed'=>'No se pudo borrar el grado',
 ];

@@ -10,5 +10,7 @@ return[
     'delete'=>'Delete',
     'school_year'=>'School year',
     'nextYear'=>'Create next year',
-    'code'=>'Code'
+    'code'=>'Code',
+    'successDelete'=>'The degree was deleted',
+    'deleteFailed'=>'Could not delete the degree',
 ];
