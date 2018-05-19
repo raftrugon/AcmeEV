@@ -15,6 +15,22 @@ class CreateControlChecksTable extends Migration
     {
         Schema::create('control_checks', function (Blueprint $table) {
             $table->increments('id');
+
+            $table->string('name');
+            $table->string('description');
+            $table->timestamp('date')->useCurrent();
+            $table->timestamp('is_submittable')->useCurrent();
+            $table->double('weight');
+            $table->double('minimum_mark');
+            $table->integer('room_id')->unsigned();
+            $table->integer('subject_instance_id')->unsigned();
+
+            $table->index('room_id');
+            $table->index('subject_instance_id');
+
+            $table->foreign('room_id')->references('id')->on('rooms');
+            $table->foreign('subject_instance_id')->references('id')->on('subject_instances');
+
             $table->timestamps();
         });
     }
