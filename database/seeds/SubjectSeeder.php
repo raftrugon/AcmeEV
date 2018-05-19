@@ -2,6 +2,7 @@
 
 use App\Degree;
 use App\Department;
+use App\Repositories\UserRepo;
 use App\Subject;
 use App\User;
 use Faker\Factory;
@@ -56,7 +57,7 @@ class SubjectSeeder extends Seeder{
                         'semester' => $faker->boolean(70) ? $faker->boolean() : null,
                         'department_id' => $department_id,
                         'degree_id' => $degree_id,
-                        'coordinator_id' => $faker->randomElement(User::where('department_id', $department_id)->get()->toArray()),
+                        'coordinator_id' => User::join('model_has_permissions','users.id','=','model_has_permissions.model_id')->where('model_has_permissions.permission_id', 6)->where('department_id', $department_id)->get()->pluck('id')->first(),//$faker->randomElement(User::where('department_id', $department_id)->get()->toArray()),
                         'subject_type' => $subject_type
                     ]);
 

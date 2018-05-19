@@ -19,7 +19,7 @@ class DepartmentSeeder extends Seeder
         Department::firstOrCreate(['name'=>'Matemática aplicada','code'=>'USD000005','website'=>'http://www.ma1.us.es/']);*/
 
 
-        factory(App\Department::class,40)->create();
+        factory(App\Department::class,25)->create();
 
 
     }
