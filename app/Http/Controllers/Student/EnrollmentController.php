@@ -16,7 +16,7 @@ class EnrollmentController extends Controller
 
 
     public function getMyEnrollments(){
-        $academic_years = $this->enrollmentRepo->getMyEnrollments()->get()->groupBy('academic_year');
+        $academic_years = $this->enrollmentRepo->getMyEnrollments()->orderBy('academic_year', 'DESC')->get()->groupBy('academic_year');
         return view('site.student.enrollment.my-enrollments', compact('academic_years'));
     }
 }
