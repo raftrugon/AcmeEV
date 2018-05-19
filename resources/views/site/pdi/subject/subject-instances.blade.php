@@ -33,9 +33,15 @@
                             @elseif($subject->getSemester()==true)
                                 @lang('subject.second')
                             @endif
+                        </br>
+                        </br>
+                        <strong>
+                            @lang('subjectInstance.academicYear'):
+                        </strong>
+                        {{$subjectInstance->getAcademicYear()}}
                     </p>
                 </div>
-                <button onclick="location.href='{{URL::to('subject/' . $subjectInstance->getId() . '/groups')}}'" class="btn btn-success">
+                <button onclick="location.href='{{URL::to('pdi/subject/' . $subjectInstance->getId() . '/groups')}}'" class="btn btn-success">
                     @lang('subjectInstance.groups')
                 </button>
             </div>

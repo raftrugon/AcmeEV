@@ -110,5 +110,29 @@ class UsersAndRolesSeeder extends Seeder
 
         //factory(App\User::class,2000)->create();
 
+
+        User::firstOrCreate(['id'=>6,
+            'name'=>'Web',
+            'surname'=>'Master',
+            'email'=>'webmaster@us.es',
+            'id_number'=>'44742618Y',
+            'address'=>'Master direction',
+            'phone_number'=>'666000666',
+            'personal_email'=>'webmaster@gmail.com',
+            'password'=>bcrypt('webmaster')
+        ]);
+        $admin = User::where('id',6)->first();
+        $admin->assignRole('student');
+        $admin->assignRole('pdi');
+        $admin->assignRole('pas');
+        $admin->assignRole('admin');
+        $admin->givePermissionTo('new');
+        $admin->givePermissionTo('current');
+        $admin->givePermissionTo('old');
+        $admin->givePermissionTo('manage');
+        $admin->givePermissionTo('direct_department');
+        $admin->givePermissionTo('teach');
+        $admin->givePermissionTo('have_appointments');
+
     }
 }

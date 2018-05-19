@@ -78,6 +78,7 @@ Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){
         Route::post('save', 'Admin\SystemConfigController@postSaveSystemConfig');
         Route::post('first_inscription_process','Admin\SystemConfigController@postInscriptionBatch')->name('process_inscriptions');
     });
+    Route::post('/degreeDelete','Admin\DegreeController@deleteDegree')->name('delete_degree');
 });
 
 Route::group(['prefix'=>'logged'/*,'middleware'=>['role:???????']*/],function(){
@@ -108,8 +109,10 @@ Route::group(['prefix'=>'subject'],function(){
 });
 
 Route::group(['prefix'=>'group'],function(){
-    Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');
-    Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');
+    Route::group(['middleware'=>['role:pdi']],function(){
+        Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');
+        Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');
+    });
 });
 
 Route::group(['prefix'=>'student'],function(){

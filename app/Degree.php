@@ -37,8 +37,8 @@ class Degree extends Model
         $this->new_students_limit = $value;
     }
 
-    public function getSubjects(){
-        return $this->hasMany('App\Subject','degree_id','id');
+        public function getSubjects(){
+            return $this->hasMany('App\Subject','degree_id','id');
     }
 
     public function isDeleted() {
@@ -46,7 +46,7 @@ class Degree extends Model
     }
 
     public function delete() {
-        $this->deleted = false;
+        $this->deleted = true;
     }
 
     public function canCreateSubjectInstances() {

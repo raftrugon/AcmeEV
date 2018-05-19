@@ -25,6 +25,11 @@
                                 <p class="card-text">
                                     @lang('degrees.newStudentsLimit'): {{$degree->getNewStudentsLimit()  }}
                                 </p>
+                                @role('admin')
+                                    <button class="btn btn-danger deleteButton" id="{{$degree->getId()}}">
+                                        @lang('degrees.delete')
+                                    </button>
+                                @endrole
                                 <div class="collapse multi-collapse">
                                     <button onclick="location.href='{{URL::to('management/degree/' . $degree->getId() . '/edit')}}'" class="btn btn-success">@lang('degrees.edit')</button>
                                     <button onclick="location.href='{{URL::to('management/degree/delete')}}'" class="btn btn-danger">@lang('degrees.delete')</button>
@@ -39,4 +44,20 @@
             </div>
         </div>
 
+@endsection
+
+@section('scripts')
+    <script type="text/javascript">
+        $('.deleteButton').click(function(e){
+            e.preventDefault();
+            $.post('{{route('delete_degree')}}',{id:$(this).attr('id')},function(data){
+                if(data==='true'){
+                    success('@lang('global.success')','@lang('degree.successDelete')');
+                    window.location.replace('{{URL::to('degree/all')}}');
+                } else {
+                    error('@lang('global.error')','@lang('degree.deleteFailed')');
+                }
+            });
+        });
+    </script>
 @endsection
