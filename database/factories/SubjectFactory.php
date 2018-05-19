@@ -21,7 +21,7 @@ use Faker\Generator as Faker;
 */
 
 
-$factory->define(App\Subject::class, function (Faker $faker){
+/*$factory->define(App\Subject::class, function (Faker $faker){
     $department = $faker->randomElement(Department::all()->pluck('id')->toArray());
     return [
         'name'=>$faker->words(4,true),
@@ -33,7 +33,7 @@ $factory->define(App\Subject::class, function (Faker $faker){
         'degree_id'=>$faker->randomElement(Degree::all()->pluck('id')->toArray()),
         'coordinator_id'=>$faker->randomElement(User::where('department_id',$department)->get()->toArray()),
     ];
-});
+});*/
 
 /*$factory->define(App\SubjectInstance::class, function (Faker $faker){
     $academic_year = $faker->numberBetween(2005, 2013);                                    //Año de comienzo de la asignatura
