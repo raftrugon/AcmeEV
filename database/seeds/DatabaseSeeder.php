@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
         $this->call(AnnouncementSeeder::class);
         $this->call(EnrollmentSeeder::class);
         $this->call(GroupSeeder::class);
+        $this->call(RoomSeeder::class);
+        $this->call(ControlCheckSeeder::class);
 
     }
 }
