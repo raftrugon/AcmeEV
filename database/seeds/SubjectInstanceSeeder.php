@@ -12,7 +12,7 @@ class SubjectInstanceSeeder extends Seeder{
 
 
         $faker = Factory::create();
-        $id = 1;
+        //$id = 1;
 
         //////////////////////////////////////////////////////////////
 
@@ -24,15 +24,18 @@ class SubjectInstanceSeeder extends Seeder{
             $academic_year = $faker->numberBetween(2010, 2014);                         //Año de comienzo de la asignatura
             $endFor = date('Y');                                                 //Año actual
 
+            if(date('m') > 8)                                                    //Si ha pasado septiembre crea las de este año tambien
+                $endFor++;
 
-            for($j = $academic_year; $j < $endFor; $j++){                               //Crea instancias desde el año de comienzo hasta el actual
+
+            for($j = $academic_year; $j <= $endFor; $j++){                               //Crea instancias desde el año de comienzo hasta el actual
                 SubjectInstance::firstOrCreate([
-                    'id'=>$id,
+                    //'id'=>$id,
                     'academic_year'=>$j,
                     'subject_id'=>$subject_id
                 ]);
 
-                $id++;
+                //$id++;
             }
         }
     }

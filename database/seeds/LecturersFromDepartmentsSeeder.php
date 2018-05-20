@@ -15,7 +15,6 @@ class LecturersFromDepartmentsSeeder extends Seeder
 
 
         $faker = Factory::create();
-        $id = 45454;
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,9 +28,8 @@ class LecturersFromDepartmentsSeeder extends Seeder
 
             for ($j = 0; $j < $lecturers_per_department; $j++) {                 //Crea $lecturers_per_department lecturers
 
-                //$department_id = $faker->randomElement(Department::all()->pluck('id')->toArray());
 
-                $pas = User::firstOrCreate(['id'=>$id,
+                $pas = User::firstOrCreate([
                     'name'=>$faker->firstName,
                     'surname'=>$faker->lastName,
                     'email'=>$faker->unique()->regexify('[a-z]{9}').'@pdi.us.es',
@@ -42,6 +40,7 @@ class LecturersFromDepartmentsSeeder extends Seeder
                     'department_id' => $department_id,
                     'password'=>bcrypt('pas')
                 ]);
+
 
                 //Roles
                 $pas->assignRole('pdi');
@@ -54,7 +53,6 @@ class LecturersFromDepartmentsSeeder extends Seeder
                     $pas->givePermissionTo('teach');
                 }
 
-                $id++;  //Incremento de id
             }
 
         }
