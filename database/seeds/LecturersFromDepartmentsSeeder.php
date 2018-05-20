@@ -12,19 +12,23 @@ class LecturersFromDepartmentsSeeder extends Seeder
 
     public function run()
     {
-
-
         $faker = Factory::create();
+
+        $minimum_number_lecturers = 2;
+        $maximum_number_lecturers = 5;
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $departments_id = Department::all()->pluck('id')->toArray();
+        $count = count($departments_id);
+
+        info('Seeding from '.$minimum_number_lecturers.' to '.$maximum_number_lecturers.' Lecturers for each Department and setting one to coordinator('.$count.' Departments).');
 
         foreach ($departments_id as $department_id) {                            //Por cada departamento
 
             $coordinator = true;                                                 //Contador para hacer el primer profesor coordinador
 
-            $lecturers_per_department = $faker->numberBetween(2, 4);             //Numero aleatorio de profesores por departamento
+            $lecturers_per_department = $faker->numberBetween($minimum_number_lecturers, $maximum_number_lecturers);             //Numero aleatorio de profesores por departamento
 
             for ($j = 0; $j < $lecturers_per_department; $j++) {                 //Crea $lecturers_per_department lecturers
 
@@ -38,7 +42,7 @@ class LecturersFromDepartmentsSeeder extends Seeder
                     'phone_number'=>$faker->phoneNumber,
                     'personal_email'=>$faker->email,
                     'department_id' => $department_id,
-                    'password'=>bcrypt('pas')
+                    'password'=>bcrypt('pdi')
                 ]);
 
 
