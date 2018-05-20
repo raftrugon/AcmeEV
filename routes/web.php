@@ -92,10 +92,16 @@ Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
         Route::get('{subjectInstance}/create', 'Pdi\AnnouncementController@getCreateAnnouncement');
         Route::post('save', 'Pdi\AnnouncementController@postSaveAnnouncement');
     });
-    Route::group(['prefix'=>'subject'],function() {
-        Route::get('/coordinator/all','Pdi\SubjectController@getSubjectsForCoordinator');
-        Route::get('{subject}/instances','Pdi\SubjectController@getSubjectInstances');
-        Route::get('{subjectInstance}/groups','Pdi\GroupController@getGroupsForSubjectInstace');
+    Route::group(['prefix'=>'subject','middleware'=>['permission:teach']],function(){
+       Route::get('list','Pdi\SubjectController@getMySubjectList');
+       Route::post('folder/new','Pdi\SubjectController@postNewFolder')->name('new_folder');
+       Route::post('folder/save','Pdi\SubjectController@postSaveFolder')->name('save_folder');
+       Route::post('folder/delete','Pdi\SubjectController@postDeleteFolder')->name('delete_folder');
+       Route::post('file/new','Pdi\SubjectController@postNewFile')->name('new_file');
+       Route::post('file/delete','Pdi\SubjectController@postDeleteFile')->name('delete_file');
+       Route::get('/coordinator/all','Pdi\SubjectController@getSubjectsForCoordinator');
+       Route::get('{subject}/instances','Pdi\SubjectController@getSubjectInstances');
+       Route::get('{subjectInstance}/groups','Pdi\GroupController@getGroupsForSubjectInstace');
     });
 });
 
@@ -106,6 +112,9 @@ Route::group(['prefix'=>'calendar'],function() {
 });
 
 Route::group(['prefix'=>'subject'],function(){
+    Route::get('{subject}','SubjectController@getSubjectDisplay')->name('subject-display');
+    Route::get('/filesystem/data','SubjectController@getFileSystemData')->name('filesystem.data');
+    Route::get('file/download/{file}','SubjectController@getDownloadFile');
 });
 
 Route::group(['prefix'=>'group'],function(){
