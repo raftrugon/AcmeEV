@@ -32,6 +32,8 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/datatables/dataTables.bootstrap4.min.css')}}">
     <!-- Dropify css -->
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/dropify.min.css')}}">
+    <!-- DateTimePIcker css -->
+    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/datetimepicker.min.css')}}">
 
 
 
@@ -90,6 +92,8 @@
 <script src="{{asset('js/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <!-- Dropify-->
 <script src="{{asset('js/dropify.min.js')}}"></script>
+<!-- DateTimePicker-->
+<script src="{{asset('js/datetimepicker.min.js')}}"></script>
 
 
 <!-- CUSTOM Scripts -->
