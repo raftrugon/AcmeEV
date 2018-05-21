@@ -40,6 +40,11 @@
             <a class="text-light nav-link" href="{{URL::to('administration')}}"><i class="fas fa- fa-cogs d-block text-primary"></i><span>{{__('menu.administration')}}</span></a>
         </li>
         @endrole
+        @can('teach')
+            <li>
+                <a class="text-light nav-link" href="{{URL::to('pdi/subject/list')}}"><i class="fas fa- fa-graduation-cap d-block text-primary"></i><span>{{__('menu.subjects')}}</span></a>
+            </li>
+        @endcan
     </ul>
 
     <ul class="list-unstyled mt-auto">

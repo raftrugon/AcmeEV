@@ -18,8 +18,13 @@ class DepartmentSeeder extends Seeder
         Department::firstOrCreate(['name'=>'Ciencias de la Computación e Inteligencia Artificial','code'=>'USD000004','website'=>'https://www.cs.us.es/']);
         Department::firstOrCreate(['name'=>'Matemática aplicada','code'=>'USD000005','website'=>'http://www.ma1.us.es/']);*/
 
+        $number_of_departments = 25;
 
-        factory(App\Department::class,25)->create();
+        //////////////////////////////////////////////////////////////
+
+        info('Seeding '.$number_of_departments.' Departments with random names.');
+
+        factory(App\Department::class,$number_of_departments)->create();
 
 
     }

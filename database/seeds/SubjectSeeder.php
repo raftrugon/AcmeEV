@@ -14,12 +14,18 @@ class SubjectSeeder extends Seeder{
 
 
         $faker = Factory::create();
-        $id = 1;
+
+        $minimum_number_subjects_course = 4;
+        $maximum_number_subjects_course = 6;
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
 
         $degrees_id = Degree::all()->pluck('id')->toArray();
+        $count = count($degrees_id);
+
+        info('Seeding from '.$minimum_number_subjects_course.' to '.$maximum_number_subjects_course.' Subjects for each course of a Degree and setting one to EDP('.$count.' Degree).');
+
 
         foreach($degrees_id as $degree_id){                         //Por cada grado
 
@@ -27,9 +33,9 @@ class SubjectSeeder extends Seeder{
 
             for($i = 1; $i < 5; $i++) {                             //Por cada curso
 
-                $subjects_per_year = $faker->numberBetween(4, 6);   //Numero aleatorio de asignaturas por año
+                $subjects_per_course = $faker->numberBetween($minimum_number_subjects_course, $maximum_number_subjects_course);   //Numero aleatorio de asignaturas por año
 
-                for($j = 0; $j < $subjects_per_year; $j++) {        //Crea $subjects_per_year asignaturas
+                for($j = 0; $j < $subjects_per_course; $j++) {        //Crea $subjects_per_course asignaturas
 
 
                     $department_id = $faker->randomElement(Department::all()->pluck('id')->toArray());
@@ -50,18 +56,16 @@ class SubjectSeeder extends Seeder{
                     };
 
                     Subject::firstOrCreate([
-                        'id' => $id,
                         'name' => $faker->words(4, true),
                         'code' => $faker->unique()->regexify('[A-Z]{3}[0-9]{6}'),
                         'school_year' => $i,
                         'semester' => $faker->boolean(70) ? $faker->boolean() : null,
                         'department_id' => $department_id,
                         'degree_id' => $degree_id,
-                        'coordinator_id' => User::join('model_has_permissions','users.id','=','model_has_permissions.model_id')->where('model_has_permissions.permission_id', 6)->where('department_id', $department_id)->get()->pluck('id')->first(),//$faker->randomElement(User::where('department_id', $department_id)->get()->toArray()),
+                        'coordinator_id' => User::join('model_has_permissions','users.id','=','model_has_permissions.model_id')->where('model_has_permissions.permission_id', 6)->where('department_id', $department_id)->get()->pluck('id')->first(),
                         'subject_type' => $subject_type
                     ]);
 
-                    $id++;  //Incremento de id
                 }
             }
         }

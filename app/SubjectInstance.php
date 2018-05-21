@@ -53,4 +53,5 @@ class SubjectInstance extends Model
             return $this->hasMany('App\Enrollment','subject_instance_id','id');
     }
 
+
 }
