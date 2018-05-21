@@ -40,13 +40,7 @@ $factory->define(App\Request::class, function (Faker $faker) {
 
 
 
-$factory->define(App\Department::class, function(Faker $faker){
-   return[
-       'name'=>$faker->words(3,true),
-       'code'=>$faker->unique->regexify('[A-Z]{4}[0-9]{5}'),
-       'website'=>$faker->domainName,
-   ];
-});
+
 
 $factory->define(App\User::class, function(Faker $faker){
     $dni = $faker->unique->regexify('[0-9]{8}[A-Z]');

@@ -61,10 +61,10 @@ class UsersAndRolesSeeder extends Seeder
         $student1->givePermissionTo('current');
         $student1->assignRole('student');
 
-        User::firstOrCreate(['id'=>3,
+        User::firstOrCreate(['id'=>3,               //NO PONERLE DEPARTMENT
             'name'=>'Jorge',
             'surname'=>'Hernandez Rodriguez',
-            'email'=>'jorherrod@alum.us.es',
+            'email'=>'jorherrod@pdi.us.es',
             'id_number'=>'11111111A',
             'address'=>'Calle de la delicia, 6',
             'phone_number'=>'611222333',

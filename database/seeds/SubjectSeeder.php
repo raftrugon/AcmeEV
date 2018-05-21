@@ -1,15 +1,69 @@
 <?php
 
+use App\Degree;
+use App\Department;
+use App\Repositories\UserRepo;
 use App\Subject;
+use App\User;
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 
 class SubjectSeeder extends Seeder{
 
     public function run(){
-        //Subject::firstOrCreate(['id'=>1,'name'=>'Física','code'=>'USSUB00001','subject_type'=>'OBLIGATORY','school_year'=>1,'semester'=>true,'department_id'=>2,'degree_id'=>1,'coordinator_id'=>1]);
-        //Subject::firstOrCreate(['id'=>2,'name'=>'Estadística','code'=>'USSUB00002','subject_type'=>'OBLIGATORY','school_year'=>2,'semester'=>false,'department_id'=>5,'degree_id'=>1,'coordinator_id'=>1]);
 
-        factory(App\Subject::class,40)->create();
 
+        $faker = Factory::create();
+        $id = 1;
+
+
+        //////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        $degrees_id = Degree::all()->pluck('id')->toArray();
+
+        foreach($degrees_id as $degree_id){                         //Por cada grado
+
+            $edp = true;
+
+            for($i = 1; $i < 5; $i++) {                             //Por cada curso
+
+                $subjects_per_year = $faker->numberBetween(4, 6);   //Numero aleatorio de asignaturas por año
+
+                for($j = 0; $j < $subjects_per_year; $j++) {        //Crea $subjects_per_year asignaturas
+
+
+                    $department_id = $faker->randomElement(Department::all()->pluck('id')->toArray());
+                    $subject_type = 'OBLIGATORY';
+
+                    //Tipo de asignatura
+                    switch($i){
+                        case 1:
+                            $subject_type = 'BASIC';
+                            break;
+                        case 4:
+                            if($edp){
+                                $edp = false;
+                                $subject_type = 'EDP';
+                                break;
+                            }
+                            $subject_type = $faker->randomElement(['OBLIGATORY', 'OPTATIVE']);
+                    };
+
+                    Subject::firstOrCreate([
+                        'id' => $id,
+                        'name' => $faker->words(4, true),
+                        'code' => $faker->unique()->regexify('[A-Z]{3}[0-9]{6}'),
+                        'school_year' => $i,
+                        'semester' => $faker->boolean(70) ? $faker->boolean() : null,
+                        'department_id' => $department_id,
+                        'degree_id' => $degree_id,
+                        'coordinator_id' => User::join('model_has_permissions','users.id','=','model_has_permissions.model_id')->where('model_has_permissions.permission_id', 6)->where('department_id', $department_id)->get()->pluck('id')->first(),//$faker->randomElement(User::where('department_id', $department_id)->get()->toArray()),
+                        'subject_type' => $subject_type
+                    ]);
+
+                    $id++;  //Incremento de id
+                }
+            }
+        }
     }
 }
