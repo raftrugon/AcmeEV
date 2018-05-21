@@ -44,7 +44,7 @@ class SystemConfigController extends Controller
         ]);
 
         if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInput();
+            return redirect()->back()->withErrors($validator)->withInput()->with('error',__('systemConfig.error'));
         }
 
         DB::beginTransaction();
@@ -74,7 +74,7 @@ class SystemConfigController extends Controller
             throw $e;
         }
 
-        return redirect()->action('Admin\SystemConfigController@getEditSystemConfig');
+        return redirect()->action('Admin\SystemConfigController@getEditSystemConfig')->with('success',__('systemConfig.success'));
     }
 
     public function postInscriptionBatch(){
