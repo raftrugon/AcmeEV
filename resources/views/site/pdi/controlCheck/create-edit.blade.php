@@ -13,6 +13,8 @@
                     <div class="card-body">
                         @include('global.input',['type'=>'text','id'=>'name','name'=>'name','label'=>__('attributes.name')])
                         @include('global.input',['type'=>'text','id'=>'description','name'=>'description','label'=>__('attributes.description')])
+                        @include('global.select',['id'=>'rooms','objects'=>$rooms,'value'=>'id','display'=>'name','label'=>__('controlCheck.rooms')])
+                        @include('global.input',['type'=>'date','id'=>'date','name'=>'date'])
                         <button>@lang('global.submit')</button>
                     </div>
                 </div>

@@ -74,6 +74,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Enrollment','user_id','id');
     }
 
-
+    public function getControlCheckInstances() {
+        return $this->hasMany('App\ControlCheckInstance','user_id','id');
+    }
 
 }

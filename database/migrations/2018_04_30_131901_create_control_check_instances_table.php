@@ -6,15 +6,19 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateControlCheckInstancesTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
     public function up()
     {
         Schema::create('control_check_instances', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('calification')->nullable();
+            $table->integer('control_check_id')->unsigned();
+            $table->integer('student_id')->unsigned();
+
+            $table->index('control_check_id');
+            $table->index('student_id');
+
+            $table->foreign('control_check_id')->references('id')->on('control_checks');
+            $table->foreign('student_id')->references('id')->on('users');
             $table->timestamps();
         });
     }

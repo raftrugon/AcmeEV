@@ -8,11 +8,9 @@ use Carbon\Carbon;
 
 class DegreeRepo extends BaseRepo
 {
-    protected $inscriptionRepo;
 
     public function __construct(InscriptionRepo $inscriptionRepo)
     {
-        $this->inscriptionRepo = $inscriptionRepo;
     }
 
     public function getModel()

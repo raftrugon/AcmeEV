@@ -19,7 +19,7 @@ class CreateControlChecksTable extends Migration
             $table->string('name');
             $table->string('description');
             $table->timestamp('date')->useCurrent();
-            $table->timestamp('is_submittable')->useCurrent();
+            $table->boolean('is_submittable');
             $table->double('weight');
             $table->double('minimum_mark');
             $table->integer('room_id')->unsigned();
