@@ -2,9 +2,12 @@
 
 @section('content')
 
-    <div class="card-deck">
+
         @foreach($subjects as $subject)
-            <div class="card">
+            @if($loop->iteration % 4 == 1)
+            <div class="card-deck my-3">
+            @endif
+            <div class="card" style="max-width: 25%">
                 <h5 class="card-header">
                     {{$subject->getName()}}
                 </h5>
@@ -39,7 +42,9 @@
                     @lang('subject.instances')
                 </button>
             </div>
+            @if($loop->iteration % 4 == 0 || $loop->last)
+            </div>
+            @endif
         @endforeach
-    </div>
 
 @endsection

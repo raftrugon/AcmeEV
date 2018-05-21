@@ -551,9 +551,11 @@
                     @endforeach
                 @endif
                 >
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
+                <div class="input-group-append">
+                    <div class="input-group-text">
+                        <i class="far fa-calendar-alt"></i>
+                    </div>
+                </div>
             </div>
             <span class="help-block invalid-feedback">{{ $errors->first($name) }}</span>
         </div>

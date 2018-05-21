@@ -17,3 +17,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('degrees',function(){
+   return \App\Degree::all();
+});
+
+Route::get('departments',function(){
+   return \App\Department::all();
+});
+
+
