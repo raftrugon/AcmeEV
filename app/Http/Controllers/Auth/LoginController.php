@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Redirect;
 
 class LoginController extends Controller
 {
@@ -40,7 +41,6 @@ class LoginController extends Controller
     protected function authenticated(\Illuminate\Http\Request $request, $user)
     {
         if ($request->ajax()){
-
             return 'true';
 
         }

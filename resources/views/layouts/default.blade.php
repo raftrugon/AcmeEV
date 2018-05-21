@@ -32,6 +32,8 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/datatables/dataTables.bootstrap4.min.css')}}">
     <!-- Dropify css -->
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/dropify.min.css')}}">
+    <!-- DateTimePIcker css -->
+    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/datetimepicker.min.css')}}">
 
 
 
@@ -51,9 +53,24 @@
 <div id="main-wrapper" class="wrapper">
     @include('layouts.default-menu')
     <div id="content" class="p-4 @if(Session::get('sidebar','true') == 'true') aside @endif">
-        <!-- Header -->
-            {{--@include('layouts.default-header')--}}
-        <!-- END HEADER -->
+        <!-- Notifications -->
+        @if(Session::get('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>@lang('global.success')</strong> {{Session::get('success')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        @if(Session::get('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <strong>@lang('global.error')</strong> {{Session::get('error')}}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        @endif
+        <!-- End Notifications -->
         @yield('content')
     </div>
 </div>
@@ -90,6 +107,8 @@
 <script src="{{asset('js/datatables/dataTables.bootstrap4.min.js')}}"></script>
 <!-- Dropify-->
 <script src="{{asset('js/dropify.min.js')}}"></script>
+<!-- DateTimePicker-->
+<script src="{{asset('js/datetimepicker.min.js')}}"></script>
 
 
 <!-- CUSTOM Scripts -->
@@ -118,11 +137,11 @@
                 $('#login_form').serialize()
             ).done(function(data){
                 if(data === 'true'){
-                    location.href = '{{route('home')}}';
+                    location.href = '{{URL::full()}}';
                 }
             }).fail(function(data,textStatus,jqXHR){
                 if(jqXHR === 'Unprocessable Entity'){
-                    error('@lang('global.error')','@lang('logged')');
+                    error('@lang('global.error')','@lang('auth.failed')');
                     $('#login-error').html('<strong>@lang('auth.failed')</strong>');
                     $('#login-email').addClass('is-invalid');
                     $('#login-password').addClass('is-invalid');
