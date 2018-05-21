@@ -6,6 +6,7 @@ use App\File;
 use App\Folder;
 use App\Repositories\SubjectRepo;
 use App\Subject;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
@@ -21,7 +22,8 @@ class SubjectController extends Controller
     }
 
     public function getSubjectDisplay(Subject $subject){
-        return view('site.subject.display',compact('subject'));
+        $announcements = $subject->getSubjectInstances()->where('academic_year',Carbon::now()->year)->first()->getAnnouncements;
+        return view('site.subject.display',compact('subject','announcements'));
     }
 
     public function getFileSystemData(Request $request){
