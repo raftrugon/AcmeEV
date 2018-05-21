@@ -30,6 +30,8 @@
     <!-- Datatables -->
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/datatables/jquery.dataTables.min.css')}}">
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/datatables/dataTables.bootstrap4.min.css')}}">
+    <!-- Dropify css -->
+    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/dropify.min.css')}}">
 
 
 
@@ -86,6 +88,8 @@
 <!-- Datatables -->
 <script src="{{asset('js/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('js/datatables/dataTables.bootstrap4.min.js')}}"></script>
+<!-- Dropify-->
+<script src="{{asset('js/dropify.min.js')}}"></script>
 
 
 <!-- CUSTOM Scripts -->
