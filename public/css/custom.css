@@ -79,7 +79,7 @@
 
 /*--Sidebar Button--*/
 .sidebar-btn{
-    position:relative;
+    position:fixed;
     width:15px;
     height:40px;
     background-color:#343a40!important;

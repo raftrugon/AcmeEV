@@ -33,11 +33,11 @@
                                         <td>{{$subject->getSchoolYear()}}</td>
                                         <td>
                                         @if ($subject->getSemester() == 0)
-                                            @lang('attributes.semester_first')
+                                            @lang('subject.first')
                                         @elseif($subject->getSemester() == 1)
-                                            @lang('attributes.semester_second')
+                                            @lang('subject.second')
                                         @else
-                                            @lang('attributes.semester_annual')
+                                            @lang('subject.annual')
                                         @endif
                                         </td>
                                         <td>{{$subject->getCode()}}</td>
