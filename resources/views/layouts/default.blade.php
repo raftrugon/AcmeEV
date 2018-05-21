@@ -122,7 +122,7 @@
                 }
             }).fail(function(data,textStatus,jqXHR){
                 if(jqXHR === 'Unprocessable Entity'){
-                    error('@lang('global.error')','@lang('logged')');
+                    error('@lang('global.error')','@lang('auth.failed')');
                     $('#login-error').html('<strong>@lang('auth.failed')</strong>');
                     $('#login-email').addClass('is-invalid');
                     $('#login-password').addClass('is-invalid');

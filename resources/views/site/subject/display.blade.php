@@ -40,7 +40,7 @@
     </nav>
     <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active pt-3" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-
+            @include('site.subject.includes.announcements')
         </div>
         <div class="tab-pane fade pt-3" id="nav-filesystem" role="tabpanel" data-id-current="" aria-labelledby="nav-filesystem-tab">
             @include('site.subject.includes.filesystem')
@@ -90,7 +90,7 @@
                     $('.download-file-button').click(function(e){
                         e.stopPropagation();
                         let id = $(this).parent().parent().parent().data('id');
-                        window.open('{{URL::to('pdi/subject/file/download')}}/'+id,'_blank');
+                        window.open('{{URL::to('subject/file/download')}}/'+id,'_blank');
                     });
                     $('#folder-title').html(data.currentName);
 
@@ -176,6 +176,7 @@
             });
 
            $('#new_folder_submit').click(function(){
+               if(!$('#new_folder_form').valid()) return false;
                $.post('{{route('new_folder')}}',{subject_id:'{{$subject->getId()}}',parent_id:$('#nav-filesystem').data('id-current'), name: $('#new_folder_name').val(), description: $('#new_folder_description').val()},
                    function(data) {
                    if(data === 'true'){
@@ -223,6 +224,17 @@
                 messages:{
                     name: "{{__('validation.required',['attribute'=>__('attributes.name')])}}",
                     url: "{{__('validation.required',['attribute'=>__('attributes.file')])}}",
+                }
+            });
+
+            $('#new_folder_form').validate({
+                rules:{
+                    name:'required',
+                    description:'required'
+                },
+                messages:{
+                    name: "{{__('validation.required',['attribute'=>__('attributes.name')])}}",
+                    description: "{{__('validation.required',['attribute'=>__('attributes.description')])}}",
                 }
             });
         });
