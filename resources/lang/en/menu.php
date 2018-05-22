@@ -9,4 +9,6 @@ return [
     'appointments-info'=>'Appointments',
     'my.subjects'=>'My Subjects',
     'enrollments'=>'Enrollments',
+    'administration'=>'Administration',
+    'subjects'=>'Subjects',
 ];

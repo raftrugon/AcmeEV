@@ -9,4 +9,6 @@ return [
     'appointments-info'=>'Citas',
     'my.subjects'=>'Mis asignaturas',
     'enrollments'=>'Matrículas',
+    'administration'=>'Administración',
+    'subjects'=>'Asignaturas',
 ];
