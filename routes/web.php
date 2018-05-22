@@ -89,6 +89,10 @@ Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
         Route::get('{subject}/instances','Pdi\SubjectController@getSubjectInstances');
         Route::get('{subjectInstance}/groups','Pdi\GroupController@getGroupsForSubjectInstace');
     });
+    Route::group(['prefix'=>'control_check'],function() {
+        Route::get('{subjectInstance}/new','Pdi\ControlCheckController@createControlCheck');
+        Route::post('/save','Pdi\ControlCheckController@postControlCheck');
+    });
 });
 
 

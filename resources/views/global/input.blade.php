@@ -333,7 +333,6 @@
                             @endforeach
                             @endif
                     >
-                    <span>{{$texto}}</span>
                 </label>
                 <span id="{{$id}}-error" class="help-block invalid-feedback">{{ $errors->first($name) }}  </span>
 

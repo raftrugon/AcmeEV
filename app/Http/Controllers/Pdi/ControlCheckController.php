@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Student;
+namespace App\Http\Controllers\Pdi;
 
 use App\ControlCheck;
 use App\Group;
@@ -36,39 +36,35 @@ class ControlCheckController extends Controller
     public function postControlCheck(Request $request) {
         $subjectInstance = SubjectInstance::where('id',$request->input('subjectInstance'))->first();
         try {
+            DB::startTransaction();
             $controlCheck = array(
                 'name' => $request->input('name'),
                 'description' => $request->input('description'),
                 'room_id' => $request->input('room'),
                 'date' => $request->input('date'),
-                'is_submittable' => $request->input('isSubmittable'),
+                'is_submittable' => is_null($request->input('isSubmittable'))?false:true,
                 'weight' => $request->input('weight'),
                 'minimum_mark' => $request->input('minimumMark'),
                 'subject_instance_id' => $subjectInstance->getId(),
             );
-            $this->controlCheckRepo->create($controlCheck);
+            $saved = $this->controlCheckRepo->create($controlCheck);
+//            foreach ($subjectInstance->getGroups() as $group) {
+//                foreach ($group->getStudents() as $student) {
+//                    echo('student '.$student->getId());
+//                        $controlCheckInstance = array(
+//                            'calification' => null,
+//                            'control_check_id' => $saved->getId(),
+//                            'student_id' => $student->getId(),
+//                        );
+//                        $this->controlCheckInstanceRepo->create($controlCheckInstance);
+//                }
+//            }
             DB::commit();
-            foreach ($subjectInstance->getGroups() as $group) {
-                foreach ($group->getStudents() as $student) {
-                    try {
-                        $controlCheckInstance = array(
-                            'calification' => null,
-                            'control_check_id' => $controlCheck->getId(),
-                            'student_id' => $student->getId(),
-                        );
-                        $this->controlCheckInstanceRepo->create($controlCheckInstance);
-                        DB::commit();
-                    }catch(\Exception $e){
-                        DB::rollBack();
-                        throw $e;
-                    }
-                }
-            }
         }catch(\Exception $e){
             DB::rollBack();
             throw $e;
         }
-        return 'true';
+        return view('home');
     }
 
 
