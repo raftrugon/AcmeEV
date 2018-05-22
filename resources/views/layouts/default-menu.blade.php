@@ -6,9 +6,16 @@
 
     <!-- Sidebar Links -->
     <ul class="list-unstyled">
+
+        <!------------------------- TODOS ------------------------->
         <li>
             <a class="text-light nav-link" href="{{URL::to('')}}"><i class="fa fa- fa-home d-block text-primary"></i><span>{{__('menu.home')}}</span></a>
         </li>
+
+
+
+
+        <!------------------------- NO LOGUEADOS ------------------------->
         @guest()
         <li>
             <a class="text-light nav-link" href="{{URL::to('degree/all')}}"><i class="fa fa- fa-graduation-cap d-block text-primary"></i><span>{{__('menu.degrees')}}</span></a>
@@ -17,19 +24,11 @@
             <a class="text-light nav-link" href="{{URL::to('department/all')}}"><i class="fas fa- fa-address-book d-block text-primary"></i><span>{{__('menu.departments')}}</span></a>
         </li>
         @endguest
-        @can('have_appointments')
-            <li>
-                <a class="text-light nav-link" href="{{URL::to('administration/calendar')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.calendar')}}</span></a>
-            </li>
-            <li>
-                <a class="text-light nav-link" href="{{URL::to('administration/appointment-info')}}"><i class="fas fa- fa-info d-block text-primary"></i><span>{{__('menu.appointments-info')}}</span></a>
-            </li>
-        @endcan
-        @if(!Auth::check() or Auth::user()->can('current'))
-            <li>
-                <a class="text-light nav-link" href="{{URL::to('calendar')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.calendar')}}</span></a>
-            </li>
-        @endif
+
+
+
+
+        <!------------------------- ROLES ------------------------->
         @role('admin')
         <li>
             <a class="text-light nav-link" href="{{URL::to('admin/systemconfig/edit')}}"><i class="fas fa- fa-cogs d-block text-primary"></i><span>{{__('menu.systemconfig')}}</span></a>
@@ -40,12 +39,50 @@
             <a class="text-light nav-link" href="{{URL::to('administration')}}"><i class="fas fa- fa-cogs d-block text-primary"></i><span>{{__('menu.administration')}}</span></a>
         </li>
         @endrole
+
+        @role('student')
+        <li>
+            <a class="text-light nav-link" href="{{URL::to('student/my-subjects')}}"><i class="fas fa-book d-block text-primary"></i><span>{{__('menu.my.subjects')}}</span></a>
+            <a class="text-light nav-link" href="{{URL::to('student/enrollment/my-enrollments')}}"><i class="fas fa-address-card d-block text-primary"></i><span>{{__('menu.enrollments')}}</span></a>
+        </li>
+        @endrole
+
+        @role('pdi')
+        @endrole
+
+
+
+
+        <!------------------------- PERMISOS ------------------------->
+        @can('have_appointments')
+            <li>
+                <a class="text-light nav-link" href="{{URL::to('administration/calendar')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.calendar')}}</span></a>
+            </li>
+            <li>
+                <a class="text-light nav-link" href="{{URL::to('administration/appointment-info')}}"><i class="fas fa- fa-info d-block text-primary"></i><span>{{__('menu.appointments-info')}}</span></a>
+            </li>
+        @endcan
         @can('teach')
             <li>
                 <a class="text-light nav-link" href="{{URL::to('pdi/subject/list')}}"><i class="fas fa- fa-graduation-cap d-block text-primary"></i><span>{{__('menu.subjects')}}</span></a>
             </li>
         @endcan
+
+
+
+    <!------------------------- CALENDAR ------------------------->
+        @if(!Auth::check() or Auth::user()->can('current'))
+            <li>
+                <a class="text-light nav-link" href="{{URL::to('calendar')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.calendar')}}</span></a>
+            </li>
+        @endif
+
+
+
     </ul>
+
+
+    {{------------------- PICKER DE IDIOMA -------------------}}
 
     <ul class="list-unstyled mt-auto">
         <hr class="border-light">
@@ -63,6 +100,8 @@
             </div>
         </li>
 
+        {{------------------- LOGIN -------------------}}
+
         <hr class="border-light">
 
         @if(Auth::check())
@@ -77,6 +116,9 @@
 
     </ul>
 </nav>
+
+{{------------------- TOGGLE -------------------}}
+
 <div class="sidebar-btn @if(Session::get('sidebar','true') == 'true') show @endif" onClick="toggleSidebar()">
     <i class="fas fa-chevron-left left"></i>
     <i class="fas fa-chevron-right right"></i>

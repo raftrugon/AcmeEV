@@ -109,6 +109,7 @@ Route::group(['prefix'=>'student'],function(){
     Route::group(['prefix'=>'enrollment'],function() {
         Route::get('my-enrollments', 'Student\EnrollmentController@getMyEnrollments');
     });
+    Route::get('my-subjects', 'Student\SubjectInstanceController@getMySubjectInstances');
 });
 
 //////////////////////////////////////////////////////// Logged ////////////////////////////////////////////////////////
