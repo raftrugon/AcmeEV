@@ -36,7 +36,6 @@ class ControlCheckController extends Controller
     public function postControlCheck(Request $request) {
         $subjectInstance = SubjectInstance::where('id',$request->input('subjectInstance'))->first();
         try {
-            DB::startTransaction();
             $controlCheck = array(
                 'name' => $request->input('name'),
                 'description' => $request->input('description'),
@@ -48,17 +47,16 @@ class ControlCheckController extends Controller
                 'subject_instance_id' => $subjectInstance->getId(),
             );
             $saved = $this->controlCheckRepo->create($controlCheck);
-//            foreach ($subjectInstance->getGroups() as $group) {
-//                foreach ($group->getStudents() as $student) {
-//                    echo('student '.$student->getId());
-//                        $controlCheckInstance = array(
-//                            'calification' => null,
-//                            'control_check_id' => $saved->getId(),
-//                            'student_id' => $student->getId(),
-//                        );
-//                        $this->controlCheckInstanceRepo->create($controlCheckInstance);
-//                }
-//            }
+            foreach ($subjectInstance->getGroups as $group) {
+                foreach ($group->getStudents as $student) {
+                        $controlCheckInstance = array(
+                            'calification' => null,
+                            'control_check_id' => $saved->getId(),
+                            'student_id' => $student->getId(),
+                        );
+                        $this->controlCheckInstanceRepo->create($controlCheckInstance);
+                }
+            }
             DB::commit();
         }catch(\Exception $e){
             DB::rollBack();
