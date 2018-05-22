@@ -4,20 +4,19 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateControlCheckInstancesTable extends Migration
+class CreateStudentGroupTable extends Migration
 {
     public function up()
     {
-        Schema::create('control_check_instances', function (Blueprint $table) {
+        Schema::create('student_group', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('calification')->nullable();
-            $table->integer('control_check_id')->unsigned();
+            $table->integer('group_id')->unsigned();
             $table->integer('student_id')->unsigned();
 
-            $table->index('control_check_id');
+            $table->index('group_id');
             $table->index('student_id');
 
-            $table->foreign('control_check_id')->references('id')->on('control_checks');
+            $table->foreign('group_id')->references('id')->on('groups');
             $table->foreign('student_id')->references('id')->on('users');
             $table->timestamps();
         });

@@ -30,8 +30,6 @@ return [
     'school_year'=> 'School Year',
     'semester' => 'Semester',
     'code' => 'Code',
-    'semester_first'=> 'First',
-    'semester_second'=> 'Second',
-    'semester_annual'=> 'Annual',
+    'type' => 'Type',
     'academic_year'=> 'Academic Year',
 ];

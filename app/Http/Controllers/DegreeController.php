@@ -72,9 +72,7 @@ class DegreeController extends Controller
     }
 
     public function displayDegree(Degree $degree) {
-        $subjects = Subject
-            ::where('degree_id',$degree->getId())
-            ->orderBy('school_year')->get();
-        return view('site.degree.display',compact('degree','subjects'));
+        $school_years = Subject::where('degree_id',$degree->getId())->orderBy('school_year')->get()->groupBy('school_year');
+        return view('site.degree.display',compact('degree','school_years'));
     }
 }

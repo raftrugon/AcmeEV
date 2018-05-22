@@ -12,6 +12,8 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(SystemConfigSeeder::class);
+        $this->call(DegreeSeeder::class);
+        $this->call(DepartmentSeeder::class);
         $this->call(UsersAndRolesSeeder::class);
 
         $this->call(DegreeSeeder::class);
@@ -22,6 +24,8 @@ class DatabaseSeeder extends Seeder
         $this->call(SubjectInstanceSeeder::class);              //Basado en subjects
         $this->call(AnnouncementSeeder::class);                 //Basado ene subject instances
         $this->call(GroupSeeder::class);                        //Basado en subject instances
+        $this->call(RoomSeeder::class);
+        $this->call(ControlCheckSeeder::class);
 
         //TO DO  $this->call(StudentsSeeder::class);
         //TO DO  $this->call(EnrollmentAndMinuteSeeder::class);        //Basado en subject instances //Varias iteraciones de creación -> enrollments, minutes, enrollments, minutes...

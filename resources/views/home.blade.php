@@ -1,14 +1,23 @@
 @extends('layouts.default')
 
 @section('content')
-<div class="container pt-3">
+<div class="container-fluid pt-3">
+
     @unless(Auth::check())
     <div class="alert alert-success text-center" role="alert">
         <strong> @lang('inscription.homealert.title') </strong> &emsp;@lang('inscription.homealert.link')
     </div>
     <div class="alert alert-success text-center" role="alert">
-        <strong> Lista de adjudicaciones disponible </strong> Pulsa <a href="{{URL::to('inscription/results')}}">aquí</a> para ver tus adjudicaciones
+        <strong> @lang('global.adjudication.title') </strong> &emsp;@lang('global.adjudication.link')
     </div>
     @endunless
+
+    <div class="card">
+        <img src="{{asset('img/mainpage.png')}}" class="card-img-top" alt="Card image cap">
+        <div class="card-body">
+            <h1 class="card-title text-center font-weight-bold">@lang('global.welcome-heading')</h1>
+            <p class="card-text text-justify">@lang('global.welcome-body')</p>
+        </div>
+    </div>
 </div>
 @endsection
