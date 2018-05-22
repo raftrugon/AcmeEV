@@ -5,7 +5,7 @@
     <div class="card-deck">
         <div class="row">
             @foreach($departments as $department)
-                <div class="col-md-6" style="padding: 20px;">
+                <div class="col-lg-6" style="padding: 20px;">
                 <div class="card">
                     <h4 class="card-header">
                         <a href="{{URL::to('department/'.$department->getId().'/display')}}"><strong>{{$department->getName()}}</strong></a>
