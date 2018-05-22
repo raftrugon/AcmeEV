@@ -154,6 +154,13 @@ Route::group(['prefix'=>'subject'],function(){
     Route::get('file/download/{file}','SubjectController@getDownloadFile');
 });
 
+Route::group(['prefix'=>'chat','middleware','middleware'=>'auth'],function(){
+    Route::group(['prefix'=>'message'],function(){
+       Route::post('new','ChatController@postNewMessage');
+       Route::get('un-read','ChatController@getUnreadMessages');
+    });
+});
+
 
 
 

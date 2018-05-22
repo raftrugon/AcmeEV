@@ -34,6 +34,8 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/dropify.min.css')}}">
     <!-- DateTimePIcker css -->
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/datetimepicker.min.css')}}">
+    <!-- Chat css -->
+    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/chat.css')}}">
 
 
 
@@ -74,6 +76,9 @@
         @yield('content')
     </div>
 </div>
+<!-- Messaging Service -->
+@include('layouts.chat')
+<!-- End of messaging -->
 <!-- #PAGE FOOTER -->
 @include('layouts.default-footer')
 <!-- END FOOTER -->
@@ -109,6 +114,8 @@
 <script src="{{asset('js/dropify.min.js')}}"></script>
 <!-- DateTimePicker-->
 <script src="{{asset('js/datetimepicker.min.js')}}"></script>
+<!-- Chat-->
+<script src="{{asset('js/chat.js')}}"></script>
 
 
 <!-- CUSTOM Scripts -->
@@ -116,6 +123,9 @@
 
 <!--AJAX CONFIG-->
 <script>
+    const urlNewMessage = '{{URL::to('chat/message/new')}}';
+    const urlRetrieveMessages = '{{URL::to('chat/message/un-read')}}';
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': '{{ csrf_token() }}'
