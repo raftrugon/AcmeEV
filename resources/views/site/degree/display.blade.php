@@ -2,80 +2,88 @@
 
 @section('content')
 
-    <div class="card bg-light mb-3">
-        <h1 class="text-center">
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 col-sm-12 card bg-light mb-3 card" style="padding: 0;">
+        <h1 class="text-center card-header bg-dark text-white">
             {{$degree->getName()}}
         </h1>
-        <p class="text-center">
-            <strong>@lang('degrees.code'): </strong> {{$degree->getCode()}}</br>
-            <strong>@lang('degrees.newStudentsLimit'): </strong>{{$degree->getNewStudentsLimit()}}
-        </p>
+            <p class="text-left card-body" style="padding: 20px;margin:0;">
+                <strong>@lang('degrees.code'): </strong> {{$degree->getCode()}}</br>
+                <strong>@lang('degrees.newStudentsLimit'): </strong>{{$degree->getNewStudentsLimit()}}
+            </p>
     </div>
-    <div class="col-12">
-        <div class="row">
-            <div class="col-sm-12 card bg-light">
-                <h1 class="text-center">
-                    @lang('department.subjects')
-                </h1>
-                <table class="table table-bordered bg-white">
-                    @foreach($subjects as $subject)
-                        <tr>
-                            <td class="card">
-                                <div class="card_header">
-                                    <h3>
-                                        {{$subject->getName()}}</br>
-                                    </h3>
-                                </div>
-                                <p class="card-text ml-4">
-                                    <strong>@lang('subject.code'): </strong>
-                                    <small class="font-weight-light">
-                                        {{$subject->getCode()}}</br>
-                                    </small>
-                                    <strong>@lang('subject.type'): </strong>
-                                    @if($subject->getSubjectType()=='OBLIGATORY')
-                                        <small class="font-weight-light">
-                                            @lang('subject.obligatory')</br>
-                                        </small>
-                                    @elseif($subject->getSubjectType()=='BASIC')
-                                        <small class="font-weight-light">
-                                            @lang('subject.basic')</br>
-                                        </small>
-                                    @elseif($subject->getSubjectType()=='OPTATIVE')
-                                        <small class="font-weight-light">
-                                            @lang('subject.optative')</br>
-                                        </small>
-                                    @elseif($subject->getSubjectType()=='EDP')
-                                        <small class="font-weight-light">
-                                            @lang('subject.dt')</br>
-                                        </small>
-                                    @endif
 
-                                    <strong>@lang('subject.schoolYear'): </strong>
-                                    <small class="font-weight-light">
-                                        {{$subject->getSchoolYear()}}</br>
-                                    </small>
-                                    <strong>@lang('subject.semester'): </strong>
-                                    @if($subject->getSemester()==null)
-                                        <small class="font-weight-light">
-                                            @lang('subject.annual')
-                                        </small>
-                                    @elseif($subject->getSemester()==false)
-                                        <small class="font-weight-light">
+
+    <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 col-sm-12 card bg-light" style="padding: 0 0 40px 0;">
+        <h2 class="text-center" style="padding-top: 13px; margin-bottom: 0">@lang('department.subjects')</h2>
+
+        @foreach($school_years as $subjects)
+            @php ($index = 0)
+
+            <div style="padding: 20px 0 0 0;">
+                <div class="card">
+                    <h5 class="card-header bg-secondary text-white">@lang('attributes.school_year')
+                        | {{$subjects->first()->getSchoolYear()}} </h5>
+                    <div class="card-body" style="padding: 0; margin:0;">
+                        <table class="table table-striped" style="padding: 0; margin:0;">
+                            <thead class="table-primary">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">@lang('attributes.name')</th>
+                                <th scope="col">@lang('attributes.department')</th>
+                                <th scope="col">@lang('attributes.school_year')</th>
+                                <th scope="col">@lang('attributes.semester')</th>
+                                <th scope="col">@lang('attributes.type')</th>
+                                <th scope="col">@lang('attributes.code')</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($subjects as $subject)
+                                @php ($index++)
+                                <tr>
+                                    <th scope="row">{{$index}}</th>
+                                    <td>{{$subject->getName()}}</td>
+                                    <td>{{$subject->getDepartment->getName()}}</td>
+                                    <td>{{$subject->getSchoolYear()}}</td>
+                                    <td>
+                                        @if ($subject->getSemester() == 0)
                                             @lang('subject.first')
-                                        </small>
-                                    @elseif($subject->getSemester()==true)
-                                        <small class="font-weight-light">
+                                        @elseif($subject->getSemester() == 1)
                                             @lang('subject.second')
-                                        </small>
-                                    @endif
-                                </p>
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
+                                        @else
+                                            @lang('subject.annual')
+                                        @endif
+                                    </td>
+                                    <td>
+                                        @if($subject->getSubjectType()=='OBLIGATORY')
+                                            <small class="font-weight-light">
+                                                @lang('subject.obligatory')</br>
+                                            </small>
+                                        @elseif($subject->getSubjectType()=='BASIC')
+                                            <small class="font-weight-light">
+                                                @lang('subject.basic')</br>
+                                            </small>
+                                        @elseif($subject->getSubjectType()=='OPTATIVE')
+                                            <small class="font-weight-light">
+                                                @lang('subject.optative')</br>
+                                            </small>
+                                        @elseif($subject->getSubjectType()=='EDP')
+                                            <small class="font-weight-light">
+                                                @lang('subject.dt')</br>
+                                            </small>
+                                        @endif
+                                    </td>
+                                    <td>{{$subject->getCode()}}</td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
-        </div>
+        @endforeach
+
     </div>
+
 
 
 @endsection
