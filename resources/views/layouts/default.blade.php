@@ -77,7 +77,7 @@
     </div>
 </div>
 <!-- Messaging Service -->
-@include('layouts.chat')
+@includeWhen(Auth::check(),'layouts.chat')
 <!-- End of messaging -->
 <!-- #PAGE FOOTER -->
 @include('layouts.default-footer')
