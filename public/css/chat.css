@@ -1,0 +1,135 @@
+.chat-list{
+    position:fixed;
+    bottom:0;
+    right:0;
+    background-color:#343a40!important;
+    border-top-left-radius: 10px;
+    height:40px;
+}
+
+.chat-tab{
+    padding: .5rem 1rem;
+    color:white!important;
+    cursor:pointer;
+    height:40px;
+}
+
+.chat-tab:not(:first-child){
+    border-left: 1px solid white;
+}
+
+.chat-tab:hover{
+    color:#007bff!important;
+}
+
+.chat-container{
+    display:none;
+    position:fixed;
+    bottom:45px;
+    right:5px;
+    width:450px;
+    height:400px;
+    border:1px solid #343a40;
+    border-radius: 7px;
+}
+
+.chat-window{
+    display:none;
+    padding: .75rem;
+    height:354px;
+}
+
+.chat-window.active{
+    display:block;
+}
+
+.chat-header{
+    color:#007bff;
+    padding:5px;
+}
+.chat-title{
+    font-size:1.5rem;
+}
+
+.chat-buttons a{
+    padding:5px;
+}
+
+.message-sent{
+    position:relative;
+    background-color: rgba(0, 123, 255, 0.5);
+    float:right;
+    text-align: right;
+    border-bottom-left-radius: 5px;
+}
+
+.message-received{
+    position:relative;
+    background-color: rgba(192, 196, 201, 0.5);
+    float:left;
+    border-bottom-right-radius: 5px;
+}
+
+.message{
+    width:70%;
+    margin-bottom:15px;
+    padding:.5rem 1rem .5rem 1rem;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.message-received:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 10px;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: rgba(192, 196, 201, 0.5);
+    border-bottom: 0;
+    border-left: 0;
+    margin-left: -10px;
+    margin-bottom: -10px;
+}
+
+.message-sent:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    border: 10px solid transparent;
+    border-top-color: rgba(0, 123, 255, 0.5);
+    border-bottom: 0;
+    border-right: 0;
+    margin-left: -10px;
+    margin-bottom: -10px;
+}
+
+.messages{
+    max-height: 85%;
+    overflow-y:auto;
+}
+
+.send-div{
+    margin-top:10px;
+    position:absolute;
+    bottom:10px;
+    width:99%;
+}
+
+.new-message-input {
+    width: 85% !important;
+    margin-right: 5px;
+    border: none;
+    border-bottom: 2px solid #ced4da;
+}
+
+.new-message-input:focus{
+    box-shadow: 0 2px 0 -0.2rem rgba(0,123,255,.25) !important;
+}
+
+.new-message-btn{
+}
