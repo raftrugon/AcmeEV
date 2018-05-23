@@ -9,4 +9,8 @@ return[
     'weight'=>'Weight',
     'minimumMark'=>'Minimum mark',
     'new'=>'New Control Check',
+    'calification'=>'Qualification',
+    'upload'=>'Upload control check',
+    'uploaded'=>'File uploaded successfully',
+    'uploadFail'=>'Could not upload the file'
 ];

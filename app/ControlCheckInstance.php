@@ -35,4 +35,12 @@ class ControlCheckInstance extends Model
     public function setStudent($value) {
         $this->student_id=$value;
     }
+
+    public function getURL() {
+        return $this->url;
+    }
+
+    public function setURL($value) {
+        $this->url=$value;
+    }
 }

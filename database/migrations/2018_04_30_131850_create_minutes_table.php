@@ -15,6 +15,15 @@ class CreateMinutesTable extends Migration
     {
         Schema::create('minutes', function (Blueprint $table) {
             $table->increments('id');
+            $table->boolean('status')->nullable();
+            $table->double('qualification');
+            $table->integer('summon');
+            $table->integer('enrollment_id')->unsigned();
+
+            $table->index('enrollment_id');
+
+            $table->foreign('enrollment_id')->references('id')->on('enrollments')->delete('cascade');
+
             $table->timestamps();
         });
     }
