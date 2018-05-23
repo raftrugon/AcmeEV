@@ -38,7 +38,7 @@ class Message extends Model
     }
 
     public function getTimestamp(){
-        return \Carbon\Carbon::createFromFormat('Y-m-d HH:ii:ss',$this->created_at);
+        return \Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$this->created_at);
     }
 
     public function isMine(){
