@@ -27,7 +27,7 @@ class DatabaseSeeder extends Seeder
         $this->call(RoomSeeder::class);
         $this->call(ControlCheckSeeder::class);
 
-        //TO DO  $this->call(StudentsSeeder::class);
+        $this->call(StudentsSeeder::class);
         //TO DO  $this->call(EnrollmentAndMinuteSeeder::class);        //Basado en subject instances //Varias iteraciones de creación -> enrollments, minutes, enrollments, minutes...
 
         $this->call(InscriptionSeeder::class);

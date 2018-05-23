@@ -14,8 +14,8 @@ class SubjectInstanceSeeder extends Seeder{
         $faker = Factory::create();
 
 
-        $initial_possible_year = 2010;
-        $end_possible_year = 2014;
+        $initial_possible_year = 2011;
+        $end_possible_year = 2013;
         $endFor = date('Y');                                                 //Año actual
 
         if(date('m') > 8)                                                    //Si ha pasado septiembre crea las de este año tambien
