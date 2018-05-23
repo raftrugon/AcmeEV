@@ -31,7 +31,7 @@ class DatabaseSeeder extends Seeder
         //TO DO  $this->call(EnrollmentAndMinuteSeeder::class);        //Basado en subject instances //Varias iteraciones de creación -> enrollments, minutes, enrollments, minutes...
 
         $this->call(InscriptionSeeder::class);
-        $this->call(EnrollmentSeeder::class);                   //Será sustituido por EnrollmentAndMinuteSeeder
+        //$this->call(EnrollmentSeeder::class);                   //Será sustituido por EnrollmentAndMinuteSeeder
 
 
     }
