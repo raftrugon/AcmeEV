@@ -13,6 +13,25 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class BaseRepo {
 
+
+    public function getAcademicYear()
+    {
+        $academic_year = date('Y'); //Año actual
+        if(date('m') > 8)           //Si ha pasado septiembre se incrementa en 1 el número
+            $academic_year++;
+
+        return $academic_year;
+    }
+
+    /*
+     * Devuelve el año académico actual. Se dará el número superior de los dos.
+     * Ejemplo: Año académico 2017-2018, la función devolverá 2018.
+     */
+
+
+
+    ///////////////////////////////////////////////////////
+
     abstract public function getModel();
 
     /*

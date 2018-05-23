@@ -42,7 +42,7 @@
                                 <tr>
                                     <th scope="row">{{$index}}</th>
                                     <td>{{$subject->getName()}}</td>
-                                    <td>{{$subject->getDepartment->getName()}}</td>
+                                    <td><a href="{{URL::to('department/' . $subject->getDepartment->getId() . '/display')}}">{{$subject->getDepartment->getName()}}</a></td>
                                     <td>{{$subject->getSchoolYear()}}</td>
                                     <td>
                                         @if ($subject->getSemester() == 0)

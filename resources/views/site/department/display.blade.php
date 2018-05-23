@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <div class="card bg-light mb-3">
+    <div class="card bg-light mb-3 col-md-8 offset-md-2">
         <h1 class="text-center">
             {{$department->getName()}}
         </h1>
@@ -16,7 +16,26 @@
     </div>
     <div class="col-12">
         <div class="row">
-            <div class="col-sm-6 card bg-light">
+            <div class="col-md-8 mb-3 offset-md-2 card bg-light">
+                <h1 class="text-center">
+                    @lang('department.pdis')
+                </h1>
+                <table class="table table-bordered bg-white">
+                    @foreach($pdis as $pdi)
+                        <tr>
+                            <td>
+                                <strong>
+                                    {{$pdi->getFullName()}}</br>
+                                </strong>
+                                <small >
+                                    {{$pdi->getEmail()}}
+                                </small>
+                            </td>
+                        </tr>
+                    @endforeach
+                </table>
+            </div>
+            <div class="col-md-8 offset-md-2 card bg-light">
                 <h1 class="text-center">
                     @lang('department.subjects')
                 </h1>
@@ -77,25 +96,7 @@
                     @endforeach
                 </table>
             </div>
-            <div class="col-sm-6 card bg-light">
-                <h1 class="text-center">
-                    @lang('department.pdis')
-                </h1>
-                <table class="table table-bordered bg-white">
-                    @foreach($pdis as $pdi)
-                        <tr>
-                            <td>
-                                <strong>
-                                    {{$pdi->getFullName()}}</br>
-                                </strong>
-                                <small class="font-weight-light">
-                                    {{$pdi->getEmail()}}
-                                </small>
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
-            </div>
+
         </div>
     </div>
 

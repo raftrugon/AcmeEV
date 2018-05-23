@@ -56,4 +56,8 @@ class Degree extends Model
                 ->where('degrees.id',$this->getId())
                 ->where('academic_year',Carbon::now()->year+1)->count() == 0;
     }
+
+    public function getStudents(){
+	return $this->hasMany('App\User','degree_id','id');
+    }
 }

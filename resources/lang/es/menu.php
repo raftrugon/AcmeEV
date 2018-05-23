@@ -7,4 +7,8 @@ return [
     'calendar'=>'Calendario',
     'systemconfig'=>'Conf. Sistema',
     'appointments-info'=>'Citas',
+    'my.subjects'=>'Mis asignaturas',
+    'enrollments'=>'Matrículas',
+    'administration'=>'Administración',
+    'subjects'=>'Asignaturas',
 ];

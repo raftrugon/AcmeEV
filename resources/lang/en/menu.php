@@ -7,4 +7,8 @@ return [
     'calendar'=>'Calendar',
     'systemconfig'=>'System Conf.',
     'appointments-info'=>'Appointments',
+    'my.subjects'=>'My Subjects',
+    'enrollments'=>'Enrollments',
+    'administration'=>'Administration',
+    'subjects'=>'Subjects',
 ];
