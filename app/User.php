@@ -82,5 +82,13 @@ class User extends Authenticatable
         return $this->belongsToMany('App\Group', 'student_group', 'student_id', 'group_id');
     }
 
+    public function getDegree(){
+	return $this->belongsTo('App\Degree','degree_id','id');
+    }
+
+    public function setDegree($value){
+    $this->degree_id=$value;
+    }
+
 
 }

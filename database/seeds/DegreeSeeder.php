@@ -24,12 +24,12 @@ class DegreeSeeder extends Seeder
         Degree::firstOrCreate(['name'=>'Grado en Administración de Empresas','code'=>'AAA000009','new_students_limit'=>15,'deleted'=>false]);
         Degree::firstOrCreate(['name'=>'Grado en Derecho','code'=>'AAA000010','new_students_limit'=>45,'deleted'=>false]);
 
-        Degree::firstOrCreate(['name'=>'Grado en Filología Inglesa','code'=>'AAA000013','new_students_limit'=>56,'deleted'=>false]);
+        /*Degree::firstOrCreate(['name'=>'Grado en Filología Inglesa','code'=>'AAA000013','new_students_limit'=>56,'deleted'=>false]);
         Degree::firstOrCreate(['name'=>'Grado en Filología Francesa','code'=>'AAA000015','new_students_limit'=>38,'deleted'=>false]);
         Degree::firstOrCreate(['name'=>'Grado en Magisterio','code'=>'AAA000016','new_students_limit'=>42,'deleted'=>false]);
 
         Degree::firstOrCreate(['name'=>'Grado en Criminología','code'=>'AAA000018','new_students_limit'=>34,'deleted'=>false]);
-        Degree::firstOrCreate(['name'=>'Grado en Audiovisuales','code'=>'AAA000019','new_students_limit'=>37,'deleted'=>false]);
+        Degree::firstOrCreate(['name'=>'Grado en Audiovisuales','code'=>'AAA000019','new_students_limit'=>37,'deleted'=>false]);*/
 
         //Degree::firstOrCreate(['name'=>'Grado en Ingeniería Informática - Tecnologías Informáticas','code'=>'AAA000003','new_students_limit'=>472,'deleted'=>false]);
         //Degree::firstOrCreate(['name'=>'Grado en Ingeniería de la Salud','code'=>'AAA000004','new_students_limit'=>24,'deleted'=>false]);
