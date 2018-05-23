@@ -5,9 +5,6 @@ $(function(){
    $('#chat-btn-min').click(function(){
        hideTab($(this).data('id'));
    });
-    $('#chat-btn-max').click(function(){
-
-    });
     $('#chat-btn-close').click(function(){
         let id = $('.chat-container').data('id');
         $('.chat-window[data-id='+id+']').remove();
@@ -31,6 +28,8 @@ function showTab(id,title){
     $('.chat-title').html(title);
     $('.chat-container').show().data('id',id);
     $('.chat-window[data-id='+id+']').find('input[name=body]').focus();
+    let messagesDiv = $('.chat-window[data-id='+id+']').find('.messages');
+    messagesDiv.animate({ scrollTop: messagesDiv.prop("scrollHeight")}, 700);
 }
 
 function hideTab(id){
@@ -79,7 +78,9 @@ function sendMessage(form){
 function retrieveMessages(){
     $.get(urlRetrieveMessages,function(data){
         $.each(data,function(i,value){
+            message(value['full_name'],value['body']);
             addReceivedMessage(value['conversation_id'],value['body']);
+            showTab(value['conversation_id']);
         });
     });
 }

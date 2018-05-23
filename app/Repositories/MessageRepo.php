@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Message;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MessageRepo extends BaseRepo
 {
@@ -23,12 +24,13 @@ class MessageRepo extends BaseRepo
     public function getUnreadMessages(){
         $messages = Message::
             join('conversations','conversations.id','=','messages.conversation_id')
+            ->join('users as senders','messages.sender_id','=','senders.id')
             ->where(function($subquery) {
                 $subquery->where('conversations.user1_id', Auth::id())
                     ->orWhere('conversations.user2_id', Auth::id());
             })
             ->where('messages.sender_id','<>',Auth::id())
-            ->select('messages.*')
+            ->select('messages.*',DB::raw('concat(senders.name," ",senders.surname) as full_name'))
             ->get();
         $notread = $messages->filter(function ($value){
             return !in_array(Auth::id(),$value->getDeliveredTo());

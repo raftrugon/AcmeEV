@@ -5,6 +5,7 @@
     background-color:#343a40!important;
     border-top-left-radius: 10px;
     height:40px;
+    z-index:999;
 }
 
 .chat-tab{
@@ -31,6 +32,8 @@
     height:400px;
     border:1px solid #343a40;
     border-radius: 7px;
+    z-index:999;
+    background:white;
 }
 
 .chat-window{
@@ -73,9 +76,10 @@
 .message{
     width:70%;
     margin-bottom:15px;
-    padding:.5rem 1rem .5rem 1rem;
+    padding:.3rem .8rem .3rem .8rem;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    font-size:80%;
 }
 
 .message-received:after {
@@ -132,4 +136,23 @@
 }
 
 .new-message-btn{
+}
+
+.new-chat-tab{
+}
+
+.new-chat-tab i{
+    color:#28a745;
+}
+
+.timestamp{
+    font-size:80%;
+}
+
+.message-received .timestamp{
+    float: right;
+}
+
+.message-sent .timestamp{
+    float: left;
 }
