@@ -21,7 +21,7 @@ class Group extends Model
     }
 
     public function getSubjectInstance() {
-        return $this->belongsTo('App\SubjectIntance','subject_instance_id','id');
+        return $this->belongsTo('App\SubjectInstance','subject_instance_id','id');
     }
 
     public function setSubjectInstance($value) {

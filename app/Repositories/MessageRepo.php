@@ -10,10 +10,12 @@ class MessageRepo extends BaseRepo
 {
 
     protected $conversationRepo;
+    protected $groupRepo;
 
-    public function __construct(ConversationRepo $conversationRepo)
+    public function __construct(ConversationRepo $conversationRepo, GroupRepo $groupRepo)
     {
         $this->conversationRepo = $conversationRepo;
+        $this->groupRepo = $groupRepo;
     }
 
     public function getModel()
@@ -22,12 +24,14 @@ class MessageRepo extends BaseRepo
     }
 
     public function getUnreadMessages(){
+        $myGroups = $this->groupRepo->getMyGroupsForThisYear()->get()->pluck('id')->toArray();
         $messages = Message::
             join('conversations','conversations.id','=','messages.conversation_id')
             ->join('users as senders','messages.sender_id','=','senders.id')
-            ->where(function($subquery) {
+            ->where(function($subquery) use($myGroups) {
                 $subquery->where('conversations.user1_id', Auth::id())
-                    ->orWhere('conversations.user2_id', Auth::id());
+                    ->orWhere('conversations.user2_id', Auth::id())
+                    ->orWhereIn('group_id',$myGroups);
             })
             ->where('messages.sender_id','<>',Auth::id())
             ->select('messages.*',DB::raw('concat(senders.name," ",senders.surname) as full_name'))

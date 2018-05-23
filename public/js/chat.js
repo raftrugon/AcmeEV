@@ -1,6 +1,15 @@
 $(function(){
-   $('.chat-tab').click(function(){
-        toggleTab($(this).data('id'),$(this).html());
+    $('[data-toggle="popover"]').popover({
+        html : true,
+        title: groupsPopoverTitle,
+        trigger:'focus',
+        container:'body',
+        template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body nav flex-column nav-pills"></div></div>'
+    });
+   $('body').on('click','.chat-tab',function(){
+       let id = $(this).data('id');
+       console.log(id);
+       if(id !== undefined) toggleTab(id,$(this).html());
    });
    $('#chat-btn-min').click(function(){
        hideTab($(this).data('id'));

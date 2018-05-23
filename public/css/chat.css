@@ -8,18 +8,27 @@
     z-index:999;
 }
 
-.chat-tab{
+/*.popover .chat-tab{*/
+    /*color:#007bff!important;*/
+    /*white-space: nowrap;*/
+/*}*/
+
+/*.popover .chat-tab:hover{*/
+    /*font-weight: bolder;*/
+/*}*/
+
+.chat-tab:not(.nav-link){
     padding: .5rem 1rem;
     color:white!important;
     cursor:pointer;
     height:40px;
 }
 
-.chat-tab:not(:first-child){
+.chat-tab:not(:first-child):not(.nav-link){
     border-left: 1px solid white;
 }
 
-.chat-tab:hover{
+.chat-tab:hover:not(.nav-link){
     color:#007bff!important;
 }
 

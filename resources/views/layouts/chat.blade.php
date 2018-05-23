@@ -1,8 +1,14 @@
 <nav class="nav nav-pills nav-justified chat-list">
     <a class="new-chat-tab chat-tab"><i class="fas fa-plus"></i></a>
+    @php($groupsStr = '')
     @foreach($conversations as $conversation)
-    <a data-id="{{$conversation->getId()}}" class="chat-tab">{{$conversation->getName()}}</a>
+    @if(is_null($conversation->getGroup))
+        <a data-id="{{$conversation->getId()}}" class="chat-tab">{{$conversation->getName()}}</a>
+    @else
+        @php($groupsStr .= '<a href="#" data-id=\''.$conversation->getId().'\' class=\'nav-link chat-tab\'>'.$conversation->getName().'</a>')
+    @endif
     @endforeach
+    <a tabindex="0" class="chat-tab" data-toggle="popover" data-placement="top" data-content="{{$groupsStr}}">Groups</a>
 </nav>
 
 <div class="chat-container">
