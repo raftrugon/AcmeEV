@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\ControlCheckInstance;
 use App\File;
 use App\Folder;
+use App\Repositories\ControlCheckRepo;
 use App\Repositories\SubjectRepo;
 use App\Subject;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
 
@@ -15,15 +18,18 @@ class SubjectController extends Controller
 {
 
     protected $subjectRepo;
+    protected $controlCheckRepo;
 
-    public function __construct(SubjectRepo $subjectRepo)
+    public function __construct(SubjectRepo $subjectRepo, ControlCheckRepo $controlCheckRepo)
     {
         $this->subjectRepo=$subjectRepo;
+        $this->controlCheckRepo=$controlCheckRepo;
     }
 
     public function getSubjectDisplay(Subject $subject){
         $announcements = $subject->getSubjectInstances()->where('academic_year',Carbon::now()->year)->first()->getAnnouncements;
-        return view('site.subject.display',compact('subject','announcements'));
+        $controlCheckInstances = $this->controlCheckRepo->getControlCheckInstancesForStudent($subject,null)->get();
+        return view('site.subject.display',compact('subject','announcements','controlCheckInstances'));
     }
 
     public function getFileSystemData(Request $request){

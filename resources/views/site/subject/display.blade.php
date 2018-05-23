@@ -35,7 +35,7 @@
         <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">@lang('subject.announcements')</a>
             <a class="nav-item nav-link" id="nav-filesystem-tab" data-toggle="tab" href="#nav-filesystem" role="tab" aria-controls="nav-filesystem" aria-selected="false">@lang('filesystem.tab')</a>
-            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">@lang('filesystem.controlchecks')</a>
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
@@ -46,7 +46,7 @@
             @include('site.subject.includes.filesystem')
         </div>
         <div class="tab-pane fade pt-3" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-
+            @include('site.subject.includes.controlchecks')
         </div>
     </div>
 
@@ -168,6 +168,14 @@
                     'error':   '@lang('global.dropify.error')'//'Ooops, something wrong happended.'
                 }
             });
+            $('#controlCheck_new_file').dropify({
+                messages: {
+                    'default': '@lang('global.dropify.default')', //'Drag and drop a file here or click',
+                    'replace': '@lang('global.dropify.replace')',//'Drag and drop or click to replace',
+                    'remove':  '@lang('global.dropify.remove')',//'Remove',
+                    'error':   '@lang('global.dropify.error')'//'Ooops, something wrong happended.'
+                }
+            });
 
             loadContent(null);
 
@@ -211,6 +219,37 @@
                             $('#new_file_url').val('');
                             success('@lang('global.success')', '@lang('filesystem.folder.new.success')');
                             loadContent($('#nav-filesystem').data('id-current'));
+                        }
+                    }
+                    });
+            });
+
+            $('#uploadControlCheckModal').on('show.bs.modal', function (event) {
+                let button = $(event.relatedTarget);
+                let recipient = button.data('id');
+                let modal = $(this);
+                modal.find('.modal-body input[name=id]').val(recipient);
+            })
+
+            $('#control_check_submit').click(function(){
+                $('#control_check_form .dropify-wrapper').css('border', '2px solid #E5E5E5');
+                let data = new FormData(document.getElementById('control_check_form'));
+                let id = data.get('id');
+                $.ajax({
+                    type: 'POST',
+                    url: '{{route('upload_control_check')}}',
+                    data: data,
+                    mimeType: "multipart/form-data",
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        if (data === 'true') {
+                            $('#uploadControlCheckModal').modal('hide');
+                            $('#new_file_url').val('');
+                            success('@lang('global.success')', '@lang('controlCheck.uploaded')');
+                            $('#uploadButton'+id).remove();
+                        }else{
+                            error('@lang('global.error')','@lang('controlCheck.uploadFail')');
                         }
                     }
                     });

@@ -53,6 +53,7 @@ class ControlCheckController extends Controller
                             'calification' => null,
                             'control_check_id' => $saved->getId(),
                             'student_id' => $student->getId(),
+                            'url'=>null,
                         );
                         $this->controlCheckInstanceRepo->create($controlCheckInstance);
                 }

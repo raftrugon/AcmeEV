@@ -13,6 +13,7 @@ class CreateControlCheckInstancesTable extends Migration
             $table->integer('calification')->nullable();
             $table->integer('control_check_id')->unsigned();
             $table->integer('student_id')->unsigned();
+            $table->string('url')->nullable();
 
             $table->index('control_check_id');
             $table->index('student_id');
