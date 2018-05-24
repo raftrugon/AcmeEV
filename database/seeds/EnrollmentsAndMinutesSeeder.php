@@ -8,7 +8,7 @@ use App\User;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
-class EnrollmentSeeder extends Seeder
+class EnrollmentsAndMinutesSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -35,8 +35,9 @@ class EnrollmentSeeder extends Seeder
         if(date('m') > 8)
             $actual_academic_year++;
 
-
         $students = User::join('model_has_permissions','users.id','=','model_has_permissions.model_id')->where('model_has_permissions.permission_id', 2)->whereNotNull('users.degree_id')->select('users.*')->get();
+
+        info('Seeding Enrollments for students since '.$min_academic_year.'/'.$max_academic_year.' to '.$actual_academic_year.' and assigning groups of the subjects and creating their corresponding minutes.('.count($students->toArray()).' Students).');
 
         foreach ($students as $student){
 
@@ -76,7 +77,7 @@ class EnrollmentSeeder extends Seeder
 
                     //Checks if the student has still subjects to enrol
                     if($number_of_subjects_on_degree - $passed_subjects_ids_count <= $j) {
-                        info('Student '.$student->getId().'already enrolled all subjects.');
+                        info('Student '.$student->getId().'already enrolled all subjects for this year.');
                         break;
                     }
 
