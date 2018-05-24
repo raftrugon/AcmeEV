@@ -30,7 +30,7 @@ class SubjectInstanceSeeder extends Seeder{
         $subjects_id = Subject::all()->pluck('id')->toArray();
         $count = count($subjects_id);
 
-        info('Seeding from '.$minimum_seeds.' to '.$maximum_seeds.' Subjects Instance for each Subject(From a year until actual year. '.$count.' Subjects).');
+        info('Seeding from '.$minimum_seeds.' to '.$maximum_seeds.' Subjects Instance for each Subject(From a specific year until actual year. '.$count.' Subjects).');
 
         foreach($subjects_id as $subject_id){
 

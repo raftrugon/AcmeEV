@@ -14,7 +14,7 @@ class CreateGroupsTable extends Migration
     public function up()
     {
         Schema::create('groups', function (Blueprint $table) {
-            $table->increments('id');
+
 
             $table->integer('number');
             $table->integer('subject_instance_id')->unsigned();
@@ -30,6 +30,8 @@ class CreateGroupsTable extends Migration
             $table->foreign('theory_lecturer_id')->references('id')->on('users');
             $table->foreign('practice_lecturer_id')->references('id')->on('users');
 
+
+            $table->increments('id');
             $table->timestamps();
         });
     }

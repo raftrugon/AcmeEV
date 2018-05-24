@@ -13,8 +13,8 @@ class GroupSeeder extends Seeder{
         $faker = Factory::create();
 
 
-        $minimum_number_groups = 3;
-        $maximum_number_groups = 4;
+        $minimum_number_groups = 2;
+        $maximum_number_groups = 3;
 
         //////////////////////////////////////////////////////////////
 
@@ -27,10 +27,10 @@ class GroupSeeder extends Seeder{
 
 
         //Busca las subject instances desde 2 años atras
-        $subject_instances = SubjectInstance::where('academic_year','>',$actual_academic_year-2)->get();
+        $subject_instances = SubjectInstance::where('academic_year','>',$actual_academic_year-5)->get();
         $count = count($subject_instances);
 
-        info('Seeding from '.$minimum_number_groups.' to '.$maximum_number_groups.' Groups for each Subject Instance not older than 2 years('.$count.' Subject Instances found).');
+        info('Seeding from '.$minimum_number_groups.' to '.$maximum_number_groups.' Groups for each Subject Instance not older than 5 years('.$count.' Subject Instances found).');
 
 
         //Por cada subject instance
