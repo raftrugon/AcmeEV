@@ -34,4 +34,8 @@ class Enrollment extends Model
     public function setSubjectInstance($value){
         $this->subject_instance_id=$value;
     }
+
+    public function getMinutes() {
+        return $this->hasMany('App\Minute','enrollment_id','id');
+    }
 }

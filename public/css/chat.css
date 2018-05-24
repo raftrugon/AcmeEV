@@ -5,20 +5,30 @@
     background-color:#343a40!important;
     border-top-left-radius: 10px;
     height:40px;
+    z-index:999;
 }
 
-.chat-tab{
+/*.popover .chat-tab{*/
+    /*color:#007bff!important;*/
+    /*white-space: nowrap;*/
+/*}*/
+
+/*.popover .chat-tab:hover{*/
+    /*font-weight: bolder;*/
+/*}*/
+
+.chat-tab:not(.nav-link){
     padding: .5rem 1rem;
     color:white!important;
     cursor:pointer;
     height:40px;
 }
 
-.chat-tab:not(:first-child){
+.chat-tab:not(:first-child):not(.nav-link){
     border-left: 1px solid white;
 }
 
-.chat-tab:hover{
+.chat-tab:hover:not(.nav-link){
     color:#007bff!important;
 }
 
@@ -31,6 +41,8 @@
     height:400px;
     border:1px solid #343a40;
     border-radius: 7px;
+    z-index:999;
+    background:white;
 }
 
 .chat-window{
@@ -73,9 +85,10 @@
 .message{
     width:70%;
     margin-bottom:15px;
-    padding:.5rem 1rem .5rem 1rem;
+    padding:.3rem .8rem .3rem .8rem;
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
+    font-size:80%;
 }
 
 .message-received:after {
@@ -132,4 +145,23 @@
 }
 
 .new-message-btn{
+}
+
+.new-chat-tab{
+}
+
+.new-chat-tab i{
+    color:#28a745;
+}
+
+.timestamp{
+    font-size:80%;
+}
+
+.message-received .timestamp{
+    float: right;
+}
+
+.message-sent .timestamp{
+    float: left;
 }

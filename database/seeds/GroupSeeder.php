@@ -1,5 +1,6 @@
 <?php
 
+use App\Conversation;
 use App\Group;
 use App\SubjectInstance;
 use App\User;
@@ -49,11 +50,15 @@ class GroupSeeder extends Seeder{
                 $practice_lecturer_id = $faker->randomElement(User::join('subjects', 'users.department_id', '=', 'subjects.department_id')->where('subjects.id', $subject_id)->where('users.id','!=',$theory_lecturer_id)->select('users.id')->pluck('id')->toArray());
 
                 //Creacion del objeto
-                Group::firstOrCreate([
+                $group = Group::firstOrCreate([
                     'number'=>$i,
                     'subject_instance_id'=>$subject_instance->getId(),
                     'theory_lecturer_id'=>$theory_lecturer_id,
                     'practice_lecturer_id'=>$practice_lecturer_id
+                ]);
+
+                Conversation::firstOrCreate([
+                    'group_id'=>$group->getId()
                 ]);
             }
 

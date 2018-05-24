@@ -30,3 +30,20 @@ function error(title,msg){
     });
 }
 
+function message(title,msg){
+    iziToast.show({
+        theme: 'dark',
+        icon: 'icon-drafts',
+        title: title,
+        message: msg,
+        position: 'topRight',
+        transitionIn: 'flipInX',
+        transitionOut: 'flipOutX',
+        progressBarColor: 'rgb(0, 255, 184)',
+        image: 'img/avatar.jpg',
+        imageWidth: 70,
+        layout: 2,
+        iconColor: 'rgb(0, 255, 184)'
+    });
+}
+

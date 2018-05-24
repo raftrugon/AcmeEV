@@ -113,6 +113,9 @@ Route::group(['prefix'=>'student'],function(){
         Route::post('control-check/upload','Student\ControlCheckController@uploadControlCheck')->name('upload_control_check');
     });
     Route::get('my-subjects', 'Student\SubjectInstanceController@getMySubjectInstances');
+    Route::group(['prefix'=>'minute'], function() {
+        Route::get('my-minutes','Student\MinuteController@getMinutesForStudent');
+    });
 });
 
 //////////////////////////////////////////////////////// Logged ////////////////////////////////////////////////////////

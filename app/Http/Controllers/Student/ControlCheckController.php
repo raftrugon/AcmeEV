@@ -15,7 +15,7 @@ class ControlCheckController extends Controller
     protected $controlCheckRepo;
     protected $controlCheckInstanceRepo;
 
-    public function __construct(ControlCheckRepo $controlCheckRepo, ControlCheckInstanceRepo $controlCheckInstanceRepo)
+    public function __construct(ControlCheckRepo $controlCheckRepo, ControlCheckInstanceReponceRepo $controlCheckInstanceRepo)
     {
         $this->controlCheckRepo = $controlCheckRepo;
         $this->controlCheckInstanceRepo = $controlCheckInstanceRepo;

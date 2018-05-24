@@ -125,6 +125,7 @@
 <script>
     const urlNewMessage = '{{URL::to('chat/message/new')}}';
     const urlRetrieveMessages = '{{URL::to('chat/message/un-read')}}';
+    const groupsPopoverTitle = '@lang('chat.groups')';
 
     $.ajaxSetup({
         headers: {
