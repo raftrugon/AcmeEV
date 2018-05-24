@@ -11,4 +11,5 @@ return [
     'enrollments'=>'Matrículas',
     'administration'=>'Administración',
     'subjects'=>'Asignaturas',
+    'minutes'=>'Calificaciones',
 ];

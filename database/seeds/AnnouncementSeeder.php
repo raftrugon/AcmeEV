@@ -12,7 +12,7 @@ class AnnouncementSeeder extends Seeder
      */
     public function run()
     {
-        $number_of_announcements = 200;
+        $number_of_announcements = 500;
 
         //////////////////////////////////////////////////////////////
 

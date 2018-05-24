@@ -14,7 +14,7 @@ class LecturersFromDepartmentsSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        $minimum_number_lecturers = 2;
+        $minimum_number_lecturers = 3;
         $maximum_number_lecturers = 5;
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////

@@ -11,4 +11,5 @@ return [
     'enrollments'=>'Enrollments',
     'administration'=>'Administration',
     'subjects'=>'Subjects',
+    'minutes'=>'Minutes',
 ];

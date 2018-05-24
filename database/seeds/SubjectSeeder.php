@@ -18,6 +18,8 @@ class SubjectSeeder extends Seeder{
         $minimum_number_subjects_course = 4;
         $maximum_number_subjects_course = 6;
 
+        $counter = 1;
+
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -29,7 +31,7 @@ class SubjectSeeder extends Seeder{
 
         foreach($degrees_id as $degree_id){                         //Por cada grado
 
-            $edp = true;
+
 
             for($i = 1; $i < 5; $i++) {                             //Por cada curso
 
@@ -47,16 +49,11 @@ class SubjectSeeder extends Seeder{
                             $subject_type = 'BASIC';
                             break;
                         case 4:
-                            if($edp){
-                                $edp = false;
-                                $subject_type = 'EDP';
-                                break;
-                            }
                             $subject_type = $faker->randomElement(['OBLIGATORY', 'OPTATIVE']);
                     };
 
                     Subject::firstOrCreate([
-                        'name' => $faker->words(4, true),
+                        'name' => 'Subject '.$counter,
                         'code' => $faker->unique()->regexify('[A-Z]{3}[0-9]{6}'),
                         'school_year' => $i,
                         'semester' => $faker->boolean(70) ? $faker->boolean() : null,
@@ -66,6 +63,22 @@ class SubjectSeeder extends Seeder{
                         'subject_type' => $subject_type
                     ]);
 
+                    $counter++;
+                }
+
+                $department_id = $faker->randomElement(Department::all()->pluck('id')->toArray());
+
+                if($i == 4){ //EDP
+                    Subject::firstOrCreate([
+                        'name' => Degree::where('id', $degree_id)->first()->getName().' End Degree Project',
+                        'code' => $faker->unique()->regexify('[A-Z]{3}[0-9]{6}'),
+                        'school_year' => $i,
+                        'semester' => $faker->boolean(70) ? $faker->boolean() : null,
+                        'department_id' => $department_id,
+                        'degree_id' => $degree_id,
+                        'coordinator_id' => User::join('model_has_permissions','users.id','=','model_has_permissions.model_id')->where('model_has_permissions.permission_id', 6)->where('department_id', $department_id)->get()->pluck('id')->first(),
+                        'subject_type' => 'EDP'
+                    ]);
                 }
             }
         }

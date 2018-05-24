@@ -73,7 +73,7 @@ class EnrollmentsAndMinutesSeeder extends Seeder
 
 
                 //Generación de enrollments, minutes y asignación de grupos
-                for($j = 0; $j <= $number_of_enrollments_this_year; $j++){
+                for($j = 0; $j < $number_of_enrollments_this_year; $j++){
 
                     //Checks if the student has still subjects to enrol
                     if($number_of_subjects_on_degree - $passed_subjects_ids_count <= $j) {

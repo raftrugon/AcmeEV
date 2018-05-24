@@ -14,7 +14,7 @@ class GroupSeeder extends Seeder{
         $faker = Factory::create();
 
 
-        $minimum_number_groups = 2;
+        $minimum_number_groups = 1;
         $maximum_number_groups = 3;
 
         //////////////////////////////////////////////////////////////
