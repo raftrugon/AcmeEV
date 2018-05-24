@@ -1,5 +1,10 @@
 <nav class="nav nav-pills nav-justified chat-list">
-    <a class="new-chat-tab chat-tab"><i class="fas fa-plus"></i></a>
+    @php($usersStr = '<select class="picker" data-size="5" data-live-search="true">')
+    @foreach($users as $user)
+        @php($usersStr .= '<option value="'.$user->id.'">'.$user->full_name.'</option>')
+    @endforeach
+    @php($usersStr .= '</select>')
+    <a tabindex="0" class="new-chat-tab chat-tab" data-toggle="popover" data-placement="top" data-content="{{$usersStr}}"><i class="fas fa-plus"></i></a>
     @php($groupsStr = '')
     @foreach($conversations as $conversation)
     @if(is_null($conversation->getGroup))
@@ -8,7 +13,7 @@
         @php($groupsStr .= '<a href="#" data-id=\''.$conversation->getId().'\' class=\'nav-link chat-tab\'>'.$conversation->getName().'</a>')
     @endif
     @endforeach
-    <a tabindex="0" class="chat-tab" data-toggle="popover" data-placement="top" data-content="{{$groupsStr}}">Groups</a>
+    <a tabindex="0" class="groups-tab chat-tab" data-toggle="popover" data-placement="top" data-content="{{$groupsStr}}">Groups</a>
 </nav>
 
 <div class="chat-container">

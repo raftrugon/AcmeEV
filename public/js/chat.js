@@ -1,10 +1,21 @@
 $(function(){
-    $('[data-toggle="popover"]').popover({
+    $('.groups-tab').popover({
         html : true,
         title: groupsPopoverTitle,
         trigger:'focus',
         container:'body',
         template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body nav flex-column nav-pills"></div></div>'
+    });
+    $('.new-chat-tab').popover({
+        html : true,
+        container:'body',
+        template:'<div class="popover" role="tooltip"><div class="arrow"></div><h3 class="popover-header"></h3><div class="popover-body"></div></div>'
+    });
+    $('.new-chat-tab').on('shown.bs.popover',function(){
+        $('.picker').selectpicker();
+        $('.picker').on('changed.bs.select',function(){
+            //Ajax post para crear conversación si no existe y traer información y pintar.
+        });
     });
    $('body').on('click','.chat-tab',function(){
        let id = $(this).data('id');
