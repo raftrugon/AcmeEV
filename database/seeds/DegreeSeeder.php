@@ -12,7 +12,7 @@ class DegreeSeeder extends Seeder
      */
     public function run()
     {
-        info('Seeding 11 Degrees.');
+        info('Seeding 6 Degrees.');
 
         //////////////////////////////////////////////////////////////
 

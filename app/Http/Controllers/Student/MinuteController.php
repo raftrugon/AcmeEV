@@ -18,7 +18,7 @@ class MinuteController extends Controller
     }
 
     public function getMinutesForStudent() {
-        $academic_years = $this->minuteRepo->getMinutesForStudent()->orderBy('academic_year', 'DESC')->get()->groupBy('academic_year');
+        $academic_years = $this->minuteRepo->getMinutesForStudent()->get()->groupBy('academic_year');
         return view('site.student.minute.my-minutes',compact('academic_years'));
     }
 }

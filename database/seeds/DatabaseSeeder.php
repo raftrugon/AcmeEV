@@ -13,12 +13,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->call(SystemConfigSeeder::class);
         $this->call(DegreeSeeder::class);
-        $this->call(DepartmentSeeder::class);
+        $this->call(DepartmentSeeder::class);                   //Basado en degrees
         $this->call(UsersAndRolesSeeder::class);
         $this->call(RoomSeeder::class);
 
-        //$this->call(DegreeSeeder::class);
-        $this->call(DepartmentSeeder::class);                   //Basado en degrees
+
         $this->call(LecturersFromDepartmentsSeeder::class);     //Basado en departments
 
         $this->call(SubjectSeeder::class);                      //Basado en degrees
