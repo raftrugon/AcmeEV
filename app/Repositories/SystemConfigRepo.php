@@ -29,7 +29,7 @@ class SystemConfigRepo extends BaseRepo
             $DB_actual_state = $DB_system_config->getActualState();
 
             $new_state = $DB_actual_state + 1;
-            if($new_state > 5)
+            if($new_state > 7)
                 $new_state = 0;
 
             $new_system_config = array(
@@ -43,8 +43,9 @@ class SystemConfigRepo extends BaseRepo
             switch ($new_state)
             {
                 case 1: break;  //Indicar aquí auto computación primera de inscripciones
-                case 2: break;  //Indicar aquí auto computación segunda de inscripciones //Indicar aquí auto generación de subject instances
-                case 4: break;  //Indicar aquí auto computación de minutes con control checks
+                case 2: break;  //Indicar aquí auto computación segunda de inscripciones //Indicar aquí la auto generación de usuarios con las inscripciones aceptadas //Indicar aquí auto generación de subject instances
+                case 4: break;  //Indicar aquí auto computación de minutes con control checks del primer cuatrimestre
+                case 6: break;  //Indicar aquí auto computación de minutes con control checks del segundo cuatrimestre y anuales
             }
         } catch(\Exception $e){
             DB::rollBack();
