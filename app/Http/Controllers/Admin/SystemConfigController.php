@@ -23,7 +23,17 @@ class SystemConfigController extends Controller
 
     public function getEditSystemConfig(){
         $system_config = $this->systemConfigRepo->getSystemConfig();
-        return view('site.admin.systemConfig.edit', compact('system_config'));
+        $actual_state = $system_config->getActualState();
+        $next_state = $actual_state + 1;
+        if($next_state > 5)
+            $next_state = 0;
+
+        $state_actual_title = 'systemConfig.state.'.$actual_state.'.title';
+        $state_actual_body = 'systemConfig.state.'.$actual_state.'.body';
+        $state_next_title = 'systemConfig.state.'.$next_state.'.title';
+        $state_next_body = 'systemConfig.state.'.$next_state.'.body';
+
+        return view('site.admin.systemConfig.edit', compact('system_config','state_actual_title','state_actual_body','state_next_title','state_next_body'));
     }
 
     public function postSaveSystemConfig(Request $request){
@@ -32,15 +42,6 @@ class SystemConfigController extends Controller
             'max_annual_summons_number'=>'required|integer|min:1',
             'secretariat_open_time'=>'required|date_format:H:i:s',
             'secretariat_close_time'=>'required|date_format:H:i:s|after:secretariat_open_time',
-            'inscriptions_start_date'=>'required|date|after:today',
-            'first_provisional_inscr_list_date'=>'required|date|after:today|after:inscriptions_start_date',
-            'second_provisional_inscr_list_date'=>'required|date|after:today|after:first_provisional_inscr_list_date',
-            'final_inscr_list_date'=>'required|date|after:today|after:second_provisional_inscr_list_date',
-            'enrolment_start_date'=>'required|date|after:today',
-            'enrolment_end_date'=>'required|date|after:today|after:enrolment_start_date',
-            'provisional_minutes_date'=>'required|date|after:today',
-            'final_minutes_date'=>'required|date|after:today|after:provisional_minutes_date',
-            'academic_year_end_date'=>'required|date|after:today'
         ]);
 
         if($validator->fails()){
@@ -54,15 +55,6 @@ class SystemConfigController extends Controller
                 'max_annual_summons_number' => $request->input('max_annual_summons_number'),
                 'secretariat_open_time' => $request->input('secretariat_open_time'),
                 'secretariat_close_time' => $request->input('secretariat_close_time'),
-                'inscriptions_start_date' => $request->input('inscriptions_start_date'),
-                'first_provisional_inscr_list_date' => $request->input('first_provisional_inscr_list_date'),
-                'second_provisional_inscr_list_date' => $request->input('second_provisional_inscr_list_date'),
-                'final_inscr_list_date' => $request->input('final_inscr_list_date'),
-                'enrolment_start_date' => $request->input('enrolment_start_date'),
-                'enrolment_end_date' => $request->input('enrolment_end_date'),
-                'provisional_minutes_date' => $request->input('provisional_minutes_date'),
-                'final_minutes_date' => $request->input('final_minutes_date'),
-                'academic_year_end_date' => $request->input('academic_year_end_date'),
             );
 
             $systemConfigDB = $this->systemConfigRepo->findOrFail($request->input('id'));
@@ -75,6 +67,18 @@ class SystemConfigController extends Controller
         }
 
         return redirect()->action('Admin\SystemConfigController@getEditSystemConfig')->with('success',__('systemConfig.success'));
+    }
+
+
+    public function getIncrementStateMachine(){
+        try {
+            $this->systemConfigRepo->incrementStateMachine();
+            return redirect()->back()->with('success',__('systemConfig.increment.success'));
+        }catch(\Exception $e){
+            return redirect()->back()->with('error',__('systemConfig.increment.error'));
+        }catch(\Throwable $t){
+            return redirect()->back()->with('error',__('systemConfig.increment.error'));
+        }
     }
 
     public function postInscriptionBatch(){

@@ -42,6 +42,7 @@ Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){
         Route::get('edit', 'Admin\SystemConfigController@getEditSystemConfig');
         Route::post('save', 'Admin\SystemConfigController@postSaveSystemConfig');
         Route::post('first_inscription_process','Admin\SystemConfigController@postInscriptionBatch')->name('process_inscriptions');
+        Route::get('increment-state','Admin\SystemConfigController@getIncrementStateMachine');
     });
     Route::post('/degreeDelete','Admin\DegreeController@deleteDegree')->name('delete_degree');
 });
