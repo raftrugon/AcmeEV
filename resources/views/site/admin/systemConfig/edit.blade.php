@@ -12,17 +12,48 @@
                         <li class="nav-item col-md-6" style="padding: 0; margin: 0">
                             <a class="nav-link active" data-toggle="pill" href="#tab1" role="button"
                                aria-expanded="true"
-                               aria-controls="tab1"><Strong>@lang('systemConfig.edit.tab1')</Strong></a>
+                               aria-controls="tab1"><Strong>@lang('systemConfig.edit.tab2')</Strong></a>
                         </li>
                         <li class="nav-item col-md-6" style="padding: 0; margin: 0">
                             <a class="nav-link" data-toggle="pill" href="#tab2" role="button" aria-expanded="false"
-                               aria-controls="tab2"><Strong>@lang('systemConfig.edit.tab2')</Strong></a>
+                               aria-controls="tab2"><Strong>@lang('systemConfig.edit.tab1')</Strong></a>
                         </li>
                     </ul>
                 </div>
                 <div class="card-body tab-content">
 
+                    {{---------------------------------------------------------------------------------------------------- FIRST TAB ----------------------------------------------------------------------------------------------------}}
                     <div class="tab-pane fade show active" id="tab1" data-parent="#accordion">
+                        <div class="row" style="padding: 0; margin: 0;">
+                            <div class="row col-12" style="padding: 0; margin: 0;">
+                                <div class="card border-success col-5 mb-3" style="max-width: 95%;padding:0;margin: 0">
+                                    <div class="card-header text-center font-weight-bold">@lang('systemConfig.state.actual')</div>
+                                    <div class="card-body text-success">
+                                        <h5 class="card-title">@lang($state_actual_title)</h5>
+                                        <p class="card-text">@lang($state_actual_body)</p>
+                                    </div>
+                                </div>
+                                <div class="col-2" style="max-width: 95%;padding: 50px 0;margin: 0">
+                                    <a class="text-light nav-link" href="{{URL::to('admin/systemconfig/increment-state')}}">
+                                        <i class="fas fa-arrow-alt-circle-right d-block text-primary text-center" style="font-size: 60px; margin-top: 50px"></i>
+                                        <span class="d-block text-primary text-center text-" style="font-size: 16px; margin-top: 5px">
+                                            <strong>@lang('systemConfig.state.go')</strong>
+                                        </span>
+                                    </a>
+                                </div>
+                                <div class="card border-primary col-5 mb-3" style="max-width: 95%;padding:0;margin: 0">
+                                    <div class="card-header text-center font-weight-bold">@lang('systemConfig.state.next')</div>
+                                    <div class="card-body text-info">
+                                        <h5 class="card-title">@lang($state_next_title)</h5>
+                                        <p class="card-text">@lang($state_next_body)</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{---------------------------------------------------------------------------------------------------- SECOND TAB ----------------------------------------------------------------------------------------------------}}
+                    <div class="tab-pane fade" id="tab2" data-parent="#accordion">
                         <form id="systemconfig_form" action="{{URL::to('admin/systemconfig/save')}}" method="post">
                             {{ csrf_field() }}
                             <div class="row align-items-end">
@@ -45,15 +76,8 @@
                             </div>
                         </form>
                     </div>
-                    <div class="tab-pane fade" id="tab2" data-parent="#accordion">
-                        <div class="row">
-                            <button id="first_inscriptions" type="button"
-                                    class="btn btn-info col-sm-4">@lang('systemConfig.edit.first-inscriptions')</button>
-                        </div>
-                    </div>
 
                 </div>
-
             </div>
         </div>
     </div>

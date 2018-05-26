@@ -23,7 +23,17 @@ class SystemConfigController extends Controller
 
     public function getEditSystemConfig(){
         $system_config = $this->systemConfigRepo->getSystemConfig();
-        return view('site.admin.systemConfig.edit', compact('system_config'));
+        $actual_state = $system_config->getActualState();
+        $next_state = $actual_state + 1;
+        if($next_state > 5)
+            $next_state = 0;
+
+        $state_actual_title = 'systemConfig.state.'.$actual_state.'.title';
+        $state_actual_body = 'systemConfig.state.'.$actual_state.'.body';
+        $state_next_title = 'systemConfig.state.'.$next_state.'.title';
+        $state_next_body = 'systemConfig.state.'.$next_state.'.body';
+
+        return view('site.admin.systemConfig.edit', compact('system_config','state_actual_title','state_actual_body','state_next_title','state_next_body'));
     }
 
     public function postSaveSystemConfig(Request $request){
@@ -57,6 +67,18 @@ class SystemConfigController extends Controller
         }
 
         return redirect()->action('Admin\SystemConfigController@getEditSystemConfig')->with('success',__('systemConfig.success'));
+    }
+
+
+    public function getIncrementStateMachine(){
+        try {
+            $this->systemConfigRepo->incrementStateMachine();
+            return redirect()->back()->with('success',__('systemConfig.increment.success'));
+        }catch(\Exception $e){
+            return redirect()->back()->with('error',__('systemConfig.increment.error'));
+        }catch(\Throwable $t){
+            return redirect()->back()->with('error',__('systemConfig.increment.error'));
+        }
     }
 
     public function postInscriptionBatch(){
