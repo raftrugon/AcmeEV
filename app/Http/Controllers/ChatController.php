@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Conversation;
 use App\Repositories\ConversationRepo;
+use App\Repositories\GroupRepo;
 use App\Repositories\MessageRepo;
 use App\User;
 use Illuminate\Http\Request;
@@ -15,10 +16,12 @@ class ChatController extends Controller
 {
     protected $conversationRepo;
     protected $messageRepo;
+    protected $groupRepo;
 
-    public function __construct(ConversationRepo $conversationRepo, MessageRepo $messageRepo){
+    public function __construct(ConversationRepo $conversationRepo, MessageRepo $messageRepo, GroupRepo $groupRepo){
         $this->conversationRepo = $conversationRepo;
         $this->messageRepo = $messageRepo;
+        $this->groupRepo = $groupRepo;
     }
 
     public function postNewMessage(Request $request){
@@ -36,6 +39,10 @@ class ChatController extends Controller
 
     public function getLoadChats(){
         $conversations = Conversation::find(Session::get('conversations',array()));
+        $myGroups = $this->groupRepo->getMyGroupsForThisYear()->get()->pluck('id')->toArray();
+        $groupConversations = Conversation::whereIn('group_id',$myGroups)
+            ->get();
+        $conversations = $conversations->merge($groupConversations);
         $users = User::orderBy('surname','ASC')->orderBy('name','ASC')->get();
         $windows = View::make('layouts.chat.conversations',compact('conversations'))->render();
         $links = View::make('layouts.chat.links',compact('conversations','users'))->render();

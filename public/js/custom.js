@@ -48,3 +48,21 @@ function message(title,msg){
     });
 }
 
+function groupMessage(title,msg,sender){
+    if(msg.length > 38) msg = msg.substr(0,35)+'...';
+    iziToast.show({
+        theme: 'dark',
+        icon: 'fas fa-envelope',
+        title: title,
+        message: '<strong>'+sender+':</strong> '+msg,
+        position: 'topRight',
+        transitionIn: 'flipInX',
+        transitionOut: 'flipOutX',
+        progressBarColor: 'rgb(153, 255, 0)',
+        image: 'img/avatar-group.png',
+        imageWidth: 70,
+        layout: 2,
+        iconColor: 'rgb(153, 255, 0)'
+    });
+}
+
