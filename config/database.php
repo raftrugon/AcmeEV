@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'default' => env('DB_CONNECTION', 'mysql'),
+    'default' => env('APP_ENV','local') == 'jelastic' ? 'jelastic' : env('DB_CONNECTION', 'mysql'),
 
     /*
     |--------------------------------------------------------------------------
@@ -91,6 +91,20 @@ return [
             'password' => env('DB_PASSWORD', ''),
             'charset' => 'utf8',
             'prefix' => '',
+        ],
+        'jelastic' => [
+            'driver' => 'mysql',
+            'host' => 'node21591-acmev.jelastic.cloudhosted.es',
+            'port' => '3306',
+            'database' => 'acmev_db',
+            'username' => 'root',
+            'password' => 'YKGhys74796',
+            'unix_socket' => env('DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => false,
+            'engine' => null,
         ],
 
     ],

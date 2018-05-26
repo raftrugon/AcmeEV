@@ -166,6 +166,11 @@ Route::group(['prefix'=>'subject'],function(){
 });
 
 Route::group(['prefix'=>'chat','middleware','middleware'=>'auth'],function(){
+    Route::post('new','ChatController@postNewChat');
+    Route::get('load','ChatController@getLoadChats');
+    Route::post('close','ChatController@postCloseChat');
+    Route::post('open','ChatController@postOpenChat');
+    Route::post('min','ChatController@postMinChat');
     Route::group(['prefix'=>'message'],function(){
        Route::post('new','ChatController@postNewMessage');
        Route::get('un-read','ChatController@getUnreadMessages');

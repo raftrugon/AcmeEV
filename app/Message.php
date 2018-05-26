@@ -45,6 +45,18 @@ class Message extends Model
         return $this->getSender->getId() == Auth::id();
     }
 
+    public function getReadBy(){
+        return is_null($this->read_by) ? array() : explode(',',$this->read_by);
+    }
+
+    public function addReadBy($value){
+        $this->read_by = is_null($this->read_by) ? $value : $this->read_by.','.$value;
+    }
+
+    public function isRead(){
+        return in_array(Auth::id(),$this->getReadBy()) || $this->isMine();
+    }
+
     public function getDeliveredTo(){
         return is_null($this->delivered_to) ? array() : explode(',',$this->delivered_to);
     }

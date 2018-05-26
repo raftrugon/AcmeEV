@@ -31,16 +31,17 @@ function error(title,msg){
 }
 
 function message(title,msg){
+    if(msg.length > 38) msg = msg.substr(0,35)+'...';
     iziToast.show({
         theme: 'dark',
-        icon: 'icon-drafts',
+        icon: 'fas fa-envelope',
         title: title,
         message: msg,
         position: 'topRight',
         transitionIn: 'flipInX',
         transitionOut: 'flipOutX',
         progressBarColor: 'rgb(0, 255, 184)',
-        image: 'img/avatar.jpg',
+        image: 'img/avatar.png',
         imageWidth: 70,
         layout: 2,
         iconColor: 'rgb(0, 255, 184)'

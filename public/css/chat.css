@@ -89,6 +89,7 @@
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     font-size:80%;
+    word-wrap:break-word;
 }
 
 .message-received:after {
@@ -124,6 +125,7 @@
 .messages{
     max-height: 85%;
     overflow-y:auto;
+    padding-right:.25rem;
 }
 
 .send-div{
@@ -164,4 +166,16 @@
 
 .message-sent .timestamp{
     float: left;
+}
+
+.chat-picker .dropdown-toggle::after{
+    display:none!important;
+}
+
+.chat-picker .dropdown-menu li:first-child{
+    display:none;
+}
+
+.not-read-badge{
+    margin-left: 1em;
 }

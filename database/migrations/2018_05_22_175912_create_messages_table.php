@@ -18,6 +18,7 @@ class CreateMessagesTable extends Migration
             $table->text('body');
             $table->integer('sender_id')->unsigned();
             $table->integer('conversation_id')->unsigned();
+            $table->string('read_by')->nullable();
             $table->string('delivered_to')->nullable();
 
             $table->foreign('sender_id')->references('id')->on('users');

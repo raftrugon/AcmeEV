@@ -39,12 +39,10 @@ class MessageRepo extends BaseRepo
         $notread = $messages->filter(function ($value){
             return !in_array(Auth::id(),$value->getDeliveredTo());
         });
-
-        $notread->each(function($value){
-            $value->addDeliveredTo(Auth::id());
-            $this->updateWithoutData($value);
+        $notread->each(function($mensaje){
+            $mensaje->addDeliveredTo(Auth::id());
+            $this->updateWithoutData($mensaje);
         });
-
         return $notread;
     }
 
@@ -53,8 +51,8 @@ class MessageRepo extends BaseRepo
             return $item->getMessages;
         })->flatten();
         $mensajes->each(function($mensaje){
-            if(!$mensaje->isDelivered() && !$mensaje->isMine()){
-                $mensaje->addDeliveredTo(Auth::id());
+            if(!$mensaje->isRead() && !$mensaje->isMine()){
+                $mensaje->addReadBy(Auth::id());
                 $this->updateWithoutData($mensaje);
             }
         });

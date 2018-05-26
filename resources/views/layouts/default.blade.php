@@ -114,8 +114,10 @@
 <script src="{{asset('js/dropify.min.js')}}"></script>
 <!-- DateTimePicker-->
 <script src="{{asset('js/datetimepicker.min.js')}}"></script>
+@auth
 <!-- Chat-->
 <script src="{{asset('js/chat.js')}}"></script>
+@endauth
 
 
 <!-- CUSTOM Scripts -->
@@ -124,8 +126,15 @@
 <!--AJAX CONFIG-->
 <script>
     const urlNewMessage = '{{URL::to('chat/message/new')}}';
+    const urlNewChat = '{{URL::to('chat/new')}}';
     const urlRetrieveMessages = '{{URL::to('chat/message/un-read')}}';
     const groupsPopoverTitle = '@lang('chat.groups')';
+    const urlLoadChats = '{{URL::to('chat/load')}}';
+    const urlCloseChat = '{{URL::to('chat/close')}}';
+    const urlOpenChat = '{{URL::to('chat/open')}}';
+    const urlMinChat = '{{URL::to('chat/min')}}';
+    //variable to store new chat id (levels out bug with double change event firing)
+    let lastCreatedChat = '';
 
     $.ajaxSetup({
         headers: {
@@ -140,7 +149,7 @@
         $.post('{{URL::to('sidebar')}}',{show: $('#sidebar').hasClass('show')});
     }
 
-    @unless(Auth::check())
+    @guest
     $(function(){
         $('#login_form').submit(function(){
             $.post(
@@ -167,8 +176,15 @@
             return false;
         });
     });
-    @endunless
+    @endguest
+
+    @auth
+        {{--@if(!is_null(Session::get('conversation.opened')))--}}
+            $(function(){loadChats({{Session::get('conversation.opened')}});});
+        {{--@endif--}}
+    @endauth
 </script>
+
 
 @yield('scripts')
 </body>
