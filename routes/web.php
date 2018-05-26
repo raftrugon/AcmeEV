@@ -58,6 +58,10 @@ Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
     });
     Route::get('/appointment-info','Pas\PasAppointmentsController@getAppointmentsInfo');
     Route::get('/inscription-list','Pas\PasController@getPrintAllLists');
+    Route::group(['prefix'=>'minute'],function(){
+        Route::get('{user}/all','Pas\MinuteController@getMinutesForStudent');
+        Route::post('/update','Pas\MinuteController@updateMinutes')->name('update_minutes');
+    });
 });
 
 //////////////////////////////////////////////////////// PDI ////////////////////////////////////////////////////////
