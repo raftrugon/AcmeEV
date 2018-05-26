@@ -52,7 +52,24 @@ class SystemConfig extends Model
     }
 
 
-    public function getInscriptionsStartDate(){
+    public function getActualState(){
+        return $this->actual_state;
+    }
+
+    public function setActualState($value){
+        $this->actual_state = $value;
+    }
+
+
+    public function getInscriptionsListStatus(){
+        return $this->inscriptions_list_status;
+    }
+
+    public function setInscriptionsListStatus($value){
+        $this->inscriptions_list_status = $value;
+    }
+
+    /*public function getInscriptionsStartDate(){
         return $this->inscriptions_start_date;
     }
 
@@ -130,15 +147,9 @@ class SystemConfig extends Model
 
     public function setAcademicYearEndDate($value){
         $this->academic_year_end_date = $value;
-    }
+    }*/
 
-    public function getInscriptionsListStatus(){
-        return $this->inscriptions_list_status;
-    }
 
-    public function setInscriptionsListStatus($value){
-        $this->inscriptions_list_status = $value;
-    }
 
 
 }
