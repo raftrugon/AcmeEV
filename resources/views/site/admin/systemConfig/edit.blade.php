@@ -33,7 +33,7 @@
                                         <p class="card-text">@lang($state_actual_body)</p>
                                     </div>
                                 </div>
-                                <div class="col-2" style="max-width: 95%;padding: 50px 0;margin: 0">
+                                <div class="col-2" style="max-width: 95%;padding: 30px 0;margin: 0">
                                     <a class="text-light nav-link" href="{{URL::to('admin/systemconfig/increment-state')}}">
                                         <i class="fas fa-arrow-alt-circle-right d-block text-primary text-center" style="font-size: 60px; margin-top: 50px"></i>
                                         <span class="d-block text-primary text-center text-" style="font-size: 16px; margin-top: 5px">

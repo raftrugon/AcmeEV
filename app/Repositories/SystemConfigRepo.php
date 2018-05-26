@@ -43,8 +43,7 @@ class SystemConfigRepo extends BaseRepo
             switch ($new_state)
             {
                 case 1: break;  //Indicar aquí auto computación primera de inscripciones
-                case 2: break;  //Indicar aquí auto computación segunda de inscripciones
-                case 3: break;  //Indicar aquí auto generación de subject instances
+                case 2: break;  //Indicar aquí auto computación segunda de inscripciones //Indicar aquí auto generación de subject instances
                 case 4: break;  //Indicar aquí auto computación de minutes con control checks
             }
         } catch(\Exception $e){
