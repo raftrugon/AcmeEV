@@ -28,4 +28,12 @@ class ConversationRepo extends BaseRepo
                 ->orWhereIn('group_id',$myGroups);
         });
     }
+
+    public function findConversation($userx,$usery){
+        return $this->getModel()->where(function($sub) use ($usery,$userx){
+                                $sub->where('user1_id',$userx)->where('user2_id',$usery);
+                            })->orWhere(function($sub2) use ($usery,$userx){
+                                $sub2->where('user1_id',$usery)->where('user2_id',$userx);
+        });
+    }
 }

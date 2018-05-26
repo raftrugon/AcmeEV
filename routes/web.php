@@ -42,6 +42,7 @@ Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){
         Route::get('edit', 'Admin\SystemConfigController@getEditSystemConfig');
         Route::post('save', 'Admin\SystemConfigController@postSaveSystemConfig');
         Route::post('first_inscription_process','Admin\SystemConfigController@postInscriptionBatch')->name('process_inscriptions');
+        Route::get('increment-state','Admin\SystemConfigController@getIncrementStateMachine');
     });
     Route::post('/degreeDelete','Admin\DegreeController@deleteDegree')->name('delete_degree');
 });
@@ -170,6 +171,11 @@ Route::group(['prefix'=>'subject'],function(){
 });
 
 Route::group(['prefix'=>'chat','middleware','middleware'=>'auth'],function(){
+    Route::post('new','ChatController@postNewChat');
+    Route::get('load','ChatController@getLoadChats');
+    Route::post('close','ChatController@postCloseChat');
+    Route::post('open','ChatController@postOpenChat');
+    Route::post('min','ChatController@postMinChat');
     Route::group(['prefix'=>'message'],function(){
        Route::post('new','ChatController@postNewMessage');
        Route::get('un-read','ChatController@getUnreadMessages');

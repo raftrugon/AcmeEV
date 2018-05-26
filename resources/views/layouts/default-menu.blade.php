@@ -5,7 +5,7 @@
     </h3>
 
     <!-- Sidebar Links -->
-    <ul class="list-unstyled">
+    <ul class="list-unstyled" style="min-height:70%;overflow-y:auto;">
 
         <!------------------------- TODOS ------------------------->
         <li>

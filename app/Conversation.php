@@ -46,4 +46,17 @@ class Conversation extends Model
             ($this->getUser1->getId() == Auth::id() ? $this->getUser2->getFullName() : $this->getUser1->getFullName())
             : $this->getGroup->getSubjectInstance->getSubject->getName();
     }
+
+    public function getOtherId(){
+        return is_null($this->getGroup) ?
+            ($this->getUser1->getId() == Auth::id() ? $this->getUser2->getId() : $this->getUser1->getId())
+            : $this->getGroup->getId();
+    }
+
+    public function isUnread(){
+        return $this->getMessages->filter(function($message){
+                                        return !$message->isRead();
+                                    })->count() > 0;
+    }
+
 }
