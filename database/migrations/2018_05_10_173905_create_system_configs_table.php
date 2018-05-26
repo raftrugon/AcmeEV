@@ -28,16 +28,7 @@ class CreateSystemConfigsTable extends Migration
             //STATE MACHINE
             $table->integer('actual_state')->default(0);
 
-            /*//Dates
-            $table->date('inscriptions_start_date');
-            $table->date('first_provisional_inscr_list_date');
-            $table->date('second_provisional_inscr_list_date');
-            $table->date('final_inscr_list_date');
-            $table->date('enrolment_start_date');
-            $table->date('enrolment_end_date');
-            $table->date('provisional_minutes_date');
-            $table->date('final_minutes_date');
-            $table->date('academic_year_end_date');*/
+
 
             $table->integer('inscriptions_list_status')->default(0);
 
