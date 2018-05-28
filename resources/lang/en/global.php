@@ -26,4 +26,5 @@ return[
         if you are not registered in the system. ',
     'adjudication.title'=>'Adjudication list available',
     'adjudication.link'=>'Press <a href="{{URL::to(\'inscription/results\')}}">here</a> to see them.',
+    'ok'=>'Success',
 ];

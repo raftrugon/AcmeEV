@@ -26,4 +26,5 @@ return[
         reservar citas en la secretaría aunque no esté registrado en el sistema.',
     'adjudication.title'=>'Lista de adjudicaciones disponible',
     'adjudication.link'=>'Pulsa <a href="{{URL::to(\'inscription/results\')}}">aquí</a> para ver tus adjudicaciones',
+    'ok'=>'Correcto',
 ];

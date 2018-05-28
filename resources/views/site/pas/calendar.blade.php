@@ -44,6 +44,7 @@
                 color: '#17a2b8',
                 titleColor: 'white',
                 iconColor: 'white',
+                schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
                 buttons: [
                     ['<button style="color:white"><b>@lang('global.yes')</b></button>', function (instance, toast) {
 

@@ -111,6 +111,8 @@ Route::group(['prefix'=>'group'],function(){
             Route::get('/','Pdi\GroupController@getSchedulingView');
             Route::get('data','Pdi\GroupController@getAvailableSubjectsAndRooms');
             Route::get('resources','Pdi\GroupController@getGroupsForYearAndDegree');
+            Route::get('events','Pdi\GroupController@getScheduledForDegreeAndYear');
+            Route::post('new','Pdi\GroupController@postNewTimetableTime');
         });
     });
 });
