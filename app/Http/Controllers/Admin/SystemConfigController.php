@@ -40,8 +40,8 @@ class SystemConfigController extends Controller
         $validator = Validator::make($request->all(),[
             'max_summons_number'=>'required|integer|min:1',
             'max_annual_summons_number'=>'required|integer|min:1',
-            'secretariat_open_time'=>'required|date_format:H:i:s',
-            'secretariat_close_time'=>'required|date_format:H:i:s|after:secretariat_open_time',
+            'building_open_time'=>'required|date_format:H:i:s',
+            'building_close_time'=>'required|date_format:H:i:s|after:building_open_time',
         ]);
 
         if($validator->fails()){
@@ -53,8 +53,8 @@ class SystemConfigController extends Controller
             $systemConfig = array(
                 'max_summons_number' => $request->input('max_summons_number'),
                 'max_annual_summons_number' => $request->input('max_annual_summons_number'),
-                'secretariat_open_time' => $request->input('secretariat_open_time'),
-                'secretariat_close_time' => $request->input('secretariat_close_time'),
+                'building_open_time' => $request->input('building_open_time'),
+                'building_close_time' => $request->input('building_close_time'),
             );
 
             $systemConfigDB = $this->systemConfigRepo->findOrFail($request->input('id'));

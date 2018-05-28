@@ -21,8 +21,8 @@ class CreateSystemConfigsTable extends Migration
             $table->integer('max_annual_summons_number');
 
             //Times
-            $table->time('secretariat_open_time');
-            $table->time('secretariat_close_time');
+            $table->time('building_open_time');
+            $table->time('building_close_time');
 
 
             //STATE MACHINE

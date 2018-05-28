@@ -106,6 +106,13 @@ Route::group(['prefix'=>'group'],function(){
         Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');
         Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');
     });
+    Route::group(['prefix'=>'manage','middleware'=>['permission:manage']],function(){
+        Route::group(['prefix'=>'timetable'],function(){
+            Route::get('/','Pdi\GroupController@getSchedulingView');
+            Route::get('data','Pdi\GroupController@getAvailableSubjectsAndRooms');
+            Route::get('resources','Pdi\GroupController@getGroupsForYearAndDegree');
+        });
+    });
 });
 
 //////////////////////////////////////////////////////// Student ////////////////////////////////////////////////////////

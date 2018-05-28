@@ -1,5 +1,8 @@
 <?php
 
+use App\Degree;
+use App\Department;
+use App\Subject;
 use Illuminate\Http\Request;
 
 /*
@@ -17,12 +20,26 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('degrees',function(){
-   return \App\Degree::all();
+Route::group('degrees',function(){
+   Route::get('/',function(){
+       return \App\Degree::all();
+   });
+   Route::get('{degree}/subjects',function(Degree $degree){
+       return $degree->getSubjects;
+   });
 });
 
-Route::get('departments',function(){
-   return \App\Department::all();
+Route::group('departments',function(){
+    Route::get('/',function(){
+        return \App\Department::all();
+    });
+    Route::get('{department}/subjects',function(Department $department){
+        return $department->getSubjects;
+    });
+    Route::get('{department}/pdis',function(Department $department){
+        return $department->getPDIs;
+    });
 });
+
 
 

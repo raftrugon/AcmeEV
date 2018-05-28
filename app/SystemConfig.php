@@ -34,21 +34,21 @@ class SystemConfig extends Model
     }
 
 
-    public function getSecretariatOpenTime(){
-        return $this->secretariat_open_time;
+    public function getBuildingOpenTime(){
+        return $this->building_open_time;
     }
 
-    public function setSecretariatOpenTime($value){
-        $this->secretariat_open_time = $value;
+    public function setBuildingOpenTime($value){
+        $this->building_open_time = $value;
     }
 
 
-    public function getSecretariatCloseTime(){
-        return $this->secretariat_close_time;
+    public function getBuildingCloseTime(){
+        return $this->building_close_time;
     }
 
-    public function setSecretariatCloseTime($value){
-        $this->secretariat_close_time = $value;
+    public function setBuildingCloseTime($value){
+        $this->building_close_time = $value;
     }
 
 

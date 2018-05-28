@@ -124,6 +124,7 @@ function retrieveChat(id){
         //Añadimos el link del chat al html
         $('.groups-tab').before(data['link']);
         lastCreatedChat = '';
+        showTab(data['id']);
     });
 }
 

@@ -21,8 +21,8 @@
             weekends:false,
             allDaySlot:false,
             height:'auto',
-            minTime: '{{$config->getSecretariatOpenTime()}}',
-            maxTime: '{{$config->getSecretariatCloseTime()}}',
+            minTime: '{{$config->getBuildingOpenTime()}}',
+            maxTime: '{{$config->getBuildingCloseTime()}}',
             events: '{{URL::to('calendar/data')}}',
             eventOrder: 'tooltip',
             eventRender: function(event, element) {

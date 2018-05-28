@@ -19,8 +19,8 @@
         weekends:false,
         timeFormat: 'HH:mm',
         height:'auto',
-        minTime: '{{$config->getSecretariatOpenTime()}}',
-        maxTime: '{{$config->getSecretariatCloseTime()}}',
+        minTime: '{{$config->getBuildingOpenTime()}}',
+        maxTime: '{{$config->getBuildingCloseTime()}}',
         select: function(startDate,endDate){
             $.post(
                 '{{URL::to('administration/calendar/new')}}',
