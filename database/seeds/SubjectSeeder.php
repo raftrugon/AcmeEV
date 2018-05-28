@@ -18,7 +18,9 @@ class SubjectSeeder extends Seeder{
         $minimum_number_subjects_course = 4;
         $maximum_number_subjects_course = 6;
 
-        $counter = 1;
+        $subject_part_1 = ['Ingeniería de ', 'Teoría de ', 'Investigación de ', 'Prácticas con ', 'Investigación experimental de ', 'Teorización con '];
+        $subject_part_2 = ['Materiales ', 'Software ', 'Hardware ', 'la Salud ', 'Aviones ', 'Coches ', 'Locomotoras ', 'Periféricos '];
+        $subject_part_3 = ['Nivel Básico', 'Nivel Avanzado', 'Nivel Elemental', 'Nivel Superior'];
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -53,7 +55,7 @@ class SubjectSeeder extends Seeder{
                     };
 
                     Subject::firstOrCreate([
-                        'name' => 'Subject '.$counter,
+                        'name' => $faker->randomElement($subject_part_1).$faker->randomElement($subject_part_2).$faker->randomElement($subject_part_3),//'name' => 'Subject '.$counter,
                         'code' => $faker->unique()->regexify('[A-Z]{3}[0-9]{6}'),
                         'school_year' => $i,
                         'semester' => $faker->boolean(70) ? $faker->boolean() : null,
@@ -63,7 +65,6 @@ class SubjectSeeder extends Seeder{
                         'subject_type' => $subject_type
                     ]);
 
-                    $counter++;
                 }
 
                 $department_id = $faker->randomElement(Department::all()->pluck('id')->toArray());
