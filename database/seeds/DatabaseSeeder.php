@@ -16,6 +16,7 @@ class DatabaseSeeder extends Seeder
         $this->call(DepartmentSeeder::class);                   //Basado en degrees
         $this->call(UsersAndRolesSeeder::class);
         $this->call(RoomSeeder::class);
+        $this->call(DemoSeeder::class);                         //Usuarios y objetos para la demo
 
 
         $this->call(LecturersFromDepartmentsSeeder::class);     //Basado en departments

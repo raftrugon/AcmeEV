@@ -18,7 +18,7 @@
         <div class="row">
             <div class="col-md-8 mb-3 offset-md-2 card bg-light">
                 <h1 class="text-center">
-                    @lang('department.pdis')
+                    @lang('department.lecturers')
                 </h1>
                 <table class="table table-bordered bg-white">
                     @foreach($pdis as $pdi)

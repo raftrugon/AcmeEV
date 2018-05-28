@@ -6,5 +6,6 @@ return[
     'url'=>'URL',
     'new'=>'New department',
     'subjects'=>'Subjects',
-    'pdis'=>'PDIs'
+    'pdis'=>'PDIs',
+    'lecturers'=>'Lecturers',
 ];

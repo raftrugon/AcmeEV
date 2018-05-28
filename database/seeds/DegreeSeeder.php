@@ -16,7 +16,7 @@ class DegreeSeeder extends Seeder
 
         //////////////////////////////////////////////////////////////
 
-        Degree::firstOrCreate(['name'=>'Grado en Ingeniería Informática - Ingeniería del Software','code'=>'AAA000001','new_students_limit'=>25,'deleted'=>false]);
+        Degree::firstOrCreate(['name'=>'Grado en Ingeniería Informática - Ingeniería del Software','id'=>1, 'code'=>'AAA000001','new_students_limit'=>25,'deleted'=>false]);
         Degree::firstOrCreate(['name'=>'Grado en Ingeniería Informática - Ingeniería de Computadores','code'=>'AAA000002','new_students_limit'=>35,'deleted'=>false]);
         Degree::firstOrCreate(['name'=>'Grado en Ingeniería Industrial','code'=>'AAA000005','new_students_limit'=>15,'deleted'=>false]);
 

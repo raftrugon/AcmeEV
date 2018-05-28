@@ -19,7 +19,7 @@ class LecturersFromDepartmentsSeeder extends Seeder
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        $departments_id = Department::all()->pluck('id')->toArray();
+        $departments_id = Department::all()->where('id','!=', 1)->pluck('id')->toArray();
         $count = count($departments_id);
 
         info('Seeding from '.$minimum_number_lecturers.' to '.$maximum_number_lecturers.' Lecturers for each Department and setting one to coordinator('.$count.' Departments).');

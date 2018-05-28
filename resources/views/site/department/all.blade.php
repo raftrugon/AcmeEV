@@ -13,7 +13,7 @@
                     <div class="card-body">
                         <p class="card-text">
                             <strong>@lang('department.code'): </strong> {{$department->getCode()  }}</br>
-                            <strong>@lang('department.url'): </strong> {{$department->getWebsite()}}
+                            <strong>@lang('department.url'): </strong> <a href="{{$department->getWebsite()}}">{{$department->getWebsite()}}</a>
                         </p>
                     </div>
                 </div>
