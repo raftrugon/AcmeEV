@@ -3,7 +3,9 @@
 namespace App\Exceptions;
 
 use Exception;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Spatie\Permission\Exceptions\UnauthorizedException;
 
 class Handler extends ExceptionHandler
 {
@@ -46,6 +48,9 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof AuthorizationException || $exception instanceof UnauthorizedException) {
+            return redirect()->back()->with('error',__('global.unauthorized'));
+        }
         return parent::render($request, $exception);
     }
 }

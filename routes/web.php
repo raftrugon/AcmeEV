@@ -110,15 +110,17 @@ Route::group(['prefix'=>'group'],function(){
 
 //////////////////////////////////////////////////////// Student ////////////////////////////////////////////////////////
 
-Route::group(['prefix'=>'student'],function(){
+Route::group(['prefix'=>'student','middleware'=>['role:student']],function(){
     Route::group(['prefix'=>'enrollment'],function() {
-        Route::get('my-enrollments', 'Student\EnrollmentController@getMyEnrollments');
-        Route::get('enroll', 'Student\EnrollmentController@getEnroll');
-        Route::post('post-enroll', 'Student\EnrollmentController@postPostEnroll');
+        Route::get('my-enrollments', 'Student\EnrollmentController@getMyEnrollments')->middleware('permission:current||old');
+        Route::get('enroll', 'Student\EnrollmentController@getEnroll')->middleware('can:enroll,App\Enrollment');
+        Route::post('post-enroll', 'Student\EnrollmentController@postPostEnroll')->middleware('can:enroll,App\Enrollment');
     });
+
     Route::group(['prefix'=>'subject'],function() {
         Route::post('control-check/upload','Student\ControlCheckController@uploadControlCheck')->name('upload_control_check');
     });
+
     Route::get('my-subjects', 'Student\SubjectInstanceController@getMySubjectInstances');
     Route::group(['prefix'=>'minute'], function() {
         Route::get('my-minutes','Student\MinuteController@getMinutesForStudent');
