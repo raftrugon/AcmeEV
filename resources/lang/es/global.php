@@ -28,4 +28,5 @@ return[
     'adjudication.link'=>'Pulse <a href="'.URL::to('inscription/results').'">aquí</a> para ver sus adjudicaciones',
     'enroll.title'=>'Ya puede matricularse',
     'enroll.link'=>'Pulse <a href="'.URL::to('student/enrollment/enroll').'">aquí</a> para matricularse',
+    'ok'=>'Correcto',
 ];

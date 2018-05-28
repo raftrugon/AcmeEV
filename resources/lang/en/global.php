@@ -28,4 +28,5 @@ return[
     'adjudication.link'=>'Press <a href="'.URL::to('inscription/results').'">here</a> to see them.',
     'enroll.title'=>'Enrollments can be done now',
     'enroll.link'=>'Press <a href="'.URL::to('student/enrollment/enroll').'">here</a> to enroll.',
+    'ok'=>'Success',
 ];

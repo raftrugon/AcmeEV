@@ -38,7 +38,7 @@ class ChatController extends Controller
     }
 
     public function getLoadChats(){
-        $conversations = Conversation::find(Session::get('conversations',array()));
+        $conversations = Conversation::find(Session::get('conversations.'.Auth::id(),array()));
         $myGroups = $this->groupRepo->getMyGroupsForThisYear()->get()->pluck('id')->toArray();
         $groupConversations = Conversation::whereIn('group_id',$myGroups)
             ->get();
@@ -59,15 +59,15 @@ class ChatController extends Controller
         $link .= '</a>';
         $id = $conversation->getId();
         $name = $conversation->getName();
-        Session::push('conversations',$conversation->getId());
+        Session::push('conversations.'.Auth::id(),$conversation->getId());
         return compact('window','link','id','name');
     }
 
     public function postCloseChat(Request $request){
-        $ids = Session::pull('conversations',array());
+        $ids = Session::pull('conversations.'.Auth::id(),array());
         unset($ids[array_search($request->input('conversation_id'),$ids)]);
-        Session::put('conversations',$ids);
-        Session::forget('conversation.opened');
+        Session::put('conversations.'.Auth::id(),$ids);
+        Session::forget('conversation.'.Auth::id().'.opened');
     }
 
     public function postOpenChat(Request $request){
@@ -78,12 +78,11 @@ class ChatController extends Controller
                 $this->messageRepo->updateWithoutData($mensaje);
             }
         });
-        Session::put('conversation.opened',$conversation->getId());
+        Session::put('conversation.'.Auth::id().'.opened',$conversation->getId());
     }
 
     public function postMinChat(Request $request){
-        $conversation = Conversation::findOrFail($request->input('conversation_id'));
-        Session::forget('conversation.opened');
+        Session::forget('conversation.'.Auth::id().'.opened');
 
     }
 }

@@ -61,8 +61,8 @@
                                 @include('global.input',['col'=>'6','type'=>'number','id'=>'max_annual_summons_number','name'=>'max_annual_summons_number','label'=>__('attributes.max_annual_summons_number'),'placeholder'=>__('placeholder.number'),  'value'=>isset($system_config) ? $system_config->getMaxAnnualSummonsNumber() : null ])
                             </div>
                             <div class="row align-items-end">
-                                @include('global.input',['col'=>'6','class'=>'time','type'=>'text','id'=>'secretariat_open_time','name'=>'secretariat_open_time','label'=>__('attributes.secretariat_open_time'),'placeholder'=>__('placeholder.time'),  'value'=>isset($system_config) ? $system_config->getSecretariatOpenTime() : null ])
-                                @include('global.input',['col'=>'6','class'=>'time','type'=>'text','id'=>'secretariat_close_time','name'=>'secretariat_close_time','label'=>__('attributes.secretariat_close_time'),'placeholder'=>__('placeholder.time'),  'value'=>isset($system_config) ? $system_config->getSecretariatCloseTime() : null ])
+                                @include('global.input',['col'=>'6','class'=>'time','type'=>'text','id'=>'building_open_time','name'=>'building_open_time','label'=>__('attributes.building_open_time'),'placeholder'=>__('placeholder.time'),  'value'=>isset($system_config) ? $system_config->getBuildingOpenTime() : null ])
+                                @include('global.input',['col'=>'6','class'=>'time','type'=>'text','id'=>'building_close_time','name'=>'building_close_time','label'=>__('attributes.building_close_time'),'placeholder'=>__('placeholder.time'),  'value'=>isset($system_config) ? $system_config->getBuildingCloseTime() : null ])
                             </div>
 
                             @isset($system_config)
@@ -109,14 +109,14 @@
                 rules: {
                     max_summons_number: 'required',
                     max_annual_summons_number: 'required',
-                    secretariat_open_time: 'required',
-                    secretariat_close_time: 'required',
+                    building_open_time: 'required',
+                    building_close_time: 'required',
                 },
                 messages: {
                     max_summons_number: "{{__('validation.required',['attribute'=>__('max_summons_number')])}}",
                     max_annual_summons_number: "{{__('validation.required',['attribute'=>__('max_annual_summons_number')])}}",
-                    secretariat_open_time: "{{__('validation.required',['attribute'=>__('secretariat_open_time')])}}",
-                    secretariat_close_time: "{{__('validation.required',['attribute'=>__('secretariat_close_time')])}}",
+                    building_open_time: "{{__('validation.required',['attribute'=>__('building_open_time')])}}",
+                    building_close_time: "{{__('validation.required',['attribute'=>__('building_close_time')])}}",
                 }
             });
         });

@@ -12,7 +12,7 @@ $(function(){
         if(e.keyCode === '13') $(this).closest('form').submit();
     });
    $('#chat-btn-min').click(function(){
-       hideTab($(this).data('id'));
+       hideTab($('.chat-container').data('id'));
    });
     $('#chat-btn-close').click(function(){
         closeChat($('.chat-container').data('id'));
@@ -43,6 +43,9 @@ function hideTab(id){
 }
 
 function toggleTab(id){
+    console.log($('.chat-container').data('id'));
+    console.log(id);
+    console.log($('.chat-container').data('id') !== id);
     if($('.chat-container').data('id') !== id){
         showTab(id);
     }else{
@@ -80,7 +83,9 @@ function addReceivedMessage(conversation_id,body,sender_id,sender_name){
         messagesDiv.find('.message-received:last').find('span').before(body+'<br/>');
         messagesDiv.animate({ scrollTop: messagesDiv.prop("scrollHeight")}, 700);
     }
-    if($('.chat-container').data('id') !== conversation_id && $('.chat-tab[data-id='+conversation_id+']').find('span').length === 0) $('.chat-tab[data-id='+conversation_id+']').append('<span class="not-read-badge badge badge-primary">!</span>');
+    let numberSpan = $('.chat-tab[data-id='+conversation_id+']').find('span');
+    if($('.chat-container').data('id') !== conversation_id && numberSpan.length === 0) $('.chat-tab[data-id='+conversation_id+']').append('<span class="not-read-badge badge badge-primary">1</span>');
+    else if($('.chat-container').data('id') !== conversation_id && numberSpan.length !== 0) numberSpan.html(parseInt(numberSpan.html())+1);
 }
 
 function sendMessage(form){
@@ -100,9 +105,9 @@ function retrieveMessages(){
     $.get(urlRetrieveMessages,function(data){
         $.each(data,function(i,value){
             if($('.chat-window[data-id='+value['conversation_id']+']').hasClass('group-chat')){
-                groupMessage(value['full_name'], value['body'], value['sender_name']);
+                groupMessage(value['full_name'], value['body'], value['sender_name'],value['conversation_id']);
             }else {
-                message(value['full_name'], value['body']);
+                message(value['full_name'], value['body'],value['conversation_id']);
             }
             if($.inArray(parseInt(value['conversation_id']),getActiveConversationsById())  === -1) retrieveChat(value['sender_id']);
             else {
@@ -119,6 +124,7 @@ function retrieveChat(id){
         //Añadimos el link del chat al html
         $('.groups-tab').before(data['link']);
         lastCreatedChat = '';
+        showTab(data['id']);
     });
 }
 

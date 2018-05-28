@@ -27,6 +27,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/bootstrap-select.min.css')}}">
     <!-- FullCalendar css -->
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/fullcalendar.min.css')}}">
+    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/scheduler.min.css')}}">
     <!-- Datatables -->
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/datatables/jquery.dataTables.min.css')}}">
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/datatables/dataTables.bootstrap4.min.css')}}">
@@ -107,6 +108,7 @@
 <!-- Calendar-->
 <script src="{{asset('js/fullcalendar/fullcalendar.min.js')}}"></script>
 <script src="{{asset('js/fullcalendar/es.js')}}"></script>
+<script src="{{asset('js/fullcalendar/scheduler.min.js')}}"></script>
 <!-- Datatables -->
 <script src="{{asset('js/datatables/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('js/datatables/dataTables.bootstrap4.min.js')}}"></script>
@@ -118,6 +120,8 @@
 <!-- Chat-->
 <script src="{{asset('js/chat.js')}}"></script>
 @endauth
+<!-- Push Notifications-->
+<script src="{{asset('js/notifications/push.min.js')}}"></script>
 
 
 <!-- CUSTOM Scripts -->
@@ -180,7 +184,7 @@
 
     @auth
         {{--@if(!is_null(Session::get('conversation.opened')))--}}
-            $(function(){loadChats({{Session::get('conversation.opened')}});});
+            $(function(){loadChats({{Session::get('conversation.'.Auth::id().'.opened')}});});
         {{--@endif--}}
     @endauth
 </script>
