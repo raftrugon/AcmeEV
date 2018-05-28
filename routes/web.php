@@ -113,6 +113,7 @@ Route::group(['prefix'=>'group'],function(){
 Route::group(['prefix'=>'student'],function(){
     Route::group(['prefix'=>'enrollment'],function() {
         Route::get('my-enrollments', 'Student\EnrollmentController@getMyEnrollments');
+        Route::get('enroll', 'Student\EnrollmentController@getEnroll');
     });
     Route::group(['prefix'=>'subject'],function() {
         Route::post('control-check/upload','Student\ControlCheckController@uploadControlCheck')->name('upload_control_check');
