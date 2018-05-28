@@ -12,7 +12,7 @@ $(function(){
         if(e.keyCode === '13') $(this).closest('form').submit();
     });
    $('#chat-btn-min').click(function(){
-       hideTab($(this).data('id'));
+       hideTab($('.chat-container').data('id'));
    });
     $('#chat-btn-close').click(function(){
         closeChat($('.chat-container').data('id'));
@@ -43,6 +43,9 @@ function hideTab(id){
 }
 
 function toggleTab(id){
+    console.log($('.chat-container').data('id'));
+    console.log(id);
+    console.log($('.chat-container').data('id') !== id);
     if($('.chat-container').data('id') !== id){
         showTab(id);
     }else{
