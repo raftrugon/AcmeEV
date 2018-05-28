@@ -25,5 +25,7 @@ return[
         more accessible. Also you can request appointments to the secretariat even 
         if you are not registered in the system. ',
     'adjudication.title'=>'Adjudication list available',
-    'adjudication.link'=>'Press <a href="{{URL::to(\'inscription/results\')}}">here</a> to see them.',
+    'adjudication.link'=>'Press <a href="'.URL::to('inscription/results').'">here</a> to see them.',
+    'enroll.title'=>'Enrollments can be done now',
+    'enroll.link'=>'Press <a href="'.URL::to('student/enrollment/enroll').'">here</a> to enroll.',
 ];

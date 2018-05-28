@@ -11,7 +11,7 @@ return[
     'personal_data'=>'Personal Data',
     'choices'=>'Degree Choices',
     'access_data'=>'Access Data',
-    'homealert.link'=> 'Click <a href="'.URL::to('inscription/new').'" class="alert-link">here</a> to fill in your inscription.',
+    'homealert.link'=> 'Click <a href="'.URL::to('inscription/new').'">here</a> to fill in your inscription.',
     'homealert.title'=>'¡New ingress inscription available!',
     'results-title'=>'Results for your inscription process',
 ];

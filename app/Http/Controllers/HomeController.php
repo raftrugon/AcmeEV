@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Repositories\SystemConfigRepo;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -11,8 +12,11 @@ class HomeController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    protected $systemConfigRepo;
+
+    public function __construct(SystemConfigRepo $systemConfigRepo)
     {
+        $this->systemConfigRepo = $systemConfigRepo;
     }
 
     /**
@@ -22,6 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $actual_state = $this->systemConfigRepo->getSystemConfig()->getActualState();
+        return view('home', compact('actual_state'));
     }
 }

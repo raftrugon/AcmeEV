@@ -25,5 +25,7 @@ return[
         haciendo la enseñanza una experiencia mas simple y accesible. También puede
         reservar citas en la secretaría aunque no esté registrado en el sistema.',
     'adjudication.title'=>'Lista de adjudicaciones disponible',
-    'adjudication.link'=>'Pulsa <a href="{{URL::to(\'inscription/results\')}}">aquí</a> para ver tus adjudicaciones',
+    'adjudication.link'=>'Pulse <a href="'.URL::to('inscription/results').'">aquí</a> para ver sus adjudicaciones',
+    'enroll.title'=>'Ya puede matricularse',
+    'enroll.link'=>'Pulse <a href="'.URL::to('student/enrollment/enroll').'">aquí</a> para matricularse',
 ];
