@@ -22,7 +22,9 @@
                                 <tr>
                                     <td>{{$minute->getEnrollment->getSubjectInstance->getSubject->getName()}}</td>
                                     <td>{{$minute->getSummon()}}</td>
-                                    <td>{{$minute->getQualification()}}</td>
+                                    <td>
+                                        <input class="form-control qualification" type="number" step="0.1" value="{{$minute->getQualification()}}" id="{{$minute->getId()}}"/>
+                                    </td>
                                     <td>{{$minute->getStatus()}}</td>
                                 </tr>
                             @endforeach
@@ -33,4 +35,33 @@
             </div>
         </div>
     @endforeach
+    <button id="submitButton" class="fixed-bottom btn btn-success position-fixed" style="left:50%;transform:translate(-50%,0);bottom:20px;">
+        @lang('minute.updateQualifications')
+    </button>
+@endsection
+
+@section('scripts')
+    <script type="text/javascript">
+        $('.qualification').change(function(){
+            $(this).addClass('qualification-changed');
+        });
+        $('#submitButton').click(function(e){
+            e.preventDefault();
+            let ids=[];
+            let qualifications=[];
+            $('.qualification-changed').each(function(index){
+                ids[index] = $(this).attr('id');
+                qualifications[index] = $(this).val();
+            });
+            $.post('{{route('update_minutes')}}',{ids:ids,qualifications:qualifications},
+                function(data) {
+                    if(data === 'true'){
+                        success('@lang('global.success')','@lang('minute.updated')');
+                        location.reload();
+                    } else {
+                        error('@lang('global.error')','@lang('minute.updateFail')');
+                    }
+                });
+        });
+    </script>
 @endsection

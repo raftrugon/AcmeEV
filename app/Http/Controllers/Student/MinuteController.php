@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
-use App\Minute;
 use App\Repositories\MinuteRepo;
-use Illuminate\Support\Facades\Auth;
 
 class MinuteController extends Controller
 {

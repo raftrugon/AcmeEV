@@ -64,11 +64,16 @@ function addSentMessage(conversation_id,body){
     }
 }
 
-function addReceivedMessage(conversation_id,body){
+function addReceivedMessage(conversation_id,body,sender_id,sender_name){
     let messagesDiv = $('.chat-window[data-id='+conversation_id+']').find('.messages');
-    if(messagesDiv.find('.message-received').length === 0 || !messagesDiv.find('.message:last').hasClass('message-received')) {
+    if(messagesDiv.find('.message-received').length === 0 || !messagesDiv.find('.message:last').hasClass('message-received') || messagesDiv.find('.message:last').data('sender-id') !== sender_id) {
         let div = document.importNode(document.getElementById('message_received_template').content.querySelector('div'), true);
-        $(div).find('span').before(body+'<br/>');
+        if($('.chat-window[data-id='+conversation_id+']').hasClass('group-chat')) {
+            $(div).data('sender-id', sender_id);
+            $(div).find('span').before('<strong>' + sender_name + '</strong><br/>' + body + '<br/>');
+        }else{
+            $(div).find('span').before(body + '<br/>');
+        }
         $(div).find('span').html(moment().format('DD/MM/YYYY HH:mm'));
         messagesDiv.append(div).animate({scrollTop: messagesDiv.prop("scrollHeight")}, 700);
     }else{
@@ -94,10 +99,14 @@ function sendMessage(form){
 function retrieveMessages(){
     $.get(urlRetrieveMessages,function(data){
         $.each(data,function(i,value){
-            message(value['full_name'],value['body']);
-            if($.inArray(parseInt(value['sender_id']),getActiveConversations())  === -1) retrieveChat(value['sender_id']);
+            if($('.chat-window[data-id='+value['conversation_id']+']').hasClass('group-chat')){
+                groupMessage(value['full_name'], value['body'], value['sender_name']);
+            }else {
+                message(value['full_name'], value['body']);
+            }
+            if($.inArray(parseInt(value['conversation_id']),getActiveConversationsById())  === -1) retrieveChat(value['sender_id']);
             else {
-                addReceivedMessage(value['conversation_id'], value['body']);
+                addReceivedMessage(value['conversation_id'], value['body'], value['sender_id'], value['sender_name']);
             }
         });
     });
@@ -113,7 +122,7 @@ function retrieveChat(id){
     });
 }
 
-function getActiveConversations(){
+function getActiveConversationsByUser(){
     let ids = [];
     $('.chat-window').each(function () {
         ids.push($(this).data('user-id'));
@@ -121,7 +130,16 @@ function getActiveConversations(){
     return ids;
 }
 
+function getActiveConversationsById(){
+    let ids = [];
+    $('.chat-window').each(function () {
+        ids.push($(this).data('id'));
+    });
+    return ids;
+}
+
 function closeChat(id){
+    if($('.chat-window[data-id='+id+']').hasClass('group-chat')) return hideTab(id);
     $.post(urlCloseChat,{conversation_id:id},function(){
         $('.chat-window[data-id='+id+']').remove();
         $('.chat-tab[data-id='+id+']').remove();
@@ -143,7 +161,7 @@ function loadChats(id = 0){
             if(id === '' || id === lastCreatedChat) return false;
             lastCreatedChat = id;
             $('.chat-picker').selectpicker('val','');
-            if($.inArray(parseInt(id),getActiveConversations())  === -1) retrieveChat(id);
+            if($.inArray(parseInt(id),getActiveConversationsByUser())  === -1) retrieveChat(id);
             else {
                 showTab(0,id);
                 lastCreatedChat = '';
