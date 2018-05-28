@@ -20,7 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::group('degrees',function(){
+Route::group(['prefix'=>'degrees'],function(){
    Route::get('/',function(){
        return \App\Degree::all();
    });
@@ -29,7 +29,7 @@ Route::group('degrees',function(){
    });
 });
 
-Route::group('departments',function(){
+Route::group(['prefix'=>'departments'],function(){
     Route::get('/',function(){
         return \App\Department::all();
     });
