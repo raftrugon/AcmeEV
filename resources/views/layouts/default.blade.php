@@ -118,6 +118,8 @@
 <!-- Chat-->
 <script src="{{asset('js/chat.js')}}"></script>
 @endauth
+<!-- Push Notifications-->
+<script src="{{asset('js/notifications/push.min.js')}}"></script>
 
 
 <!-- CUSTOM Scripts -->

@@ -80,7 +80,9 @@ function addReceivedMessage(conversation_id,body,sender_id,sender_name){
         messagesDiv.find('.message-received:last').find('span').before(body+'<br/>');
         messagesDiv.animate({ scrollTop: messagesDiv.prop("scrollHeight")}, 700);
     }
-    if($('.chat-container').data('id') !== conversation_id && $('.chat-tab[data-id='+conversation_id+']').find('span').length === 0) $('.chat-tab[data-id='+conversation_id+']').append('<span class="not-read-badge badge badge-primary">!</span>');
+    let numberSpan = $('.chat-tab[data-id='+conversation_id+']').find('span');
+    if($('.chat-container').data('id') !== conversation_id && numberSpan.length === 0) $('.chat-tab[data-id='+conversation_id+']').append('<span class="not-read-badge badge badge-primary">1</span>');
+    else if($('.chat-container').data('id') !== conversation_id && numberSpan.length !== 0) numberSpan.html(parseInt(numberSpan.html())+1);
 }
 
 function sendMessage(form){
@@ -100,9 +102,9 @@ function retrieveMessages(){
     $.get(urlRetrieveMessages,function(data){
         $.each(data,function(i,value){
             if($('.chat-window[data-id='+value['conversation_id']+']').hasClass('group-chat')){
-                groupMessage(value['full_name'], value['body'], value['sender_name']);
+                groupMessage(value['full_name'], value['body'], value['sender_name'],value['conversation_id']);
             }else {
-                message(value['full_name'], value['body']);
+                message(value['full_name'], value['body'],value['conversation_id']);
             }
             if($.inArray(parseInt(value['conversation_id']),getActiveConversationsById())  === -1) retrieveChat(value['sender_id']);
             else {

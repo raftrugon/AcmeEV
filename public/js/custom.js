@@ -7,6 +7,13 @@ $(function(){
         transitionOut: 'flipOutLeft',
         layout: 2,
     });
+
+    Push.config({
+        serviceWorker: './js/notifications/serviceWorker.min.js', // Sets a custom service worker script
+        fallback: function(payload) {
+            messageNative(payload.title,payload.body);
+        }
+    });
 });
 
 function success(title,msg){
@@ -30,7 +37,7 @@ function error(title,msg){
     });
 }
 
-function message(title,msg){
+function messageNative(title,msg){
     if(msg.length > 38) msg = msg.substr(0,35)+'...';
     iziToast.show({
         theme: 'dark',
@@ -48,7 +55,7 @@ function message(title,msg){
     });
 }
 
-function groupMessage(title,msg,sender){
+function groupMessageNative(title,msg,sender){
     if(msg.length > 38) msg = msg.substr(0,35)+'...';
     iziToast.show({
         theme: 'dark',
@@ -63,6 +70,34 @@ function groupMessage(title,msg,sender){
         imageWidth: 70,
         layout: 2,
         iconColor: 'rgb(153, 255, 0)'
+    });
+}
+
+function message(title,msg,id) {
+    Push.create(title, {
+        body: msg,
+        icon: 'img/avatar.png',
+        timeout: 5000,
+        vibrate: [200,100,200],
+        onClick: function () {
+            window.focus();
+            showTab(id);
+            this.close();
+        }
+    });
+}
+
+function groupMessage(title,msg,sender,id) {
+    Push.create(title, {
+        body: sender+': '+msg,
+        icon: 'img/avatar-group.png',
+        timeout: 5000,
+        vibrate: [200,100,200],
+        onClick: function () {
+            window.focus();
+            showTab(id);
+            this.close();
+        }
     });
 }
 
