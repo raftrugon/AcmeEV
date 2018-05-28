@@ -14,12 +14,28 @@ class DemoSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        info('Seeding from  Departments).');
+        info('Seeding objects for demo).');
 
 
         $department_id = Department::where('id', 1)->pluck('id')->first();
 
         ///////////////////////////////////////// PDIs /////////////////////////////////////////
+
+        $manager = User::firstOrCreate([
+            'name' => 'Juana',
+            'surname' => 'Dominguez',
+            'email' => 'manager@pdi.us.es',
+            'id_number' => $faker->unique()->regexify('[0-9]{8}[A-Z]{1}'),
+            'address' => $faker->address,
+            'phone_number' => $faker->phoneNumber,
+            'personal_email' => $faker->email,
+            'department_id' => null,
+            'password' => bcrypt('manager')
+        ]);
+
+        $manager->assignRole('pdi');
+        $manager->givePermissionTo('manage');
+
 
         $coordinator = User::firstOrCreate([
             'name' => 'Juan',
@@ -34,7 +50,7 @@ class DemoSeeder extends Seeder
         ]);
 
         $coordinator->assignRole('pdi');
-        $coordinator->givePermissionTo('teach', 'direct_department');        //El primero es coordinador
+        $coordinator->givePermissionTo('teach', 'direct_department');        //Coordinador del departamento
 
 
 

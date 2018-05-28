@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Degree;
 use App\Repositories\DegreeRepo;
+use App\Repositories\SystemConfigRepo;
 use App\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -13,9 +14,11 @@ class DegreeController extends Controller
 {
 
     protected $degreeRepo;
+    protected $systemConfigRepo;
 
-    public function __construct(DegreeRepo $degreeRepo){
+    public function __construct(DegreeRepo $degreeRepo, SystemConfigRepo $systemConfigRepo){
         $this->degreeRepo = $degreeRepo;
+        $this->systemConfigRepo = $systemConfigRepo;
     }
 
     public function getAllButSelected(Request $request){
@@ -24,11 +27,13 @@ class DegreeController extends Controller
 
     public function getAll(){
         $degrees = Degree::where('deleted',0)->get();
-        return view('site.degree.all', compact('degrees'));
+        $actual_state = $this->systemConfigRepo->getActualState();
+        return view('site.degree.all', compact('degrees','actual_state'));
     }
 
     public function getNewDegree(){
-        return view('site.degree.create-edit');
+        $actual_state = $this->systemConfigRepo->getActualState();
+        return view('site.degree.create-edit', compact('actual_state'));
     }
 
     public function getEditDegree(Degree $degree){

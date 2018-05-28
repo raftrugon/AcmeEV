@@ -26,7 +26,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $actual_state = $this->systemConfigRepo->getSystemConfig()->getActualState();
+        $actual_state = $this->systemConfigRepo->getActualState();
         return view('home', compact('actual_state'));
     }
 }
