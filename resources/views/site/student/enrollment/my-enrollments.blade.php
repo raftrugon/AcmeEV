@@ -3,7 +3,11 @@
 @section('content')
 
     <div class="row">
-
+        <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 col-sm-12 " style="padding: 0 0 40px 0;">
+            <div class="card bg-info">
+                <h5 class="card-header text-center text-white">@lang('enrollment.my.title'){{Auth::user()->getDegree->GetName()}} </h5>
+            </div>
+        </div>
             @foreach($academic_years as $enrollments)
             @php ($index = 0)
 
