@@ -176,6 +176,14 @@
                     'error':   '@lang('global.dropify.error')'//'Ooops, something wrong happended.'
                 }
             });
+            $('#controlCheck_csv_qualifications').dropify({
+                messages: {
+                    'default': '@lang('global.dropify.default')', //'Drag and drop a file here or click',
+                    'replace': '@lang('global.dropify.replace')',//'Drag and drop or click to replace',
+                    'remove':  '@lang('global.dropify.remove')',//'Remove',
+                    'error':   '@lang('global.dropify.error')'//'Ooops, something wrong happended.'
+                }
+            });
 
             loadContent(null);
 
@@ -229,7 +237,21 @@
                 let recipient = button.data('id');
                 let modal = $(this);
                 modal.find('.modal-body input[name=id]').val(recipient);
-            })
+            });
+
+            $('#uploadControlCheckQualifications').on('show.bs.modal', function (event) {
+                let button = $(event.relatedTarget);
+                let recipient = button.data('id');
+                let modal = $(this);
+                modal.find('.modal-body input[name=id]').val(recipient);
+            });
+
+            $('#deleteControlCheck').on('show.bs.modal', function (event) {
+                let button = $(event.relatedTarget);
+                let recipient = button.data('id');
+                let modal = $(this);
+                modal.find('.modal-body input[name=id]').val(recipient);
+            });
 
             $('#control_check_submit').click(function(){
                 $('#control_check_form .dropify-wrapper').css('border', '2px solid #E5E5E5');
@@ -245,11 +267,53 @@
                     success: function(data) {
                         if (data === 'true') {
                             $('#uploadControlCheckModal').modal('hide');
-                            $('#new_file_url').val('');
+                            $('#controlCheck_new_file').val('');
                             success('@lang('global.success')', '@lang('controlCheck.uploaded')');
                             $('#uploadButton'+id).remove();
                         }else{
                             error('@lang('global.error')','@lang('controlCheck.uploadFail')');
+                        }
+                    }
+                    });
+            });
+
+            $('#control_check_grades_submit').click(function(){
+                $('#control_check_grades_form .dropify-wrapper').css('border', '2px solid #E5E5E5');
+                let data = new FormData(document.getElementById('control_check_grades_form'));
+                $.ajax({
+                    type: 'POST',
+                    url: '{{route('import_controlCheck_qualifications')}}',
+                    data: data,
+                    mimeType: "multipart/form-data",
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        if (data === 'true') {
+                            $('#uploadControlCheckQualifications').modal('hide');
+                            $('#controlCheck_csv_qualifications').val('');
+                            success('@lang('global.success')', '@lang('controlCheck.uploaded')');
+                        }else{
+                            error('@lang('global.error')','@lang('controlCheck.uploadFail')');
+                        }
+                    }
+                    });
+            });
+            $('#control_check_delete_button').click(function(){
+                let data = new FormData(document.getElementById('control_check_delete'));
+                $.ajax({
+                    type: 'POST',
+                    url: '{{route('delete_control_check')}}',
+                    data: data,
+                    mimeType: "multipart/form-data",
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        if (data === 'true') {
+                            $('#deleteControlCheck').modal('hide');
+                            success('@lang('global.success')', '@lang('controlCheck.deleted')');
+                            location.reload();
+                        }else{
+                            error('@lang('global.error')','@lang('controlCheck.deleteFail')');
                         }
                     }
                     });
@@ -277,6 +341,13 @@
                 }
             });
         });
+
+        $(document).ready(function(){
+            $('[data-tooltip="tooltip"]').tooltip({
+                trigger : 'hover'
+            });
+        });
+
     </script>
 
 @endsection

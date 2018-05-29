@@ -29,7 +29,7 @@ class ControlCheckInstance extends Model
     }
 
     public function getStudent() {
-        return $this->belongsTo('App\Student','student_id','id');
+        return $this->belongsTo('App\User','student_id','id');
     }
 
     public function setStudent($value) {

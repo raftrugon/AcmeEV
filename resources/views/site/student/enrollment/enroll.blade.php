@@ -8,7 +8,7 @@
             <div class="col-md-9">
                 <div class="card border-info">
                     <div class="card-header text-center">
-                        <Strong>@lang('enrollment.new')</Strong>
+                        <Strong>@lang('enrollment.enroll.title')</Strong>
                     </div>
                     <div class="card text-white bg-info" style="max-width: 100%; margin: 6px 0;">
                         <div class="card-body">

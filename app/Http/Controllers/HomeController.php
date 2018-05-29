@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Repositories\SystemConfigRepo;
+use App\Repositories\UserRepo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -13,10 +15,12 @@ class HomeController extends Controller
      * @return void
      */
     protected $systemConfigRepo;
+    protected $userRepo;
 
-    public function __construct(SystemConfigRepo $systemConfigRepo)
+    public function __construct(SystemConfigRepo $systemConfigRepo, UserRepo $userRepo)
     {
         $this->systemConfigRepo = $systemConfigRepo;
+        $this->userRepo = $userRepo;
     }
 
     /**
@@ -27,6 +31,11 @@ class HomeController extends Controller
     public function index()
     {
         $actual_state = $this->systemConfigRepo->getActualState();
-        return view('home', compact('actual_state'));
+        $can_student_enroll = false;
+
+        if($actual_state == 2 && Auth::check() && Auth::user()->hasRole('student'))
+            $can_student_enroll = $this->userRepo->canUserEnroll();
+
+        return view('home', compact('actual_state', 'can_student_enroll'));
     }
 }

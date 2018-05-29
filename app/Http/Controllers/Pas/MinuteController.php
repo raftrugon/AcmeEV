@@ -26,7 +26,7 @@ class MinuteController extends Controller
     public function updateMinutes(Request $request) {
         $ids = $request->input('ids');
         $qualifications = $request->input('qualifications');
-        for($i = 0; $i < count($ids); ++$i) {
+        for($i = 0; $i < count($ids); $i++) {
            $minute = Minute::where('id',$ids[$i])->first();
            $minute->setQualification($qualifications[$i]);
            $this->minuteRepo->updateWithoutData($minute);

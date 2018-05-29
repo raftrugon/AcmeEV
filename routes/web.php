@@ -44,45 +44,53 @@ Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){
         Route::post('first_inscription_process','Admin\SystemConfigController@postInscriptionBatch')->name('process_inscriptions');
         Route::get('increment-state','Admin\SystemConfigController@getIncrementStateMachine');
     });
+
     Route::post('/degreeDelete','Admin\DegreeController@deleteDegree')->name('delete_degree');
 });
 
 //////////////////////////////////////////////////////// PAS ////////////////////////////////////////////////////////
 
 Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
-    Route::get('/','Pas\PasController@getDashboard');
     Route::group(['prefix'=>'calendar','middleware'=>['permission:have_appointments']],function() {
         Route::get('/', 'Pas\PasAppointmentsController@getCalendar');
         Route::get('/data', 'Pas\PasAppointmentsController@getCalendarData');
         Route::post('/new', 'Pas\PasAppointmentsController@postNewCalendarDate');
         Route::post('/delete', 'Pas\PasAppointmentsController@postDeleteCalendarDate');
     });
+
     Route::get('/appointment-info','Pas\PasAppointmentsController@getAppointmentsInfo');
     Route::get('/inscription-list','Pas\PasController@getPrintAllLists');
     Route::group(['prefix'=>'minute'],function(){
         Route::get('{user}/all','Pas\MinuteController@getMinutesForStudent');
         Route::post('/update','Pas\MinuteController@updateMinutes')->name('update_minutes');
     });
+
+    Route::get('/','Pas\PasController@getDashboard');
 });
 
 //////////////////////////////////////////////////////// PDI ////////////////////////////////////////////////////////
 
 Route::group(['prefix'=>'management','middleware'=>['permission:manage']],function(){
     Route::group(['prefix'=>'degree'],function() {
-        Route::get('new','DegreeController@getNewDegree');
-        Route::post('save','DegreeController@postSaveDegree');
-        Route::get('{degree}/edit','DegreeController@getEditDegree');
+        Route::get('new','DegreeController@getNewDegree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');
+        Route::post('save','DegreeController@postSaveDegree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');
+        Route::get('{degree}/edit','DegreeController@getEditDegree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');
+
+        //ESTO SERÁ SUSTITUIDO
         route::get('{degree}/add-next-year-subjects','Pdi\ManagementController@getDegreeEditAddNextYearSubjects');
         route::post('/create-subject-instances','Pdi\ManagementController@createNextYearDegree')->name('post_subject_instances');
+        //ESTO SERÁ SUSTITUIDO
     });
 });
 
 
+//TO-DO EN CONTROLADOR CHECKEAR QUE SEA PROFESOR DE LA ASIGNATURA
 Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
     Route::group(['prefix'=>'announcement'],function() {
         Route::get('{subjectInstance}/create', 'Pdi\AnnouncementController@getCreateAnnouncement');
         Route::post('save', 'Pdi\AnnouncementController@postSaveAnnouncement');
     });
+
     Route::group(['prefix'=>'subject','middleware'=>['permission:teach']],function(){
         Route::get('list','Pdi\SubjectController@getMySubjectList');
         Route::post('folder/new','Pdi\SubjectController@postNewFolder')->name('new_folder');
@@ -94,26 +102,35 @@ Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
         Route::get('{subject}/instances','Pdi\SubjectController@getSubjectInstances');
         Route::get('{subjectInstance}/groups','Pdi\GroupController@getGroupsForSubjectInstace');
     });
+
     Route::group(['prefix'=>'control_check'],function() {
         Route::get('{subjectInstance}/new','Pdi\ControlCheckController@createControlCheck');
         Route::post('/save','Pdi\ControlCheckController@postControlCheck');
+        Route::get('{controlCheck}/correct','Pdi\ControlCheckController@correctControlCheck');
+        Route::post('post_marks','Pdi\ControlCheckController@updateQualifications')->name('update_controlCheck_qualifications');
+        Route::post('import_marks','Pdi\ControlCheckController@importGradesFromCsv')->name('import_controlCheck_qualifications');
+        Route::post('/delete','Pdi\ControlCheckController@deleteControlCheck')->name('delete_control_check');
+    });
+    Route::group(['prefix'=>'department'],function(){
+        Route::get('edit/{department?}','Pdi\DepartmentController@createOrEdit');
+        Route::post('/save','Pdi\DepartmentController@saveDepartment');
     });
 });
 
-
 Route::group(['prefix'=>'group'],function(){
     Route::group(['middleware'=>['role:pdi']],function(){
+        Route::group(['prefix'=>'manage','middleware'=>['permission:manage']],function(){
+            Route::group(['prefix'=>'timetable'],function(){
+                Route::get('/','Pdi\GroupController@getSchedulingView');
+                Route::get('data','Pdi\GroupController@getAvailableSubjectsAndRooms');
+                Route::get('resources','Pdi\GroupController@getGroupsForYearAndDegree');
+                Route::get('events','Pdi\GroupController@getScheduledForDegreeAndYear');
+                Route::post('new','Pdi\GroupController@postNewTimetableTime');
+            });
+        });
+
         Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');
         Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');
-    });
-    Route::group(['prefix'=>'manage','middleware'=>['permission:manage']],function(){
-        Route::group(['prefix'=>'timetable'],function(){
-            Route::get('/','Pdi\GroupController@getSchedulingView');
-            Route::get('data','Pdi\GroupController@getAvailableSubjectsAndRooms');
-            Route::get('resources','Pdi\GroupController@getGroupsForYearAndDegree');
-            Route::get('events','Pdi\GroupController@getScheduledForDegreeAndYear');
-            Route::post('new','Pdi\GroupController@postNewTimetableTime');
-        });
     });
     Route::group(['prefix'=>'student','middleware'=>['permission:current']],function(){
         Route::group(['prefix'=>'schedule'],function() {
@@ -151,9 +168,21 @@ Route::group(['prefix'=>'student','middleware'=>['role:student']],function(){
 
 //////////////////////////////////////////////////////// Logged ////////////////////////////////////////////////////////
 
-Route::group(['prefix'=>'logged'/*,'middleware'=>['role:???????']*/],function(){
+Route::group(['prefix'=>'logged'/*,'middleware'=>'auth'*/],function(){
     Route::group(['prefix'=>'announcement'],function() {
-        Route::get('{subjectInstance}/list', 'Logged\AnnouncementController@getAllBySubjectInstance');//@getAllBySubjectInstance
+        Route::get('{subjectInstance}/list', 'Logged\AnnouncementController@getAllBySubjectInstance');
+    });
+});
+
+Route::group(['prefix'=>'chat','middleware','middleware'=>'auth'],function(){
+    Route::post('new','ChatController@postNewChat');
+    Route::get('load','ChatController@getLoadChats');
+    Route::post('close','ChatController@postCloseChat');
+    Route::post('open','ChatController@postOpenChat');
+    Route::post('min','ChatController@postMinChat');
+    Route::group(['prefix'=>'message'],function(){
+        Route::post('new','ChatController@postNewMessage');
+        Route::get('un-read','ChatController@getUnreadMessages');
     });
 });
 
@@ -177,8 +206,6 @@ Route::group(['prefix'=>'degree'],function(){
 
 Route::group(['prefix'=>'department'],function(){
     Route::get('/all','DepartmentController@getAll');
-    Route::get('new','DepartmentController@getNewDepartment');
-    Route::post('save','DepartmentController@postSaveDepartment');
     Route::get('{department}/display','DepartmentController@displayDepartment');
 });
 
@@ -196,16 +223,8 @@ Route::group(['prefix'=>'subject'],function(){
     Route::get('file/download/{file}','SubjectController@getDownloadFile');
 });
 
-Route::group(['prefix'=>'chat','middleware','middleware'=>'auth'],function(){
-    Route::post('new','ChatController@postNewChat');
-    Route::get('load','ChatController@getLoadChats');
-    Route::post('close','ChatController@postCloseChat');
-    Route::post('open','ChatController@postOpenChat');
-    Route::post('min','ChatController@postMinChat');
-    Route::group(['prefix'=>'message'],function(){
-       Route::post('new','ChatController@postNewMessage');
-       Route::get('un-read','ChatController@getUnreadMessages');
-    });
+Route::group(['prefix'=>'error'],function(){
+    Route::get('forbidden','ErrorController@forbidden');
 });
 
 

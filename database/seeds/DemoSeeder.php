@@ -14,12 +14,69 @@ class DemoSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        info('Seeding objects for demo).');
+        info('Seeding objects for demo.');
 
 
         $department_id = Department::where('id', 1)->pluck('id')->first();
 
+        ///////////////////////////////////////// WEBMASTER /////////////////////////////////////////
+
+        $webmaster = User::firstOrCreate([
+            'name'=>'Web',
+            'surname'=>'Master',
+            'email'=>'webmaster@us.es',
+            'id_number'=>'44742618Y',
+            'address'=>'Master direction',
+            'phone_number'=>'666000666',
+            'personal_email'=>'webmaster@gmail.com',
+            'password'=>bcrypt('webmaster')
+        ]);
+
+        $webmaster->assignRole('student');
+        $webmaster->assignRole('pdi');
+        $webmaster->assignRole('pas');
+        $webmaster->assignRole('admin');
+        $webmaster->givePermissionTo('new');
+        $webmaster->givePermissionTo('current');
+        $webmaster->givePermissionTo('old');
+        $webmaster->givePermissionTo('manage');
+        $webmaster->givePermissionTo('direct_department');
+        $webmaster->givePermissionTo('teach');
+        $webmaster->givePermissionTo('have_appointments');
+
+        ///////////////////////////////////////// PAS /////////////////////////////////////////
+
+        $pas = User::firstOrCreate([
+            'name'=>'Juana',
+            'surname'=>'Vargas Pérez',
+            'email'=>'pas@pas.us.es',
+            'id_number'=>'44444444A',
+            'address'=>'Calle de la soledad, 11',
+            'phone_number'=>'612345678',
+            'personal_email'=>'juanavargas@gmail.com',
+            'password'=>bcrypt('pas')
+        ]);
+
+        $pas->givePermissionTo('have_appointments');
+        $pas->assignRole('pas');
+
         ///////////////////////////////////////// PDIs /////////////////////////////////////////
+
+        $pdimaster = User::firstOrCreate([
+            'name' => 'Juan',
+            'surname' => 'Domingo',
+            'email' => 'pdimaster@pdi.us.es',
+            'id_number' => $faker->unique()->regexify('[0-9]{8}[A-Z]{1}'),
+            'address' => $faker->address,
+            'phone_number' => $faker->phoneNumber,
+            'personal_email' => $faker->email,
+            'department_id' => $department_id,
+            'password' => bcrypt('pdimaster')
+        ]);
+
+        $pdimaster->assignRole('pdi');
+        $pdimaster->givePermissionTo('manage', 'teach', 'direct_department');
+
 
         $manager = User::firstOrCreate([
             'name' => 'Juana',

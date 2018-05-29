@@ -3,24 +3,29 @@
 namespace App\Http\Controllers\Pdi;
 
 use App\ControlCheck;
+use App\ControlCheckInstance;
 use App\Group;
 use App\Http\Controllers\Controller;
 use App\Repositories\ControlCheckInstanceRepo;
 use App\Repositories\ControlCheckRepo;
+use App\Repositories\FileRepo;
 use App\Room;
 use App\SubjectInstance;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 
 class ControlCheckController extends Controller
 {
     protected $controlCheckRepo;
     protected $controlCheckInstanceRepo;
+    protected $fileRepo;
 
-    public function __construct(ControlCheckRepo $controlCheckRepo,ControlCheckInstanceRepo $controlCheckInstanceRepo)
+    public function __construct(ControlCheckRepo $controlCheckRepo,ControlCheckInstanceRepo $controlCheckInstanceRepo, FileRepo $fileRepo)
     {
         $this->controlCheckRepo=$controlCheckRepo;
         $this->controlCheckInstanceRepo=$controlCheckInstanceRepo;
+        $this->fileRepo=$fileRepo;
     }
 
     public function getControlChecksForStudent(Group $group) {
@@ -66,5 +71,21 @@ class ControlCheckController extends Controller
         return view('home');
     }
 
+    public function importGradesFromCsv(Request $request)
+    {
+        return $this->fileRepo->importGradesFromCsv($request->file('url'),$request->input('id'));
+    }
 
+    public function correctControlCheck(ControlCheck $controlCheck){
+        $controlCheckInstances = $controlCheck->getControlCheckInstances;
+        return view('site.pdi.controlCheck.correct',compact('controlCheckInstances'));
+    }
+
+    public function updateQualifications(Request $request) {
+        return $this->controlCheckInstanceRepo->updateQualifications($request->input('ids'),$request->input('qualifications'));
+    }
+
+    public function deleteControlCheck(Request $request) {
+        return $this->controlCheckRepo->deleteControlCheck($request->input('id'));
+    }
 }
