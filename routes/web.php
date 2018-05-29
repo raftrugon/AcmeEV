@@ -207,7 +207,9 @@ Route::group(['prefix'=>'subject'],function(){
     Route::get('file/download/{file}','SubjectController@getDownloadFile');
 });
 
-
+Route::group(['prefix'=>'error'],function(){
+    Route::get('forbidden','ErrorController@forbidden');
+});
 
 
 
