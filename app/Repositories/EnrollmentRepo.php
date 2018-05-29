@@ -22,4 +22,8 @@ class EnrollmentRepo extends BaseRepo
         return Enrollment::join('subject_instances', 'enrollments.subject_instance_id', '=', 'subject_instances.id')->select('enrollments.*', 'subject_instances.academic_year')->where('user_id', Auth::id());
     }
 
+    public function getMyActualEnrollments(){
+        return Enrollment::join('subject_instances', 'enrollments.subject_instance_id', '=', 'subject_instances.id')->where('subject_instances.academic_year', $this->getAcademicYear())->select('enrollments.*')->where('user_id', Auth::id());
+    }
+
 }

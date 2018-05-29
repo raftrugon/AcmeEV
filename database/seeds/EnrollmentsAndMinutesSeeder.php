@@ -37,7 +37,7 @@ class EnrollmentsAndMinutesSeeder extends Seeder
 
         $students = User::join('model_has_permissions','users.id','=','model_has_permissions.model_id')->where('model_has_permissions.permission_id', 2)->whereNotNull('users.degree_id')->select('users.*')->get();
 
-        info('Seeding Enrollments for students since '.$min_academic_year.'/'.$max_academic_year.' to '.$actual_academic_year.' and assigning groups of the subjects and creating their corresponding minutes.('.count($students->toArray()).' Students).');
+        info('Seeding Enrollments for students since '.$min_academic_year.'/'.$max_academic_year.' to '.($actual_academic_year - 1).' and assigning groups of the subjects and creating their corresponding minutes.('.count($students->toArray()).' Students).');
 
         foreach ($students as $student){
 
@@ -49,7 +49,7 @@ class EnrollmentsAndMinutesSeeder extends Seeder
 
             $starting_academic_year = $faker->numberBetween($min_academic_year, $max_academic_year);
 
-            for($i = $starting_academic_year; $i <= $actual_academic_year; $i++){
+            for($i = $starting_academic_year; $i < $actual_academic_year; $i++){ //Actualmente se crean las matriculas hasta el curso 2017 <=
 
                 //Variables
                 $number_of_enrollments_this_year = $faker->numberBetween($min_number_enrollments_per_year,$max_number_enrollments_per_year);
