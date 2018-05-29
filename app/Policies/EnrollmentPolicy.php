@@ -25,10 +25,7 @@ class EnrollmentPolicy
     {
         $return = true;
 
-        //dd($this->systemConfigRepo->getSystemConfig()->getActualState());
-        if($user->getSubjectInstances()->where('academic_year',$this->userRepo->getAcademicYear())->count() != 0)
-            $return = false;
-        elseif($this->userRepo->isUserFinished())
+        if(!$this->userRepo->canUserEnroll())
             $return = false;
         elseif($this->systemConfigRepo->getSystemConfig()->getActualState() != 2)
             $return = false;

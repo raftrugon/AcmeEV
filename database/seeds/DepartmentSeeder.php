@@ -27,7 +27,7 @@ class DepartmentSeeder extends Seeder
 
         //////////////////////////////////////////////////////////////
 
-        info('Seeding '.$number_of_departments.' Departments with random names.');
+        info('Seeding '.$number_of_departments.' Departments.');
 
         //factory(App\Department::class,$number_of_departments)->create();
 

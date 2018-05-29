@@ -17,9 +17,11 @@
         @endunless
         @can('current')
             @if($actual_state == 2)
-                <div class="alert alert-success text-center" role="alert">
-                    <strong> @lang('global.enroll.title') </strong> &emsp;@lang('global.enroll.link')
-                </div>
+                @if($can_student_enroll)
+                    <div class="alert alert-success text-center" role="alert">
+                        <strong> @lang('global.enroll.title') </strong> &emsp;@lang('global.enroll.link')
+                    </div>
+                @endif
             @endif
         @endcan
 
