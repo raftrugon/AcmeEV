@@ -3,16 +3,34 @@
 namespace App\Repositories;
 
 use App\SubjectInstance;
+use Illuminate\Support\Facades\Auth;
 
 class SubjectInstanceRepo extends BaseRepo {
 
-    public function __construct()
-    {
 
-    }
 
     public function getModel() {
         return new SubjectInstance;
+    }
+
+
+    public function isUserTeacherNOFUNCIONAL($subject_instance)
+    {
+        $res = false;
+        $user = Auth::user();
+        $groups = $subject_instance->getGroups()->get();
+
+        foreach ($groups as $group) {
+            if ($group->getTheoryLecturer->getId() == $user->getId()) {
+                $res = true;
+                break;
+            } elseif ($group->getPracticeLecturer->getId() == $user->getId()) {
+                $res = true;
+                break;
+            }
+        }
+
+        return $res;
     }
 
     public function getCurrentInstance($subject_id) {

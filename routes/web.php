@@ -44,25 +44,28 @@ Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){
         Route::post('first_inscription_process','Admin\SystemConfigController@postInscriptionBatch')->name('process_inscriptions');
         Route::get('increment-state','Admin\SystemConfigController@getIncrementStateMachine');
     });
+
     Route::post('/degreeDelete','Admin\DegreeController@deleteDegree')->name('delete_degree');
 });
 
 //////////////////////////////////////////////////////// PAS ////////////////////////////////////////////////////////
 
 Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
-    Route::get('/','Pas\PasController@getDashboard');
     Route::group(['prefix'=>'calendar','middleware'=>['permission:have_appointments']],function() {
         Route::get('/', 'Pas\PasAppointmentsController@getCalendar');
         Route::get('/data', 'Pas\PasAppointmentsController@getCalendarData');
         Route::post('/new', 'Pas\PasAppointmentsController@postNewCalendarDate');
         Route::post('/delete', 'Pas\PasAppointmentsController@postDeleteCalendarDate');
     });
+
     Route::get('/appointment-info','Pas\PasAppointmentsController@getAppointmentsInfo');
     Route::get('/inscription-list','Pas\PasController@getPrintAllLists');
     Route::group(['prefix'=>'minute'],function(){
         Route::get('{user}/all','Pas\MinuteController@getMinutesForStudent');
         Route::post('/update','Pas\MinuteController@updateMinutes')->name('update_minutes');
     });
+
+    Route::get('/','Pas\PasController@getDashboard');
 });
 
 //////////////////////////////////////////////////////// PDI ////////////////////////////////////////////////////////
@@ -72,13 +75,17 @@ Route::group(['prefix'=>'management','middleware'=>['permission:manage']],functi
         Route::get('new','DegreeController@getNewDegree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');
         Route::post('save','DegreeController@postSaveDegree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');
         Route::get('{degree}/edit','DegreeController@getEditDegree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');
+
+        //ESTO SERÁ SUSTITUIDO
         route::get('{degree}/add-next-year-subjects','Pdi\ManagementController@getDegreeEditAddNextYearSubjects');
         route::post('/create-subject-instances','Pdi\ManagementController@createNextYearDegree')->name('post_subject_instances');
+        //ESTO SERÁ SUSTITUIDO
     });
 });
 
 
 Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
+    //TO-DO EN CONTROLADOR CHECKEAR QUE SEA PROFESOR DE LA ASIGNATURA
     Route::group(['prefix'=>'announcement'],function() {
         Route::get('{subjectInstance}/create', 'Pdi\AnnouncementController@getCreateAnnouncement');
         Route::post('save', 'Pdi\AnnouncementController@postSaveAnnouncement');
