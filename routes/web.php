@@ -102,6 +102,10 @@ Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
         Route::post('import_marks','Pdi\ControlCheckController@importGradesFromCsv')->name('import_controlCheck_qualifications');
         Route::post('/delete','Pdi\ControlCheckController@deleteControlCheck')->name('delete_control_check');
     });
+    Route::group(['prefix'=>'department'],function(){
+        Route::get('edit/{department?}','Pdi\DepartmentController@createOrEdit');
+        Route::post('/save','Pdi\DepartmentController@saveDepartment');
+    });
 });
 
 
@@ -168,8 +172,6 @@ Route::group(['prefix'=>'degree'],function(){
 
 Route::group(['prefix'=>'department'],function(){
     Route::get('/all','DepartmentController@getAll');
-    Route::get('new','DepartmentController@getNewDepartment');
-    Route::post('save','DepartmentController@postSaveDepartment');
     Route::get('{department}/display','DepartmentController@displayDepartment');
 });
 

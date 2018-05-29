@@ -12,6 +12,7 @@ return[
     'no'=>'No',
     'start'=>'Start',
     'end'=>'End',
+    'edit'=>'Edit',
     'error'=>'Error',
     'success'=>'Success',
     'close'=>'Close',
