@@ -8,7 +8,9 @@
                     <div class="d-flex align-items-center justify-content-start">
                         <a href="#" id="uploadGradesButton{{$cc->getId()}}" class="ml-1 btn btn-outline-success upload-control-check-button" title="@lang('controlCheck.csvExplanation')" data-toggle="modal" data-tooltip="tooltip" data-target="#uploadControlCheckQualifications" data-id="{{$cc->getId()}}"> <i class="fas fa-upload"></i></a>
                         <a href="{{URL::to('pdi/control_check/'.$cc->getId().'/correct')}}" class="ml-1 btn btn-outline-success upload-control-check-button" data-tooltip="tooltip" title="@lang('controlCheck.marks')" data-id="{{$cc->getId()}}"> <i class="far fa-bookmark"></i></a>
-                        <a href="#" id="deleteControlCheck{{$cc->getId()}}" class="ml-1 btn btn-outline-danger upload-control-check-button" title="@lang('controlCheck.delete')" data-toggle="modal" data-tooltip="tooltip" data-target="#deleteControlCheck" data-id="{{$cc->getId()}}"> <i class="fas fa-trash-alt"></i></a>
+                        @if(\Carbon\Carbon::createFromFormat('Y-m-d H:i:s',$cc->getDate())->gt(\Carbon\Carbon::now()))
+                            <a href="#" id="deleteControlCheck{{$cc->getId()}}" class="ml-1 btn btn-outline-danger upload-control-check-button" title="@lang('controlCheck.delete')" data-toggle="modal" data-tooltip="tooltip" data-target="#deleteControlCheck" data-id="{{$cc->getId()}}"> <i class="fas fa-trash-alt"></i></a>
+                        @endif
                     </div>
                 </div>
         </div>
