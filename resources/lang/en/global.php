@@ -18,6 +18,7 @@ return[
     'cancel'=>'Cancel',
     'anonymous'=>'Anonymous',
     'new_ingress'=>'New Ingress',
+    'idNumber'=>'Id number',
     'student'=>'Student',
     'welcome-heading'=>'Welcome to the virtual teaching platform',
     'welcome-body'=>'This web page is designed for students and university\'s internal 

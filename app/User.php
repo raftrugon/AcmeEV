@@ -90,5 +90,7 @@ class User extends Authenticatable
     $this->degree_id=$value;
     }
 
-
+    public function getIdNumber() {
+        return $this->id_number;
+    }
 }
