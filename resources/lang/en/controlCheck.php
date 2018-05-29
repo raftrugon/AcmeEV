@@ -17,4 +17,8 @@ return[
     'marks'=>'Introduce qualifications',
     'updated'=>'Qualifications updated successfully',
     'updateFail'=>'Could not update the qualifications',
+    'delete'=>'Delete control check',
+    'deleteConfirm'=>'Are you sure you want to delete this control check?',
+    'deleted'=>'Control check deleted successfully',
+    'deleteFail'=>'Could not delete the control check',
 ];
