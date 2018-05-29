@@ -90,6 +90,9 @@ class User extends Authenticatable
     $this->degree_id=$value;
     }
 
+    public function getIdNumber() {
+        return $this->id_number;
+    }
 
     public function getSubjectInstances() {
         return $this->belongsToMany('App\SubjectInstance', 'enrollments', 'user_id', 'subject_instance_id')->using('App\Enrollment');

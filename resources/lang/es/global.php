@@ -18,6 +18,7 @@ return[
     'cancel'=>'Cancelar',
     'anonymous'=>'Anónimo',
     'new_ingress'=>'Nuevo Ingreso',
+    'idNumber'=>'Número de identificación',
     'student'=>'Estudiante',
     'welcome-heading'=>'Bienvenido a la Plataforma de Enseñanza Virtual',
     'welcome-body'=>'Esta página web ha sido diseñada para los estudiantes de la universidad

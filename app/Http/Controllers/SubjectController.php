@@ -29,7 +29,11 @@ class SubjectController extends Controller
     public function getSubjectDisplay(Subject $subject){
         $announcements = $subject->getSubjectInstances()->where('academic_year',Carbon::now()->year)->first()->getAnnouncements;
         $controlCheckInstances = $this->controlCheckRepo->getControlCheckInstancesForStudent($subject,null)->get();
-        return view('site.subject.display',compact('subject','announcements','controlCheckInstances'));
+        $controlChecks = $this->controlCheckRepo->getControlChecksForLecturer($subject)->get();
+        if(Auth::user()->hasRole('student'))
+            return view('site.subject.display',compact('subject','announcements','controlCheckInstances'));
+        elseif(Auth::user()->hasRole('pdi'))
+            return view('site.subject.display',compact('subject','announcements','controlChecks'));
     }
 
     public function getFileSystemData(Request $request){
