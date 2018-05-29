@@ -115,6 +115,19 @@ Route::group(['prefix'=>'group'],function(){
             Route::post('new','Pdi\GroupController@postNewTimetableTime');
         });
     });
+    Route::group(['prefix'=>'student','middleware'=>['permission:current']],function(){
+        Route::group(['prefix'=>'schedule'],function() {
+            Route::get('/', 'Student\ScheduleController@getSchedule');
+            Route::get('events', 'Student\ScheduleController@getScheduleEvents');
+            Route::get('resources', 'Student\ScheduleController@getScheduleResources');
+//            Route::get('print', 'Student\ScheduleController@getPrint');
+        });
+        Route::group(['prefix'=>'exchange'],function() {
+            Route::get('/create', 'Student\ExchangeController@getCreate');
+            Route::get('/data-and-availability', 'Student\ExchangeController@getTargetDataAndAvailability');
+            Route::post('/save', 'Student\ExchangeController@postSave');
+        });
+    });
 });
 
 //////////////////////////////////////////////////////// Student ////////////////////////////////////////////////////////

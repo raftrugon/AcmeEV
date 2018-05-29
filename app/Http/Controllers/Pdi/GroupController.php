@@ -65,16 +65,32 @@ class GroupController extends Controller
                                     ->select('subject_instances.id','subjects.name')
                                     ->distinct('subject_instances.id')
                                     ->get();
-        $rooms = Room::leftJoin('period_times','rooms.id','=','period_times.room_id')
-                    ->havingRaw('(day <> "'.$request->input('day').'" or start > "'.$request->input('start').'" or end < "'.$request->input('end').'" or period_time_id is null)')
-                    ->select('rooms.id','period_times.day','period_times.start','period_times.end','period_times.id as period_time_id',
-                        DB::raw('
+        $rooms = Room::select(DB::raw('
                                 (CASE 
                                     WHEN rooms.is_laboratory = 1 THEN CONCAT(rooms.module," - ",rooms.floor,".",rooms.number," (LAB)")
                                     ELSE CONCAT(rooms.module," - ",rooms.floor,".",rooms.number)
                                 END) as name
-                        ')
-                    )
+                        '))
+                    ->whereNotExists(function($query) use($request){
+                        $query->select(DB::raw(1))
+                            ->from('period_times')
+                            ->where('day',$request->input('day'))
+                            ->where(function($sub) use ($request){
+                               $sub->where(function($sub1) use ($request){
+                                   $sub1->where('start','<=',$request->input('start'))
+                                    ->where('end','>',$request->input('start'));
+                               })
+                               ->orWhere(function($sub2) use ($request) {
+                                   $sub2->where('start', '<', $request->input('end'))
+                                    ->where('end', '>=', $request->input('end'));
+                               })
+                               ->orWhere(function($sub3) use ($request){
+                                  $sub3->where('start','>=',$request->input('start'))
+                                    ->where('end','<=',$request->input('end')) ;
+                               });
+                            })
+                            ->whereRaw('period_times.room_id = rooms.id');
+                    })
                     ->orderBy('name','ASC')
                     ->groupBy('rooms.id')
                     ->get();
@@ -106,7 +122,6 @@ class GroupController extends Controller
             ]);
             return 'true';
         }catch(\Exception $e){
-            throw $e;
             return 'false';
         }
     }
@@ -127,6 +142,7 @@ class GroupController extends Controller
                 'period_times.start as start',
                 'period_times.end as end',
                 'period_times.day as day',
+                'rooms.is_laboratory as lab',
                 DB::raw('
                      (CASE 
                             WHEN rooms.is_laboratory = 1 THEN CONCAT(subjects.name," (",rooms.module," - ",rooms.floor,".",rooms.number,") [LAB]")
@@ -139,6 +155,7 @@ class GroupController extends Controller
            $day = $monday->copy()->addDays(intval($period['day']) - 1);
            $period['start'] = $day->copy()->setTimeFromTimeString($period['start'])->format('Y-m-d H:i:s');
            $period['end'] = $day->copy()->setTimeFromTimeString($period['end'])->format('Y-m-d H:i:s');
+           if($period['lab'] == 1) $period['color'] = '#ffc107';
            return $period;
         });
 

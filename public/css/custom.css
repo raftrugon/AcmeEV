@@ -119,7 +119,7 @@ div.is-invalid span.help-block{
 }
 
 /*--Student Calendar Events--*/
-.student-calendar > .fc-time-grid .fc-bgevent, .fc-time-grid .fc-event{
+.student-calendar > .fc-time-grid .fc-bgevent,.student-calendar >  .fc-time-grid .fc-event{
     border-color: white!important;
     border-radius: 0!important;
 }

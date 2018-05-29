@@ -73,8 +73,14 @@
                 <a class="text-light nav-link" href="{{URL::to('degree/all')}}"><i class="fa fa- fa-graduation-cap d-block text-primary"></i><span>{{__('menu.degrees')}}</span></a>
             </li>
             <li>
-                <a class="text-light nav-link" href="{{URL::to('group/manage/timetable')}}"><i class="fa fa- fa-graduation-cap d-block text-primary"></i><span>{{__('menu.group.timetable')}}</span></a>
+                <a class="text-light nav-link" href="{{URL::to('group/manage/timetable')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.group.timetable')}}</span></a>
             </li>
+        @endcan
+        @can('current')
+            <li>
+                <a class="text-light nav-link" href="{{URL::to('group/student/schedule')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.student.schedule')}}</span></a>
+            </li>
+
         @endcan
 
 

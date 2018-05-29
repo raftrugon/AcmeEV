@@ -15,6 +15,14 @@ class CreateExchangesTable extends Migration
     {
         Schema::create('exchanges', function (Blueprint $table) {
             $table->increments('id');
+            $table->boolean('is_approved')->default(0);
+            $table->integer('source_id')->unsigned();
+            $table->integer('target_id')->unsigned();
+            $table->integer('user_id')->unsigned();
+
+            $table->foreign('source_id')->references('id')->on('groups');
+            $table->foreign('target_id')->references('id')->on('groups');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->timestamps();
         });
     }
