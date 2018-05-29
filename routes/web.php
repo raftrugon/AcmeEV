@@ -109,17 +109,30 @@ Route::group(['prefix'=>'group'],function(){
         Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');
         Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');
     });
+    Route::group(['prefix'=>'manage','middleware'=>['permission:manage']],function(){
+        Route::group(['prefix'=>'timetable'],function(){
+            Route::get('/','Pdi\GroupController@getSchedulingView');
+            Route::get('data','Pdi\GroupController@getAvailableSubjectsAndRooms');
+            Route::get('resources','Pdi\GroupController@getGroupsForYearAndDegree');
+            Route::get('events','Pdi\GroupController@getScheduledForDegreeAndYear');
+            Route::post('new','Pdi\GroupController@postNewTimetableTime');
+        });
+    });
 });
 
 //////////////////////////////////////////////////////// Student ////////////////////////////////////////////////////////
 
-Route::group(['prefix'=>'student'],function(){
+Route::group(['prefix'=>'student','middleware'=>['role:student']],function(){
     Route::group(['prefix'=>'enrollment'],function() {
-        Route::get('my-enrollments', 'Student\EnrollmentController@getMyEnrollments');
+        Route::get('my-enrollments', 'Student\EnrollmentController@getMyEnrollments')->middleware('permission:current||old');
+        Route::get('enroll', 'Student\EnrollmentController@getEnroll')->middleware('can:enroll,App\Enrollment');
+        Route::post('post-enroll', 'Student\EnrollmentController@postPostEnroll')->middleware('can:enroll,App\Enrollment');
     });
+
     Route::group(['prefix'=>'subject'],function() {
         Route::post('control-check/upload','Student\ControlCheckController@uploadControlCheck')->name('upload_control_check');
     });
+
     Route::get('my-subjects', 'Student\SubjectInstanceController@getMySubjectInstances');
     Route::group(['prefix'=>'minute'], function() {
         Route::get('my-minutes','Student\MinuteController@getMinutesForStudent');

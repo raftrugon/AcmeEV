@@ -22,6 +22,10 @@ class SystemConfigRepo extends BaseRepo
         return SystemConfig::first();//DB::table('system_configs')->first();//
     }
 
+    public function getActualState(){
+        return SystemConfig::first()->getActualState();//DB::table('system_configs')->first();//
+    }
+
     public function incrementStateMachine(){
         DB::beginTransaction();
         try {

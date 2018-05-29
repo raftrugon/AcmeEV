@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\Pivot;
 
-class Enrollment extends Model
+class Enrollment extends Pivot
 {
 
     protected $guarded = [];
+    protected $table = 'enrollments';
 
     public function getId(){
         return $this->id;

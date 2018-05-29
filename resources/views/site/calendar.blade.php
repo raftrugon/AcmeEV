@@ -21,9 +21,10 @@
             weekends:false,
             allDaySlot:false,
             height:'auto',
-            minTime: '{{$config->getSecretariatOpenTime()}}',
-            maxTime: '{{$config->getSecretariatCloseTime()}}',
+            minTime: '{{$config->getBuildingOpenTime()}}',
+            maxTime: '{{$config->getBuildingCloseTime()}}',
             events: '{{URL::to('calendar/data')}}',
+            schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
             eventOrder: 'tooltip',
             eventRender: function(event, element) {
                 element.attr('data-toggle','tooltip');

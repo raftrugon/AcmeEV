@@ -15,13 +15,16 @@ class CreatePeriodTimesTable extends Migration
     {
         Schema::create('period_times', function (Blueprint $table) {
             $table->increments('id');
-            $table->enum('day',['L','M','X','J','V','S','D']);
+            //0->6 Domingo,Lunes,...,Viernes,Sabado
+            $table->integer('day');
             $table->time('start');
             $table->time('end');
             $table->integer('group_id')->unsigned();
+            $table->integer('room_id')->unsigned();
 
             $table->index('id');
             $table->foreign('group_id')->references('id')->on('groups')->delete('cascade');
+            $table->foreign('room_id')->references('id')->on('rooms')->delete('cascade');
             $table->timestamps();
         });
     }

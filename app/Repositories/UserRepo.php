@@ -8,15 +8,21 @@ use App\User;
 
 class UserRepo extends BaseRepo
 {
+    protected $subjectRepo;
 
-    public function __construct()
+    public function __construct(SubjectRepo $subjectRepo)
     {
-
+        $this->subjectRepo=$subjectRepo;
     }
 
     public function getModel()
     {
         return new User;
+    }
+
+    public function isUserFinished()
+    {
+        return $this->subjectRepo->getMyNonPassedSubjects() == 0;
     }
 
     public function createBatchFromInscriptions(){

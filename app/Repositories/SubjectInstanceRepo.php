@@ -12,7 +12,13 @@ class SubjectInstanceRepo extends BaseRepo {
     }
 
     public function getModel() {
-        return new SubjectINstance;
+        return new SubjectInstance;
+    }
+
+    public function getCurrentInstance($subject_id) {
+        return SubjectInstance::where('subject_id',$subject_id)
+            ->where('academic_year', $this->getAcademicYear())
+            ->first();
     }
 
 }

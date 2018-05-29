@@ -39,4 +39,22 @@ class SubjectRepo extends BaseRepo {
         return compact('files','folders');
     }
 
+    public function getMyNonPassedSubjects(){
+
+        $passed_subjects_ids = Subject::join('subject_instances', 'subjects.id', '=', 'subject_instances.subject_id')       //Une a subjects la tabla subject_instances
+        ->join('enrollments', 'subject_instances.id', '=', 'enrollments.subject_instance_id')                               //Une con la tabla enrollments
+        ->where('enrollments.user_id', Auth::id())                                                                          //Filtra a las asignaturas con enrollments del estudiante
+        ->join('minutes', 'enrollments.id', '=', 'minutes.enrollment_id')                                                   //Une con la tabla minutes
+        ->where('minutes.qualification', '>=', 5)                                                                           //Filtra a las asignaturas con enrollments con minutes aprobados
+        ->select('subjects.*')->distinct()->get()->pluck('id')->toArray();                                                  //Extrae los IDs de esas asignaturas
+
+        $non_passed_subjects = Subject::join('subject_instances', 'subjects.id', '=', 'subject_instances.subject_id')       //Une a subjects la tabla subject_instances
+        ->join('enrollments', 'subject_instances.id', '=', 'enrollments.subject_instance_id')                               //Une con la tabla enrollments
+        ->where('subjects.degree_id', Auth::user()->getDegree->getId())                                                                          //Filtra a las asignaturas con enrollments del estudiante
+        ->whereNotIn('subjects.id', $passed_subjects_ids)                                                                   //Elimina las aprobadas
+        ->select('subjects.*')->distinct();
+
+        return $non_passed_subjects;
+    }
+
 }

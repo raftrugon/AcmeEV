@@ -93,4 +93,10 @@ class User extends Authenticatable
     public function getIdNumber() {
         return $this->id_number;
     }
+
+    public function getSubjectInstances() {
+        return $this->belongsToMany('App\SubjectInstance', 'enrollments', 'user_id', 'subject_instance_id')->using('App\Enrollment');
+    }
+
+
 }
