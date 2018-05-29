@@ -6,8 +6,9 @@
                         <h3>{{$cc->getName()}} <small>{{$cc->getDescription()}}</small></h3>
                     </div>
                     <div class="d-flex align-items-center justify-content-start">
-                        <a href="#" id="uploadGradesButton{{$cc->getId()}}" class="ml-1 btn btn-outline-success upload-control-check-button" title="@lang('controlCheck.csvExplanation')" data-toggle="modal" data-target="#uploadControlCheckQualifications" data-id="{{$cc->getId()}}"> <i class="fas fa-upload"></i></a>
-                        <a href="{{URL::to('pdi/control_check/'.$cc->getId().'/correct')}}" class="ml-1 btn btn-outline-success upload-control-check-button" title="@lang('controlCheck.marks')" data-id="{{$cc->getId()}}"> <i class="far fa-bookmark"></i></a>
+                        <a href="#" id="uploadGradesButton{{$cc->getId()}}" class="ml-1 btn btn-outline-success upload-control-check-button" title="@lang('controlCheck.csvExplanation')" data-toggle="modal" data-tooltip="tooltip" data-target="#uploadControlCheckQualifications" data-id="{{$cc->getId()}}"> <i class="fas fa-upload"></i></a>
+                        <a href="{{URL::to('pdi/control_check/'.$cc->getId().'/correct')}}" class="ml-1 btn btn-outline-success upload-control-check-button" data-tooltip="tooltip" title="@lang('controlCheck.marks')" data-id="{{$cc->getId()}}"> <i class="far fa-bookmark"></i></a>
+                        <a href="#" id="deleteControlCheck{{$cc->getId()}}" class="ml-1 btn btn-outline-danger upload-control-check-button" title="@lang('controlCheck.delete')" data-toggle="modal" data-tooltip="tooltip" data-target="#deleteControlCheck" data-id="{{$cc->getId()}}"> <i class="fas fa-trash-alt"></i></a>
                     </div>
                 </div>
         </div>
@@ -84,6 +85,24 @@
               <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('global.cancel')</button>
                   <button type="button" class="btn btn-primary" id="control_check_grades_submit">@lang('global.submit')</button>
+              </div>
+          </div>
+      </div>
+  </div>
+
+  <div class="modal fade" id="deleteControlCheck" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+          <div class="modal-content">
+
+              <div class="modal-body">
+                  <form id="control_check_delete">
+                      <input type="hidden" name="id"/>
+                      <p><strong>@lang('controlCheck.deleteConfirm')</strong></p>
+                  </form>
+              </div>
+              <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-dismiss="modal">@lang('global.cancel')</button>
+                  <button type="button" class="btn btn-primary" id="control_check_delete_button">@lang('global.confirm')</button>
               </div>
           </div>
       </div>

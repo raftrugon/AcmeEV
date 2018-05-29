@@ -16,6 +16,7 @@ return[
     'success'=>'Éxito',
     'close'=>'Cerrar',
     'cancel'=>'Cancelar',
+    'confirm'=>'Confirmar',
     'anonymous'=>'Anónimo',
     'new_ingress'=>'Nuevo Ingreso',
     'idNumber'=>'Número de identificación',

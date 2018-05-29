@@ -82,13 +82,10 @@ class ControlCheckController extends Controller
     }
 
     public function updateQualifications(Request $request) {
-        $ids = $request->input('ids');
-        $qualifications = $request->input('qualifications');
-        for($i = 0; $i < count($ids); $i++) {
-            $controlCheckInstance = ControlCheckInstance::where('id',$ids[$i])->first();
-            $controlCheckInstance->setCalification($qualifications[$i]);
-            $this->controlCheckInstanceRepo->updateWithoutData($controlCheckInstance);
-        }
-        return 'true';
+        return $this->controlCheckInstanceRepo->updateQualifications($request->input('ids'),$request->input('qualifications'));
+    }
+
+    public function deleteControlCheck(Request $request) {
+        return $this->controlCheckRepo->deleteControlCheck($request->input('id'));
     }
 }

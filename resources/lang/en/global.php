@@ -16,6 +16,7 @@ return[
     'success'=>'Success',
     'close'=>'Close',
     'cancel'=>'Cancel',
+    'confirm'=>'Confirm',
     'anonymous'=>'Anonymous',
     'new_ingress'=>'New Ingress',
     'idNumber'=>'Id number',

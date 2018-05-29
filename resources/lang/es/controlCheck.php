@@ -17,4 +17,8 @@ return[
     'marks'=>'Introducir notas',
     'updated'=>'Calificacines actualizadas con éxito',
     'updateFail'=>'No se pudieron actualizar las calificaciones',
+    'delete'=>'Borrar control',
+    'deleteConfirm'=>'¿Seguro que desea eliminar el control?',
+    'deleted'=>'Control eliminado con éxito',
+    'deleteFail'=>'No se pudo eliminar el control',
 ];

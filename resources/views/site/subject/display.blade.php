@@ -246,6 +246,13 @@
                 modal.find('.modal-body input[name=id]').val(recipient);
             });
 
+            $('#deleteControlCheck').on('show.bs.modal', function (event) {
+                let button = $(event.relatedTarget);
+                let recipient = button.data('id');
+                let modal = $(this);
+                modal.find('.modal-body input[name=id]').val(recipient);
+            });
+
             $('#control_check_submit').click(function(){
                 $('#control_check_form .dropify-wrapper').css('border', '2px solid #E5E5E5');
                 let data = new FormData(document.getElementById('control_check_form'));
@@ -291,6 +298,26 @@
                     }
                     });
             });
+            $('#control_check_delete_button').click(function(){
+                let data = new FormData(document.getElementById('control_check_delete'));
+                $.ajax({
+                    type: 'POST',
+                    url: '{{route('delete_control_check')}}',
+                    data: data,
+                    mimeType: "multipart/form-data",
+                    processData: false,
+                    contentType: false,
+                    success: function(data) {
+                        if (data === 'true') {
+                            $('#deleteControlCheck').modal('hide');
+                            success('@lang('global.success')', '@lang('controlCheck.deleted')');
+                            location.reload();
+                        }else{
+                            error('@lang('global.error')','@lang('controlCheck.deleteFail')');
+                        }
+                    }
+                    });
+            });
 
             $('#new_file_form').validate({
                 rules:{
@@ -316,7 +343,9 @@
         });
 
         $(document).ready(function(){
-            $('[data-toggle="tooltip"]').tooltip();
+            $('[data-tooltip="tooltip"]').tooltip({
+                trigger : 'hover'
+            });
         });
 
     </script>
