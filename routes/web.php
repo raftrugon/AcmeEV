@@ -69,9 +69,9 @@ Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
 
 Route::group(['prefix'=>'management','middleware'=>['permission:manage']],function(){
     Route::group(['prefix'=>'degree'],function() {
-        Route::get('new','DegreeController@getNewDegree');
-        Route::post('save','DegreeController@postSaveDegree');
-        Route::get('{degree}/edit','DegreeController@getEditDegree');
+        Route::get('new','DegreeController@getNewDegree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');
+        Route::post('save','DegreeController@postSaveDegree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');
+        Route::get('{degree}/edit','DegreeController@getEditDegree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');
         route::get('{degree}/add-next-year-subjects','Pdi\ManagementController@getDegreeEditAddNextYearSubjects');
         route::post('/create-subject-instances','Pdi\ManagementController@createNextYearDegree')->name('post_subject_instances');
     });

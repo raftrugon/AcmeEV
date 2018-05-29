@@ -27,9 +27,9 @@ class UserRepo extends BaseRepo
         try {
             return $this->subjectRepo->getMyNonPassedSubjects()->count() == 0;
         } catch (\Exception $e) {
-            return false;
+            return null;
         } catch (\Throwable $t) {
-            return false;
+            return null;
         }
     }
 
@@ -38,9 +38,9 @@ class UserRepo extends BaseRepo
         try {
             return !($this->enrollmentRepo->getMyActualEnrollments()->count() == 0);
         } catch (\Exception $e) {
-            return false;
+            return null;
         } catch (\Throwable $t) {
-            return false;
+            return null;
         }
     }
 

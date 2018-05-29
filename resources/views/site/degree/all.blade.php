@@ -3,7 +3,7 @@
 @section('content')
 
     @can('manage')
-        @if($actual_state == 6 || $actual_state < 2)
+        @if($actual_state == 7 || $actual_state < 2)
             <div class="card border-primary" style="background-color: #6c6b6d;margin-bottom: 40px;">
                 <div class="card-body">
                     <button onclick="location.href='{{URL::to('management/degree/new')}}'"
