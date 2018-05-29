@@ -84,12 +84,13 @@ Route::group(['prefix'=>'management','middleware'=>['permission:manage']],functi
 });
 
 
+//TO-DO EN CONTROLADOR CHECKEAR QUE SEA PROFESOR DE LA ASIGNATURA
 Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
-    //TO-DO EN CONTROLADOR CHECKEAR QUE SEA PROFESOR DE LA ASIGNATURA
     Route::group(['prefix'=>'announcement'],function() {
         Route::get('{subjectInstance}/create', 'Pdi\AnnouncementController@getCreateAnnouncement');
         Route::post('save', 'Pdi\AnnouncementController@postSaveAnnouncement');
     });
+
     Route::group(['prefix'=>'subject','middleware'=>['permission:teach']],function(){
         Route::get('list','Pdi\SubjectController@getMySubjectList');
         Route::post('folder/new','Pdi\SubjectController@postNewFolder')->name('new_folder');
@@ -101,6 +102,7 @@ Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
         Route::get('{subject}/instances','Pdi\SubjectController@getSubjectInstances');
         Route::get('{subjectInstance}/groups','Pdi\GroupController@getGroupsForSubjectInstace');
     });
+
     Route::group(['prefix'=>'control_check'],function() {
         Route::get('{subjectInstance}/new','Pdi\ControlCheckController@createControlCheck');
         Route::post('/save','Pdi\ControlCheckController@postControlCheck');
@@ -110,20 +112,20 @@ Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
     });
 });
 
+Route::group(['middleware'=>['role:pdi']],function(){
+    Route::group(['prefix'=>'group'],function(){
+        Route::group(['prefix'=>'manage','middleware'=>['permission:manage']],function(){
+            Route::group(['prefix'=>'timetable'],function(){
+                Route::get('/','Pdi\GroupController@getSchedulingView');
+                Route::get('data','Pdi\GroupController@getAvailableSubjectsAndRooms');
+                Route::get('resources','Pdi\GroupController@getGroupsForYearAndDegree');
+                Route::get('events','Pdi\GroupController@getScheduledForDegreeAndYear');
+                Route::post('new','Pdi\GroupController@postNewTimetableTime');
+            });
+        });
 
-Route::group(['prefix'=>'group'],function(){
-    Route::group(['middleware'=>['role:pdi']],function(){
         Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');
         Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');
-    });
-    Route::group(['prefix'=>'manage','middleware'=>['permission:manage']],function(){
-        Route::group(['prefix'=>'timetable'],function(){
-            Route::get('/','Pdi\GroupController@getSchedulingView');
-            Route::get('data','Pdi\GroupController@getAvailableSubjectsAndRooms');
-            Route::get('resources','Pdi\GroupController@getGroupsForYearAndDegree');
-            Route::get('events','Pdi\GroupController@getScheduledForDegreeAndYear');
-            Route::post('new','Pdi\GroupController@postNewTimetableTime');
-        });
     });
 });
 
@@ -148,9 +150,21 @@ Route::group(['prefix'=>'student','middleware'=>['role:student']],function(){
 
 //////////////////////////////////////////////////////// Logged ////////////////////////////////////////////////////////
 
-Route::group(['prefix'=>'logged'/*,'middleware'=>['role:???????']*/],function(){
+Route::group(['prefix'=>'logged'/*,'middleware'=>'auth'*/],function(){
     Route::group(['prefix'=>'announcement'],function() {
-        Route::get('{subjectInstance}/list', 'Logged\AnnouncementController@getAllBySubjectInstance');//@getAllBySubjectInstance
+        Route::get('{subjectInstance}/list', 'Logged\AnnouncementController@getAllBySubjectInstance');
+    });
+});
+
+Route::group(['prefix'=>'chat','middleware','middleware'=>'auth'],function(){
+    Route::post('new','ChatController@postNewChat');
+    Route::get('load','ChatController@getLoadChats');
+    Route::post('close','ChatController@postCloseChat');
+    Route::post('open','ChatController@postOpenChat');
+    Route::post('min','ChatController@postMinChat');
+    Route::group(['prefix'=>'message'],function(){
+        Route::post('new','ChatController@postNewMessage');
+        Route::get('un-read','ChatController@getUnreadMessages');
     });
 });
 
@@ -193,17 +207,7 @@ Route::group(['prefix'=>'subject'],function(){
     Route::get('file/download/{file}','SubjectController@getDownloadFile');
 });
 
-Route::group(['prefix'=>'chat','middleware','middleware'=>'auth'],function(){
-    Route::post('new','ChatController@postNewChat');
-    Route::get('load','ChatController@getLoadChats');
-    Route::post('close','ChatController@postCloseChat');
-    Route::post('open','ChatController@postOpenChat');
-    Route::post('min','ChatController@postMinChat');
-    Route::group(['prefix'=>'message'],function(){
-       Route::post('new','ChatController@postNewMessage');
-       Route::get('un-read','ChatController@getUnreadMessages');
-    });
-});
+
 
 
 
