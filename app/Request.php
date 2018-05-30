@@ -3,10 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Request extends Model
 {
+
+    use SoftDeletes;
+
     protected $guarded = ['accepted'];
+    protected $dates = ['deleted_at'];
 
     public function getId(){
         return $this->id;

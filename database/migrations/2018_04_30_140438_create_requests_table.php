@@ -27,6 +27,7 @@ class CreateRequestsTable extends Migration
             $table->foreign('inscription_id')->references('id')->on('inscriptions')->delete('cascade');
             $table->foreign('degree_id')->references('id')->on('degrees')->delete('cascade');
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

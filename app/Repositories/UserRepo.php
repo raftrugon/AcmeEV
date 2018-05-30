@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Inscription;
+use App\Request;
 use App\SystemConfig;
 use App\User;
 use Illuminate\Support\Facades\DB;
@@ -11,11 +12,15 @@ class UserRepo extends BaseRepo
 {
     protected $subjectRepo;
     protected $enrollmentRepo;
+    protected $inscriptionRepo;
+    protected $requestRepo;
 
-    public function __construct(SubjectRepo $subjectRepo, EnrollmentRepo $enrollmentRepo)
+    public function __construct(SubjectRepo $subjectRepo, EnrollmentRepo $enrollmentRepo, InscriptionRepo $inscriptionRepo, RequestRepo $requestRepo)
     {
         $this->subjectRepo = $subjectRepo;
         $this->enrollmentRepo = $enrollmentRepo;
+        $this->inscriptionRepo = $inscriptionRepo;
+        $this->requestRepo = $requestRepo;
     }
 
     public function getModel()
@@ -58,6 +63,7 @@ class UserRepo extends BaseRepo
 
     public function createBatchFromInscriptions()
     {
+        //Accepted inscriptions with accepted requests
         $inscriptions = Inscription::join('requests', 'inscriptions.id', '=', 'requests.inscription_id')
             ->join('degrees', 'requests.degree_id', '=', 'degrees.id')
             ->where('requests.accepted', 1)
@@ -67,16 +73,16 @@ class UserRepo extends BaseRepo
 
 
         try {
-
             DB::beginTransaction();
 
             foreach ($inscriptions as $inscription){
                 try {
 
+                    //Email is generated with the first part of the users personal email
                     $split_email = explode('@',$inscription->email);
 
-                    //dd();
 
+                    //Student creation
                     $student_array = array(
                         'name' => $inscription->name,
                         'surname' => $inscription->surname,
@@ -90,11 +96,10 @@ class UserRepo extends BaseRepo
                         'email' => $split_email[0].'@alum.us.es',
                     );
 
-
-
                     $student = $this->create($student_array);
 
-                    //Roles y permisos
+
+                    //Roles and permissions
                     $student->assignRole('student');
                     $student->givePermissionTo('new');
 
@@ -110,11 +115,19 @@ class UserRepo extends BaseRepo
 
             //Soft delete de las inscriptions
             $all_inscriptions = Inscription::all();
+            foreach ($all_inscriptions as $inscription){
+                $this->inscriptionRepo->delete($inscription);
+            }
 
-
+            //Soft delete de las requests
+            $all_requests = Request::all();
+            foreach ($all_requests as $request){
+                $this->requestRepo->delete($request);
+            }
 
 
             DB::commit();
+
 
             return true;
 

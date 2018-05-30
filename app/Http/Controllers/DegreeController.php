@@ -16,12 +16,10 @@ class DegreeController extends Controller
 
     protected $degreeRepo;
     protected $systemConfigRepo;
-    protected $userRepo;
 
-    public function __construct(DegreeRepo $degreeRepo, SystemConfigRepo $systemConfigRepo, UserRepo $userRepo){
+    public function __construct(DegreeRepo $degreeRepo, SystemConfigRepo $systemConfigRepo){
         $this->degreeRepo = $degreeRepo;
         $this->systemConfigRepo = $systemConfigRepo;
-        $this->userRepo = $userRepo;
     }
 
     public function getAllButSelected(Request $request){
@@ -84,8 +82,5 @@ class DegreeController extends Controller
         return view('site.degree.display',compact('degree','school_years'));
     }
 
-    public function debug() {
-        $this->userRepo->createBatchFromInscriptions();
-        return view('site.degree.display',compact('degree','school_years'));
-    }
+
 }

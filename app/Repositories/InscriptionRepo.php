@@ -14,13 +14,11 @@ class InscriptionRepo extends BaseRepo
 
     protected $requestRepo;
     protected $systemConfigRepo;
-    protected $userRepo;
 
-    public function __construct(RequestRepo $requestRepo, SystemConfigRepo $systemConfigRepo,UserRepo $userRepo)
+    public function __construct(RequestRepo $requestRepo, SystemConfigRepo $systemConfigRepo)
     {
         $this->requestRepo = $requestRepo;
         $this->systemConfigRepo = $systemConfigRepo;
-        $this->userRepo = $userRepo;
     }
 
     public function getModel()
