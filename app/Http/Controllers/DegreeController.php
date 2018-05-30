@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Degree;
 use App\Repositories\DegreeRepo;
 use App\Repositories\SystemConfigRepo;
+use App\Repositories\UserRepo;
 use App\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,10 +16,12 @@ class DegreeController extends Controller
 
     protected $degreeRepo;
     protected $systemConfigRepo;
+    protected $userRepo;
 
-    public function __construct(DegreeRepo $degreeRepo, SystemConfigRepo $systemConfigRepo){
+    public function __construct(DegreeRepo $degreeRepo, SystemConfigRepo $systemConfigRepo, UserRepo $userRepo){
         $this->degreeRepo = $degreeRepo;
         $this->systemConfigRepo = $systemConfigRepo;
+        $this->userRepo = $userRepo;
     }
 
     public function getAllButSelected(Request $request){
@@ -78,6 +81,11 @@ class DegreeController extends Controller
 
     public function displayDegree(Degree $degree) {
         $school_years = Subject::where('degree_id',$degree->getId())->orderBy('school_year')->get()->groupBy('school_year');
+        return view('site.degree.display',compact('degree','school_years'));
+    }
+
+    public function debug() {
+        $this->userRepo->createBatchFromInscriptions();
         return view('site.degree.display',compact('degree','school_years'));
     }
 }

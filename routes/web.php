@@ -228,5 +228,6 @@ Route::group(['prefix'=>'error'],function(){
 });
 
 
+Route::get('debug','DegreeController@debug');
 
 
