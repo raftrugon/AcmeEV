@@ -48,4 +48,5 @@ class ControlCheckRepo extends BaseRepo
             return 'false';
         }
     }
+
 }

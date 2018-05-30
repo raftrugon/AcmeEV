@@ -11,6 +11,7 @@ use App\Repositories\ControlCheckRepo;
 use App\Repositories\FileRepo;
 use App\Room;
 use App\SubjectInstance;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
@@ -33,42 +34,57 @@ class ControlCheckController extends Controller
         return view('site.student.subjectInstance.controlChecks.all',compact('controlChecks'));
     }
 
-    public function createControlCheck(SubjectInstance $subjectInstance) {
+    public function createOrEdit(SubjectInstance $subjectInstance, ControlCheck $controlCheck=null) {
         $rooms = Room::all();
-        return view('site.pdi.controlCheck.create-edit',compact('subjectInstance','rooms'));
+        return view('site.pdi.controlCheck.create-edit',compact('subjectInstance','controlCheck','rooms'));
     }
 
     public function postControlCheck(Request $request) {
         $subjectInstance = SubjectInstance::where('id',$request->input('subjectInstance'))->first();
         try {
-            $controlCheck = array(
-                'name' => $request->input('name'),
-                'description' => $request->input('description'),
-                'room_id' => $request->input('room'),
-                'date' => $request->input('date'),
-                'is_submittable' => is_null($request->input('isSubmittable'))?false:true,
-                'weight' => $request->input('weight'),
-                'minimum_mark' => $request->input('minimumMark'),
-                'subject_instance_id' => $subjectInstance->getId(),
-            );
-            $saved = $this->controlCheckRepo->create($controlCheck);
-            foreach ($subjectInstance->getGroups as $group) {
-                foreach ($group->getStudents as $student) {
+            if($request->input('id')=="0") {
+                $controlCheck = array(
+                    'name' => $request->input('name'),
+                    'description' => $request->input('description'),
+                    'room_id' => $request->input('room'),
+                    'date' => $request->input('date'),
+                    'is_submittable' => is_null($request->input('isSubmittable')) ? false : true,
+                    'weight' => $request->input('weight'),
+                    'minimum_mark' => $request->input('minimumMark'),
+                    'subject_instance_id' => $subjectInstance->getId(),
+                );
+                $saved = $this->controlCheckRepo->create($controlCheck);
+                foreach ($subjectInstance->getGroups as $group) {
+                    foreach ($group->getStudents as $student) {
                         $controlCheckInstance = array(
                             'calification' => null,
                             'control_check_id' => $saved->getId(),
                             'student_id' => $student->getId(),
-                            'url'=>null,
+                            'url' => null,
                         );
                         $this->controlCheckInstanceRepo->create($controlCheckInstance);
+                    }
                 }
+                DB::commit();
+            } else {
+                $controlCheck = ControlCheck::where('id',$request->input('id'))->first();
+                $controlCheck->setName($request->input('name'));
+                $controlCheck->setDescription($request->input('description'));
+                $controlCheck->setRoom($request->input('room'));
+                $controlCheck->setDate($request->input('date'));
+                $controlCheck->setIsSubmittable(is_null($request->input('isSubmittable')) ? false : true);
+                $controlCheck->setWeight($request->input('weight'));
+                $controlCheck->setMinimumMark($request->input('minimumMark'));
+                $this->controlCheckRepo->updateWithoutData($controlCheck);
             }
-            DB::commit();
         }catch(\Exception $e){
             DB::rollBack();
             throw $e;
         }
-        return view('home');
+        $subject = SubjectInstance::where('id',$request->input('subjectInstance'))->first()->getSubject;
+        $announcements = $subject->getSubjectInstances()->where('academic_year',Carbon::now()->year)->first()->getAnnouncements;
+        $controlChecks = $this->controlCheckRepo->getControlChecksForLecturer($subject)->get();
+        return view('site.subject.display',compact('subject','announcements','controlChecks'));
     }
 
     public function importGradesFromCsv(Request $request)

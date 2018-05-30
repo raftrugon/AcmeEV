@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\ControlCheck;
 use App\SubjectInstance;
 use Illuminate\Support\Facades\Auth;
 
@@ -39,4 +40,8 @@ class SubjectInstanceRepo extends BaseRepo {
             ->first();
     }
 
+    public function canAddControlChecks($subjectInstanceId){
+        return ControlCheck::where('subject_instance_id',$subjectInstanceId)
+                ->sum('weight')<1 ? 1:0;
+    }
 }
