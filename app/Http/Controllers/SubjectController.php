@@ -6,6 +6,7 @@ use App\ControlCheckInstance;
 use App\File;
 use App\Folder;
 use App\Repositories\ControlCheckRepo;
+use App\Repositories\SubjectInstanceRepo;
 use App\Repositories\SubjectRepo;
 use App\Subject;
 use Carbon\Carbon;
@@ -19,21 +20,25 @@ class SubjectController extends Controller
 
     protected $subjectRepo;
     protected $controlCheckRepo;
+    protected $subjectInstanceRepo;
 
-    public function __construct(SubjectRepo $subjectRepo, ControlCheckRepo $controlCheckRepo)
+    public function __construct(SubjectRepo $subjectRepo, ControlCheckRepo $controlCheckRepo, SubjectInstanceRepo $subjectInstanceRepo)
     {
         $this->subjectRepo=$subjectRepo;
         $this->controlCheckRepo=$controlCheckRepo;
+        $this->subjectInstanceRepo=$subjectInstanceRepo;
     }
 
     public function getSubjectDisplay(Subject $subject){
         $announcements = $subject->getSubjectInstances()->where('academic_year',Carbon::now()->year)->first()->getAnnouncements;
         $controlCheckInstances = $this->controlCheckRepo->getControlCheckInstancesForStudent($subject,null)->get();
         $controlChecks = $this->controlCheckRepo->getControlChecksForLecturer($subject)->get();
+        $canCreateControlChecks = $this->subjectInstanceRepo->canAddControlChecks(
+            $this->subjectInstanceRepo->getCurrentInstance($subject->getId())->getId());
         if(Auth::user()->hasRole('student'))
             return view('site.subject.display',compact('subject','announcements','controlCheckInstances'));
         elseif(Auth::user()->hasRole('pdi'))
-            return view('site.subject.display',compact('subject','announcements','controlChecks'));
+            return view('site.subject.display',compact('subject','announcements','controlChecks','canCreateControlChecks'));
     }
 
     public function getFileSystemData(Request $request){

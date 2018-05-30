@@ -104,7 +104,7 @@ Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
     });
 
     Route::group(['prefix'=>'control_check'],function() {
-        Route::get('{subjectInstance}/new','Pdi\ControlCheckController@createControlCheck');
+        Route::get('{subjectInstance}/edit/{controlCheck?}','Pdi\ControlCheckController@createOrEdit');
         Route::post('/save','Pdi\ControlCheckController@postControlCheck');
         Route::get('{controlCheck}/correct','Pdi\ControlCheckController@correctControlCheck');
         Route::post('post_marks','Pdi\ControlCheckController@updateQualifications')->name('update_controlCheck_qualifications');

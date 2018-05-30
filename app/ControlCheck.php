@@ -64,7 +64,7 @@ class ControlCheck extends Model
     }
 
     public function getWeight() {
-        return $this->weight();
+        return $this->weight;
     }
 
     public function setWeight($value) {
@@ -75,7 +75,7 @@ class ControlCheck extends Model
         return $this->minimum_mark;
     }
 
-    public function setMainimumMark($value) {
+    public function setMinimumMark($value) {
         $this->minimum_mark=$value;
     }
 
@@ -84,7 +84,7 @@ class ControlCheck extends Model
     }
 
     public function getSubjectInstance() {
-        return $this->belongsTo('App\SoubjectInstance','subject_instance_id','id');
+        return $this->belongsTo('App\SubjectInstance','subject_instance_id','id');
     }
 
     public function setSubjectIntance($value) {

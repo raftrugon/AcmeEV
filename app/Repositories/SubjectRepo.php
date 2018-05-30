@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\ControlCheck;
 use App\Folder;
 use App\Subject;
 use Carbon\Carbon;
@@ -56,5 +57,4 @@ class SubjectRepo extends BaseRepo {
 
         return $non_passed_subjects;
     }
-
 }

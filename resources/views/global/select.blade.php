@@ -6,9 +6,9 @@
         @foreach($objects as $object)
             <option value="{{$object[$value]}}"
                     @if(isset($vue) && isset($bind)) :value="{bind: '{{$object[$bind]}}' }" @elseif(isset($vue)) :value="{bind: '{{$object[$display]}}' }" @endif
-                    @if(!is_null(old($name)) && old($name) == $object[$value]) selected="true" @endif
+                    @if(isset($selectedOption) && $selectedOption == $object[$value]) selected="true" @endif
                     >{{$object[$display]}}</option>
         @endforeach
     </select>
-    <span id="{{$id}}-error" class="help-block invalid-feedback">@if(isset($name)) {{ $errors->first($name) }} @else {{ $errors->first($id) }} @endif</span>
+    <spanz id="{{$id}}-error" class="help-block invalid-feedback">@if(isset($name)) {{ $errors->first($name) }} @else {{ $errors->first($id) }} @endif</spanz>
 </div>
