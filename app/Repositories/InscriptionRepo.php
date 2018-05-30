@@ -13,12 +13,10 @@ class InscriptionRepo extends BaseRepo
 {
 
     protected $requestRepo;
-    protected $systemConfigRepo;
 
-    public function __construct(RequestRepo $requestRepo, SystemConfigRepo $systemConfigRepo)
+    public function __construct(RequestRepo $requestRepo)
     {
         $this->requestRepo = $requestRepo;
-        $this->systemConfigRepo = $systemConfigRepo;
     }
 
     public function getModel()
@@ -64,8 +62,8 @@ class InscriptionRepo extends BaseRepo
                 }
             }
             $iteration++;
-            $systemConfig->setInscriptionsListStatus($iteration);
-            $this->systemConfigRepo->updateWithoutData($systemConfig);
+            /*$systemConfig->setInscriptionsListStatus($iteration);
+            $this->systemConfigRepo->updateWithoutData($systemConfig);*/
             DB::commit();
             if($iteration == 3) $this->userRepo->createBatchFromInscriptions();
         }catch(\Exception $e){

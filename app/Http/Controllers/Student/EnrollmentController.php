@@ -74,6 +74,11 @@ class EnrollmentController extends Controller
 
             }
 
+            if($user->can('new')) {
+                $user->revokePermissionTo('new');
+                $user->givePermissionTo('current');
+            }
+
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
