@@ -25,7 +25,7 @@ class SystemConfigController extends Controller
         $system_config = $this->systemConfigRepo->getSystemConfig();
         $actual_state = $system_config->getActualState();
         $next_state = $actual_state + 1;
-        if($next_state > 7)
+        if($next_state > 8)
             $next_state = 0;
 
         $state_actual_title = 'systemConfig.state.'.$actual_state.'.title';
@@ -81,14 +81,5 @@ class SystemConfigController extends Controller
         }
     }
 
-    public function postInscriptionBatch(){
-        try {
-            $this->inscriptionRepo->inscriptionBatch();
-            return 'true';
-        }catch(\Exception $e){
-            return 'false';
-        }catch(\Throwable $t){
-            return 'false';
-        }
-    }
+
 }

@@ -13,14 +13,10 @@ class InscriptionRepo extends BaseRepo
 {
 
     protected $requestRepo;
-    protected $systemConfigRepo;
-    protected $userRepo;
 
-    public function __construct(RequestRepo $requestRepo, SystemConfigRepo $systemConfigRepo,UserRepo $userRepo)
+    public function __construct(RequestRepo $requestRepo)
     {
         $this->requestRepo = $requestRepo;
-        $this->systemConfigRepo = $systemConfigRepo;
-        $this->userRepo = $userRepo;
     }
 
     public function getModel()
@@ -38,38 +34,49 @@ class InscriptionRepo extends BaseRepo
 
 
 
-    public function inscriptionBatch(){
+    public function inscriptionBatch($actual_state){
         DB::beginTransaction();
         try {
-            $systemConfig = SystemConfig::first();
-            $iteration = $systemConfig->getInscriptionsListStatus();
-            //Para el segundo y definitivo listado quitamos las adjudicaciones a los que no las han confirmado(agreed = 0)
-            if ($iteration > 0) DB::table('requests')->join('inscriptions', 'requests.inscription_id', '=', 'inscriptions.id')->where('inscriptions.agreed', 0)->update(['accepted' => 0]);
+
+            //Para el definitivo listado quitamos las adjudicaciones a los que no las han confirmado(agreed != 1)
+            if ($actual_state == 2)
+                DB::table('requests')->join('inscriptions', 'requests.inscription_id', '=', 'inscriptions.id')->where('inscriptions.agreed','!=', 1)->update(['accepted' => 0]);
+
             $inscriptions = Inscription::orderBy('grade', 'desc');
-            //Para el segundo y definitivo listado solo iteramos sobre los que no tuvieron adjudicación en los anteriores listados
-            if ($iteration > 0) $inscriptions->whereNull('agreed');
+
+            //Para el definitivo listado solo iteramos sobre los que respondieron; bien aceptando, o denegando la adjudicación.
+            if ($actual_state == 2)
+                $inscriptions = $inscriptions->where('agreed', 0);
+
+
+            //iteramos sobre las inscripciones por orden de nota
             foreach ($inscriptions->get() as $inscription) {
+
                 //iteramos sobre las requests por orden de prioridad
                 foreach ($inscription->getRequests()->orderBy('priority', 'asc')->get() as $request) {
+
                     //Buscamos cuantos estudiantes están ya asignados a este grado
                     $numAppliedToDegree = Request::where('degree_id', $request->getDegree->getId())->where('accepted', 1)->count();
+
+
                     //Si hay hueco en el grado se lo asignamos
                     if ($request->getDegree->getNewStudentsLimit() > $numAppliedToDegree) {
+
                         //Lo seteamos a aceptado
                         $request->setAccepted(1);
                         $this->requestRepo->updateWithoutData($request);
-                        //Le seteamos el agreed de null a 0 para que si no confirma la request se le retire en el próximo listado
-                        $inscription->setAgreed(0);
+
+                        //Le seteamos el agreed de 0 a null en la segunda iteración para que si no confirma la request se le retire
+                        $inscription->setAgreed(null);
                         $this->updateWithoutData($inscription);
                         break;
                     }
                 }
             }
-            $iteration++;
-            $systemConfig->setInscriptionsListStatus($iteration);
-            $this->systemConfigRepo->updateWithoutData($systemConfig);
+
+
             DB::commit();
-            if($iteration == 3) $this->userRepo->createBatchFromInscriptions();
+
         }catch(\Exception $e){
             DB::rollBack();
             throw $e;

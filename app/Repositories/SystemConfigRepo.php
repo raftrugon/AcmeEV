@@ -8,9 +8,13 @@ use Illuminate\Support\Facades\DB;
 class SystemConfigRepo extends BaseRepo
 {
 
-    public function __construct()
-    {
+    protected $userRepo;
+    protected $inscriptionRepo;
 
+    public function __construct(UserRepo $userRepo, InscriptionRepo $inscriptionRepo)
+    {
+        $this->userRepo = $userRepo;
+        $this->inscriptionRepo = $inscriptionRepo;
     }
 
     public function getModel()
@@ -33,7 +37,7 @@ class SystemConfigRepo extends BaseRepo
             $DB_actual_state = $DB_system_config->getActualState();
 
             $new_state = $DB_actual_state + 1;
-            if($new_state > 7)
+            if($new_state > 8)
                 $new_state = 0;
 
             $new_system_config = array(
@@ -42,15 +46,28 @@ class SystemConfigRepo extends BaseRepo
 
             $this->update($DB_system_config, $new_system_config);
 
-            DB::commit();
+
 
             switch ($new_state)
             {
-                case 1: break;  //Indicar aquí auto computación primera de inscripciones
-                case 2: break;  //Indicar aquí auto computación segunda de inscripciones //Indicar aquí la auto generación de usuarios con las inscripciones aceptadas //Indicar aquí auto generación de subject instances
-                case 4: break;  //Indicar aquí auto computación de minutes con control checks del primer cuatrimestre
-                case 6: break;  //Indicar aquí auto computación de minutes con control checks del segundo cuatrimestre y anuales
+                case 1:
+                    $this->inscriptionRepo->inscriptionBatch(1);        //Auto computación primera de inscripciones
+                    break;
+
+                case 2:
+                    $this->inscriptionRepo->inscriptionBatch(2);        //Auto computación segunda de inscripciones
+                    break;
+
+                case 3:
+                    //Indicar aquí auto generación de subject instances
+                    $this->userRepo->createBatchFromInscriptions();                //Generación de usuarios con las inscripciones aceptadas
+                    break;
+
+                case 5: break;  //Indicar aquí auto computación de minutes con control checks del primer cuatrimestre
+                case 7: break;  //Indicar aquí auto computación de minutes con control checks del segundo cuatrimestre y anuales
             }
+
+            DB::commit();
         } catch(\Exception $e){
             DB::rollBack();
             throw $e;

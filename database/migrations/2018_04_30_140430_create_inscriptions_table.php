@@ -24,6 +24,7 @@ class CreateInscriptionsTable extends Migration
             $table->string('phone_number');
             $table->double('grade');
             $table->boolean('agreed')->nullable();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Degree;
 use App\Repositories\DegreeRepo;
 use App\Repositories\SystemConfigRepo;
+use App\Repositories\UserRepo;
 use App\Subject;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -32,8 +33,7 @@ class DegreeController extends Controller
     }
 
     public function getNewDegree(){
-        $actual_state = $this->systemConfigRepo->getActualState();
-        return view('site.degree.create-edit', compact('actual_state'));
+        return view('site.degree.create-edit');
     }
 
     public function getEditDegree(Degree $degree){
@@ -80,4 +80,6 @@ class DegreeController extends Controller
         $school_years = Subject::where('degree_id',$degree->getId())->orderBy('school_year')->get()->groupBy('school_year');
         return view('site.degree.display',compact('degree','school_years'));
     }
+
+
 }
