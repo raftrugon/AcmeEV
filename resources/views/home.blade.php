@@ -17,7 +17,7 @@
         @endunless
         @if(Auth::check())
             @if(Auth::user()->can('current') || Auth::user()->can('new'))
-                @if($actual_state == 2)
+                @if($actual_state == 3)
                     @if($can_student_enroll)
                         <div class="alert alert-success text-center" role="alert">
                             <strong> @lang('global.enroll.title') </strong> &emsp;@lang('global.enroll.link')

@@ -23,7 +23,7 @@ class CreateInscriptionsTable extends Migration
             $table->string('address');
             $table->string('phone_number');
             $table->double('grade');
-            $table->boolean('agreed')->nullable();
+            $table->boolean('agreed')->nullable()->default(null);
             $table->softDeletes();
             $table->timestamps();
         });

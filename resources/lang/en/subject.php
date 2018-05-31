@@ -14,4 +14,6 @@ return[
     'first'=>'First semester',
     'second'=>'Second semester',
     'instances'=>'Instances',
+    'add'=>'Add subject',
+    'edit'=>'Edit subject'
 ];

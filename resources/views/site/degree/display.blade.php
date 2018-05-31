@@ -34,6 +34,7 @@
                                 <th scope="col">@lang('attributes.semester')</th>
                                 <th scope="col">@lang('attributes.type')</th>
                                 <th scope="col">@lang('attributes.code')</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <tbody>
@@ -45,12 +46,12 @@
                                     <td><a href="{{URL::to('department/' . $subject->getDepartment->getId() . '/display')}}">{{$subject->getDepartment->getName()}}</a></td>
                                     <td>{{$subject->getSchoolYear()}}</td>
                                     <td>
-                                        @if ($subject->getSemester() == 0)
-                                            @lang('subject.first')
+                                        @if (is_null($subject->getSemester()))
+                                            @lang('subject.annual')
                                         @elseif($subject->getSemester() == 1)
                                             @lang('subject.second')
-                                        @else
-                                            @lang('subject.annual')
+                                        @elseif($subject->getSemester() == 0)
+                                            @lang('subject.first')
                                         @endif
                                     </td>
                                     <td>
@@ -73,6 +74,7 @@
                                         @endif
                                     </td>
                                     <td>{{$subject->getCode()}}</td>
+                                    <td><a href="{{URL::to('pdi/subject/'.$degree->getId().'/edit/'.$subject->getId())}}" class="btn btn-primary">@lang('global.edit')</a></td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -84,6 +86,9 @@
 
     </div>
 
+    <a href="{{URL::to('pdi/subject/'.$degree->getId().'/edit')}}" id="submitButton" class="fixed-bottom btn btn-success position-fixed col-sm-3" style="left:50%;transform:translate(-50%,0);bottom:20px;">
+        @lang('subject.add')
+    </a>
 
 
 @endsection
