@@ -102,7 +102,10 @@ Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
         Route::get('{subject}/instances','Pdi\SubjectController@getSubjectInstances');
         Route::get('{subjectInstance}/groups','Pdi\GroupController@getGroupsForSubjectInstace');
     });
-
+    Route::group(['prefix'=>'subject','middleware'=>['permission:manage']],function(){
+        Route::get('{degree}/edit/{subject?}','Pdi\SubjectController@createOrEdit');
+        Route::post('save','Pdi\SubjectController@saveSubject');
+    });
     Route::group(['prefix'=>'control_check'],function() {
         Route::get('{subjectInstance}/edit/{controlCheck?}','Pdi\ControlCheckController@createOrEdit');
         Route::post('/save','Pdi\ControlCheckController@postControlCheck');
