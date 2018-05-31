@@ -56,7 +56,21 @@
                     {data:'priority',"width":"10%"},
                     {data:'name',"width":"70%"},
                     {data:'accepted',"width":"20%"},
-                ]
+                ],
+                fnDrawCallback:function(){
+                    $('.agree-btn').click(function(){
+                       $.post('{{URL::to('inscription/results/agree')}}',{id_number: $('#id_number').val(),password: $('#password').val()},function(data){
+                           if(data === 'true'){
+                               success('@lang('global.ok')','@lang('inscription.result.accept.success')');
+                               resultsTable.ajax.reload();
+                           }else if(data === 'credentials'){
+                               error('@lang('global.error')','@lang('inscription.result.accept.credentials')');
+                           }else{
+                               error('@lang('global.error')','@lang('inscription.result.accept.error')');
+                           }
+                       });
+                    });
+                }
             });
 
             $('#results_form button').click(function(){

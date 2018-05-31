@@ -32,4 +32,6 @@ return[
     'enroll.title'=>'Ya puede matricularse',
     'enroll.link'=>'Pulse <a href="'.URL::to('student/enrollment/enroll').'">aquí</a> para matricularse',
     'ok'=>'Correcto',
+    'cookies'=>'Para brindarte una experiencia personalizada AcmEv usa cookies. Si continúas navegando estarás aceptando el uso de cookies por parte de AcmEv.',
+    'cookies.accept'=>'No volver a mostrar',
 ];

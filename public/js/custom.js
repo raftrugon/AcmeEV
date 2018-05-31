@@ -14,6 +14,14 @@ $(function(){
             messageNative(payload.title,payload.body);
         }
     });
+
+    $('#accept_cookies_btn').click(function(){
+       $.post(urlAcceptCookies,function(data){
+           if(data === 'true'){
+               $('.alert-cookies').remove();
+           }
+       });
+    });
 });
 
 function success(title,msg){

@@ -35,6 +35,11 @@ Route::get('/lang/{locale}',function($locale){
     return redirect()->back();
 });
 
+Route::post('/cookies/accept',function(){
+   Session::put('cookies',true);
+   return 'true';
+});
+
 //////////////////////////////////////////////////////// Admin ////////////////////////////////////////////////////////
 
 Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){
@@ -197,6 +202,7 @@ Route::group(['prefix'=>'inscription'],function(){
     Route::post('save','InscriptionController@postSaveInscription');
     Route::get('/results','InscriptionController@getResultsInscription');
     Route::post('/results/data','InscriptionController@getResultsInscriptionData');
+    Route::post('/results/agree','InscriptionController@postAgreeToInscription');
 });
 
 

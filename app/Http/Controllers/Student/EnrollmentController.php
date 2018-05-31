@@ -7,6 +7,7 @@ use App\Repositories\EnrollmentRepo;
 use App\Repositories\GroupRepo;
 use App\Repositories\SubjectInstanceRepo;
 use App\Repositories\SubjectRepo;
+use App\Repositories\UserRepo;
 use App\Subject;
 use Faker\Factory;
 use Illuminate\Http\Request;
@@ -18,14 +19,16 @@ class EnrollmentController extends Controller
     protected $enrollmentRepo;
     protected $subjectRepo;
     protected $subjectInstanceRepo;
+    protected $userRepo;
 
 
 
-    public function __construct(EnrollmentRepo $enrollmentRepo, SubjectRepo $subjectRepo, SubjectInstanceRepo $subjectInstanceRepo)
+    public function __construct(EnrollmentRepo $enrollmentRepo, SubjectRepo $subjectRepo, SubjectInstanceRepo $subjectInstanceRepo, UserRepo $userRepo)
     {
         $this->enrollmentRepo = $enrollmentRepo;
         $this->subjectRepo = $subjectRepo;
         $this->subjectInstanceRepo = $subjectInstanceRepo;
+        $this->userRepo = $userRepo;
     }
 
 
@@ -79,6 +82,7 @@ class EnrollmentController extends Controller
                 $user->givePermissionTo('current');
             }
 
+            $this->userRepo->updateWithoutData($user);
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();

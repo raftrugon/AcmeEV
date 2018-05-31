@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Student;
 use App\Exchange;
 use App\Group;
 use App\Repositories\ExchangeRepo;
+use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class ExchangeController extends Controller
 {
@@ -45,26 +47,43 @@ class ExchangeController extends Controller
     public function postSave(Request $request){
         $target = Group::findOrFail($request->input('target_id'));
         $source = Group::findOrFail($request->input('source_id'));
+
+        $isRepeated = Exchange::where('source_id',$source->getId())
+                        ->where('user_id',Auth::id())
+                        ->where('is_approved',0)
+                        ->count('id') > 0;
+        if($isRepeated) return 'repeated';
+
         $permutaExistente = Exchange::where('source_id',$target->getId())
                                     ->where('target_id',$source->getId())
                                     ->where('is_approved',0)
                                     ->oldest()
                                     ->first();
-        if(!is_null($permutaExistente)){
-            $permutaExistente->setIsApproved(1);
-            $this->exchangeRepo->updateWithoutData($permutaExistente);
-            $permutaExistente->getUser->toggle([$target->getId(),$source->getId()]);
-            Auth::user()->toggle([$target->getId(),$source->getId()]);
-        }else if($target->getMaxStudents() > $target->getStudents->count()){
-            Auth::user()->toggle([$target->getId(),$source->getId()]);
-        }else{
-            $permuta = new Exchange();
-            $permuta->setSource($source->getId());
-            $permuta->setTarget($target->getId());
-            $permuta->setUser(Auth::id());
-            $this->exchangeRepo->updateWithoutData($permuta);
+        DB::beginTransaction();
+        try {
+            $done = true;
+            if (!is_null($permutaExistente)) {
+                $permutaExistente->setIsApproved(1);
+                $this->exchangeRepo->updateWithoutData($permutaExistente);
+                $permutaExistente->getUser->getGroups()->toggle([$target->getId(), $source->getId()]);
+                Auth::user()->getGroups()->toggle([$target->getId(), $source->getId()]);
+            } else if ($target->getMaxStudents() > $target->getStudents->count()) {
+                Auth::user()->getGroups()->toggle([$target->getId(), $source->getId()]);
+            } else {
+                $done = false;
+                $permuta = new Exchange();
+                $permuta->setSource($source->getId());
+                $permuta->setTarget($target->getId());
+                $permuta->setUser(Auth::id());
+                $this->exchangeRepo->updateWithoutData($permuta);
+            }
+            DB::commit();
+            if($done) return 'true';
+            else return 'waiting';
+        }catch(Exception $e){
+            DB::rollback();
+            return false;
         }
 
-        //TODO: FALTA IMPLEMENTAR LAS RESPUESTAS AL CLIENTE (SUCCESS PARA LOS DOS PRIMEROS CASOS, WARNING PARA EL TERCERO. AÑADIR ADEMÁS UNA TRANSACTION EN EL PRIMER CASO.
     }
 }

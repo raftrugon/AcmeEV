@@ -65,7 +65,7 @@ class GroupController extends Controller
                                     ->select('subject_instances.id','subjects.name')
                                     ->distinct('subject_instances.id')
                                     ->get();
-        $rooms = Room::select(DB::raw('
+        $rooms = Room::select('rooms.id',DB::raw('
                                 (CASE 
                                     WHEN rooms.is_laboratory = 1 THEN CONCAT(rooms.module," - ",rooms.floor,".",rooms.number," (LAB)")
                                     ELSE CONCAT(rooms.module," - ",rooms.floor,".",rooms.number)
@@ -104,7 +104,7 @@ class GroupController extends Controller
                         ->where('subjects.school_year',$request->input('year'))
                         ->where('subject_instances.academic_year',$this->groupRepo->getAcademicYear())
                         ->groupBy('groups.number')
-                        ->select('groups.number as id','groups.number')
+                        ->select('groups.number as id','groups.number','groups.id as real_id')
                         ->get();
     }
 
