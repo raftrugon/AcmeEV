@@ -29,6 +29,7 @@ $factory->define(App\Inscription::class, function (Faker $faker) {
         'email'=>$faker->unique->safeEmail,
         'id_number'=>$dni,
         'password'=>bcrypt($dni),
+        'agreed'=>null,
     ];
 });
 

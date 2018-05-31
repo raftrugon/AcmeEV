@@ -9,10 +9,12 @@ class SystemConfigRepo extends BaseRepo
 {
 
     protected $userRepo;
+    protected $inscriptionRepo;
 
-    public function __construct(UserRepo $userRepo)
+    public function __construct(UserRepo $userRepo, InscriptionRepo $inscriptionRepo)
     {
         $this->userRepo = $userRepo;
+        $this->inscriptionRepo = $inscriptionRepo;
     }
 
     public function getModel()
@@ -48,9 +50,13 @@ class SystemConfigRepo extends BaseRepo
 
             switch ($new_state)
             {
-                case 1: break;  //Indicar aquí auto computación primera de inscripciones
-                case 2:   //Indicar aquí auto computación segunda de inscripciones  //Indicar aquí auto generación de subject instances
-                    $this->userRepo->createBatchFromInscriptions(); //Generación de usuarios con las inscripciones aceptadas
+                case 1:
+                    $this->inscriptionRepo->inscriptionBatch(1);        //Auto computación primera de inscripciones
+                    break;
+                case 2:
+                    $this->inscriptionRepo->inscriptionBatch(2);        //Auto computación segunda de inscripciones
+                    $this->userRepo->createBatchFromInscriptions();                //Generación de usuarios con las inscripciones aceptadas
+                    //Indicar aquí auto generación de subject instances
                     break;
                 case 4: break;  //Indicar aquí auto computación de minutes con control checks del primer cuatrimestre
                 case 6: break;  //Indicar aquí auto computación de minutes con control checks del segundo cuatrimestre y anuales
