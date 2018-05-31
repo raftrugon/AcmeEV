@@ -44,10 +44,10 @@ class Subject extends Model
     }
 
     public function isActive(){
-        return $this->is_active;
+        return $this->active;
     }
     public function setActive($value){
-        $this->is_active=$value;
+        $this->active=$value;
     }
 
     public function getDepartment(){

@@ -25,7 +25,10 @@ $factory->define(App\Announcement::class, function (Faker $faker) {
     if(date('m') > 8)                                                    //Si ha pasado septiembre crea las de este año tambien
         $actual_academic_year++;
 
-    $subject_instances = SubjectInstance::where('academic_year',$actual_academic_year)->pluck('id')->toArray();
+    $past_academic_year = $actual_academic_year - 1;
+
+
+    $subject_instances = SubjectInstance::where('academic_year',$past_academic_year)->pluck('id')->toArray();
 
     return [
         'title' => $faker->realText($maxNbChars = 20, $indexSize = 2),

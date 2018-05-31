@@ -108,6 +108,9 @@ class UserRepo extends BaseRepo
                 }catch(\Exception $e){
                     DB::rollBack();
                     throw $e;
+                } catch(\Throwable $t){
+                    DB::rollBack();
+                    throw $t;
                 }
             }
 
@@ -133,10 +136,11 @@ class UserRepo extends BaseRepo
 
         }catch(\Exception $e){
             DB::rollBack();
-            return false;
+            throw $e;
+        } catch(\Throwable $t){
+            DB::rollBack();
+            throw $t;
         }
-
-
 
     }
 

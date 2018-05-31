@@ -17,10 +17,9 @@ class CreateGroupsTable extends Migration
 
 
             $table->integer('number');
-            $table->integer('max_students');
             $table->integer('subject_instance_id')->unsigned();
-            $table->integer('theory_lecturer_id')->unsigned();
-            $table->integer('practice_lecturer_id')->unsigned();
+            $table->integer('theory_lecturer_id')->unsigned()->nullable();
+            $table->integer('practice_lecturer_id')->unsigned()->nullable();
 
             $table->index('id');
             $table->index('subject_instance_id');

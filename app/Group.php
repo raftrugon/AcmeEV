@@ -20,14 +20,6 @@ class Group extends Model
         $this->number=$value;
     }
 
-    public function getMaxStudents(){
-        return $this->max_students;
-    }
-
-    public function setMaxStudents($value){
-        $this->max_students = $value;
-    }
-
     public function getSubjectInstance() {
         return $this->belongsTo('App\SubjectInstance','subject_instance_id','id');
     }
