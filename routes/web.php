@@ -202,6 +202,7 @@ Route::group(['prefix'=>'inscription'],function(){
     Route::post('save','InscriptionController@postSaveInscription');
     Route::get('/results','InscriptionController@getResultsInscription');
     Route::post('/results/data','InscriptionController@getResultsInscriptionData');
+    Route::post('/results/agree','InscriptionController@postAgreeToInscription');
 });
 
 

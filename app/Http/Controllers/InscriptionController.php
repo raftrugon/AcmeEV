@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Degree;
+use App\Inscription;
 use App\Repositories\DegreeRepo;
 use App\Repositories\InscriptionRepo;
 use App\Repositories\RequestRepo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -96,7 +98,7 @@ class InscriptionController extends Controller
         return DataTables::of($results)
             ->editColumn('accepted',function($request){
                 if($request->accepted && !$request->agreed) {
-                    return '<button type="button" class="btn btn-light btn-sm">' . __('inscription.agree') . '</button>';
+                    return '<button type="button" class="btn btn-light btn-sm agree-btn">' . __('inscription.agree') . '</button>';
                 }elseif($request->accepted && $request->agreed){
                     return '<i class="far fa-check-circle" style="font-size:1.5em"></i>';
                 }else{
@@ -115,6 +117,20 @@ class InscriptionController extends Controller
                 }
             })
             ->make(true);
+    }
+
+    public function postAgreeToInscription(Request $request){
+        try {
+            $inscription = Inscription::where('id_number',$request->input('id_number'))->first();
+            if(is_null($inscription) || !Hash::check($request->input('password'),$inscription->getPassword())){
+                return 'credentials';
+            }
+            $inscription->setAgreed(true);
+            $this->inscriptionRepo->updateWithoutData($inscription);
+            return 'true';
+        }catch(\Exception $e){
+            return 'false';
+        }
     }
 
 
