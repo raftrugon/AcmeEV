@@ -33,8 +33,7 @@ class DegreeController extends Controller
     }
 
     public function getNewDegree(){
-        $actual_state = $this->systemConfigRepo->getActualState();
-        return view('site.degree.create-edit', compact('actual_state'));
+        return view('site.degree.create-edit');
     }
 
     public function getEditDegree(Degree $degree){

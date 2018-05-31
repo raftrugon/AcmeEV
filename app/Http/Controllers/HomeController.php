@@ -33,7 +33,7 @@ class HomeController extends Controller
         $actual_state = $this->systemConfigRepo->getActualState();
         $can_student_enroll = false;
 
-        if($actual_state == 2 && Auth::check() && Auth::user()->hasRole('student'))
+        if($actual_state == 3 && Auth::check() && Auth::user()->hasRole('student'))
             $can_student_enroll = $this->userRepo->canUserEnroll();
 
         return view('home', compact('actual_state', 'can_student_enroll'));

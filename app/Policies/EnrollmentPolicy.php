@@ -27,7 +27,7 @@ class EnrollmentPolicy
 
         if(!$this->userRepo->canUserEnroll())
             $return = false;
-        elseif($this->systemConfigRepo->getSystemConfig()->getActualState() != 2)
+        elseif($this->systemConfigRepo->getSystemConfig()->getActualState() != 3)
             $return = false;
 
         return $return;

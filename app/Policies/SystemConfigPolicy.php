@@ -23,7 +23,7 @@ class SystemConfigPolicy
     {
         $return = true;
 
-        if($this->systemConfigRepo->getActualState() > 1 && $this->systemConfigRepo->getActualState() < 7)
+        if($this->systemConfigRepo->getActualState() > 2 && $this->systemConfigRepo->getActualState() < 8)
             $return = false;
 
         return $return;
