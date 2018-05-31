@@ -43,6 +43,13 @@ class Subject extends Model
         $this->semester=$value;
     }
 
+    public function isActive(){
+        return $this->is_active;
+    }
+    public function setActive($value){
+        $this->is_active=$value;
+    }
+
     public function getDepartment(){
         return $this->belongsTo('App\Department','department_id','id');
     }
