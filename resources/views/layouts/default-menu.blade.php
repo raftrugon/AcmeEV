@@ -51,6 +51,9 @@
         @endrole
 
         @role('pdi')
+        <li>
+            <a class="text-light nav-link" href="{{URL::to('department/all')}}"><i class="fas fa- fa-address-book d-block text-primary"></i><span>{{__('menu.departments')}}</span></a>
+        </li>
         @endrole
 
 

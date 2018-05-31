@@ -20,7 +20,7 @@
                             @include('global.input',['type'=>'text','id'=>'name','name'=>'name','label'=>__('attributes.name')])
                             @include('global.input',['type'=>'text','id'=>'website','name'=>'website','label'=>__('attributes.website')])
                         @endif
-                        <button>@lang('global.submit')</button>
+                        <button class="btn btn-success">@lang('global.submit')</button>
                     </div>
                 </div>
             </div>
