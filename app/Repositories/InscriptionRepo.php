@@ -38,15 +38,15 @@ class InscriptionRepo extends BaseRepo
         DB::beginTransaction();
         try {
 
-            //Para el definitivo listado quitamos las adjudicaciones a los que no las han confirmado(agreed != 1)
+            //Para el definitivo listado quitamos las adjudicaciones a los que no las han confirmado(agreed 0)
             if ($actual_state == 2)
-                DB::table('requests')->join('inscriptions', 'requests.inscription_id', '=', 'inscriptions.id')->where('inscriptions.agreed','!=', 1)->update(['accepted' => 0]);
+                DB::table('requests')->join('inscriptions', 'requests.inscription_id', '=', 'inscriptions.id')->where('inscriptions.agreed', 0)->update(['accepted' => 0]);
 
             $inscriptions = Inscription::orderBy('grade', 'desc');
 
-            //Para el definitivo listado solo iteramos sobre los que respondieron; bien aceptando, o denegando la adjudicación.
+            //Para el definitivo listado solo iteramos sobre los que no consiguieron plaza.
             if ($actual_state == 2)
-                $inscriptions = $inscriptions->where('agreed', 0);
+                $inscriptions = $inscriptions->where('agreed', null);
 
 
             //iteramos sobre las inscripciones por orden de nota
@@ -67,7 +67,7 @@ class InscriptionRepo extends BaseRepo
                         $this->requestRepo->updateWithoutData($request);
 
                         //Le seteamos el agreed de 0 a null en la segunda iteración para que si no confirma la request se le retire
-                        $inscription->setAgreed(null);
+                        $inscription->setAgreed(0);
                         $this->updateWithoutData($inscription);
                         break;
                     }
