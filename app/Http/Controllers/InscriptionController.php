@@ -82,8 +82,9 @@ class InscriptionController extends Controller
             DB::commit();
         }catch(\Exception $e){
             DB::rollBack();
+            return redirect()->action('HomeController@index')->with('error',__('inscription.error'));
         }
-        return view('site.inscriptions.success');
+        return redirect()->action('HomeController@index')->with('success',__('inscription.success'));
     }
 
     public function getResultsInscription(){

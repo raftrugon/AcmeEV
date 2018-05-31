@@ -14,4 +14,6 @@ return[
     'homealert.link'=> 'Click <a href="'.URL::to('inscription/new').'">here</a> to fill in your inscription.',
     'homealert.title'=>'¡New ingress inscription available!',
     'results-title'=>'Results for your inscription process',
+    'success'=>'You have been successfully inscribed.',
+    'error'=>'There was a problem committing your inscription. Maybe you have filled an inscription with the same ID number.',
 ];
