@@ -82,7 +82,17 @@
         $('.submit-btn').click(function(){
            if($('.target-card .selectpicker').val() === '') return false;
            $.post('{{URL::to('group/student/exchange/save')}}',{source_id: $('.source-card').data('group-id'),target_id:$('.target-card .selectpicker').val()},function(data){
-               $('#calendar').fullCalendar('refetcEvents');
+               $('#calendar').fullCalendar('refetchEvents');
+               $('#exchangeModal').modal('hide');
+               if(data === 'true'){
+                   success('@lang('global.ok')','@lang('exchange.success')');
+               }else if(data === 'waiting') {
+                   warning('@lang('global.warning')', '@lang('exchange.warning')');
+               }else if(data === 'repeated'){
+                   error('@lang('global.error')','@lang('exchange.repeated')');
+               }else{
+                   error('@lang('global.error')','@lang('exchange.error')');
+               }
            });
         });
     });
