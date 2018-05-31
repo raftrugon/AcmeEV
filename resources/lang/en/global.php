@@ -32,4 +32,6 @@ return[
     'enroll.title'=>'Enrollments can be done now',
     'enroll.link'=>'Press <a href="'.URL::to('student/enrollment/enroll').'">here</a> to enroll.',
     'ok'=>'Success',
+    'cookies'=>'To give you a tailored experience AcmEv uses cookies. By continuing to browse the site you are agreeing to our use of cookies.',
+    'cookies.accept'=>'Don\'t show this again',
 ];

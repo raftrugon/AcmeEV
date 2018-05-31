@@ -35,6 +35,11 @@ Route::get('/lang/{locale}',function($locale){
     return redirect()->back();
 });
 
+Route::post('/cookies/accept',function(){
+   Session::put('cookies',true);
+   return 'true';
+});
+
 //////////////////////////////////////////////////////// Admin ////////////////////////////////////////////////////////
 
 Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){
