@@ -5,6 +5,7 @@ return[
     'previous'=>'Previous',
     'next'=>'Next',
     'finish'=>'Finish',
+    'go'=>'Go',
     'submit'=>'Submit',
     'option'=>'Option :number',
     'choose_one'=>'-- Choose One --',

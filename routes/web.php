@@ -75,10 +75,11 @@ Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
 //////////////////////////////////////////////////////// PDI ////////////////////////////////////////////////////////
 
 Route::group(['prefix'=>'management','middleware'=>['permission:manage']],function(){
-    Route::group(['prefix'=>'degree'],function() {
-        Route::get('new','DegreeController@getNewDegree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');
-        Route::post('save','DegreeController@postSaveDegree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');
-        Route::get('{degree}/edit','DegreeController@getEditDegree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');
+
+    Route::group(['prefix'=>'degree', 'middleware'=>['can:stateEditDegreesDepartmentsSubjects,App\SystemConfig']],function() {  //middleware por estado 8 o 0-2
+        Route::get('new','DegreeController@getNewDegree');                                                  //Correct
+        Route::post('save','DegreeController@postSaveDegree');                                              //Correct
+        Route::get('{degree}/edit','DegreeController@getEditDegree');                                       //Correct
 
     });
 
@@ -92,6 +93,7 @@ Route::group(['prefix'=>'management','middleware'=>['permission:manage']],functi
 
 //TO-DO EN CONTROLADOR CHECKEAR QUE SEA PROFESOR DE LA ASIGNATURA
 Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
+
     Route::group(['prefix'=>'announcement'],function() {
         Route::get('{subjectInstance}/create', 'Pdi\AnnouncementController@getCreateAnnouncement');
         Route::post('save', 'Pdi\AnnouncementController@postSaveAnnouncement');
@@ -126,35 +128,7 @@ Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
     });
 });
 
-Route::group(['prefix'=>'group'],function(){
-    Route::group(['middleware'=>['role:pdi']],function(){
-        Route::group(['prefix'=>'manage','middleware'=>['permission:manage']],function(){
-            Route::group(['prefix'=>'timetable'],function(){
-                Route::get('/','Pdi\GroupController@getSchedulingView');
-                Route::get('data','Pdi\GroupController@getAvailableSubjectsAndRooms');
-                Route::get('resources','Pdi\GroupController@getGroupsForYearAndDegree');
-                Route::get('events','Pdi\GroupController@getScheduledForDegreeAndYear');
-                Route::post('new','Pdi\GroupController@postNewTimetableTime');
-            });
-        });
 
-        Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');
-        Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');
-    });
-    Route::group(['prefix'=>'student','middleware'=>['permission:current']],function(){
-        Route::group(['prefix'=>'schedule'],function() {
-            Route::get('/', 'Student\ScheduleController@getSchedule');
-            Route::get('events', 'Student\ScheduleController@getScheduleEvents');
-            Route::get('resources', 'Student\ScheduleController@getScheduleResources');
-//            Route::get('print', 'Student\ScheduleController@getPrint');
-        });
-        Route::group(['prefix'=>'exchange'],function() {
-            Route::get('/create', 'Student\ExchangeController@getCreate');
-            Route::get('/data-and-availability', 'Student\ExchangeController@getTargetDataAndAvailability');
-            Route::post('/save', 'Student\ExchangeController@postSave');
-        });
-    });
-});
 
 //////////////////////////////////////////////////////// Student ////////////////////////////////////////////////////////
 
@@ -192,6 +166,42 @@ Route::group(['prefix'=>'chat','middleware','middleware'=>'auth'],function(){
     Route::group(['prefix'=>'message'],function(){
         Route::post('new','ChatController@postNewMessage');
         Route::get('un-read','ChatController@getUnreadMessages');
+    });
+});
+
+//////////////////////////////////////////////////////// GRUPOS ////////////////////////////////////////////////////////
+
+Route::group(['prefix'=>'group', 'middleware'=>['can:stateAccessTimeTable,App\SystemConfig']],function(){   //middleware estado 3 - 7
+
+    Route::group(['middleware'=>['role:pdi']],function(){                                       //middleware pdi
+        Route::group(['prefix'=>'manage','middleware'=>['permission:manage']],function(){       //middleware management
+            Route::group(['prefix'=>'timetable'],function(){
+                Route::get('/','Pdi\GroupController@getSchedulingView');                                    //verificar
+                Route::get('data','Pdi\GroupController@getAvailableSubjectsAndRooms');                      //verificar
+                Route::get('resources','Pdi\GroupController@getGroupsForYearAndDegree');                    //verificar
+                Route::get('events','Pdi\GroupController@getScheduledForDegreeAndYear');                    //verificar
+                Route::post('new','Pdi\GroupController@postNewTimetableTime');                              //verificar
+            });
+        });
+
+        Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');                                //verificar
+        Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');     //verificar
+    });
+
+
+    Route::group(['prefix'=>'student','middleware'=>['permission:current']],function(){         //middleware current
+        Route::group(['prefix'=>'schedule'],function() {
+            Route::get('/', 'Student\ScheduleController@getSchedule');                                      //Verificar
+            Route::get('events', 'Student\ScheduleController@getScheduleEvents');                           //verificar
+            Route::get('resources', 'Student\ScheduleController@getScheduleResources');                     //verificar
+//            Route::get('print', 'Student\ScheduleController@getPrint');
+        });
+
+        Route::group(['prefix'=>'exchange'],function() {
+            Route::get('/create', 'Student\ExchangeController@getCreate');                                  //verificar
+            Route::get('/data-and-availability', 'Student\ExchangeController@getTargetDataAndAvailability');//verificar
+            Route::post('/save', 'Student\ExchangeController@postSave');                                    //verificar
+        });
     });
 });
 
@@ -236,8 +246,5 @@ Route::group(['prefix'=>'subject'],function(){
 Route::group(['prefix'=>'error'],function(){
     Route::get('forbidden','ErrorController@forbidden');
 });
-
-
-
 
 

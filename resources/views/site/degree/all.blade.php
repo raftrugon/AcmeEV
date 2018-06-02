@@ -40,10 +40,6 @@
                                             class="btn btn-success">@lang('degrees.edit')</button>
                                     <button class="btn btn-danger deleteButton"
                                             id="{{$degree->getId()}}">@lang('degrees.delete')</button>
-                                    @if ($degree->canCreateSubjectInstances())
-                                        <button onclick="location.href='{{URL::to('management/degree/'. $degree->getId() .'/add-next-year-subjects')}}'"
-                                                class="btn btn-success">@lang('degrees.nextYear')</button>
-                                    @endif
                                 </div>
                             @endcan
                         </div>
