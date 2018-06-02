@@ -79,8 +79,12 @@ class ControlCheckController extends Controller
             }
         }catch(\Exception $e){
             DB::rollBack();
-            throw $e;
+            return redirect()->back()->with('error',__('global.post.error'));
+        }catch(\Throwable $t){
+            DB::rollBack();
+            return redirect()->back()->with('error',__('global.post.error'));
         }
+
         $subject = SubjectInstance::where('id',$request->input('subjectInstance'))->first()->getSubject;
         $announcements = $subject->getSubjectInstances()->where('academic_year',Carbon::now()->year)->first()->getAnnouncements;
         $controlChecks = $this->controlCheckRepo->getControlChecksForLecturer($subject)->get();

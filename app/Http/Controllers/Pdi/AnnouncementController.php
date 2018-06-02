@@ -50,7 +50,10 @@ class AnnouncementController extends Controller
             DB::commit();
         }catch(\Exception $e){
             DB::rollBack();
-            throw $e;
+            return redirect()->back()->with('error',__('global.post.error'));
+        }catch(\Throwable $t){
+            DB::rollBack();
+            return redirect()->back()->with('error',__('global.post.error'));
         }
 
         $subject_instance_id = $request->input('subject_instance_id');

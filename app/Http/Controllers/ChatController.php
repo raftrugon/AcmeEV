@@ -30,6 +30,8 @@ class ChatController extends Controller
             return 'true';
         }catch(\Exception $e){
             return 'false';
+        }catch(\Throwable $t){
+            return 'false';
         }
     }
 

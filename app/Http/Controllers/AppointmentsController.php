@@ -33,10 +33,12 @@ class AppointmentsController extends Controller
             try {
                 $this->appointmentRepo->delete($appointment->getId());
                 return 'true';
-            } catch (\Exception $e) {
+            }catch(\Exception $e){
+                return 'false';
+            }catch(\Throwable $t){
                 return 'false';
             }
-        }else {
+        } else {
             $is_available = $this->appointmentRepo->checkAvailability($request->input('start'));
             $has_day_appointment = $this->appointmentRepo->hasDayAppointment($request->except('_token'));
             if ($is_available && !$has_day_appointment) {
@@ -44,7 +46,9 @@ class AppointmentsController extends Controller
                     if (Auth::check()) $request->merge(['student_id' => Auth::user()->getId()]);
                     $this->appointmentRepo->create($request->except('_token'));
                     return 'true';
-                } catch (\Exception $e) {
+                }catch(\Exception $e){
+                    return 'false';
+                }catch(\Throwable $t){
                     return 'false';
                 }
             } elseif($has_day_appointment) {

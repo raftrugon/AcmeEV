@@ -74,8 +74,9 @@ class SubjectController extends Controller {
             $values = $values->except('subject_id');
             $this->folderRepo->create($values->toArray());
             return 'true';
-        }catch(Exception $e){
-            Log::error($e);
+        }catch(\Exception $e){
+            return 'false';
+        }catch(\Throwable $t){
             return 'false';
         }
     }
@@ -88,10 +89,12 @@ class SubjectController extends Controller {
             $url = Storage::url($relativeUrl);
             $this->fileRepo->create(['name'=>$request->input('name'),'url'=>$url,'folder_id' =>$folder->getId()]);
             return 'true';
-        }catch(Exception $e){
-            Log::error($e);
+        }catch(\Exception $e){
+            return 'false';
+        }catch(\Throwable $t){
             return 'false';
         }
+
     }
 
     public function postSaveFolder(Request $request){
@@ -101,8 +104,9 @@ class SubjectController extends Controller {
             $folder->setDescription($request->input('description'));
             $this->folderRepo->updateWithoutData($folder);
             return 'true';
-        }catch(Exception $e){
-            Log::error($e);
+        }catch(\Exception $e){
+            return 'false';
+        }catch(\Throwable $t){
             return 'false';
         }
     }
@@ -111,8 +115,9 @@ class SubjectController extends Controller {
         try{
             $this->folderRepo->delete(Folder::findOrFail($request->input('id')));
             return 'true';
-        }catch(Exception $e){
-            Log::error($e);
+        }catch(\Exception $e){
+            return 'false';
+        }catch(\Throwable $t){
             return 'false';
         }
     }
@@ -121,8 +126,9 @@ class SubjectController extends Controller {
         try{
             $this->fileRepo->delete(File::findOrFail($request->input('id')));
             return 'true';
-        }catch(Exception $e){
-            Log::error($e);
+        }catch(\Exception $e){
+            return 'false';
+        }catch(\Throwable $t){
             return 'false';
         }
     }
@@ -178,8 +184,12 @@ class SubjectController extends Controller {
             DB::commit();
         }catch(\Exception $e){
             DB::rollBack();
-            throw $e;
+            return redirect()->back()->with('error',__('global.post.error'));
+        }catch(\Throwable $t){
+            DB::rollBack();
+            return redirect()->back()->with('error',__('global.post.error'));
         }
+
         $departments = Department::all();
         return view("site.department.all",compact('departments'));
     }

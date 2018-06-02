@@ -36,6 +36,6 @@ class HomeController extends Controller
         if($actual_state == 3 && Auth::check() && Auth::user()->hasRole('student'))
             $can_student_enroll = $this->userRepo->canUserEnroll();
 
-        return view('home', compact('actual_state', 'can_student_enroll'));
+        return view('home', compact('can_student_enroll'));
     }
 }

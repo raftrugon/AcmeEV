@@ -63,7 +63,10 @@ class SystemConfigController extends Controller
             DB::commit();
         }catch(\Exception $e){
             DB::rollBack();
-            throw $e;
+            return redirect()->back()->with('error',__('global.post.error'));
+        }catch(\Throwable $t){
+            DB::rollBack();
+            return redirect()->back()->with('error',__('global.post.error'));
         }
 
         return redirect()->action('Admin\SystemConfigController@getEditSystemConfig')->with('success',__('systemConfig.success'));

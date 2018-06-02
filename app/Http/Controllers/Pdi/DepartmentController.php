@@ -53,7 +53,10 @@ class DepartmentController extends Controller
             DB::commit();
         }catch(\Exception $e){
             DB::rollBack();
-            throw $e;
+            return redirect()->back()->with('error',__('global.post.error'));
+        }catch(\Throwable $t){
+            DB::rollBack();
+            return redirect()->back()->with('error',__('global.post.error'));
         }
         $departments = Department::all();
         return view("site.department.all",compact('departments'));

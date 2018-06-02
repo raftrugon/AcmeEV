@@ -43,10 +43,16 @@ class GroupController extends Controller
     }
 
     public function saveGroup(Request $request) {
-        $group = Group::where('id',$request->input('group'))->first();
-        $group->setTheoryLecturer($request->input('lecturers')[0]);
-        $group->setPracticeLecturer($request->input('lecturers')[1]);
-        $this->groupRepo->updateWithoutData($group);
+        try{
+            $group = Group::where('id',$request->input('group'))->first();
+            $group->setTheoryLecturer($request->input('lecturers')[0]);
+            $group->setPracticeLecturer($request->input('lecturers')[1]);
+            $this->groupRepo->updateWithoutData($group);
+        }catch(\Exception $e){
+            return 'false';
+        }catch(\Throwable $t){
+            return 'false';
+        }
         return 'true';
     }
 
@@ -122,6 +128,8 @@ class GroupController extends Controller
             ]);
             return 'true';
         }catch(\Exception $e){
+            return 'false';
+        }catch(\Throwable $t){
             return 'false';
         }
     }

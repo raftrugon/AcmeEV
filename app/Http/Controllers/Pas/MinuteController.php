@@ -24,12 +24,18 @@ class MinuteController extends Controller
     }
 
     public function updateMinutes(Request $request) {
-        $ids = $request->input('ids');
-        $qualifications = $request->input('qualifications');
-        for($i = 0; $i < count($ids); $i++) {
-           $minute = Minute::where('id',$ids[$i])->first();
-           $minute->setQualification($qualifications[$i]);
-           $this->minuteRepo->updateWithoutData($minute);
+        try{
+            $ids = $request->input('ids');
+            $qualifications = $request->input('qualifications');
+            for($i = 0; $i < count($ids); $i++) {
+               $minute = Minute::where('id',$ids[$i])->first();
+               $minute->setQualification($qualifications[$i]);
+               $this->minuteRepo->updateWithoutData($minute);
+            }
+        }catch(\Exception $e){
+            return 'false';
+        }catch(\Throwable $t){
+            return 'false';
         }
         return 'true';
     }
