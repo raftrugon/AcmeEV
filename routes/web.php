@@ -76,17 +76,33 @@ Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
 
 Route::group(['prefix'=>'management','middleware'=>['permission:manage']],function(){
 
-    Route::group(['prefix'=>'degree', 'middleware'=>['can:stateEditDegreesDepartmentsSubjects,App\SystemConfig']],function() {  //middleware por estado 8 o 0-2
-        Route::get('new','DegreeController@getNewDegree');                                                  //Correct
-        Route::post('save','DegreeController@postSaveDegree');                                              //Correct
-        Route::get('{degree}/edit','DegreeController@getEditDegree');                                       //Correct
+    Route::group(['middleware'=>['can:stateEditDegreesDepartmentsSubjects,App\SystemConfig']],function() {  //middleware por estado 8 o 0-2
+
+        Route::group(['prefix'=>'degree'],function() {
+            Route::get('new','DegreeController@getNewDegree');                                                  //Correct
+            Route::post('save','DegreeController@postSaveDegree');                                              //Correct
+            Route::get('{degree}/edit','DegreeController@getEditDegree');                                       //Correct
+
+        });
+
+        Route::group(['prefix'=>'subject'],function() {
+            Route::get('{degree}/edit/{subject?}','Pdi\SubjectController@createOrEdit');                        //Correct
+            Route::post('save','Pdi\SubjectController@saveSubject');                                            //Correct
+        });
+
+        Route::group(['prefix'=>'department'],function() {
+            Route::get('edit/{department?}','Pdi\DepartmentController@createOrEdit');                       //Correct
+            Route::post('/save','Pdi\DepartmentController@saveDepartment');                                 //Correct
+        });
 
     });
 
     Route::group(['prefix'=>'minute', 'middleware'=>['can:stateEditMinutes,App\SystemConfig']],function(){              //middleware por estado 5 o 7
-        Route::get('{user}/all','Pas\MinuteController@getMinutesForStudent');                               //Falla la vista
+        //Ruta para ver todos los usuarios para poder acceder a la edición
+        Route::get('{user}/all','Pas\MinuteController@getMinutesForStudent');                               //Falla la vista y tienen que aparecer los no definitivos
         Route::post('/update','Pas\MinuteController@updateMinutes')->name('update_minutes');          //Verificar
     });
+
 
 });
 
@@ -110,10 +126,7 @@ Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
         Route::get('{subject}/instances','Pdi\SubjectController@getSubjectInstances');
         Route::get('{subjectInstance}/groups','Pdi\GroupController@getGroupsForSubjectInstace');
     });
-    Route::group(['prefix'=>'subject','middleware'=>['permission:manage']],function(){
-        Route::get('{degree}/edit/{subject?}','Pdi\SubjectController@createOrEdit');
-        Route::post('save','Pdi\SubjectController@saveSubject');
-    });
+
     Route::group(['prefix'=>'control_check'],function() {
         Route::get('{subjectInstance}/edit/{controlCheck?}','Pdi\ControlCheckController@createOrEdit');
         Route::post('/save','Pdi\ControlCheckController@postControlCheck');
@@ -122,10 +135,8 @@ Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
         Route::post('import_marks','Pdi\ControlCheckController@importGradesFromCsv')->name('import_controlCheck_qualifications');
         Route::post('/delete','Pdi\ControlCheckController@deleteControlCheck')->name('delete_control_check');
     });
-    Route::group(['prefix'=>'department'],function(){
-        Route::get('edit/{department?}','Pdi\DepartmentController@createOrEdit');
-        Route::post('/save','Pdi\DepartmentController@saveDepartment');
-    });
+
+
 });
 
 
