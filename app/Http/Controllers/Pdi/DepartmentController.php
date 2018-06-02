@@ -21,17 +21,25 @@ class DepartmentController extends Controller
         $this->departmentRepo = $departmentRepo;
     }
 
-    public function createOrEdit(Department $department=null) {
-            return view('site.department.create-edit',compact('department'));
+    public function createOrEdit(Department $department = null)
+    {
+        try {
+            return view('site.department.create-edit', compact('department'));
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
     }
 
-    public function saveDepartment(Request $request){
-        $validator = Validator::make($request->all(),[
-            'name'=>'required',
-            'website'=>'required',
+    public function saveDepartment(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'website' => 'required',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -45,20 +53,20 @@ class DepartmentController extends Controller
                 );
                 $this->departmentRepo->create($department);
             } else {
-                $department = Department::where('id',$request->input('id'))->first();
+                $department = Department::where('id', $request->input('id'))->first();
                 $department->setName($request->input('name'));
                 $department->setWebsite($request->input('website'));
                 $this->departmentRepo->updateWithoutData($department);
             }
             DB::commit();
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error',__('global.post.error'));
-        }catch(\Throwable $t){
+            return redirect()->back()->with('error', __('global.post.error'));
+        } catch (\Throwable $t) {
             DB::rollBack();
-            return redirect()->back()->with('error',__('global.post.error'));
+            return redirect()->back()->with('error', __('global.post.error'));
         }
         $departments = Department::all();
-        return view("site.department.all",compact('departments'));
+        return view("site.department.all", compact('departments'));
     }
 }

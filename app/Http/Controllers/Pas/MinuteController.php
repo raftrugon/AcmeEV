@@ -18,25 +18,35 @@ class MinuteController extends Controller
         $this->minuteRepo = $minuteRepo;
     }
 
-    public function getMinutesForStudent(User $user) {
-        $academic_years = $this->minuteRepo->getMinutesForStudent($user)->get()->groupBy('academic_year');
-        return view('site.pas.student-minutes',compact('academic_years'));
+    public function getMinutesForStudent(User $user)
+    {
+        try {
+            $academic_years = $this->minuteRepo->getMinutesForStudent($user)->get()->groupBy('academic_year');
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
+
+        return view('site.pas.student-minutes', compact('academic_years'));
     }
 
-    public function updateMinutes(Request $request) {
-        try{
+    public function updateMinutes(Request $request)
+    {
+        try {
             $ids = $request->input('ids');
             $qualifications = $request->input('qualifications');
-            for($i = 0; $i < count($ids); $i++) {
-               $minute = Minute::where('id',$ids[$i])->first();
-               $minute->setQualification($qualifications[$i]);
-               $this->minuteRepo->updateWithoutData($minute);
+            for ($i = 0; $i < count($ids); $i++) {
+                $minute = Minute::where('id', $ids[$i])->first();
+                $minute->setQualification($qualifications[$i]);
+                $this->minuteRepo->updateWithoutData($minute);
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             return 'false';
-        }catch(\Throwable $t){
+        } catch (\Throwable $t) {
             return 'false';
         }
+
         return 'true';
     }
 }

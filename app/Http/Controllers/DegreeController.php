@@ -17,36 +17,55 @@ class DegreeController extends Controller
     protected $degreeRepo;
     protected $systemConfigRepo;
 
-    public function __construct(DegreeRepo $degreeRepo, SystemConfigRepo $systemConfigRepo){
+    public function __construct(DegreeRepo $degreeRepo, SystemConfigRepo $systemConfigRepo)
+    {
         $this->degreeRepo = $degreeRepo;
         $this->systemConfigRepo = $systemConfigRepo;
     }
 
-    public function getAllButSelected(Request $request){
-        return $this->degreeRepo->getAllButSelected($request->input('ids'))->get();
+    public function getAllButSelected(Request $request)
+    {
+        try {
+            return $this->degreeRepo->getAllButSelected($request->input('ids'))->get();
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
     }
 
-    public function getAll(){
-        $degrees = Degree::where('deleted',0)->get();
-        $actual_state = $this->systemConfigRepo->getActualState();
-        return view('site.degree.all', compact('degrees','actual_state'));
+    public function getAll()
+    {
+        try {
+            $degrees = Degree::where('deleted', 0)->get();
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
+
+        return view('site.degree.all', compact('degrees'));
+
     }
 
-    public function getNewDegree(){
+    public function getNewDegree()
+    {
         return view('site.degree.create-edit');
     }
 
-    public function getEditDegree(Degree $degree){
+    public function getEditDegree(Degree $degree)
+    {
         return view('site.degree.create-edit', compact('degree'));
     }
 
-    public function postSaveDegree(Request $request){
-        $validator = Validator::make($request->all(),[
-            'name'=>'required',
-            'new_students_limit'=>'required',
+    public function postSaveDegree(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'new_students_limit' => 'required',
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -62,26 +81,34 @@ class DegreeController extends Controller
                 $this->degreeRepo->update($degreeBD, $degree);
             } else {
                 //Random Code Generation (ABC123456)
-                $random = $random_string = chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(65,90)) . chr(rand(48,57)) . chr(rand(48,57)). chr(rand(48,57)). chr(rand(48,57)). chr(rand(48,57)). chr(rand(48,57));
+                $random = $random_string = chr(rand(65, 90)) . chr(rand(65, 90)) . chr(rand(65, 90)) . chr(rand(48, 57)) . chr(rand(48, 57)) . chr(rand(48, 57)) . chr(rand(48, 57)) . chr(rand(48, 57)) . chr(rand(48, 57));
                 $degree['code'] = $random;
                 $this->degreeRepo->create($degree);
             }
 
             DB::commit();
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error',__('global.post.error'));
-        }catch(\Throwable $t){
+            return redirect()->back()->with('error', __('global.post.error'));
+        } catch (\Throwable $t) {
             DB::rollBack();
-            return redirect()->back()->with('error',__('global.post.error'));
+            return redirect()->back()->with('error', __('global.post.error'));
         }
 
         return redirect()->action('DegreeController@getAll');
     }
 
-    public function displayDegree(Degree $degree) {
-        $school_years = Subject::where('degree_id',$degree->getId())->orderBy('school_year')->get()->groupBy('school_year');
-        return view('site.degree.display',compact('degree','school_years'));
+    public function displayDegree(Degree $degree)
+    {
+        try {
+            $school_years = Subject::where('degree_id', $degree->getId())->orderBy('school_year')->get()->groupBy('school_year');
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
+
+        return view('site.degree.display', compact('degree', 'school_years'));
     }
 
 

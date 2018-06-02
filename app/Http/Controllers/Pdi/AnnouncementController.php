@@ -16,23 +16,33 @@ class AnnouncementController extends Controller
 
     protected $announcementRepo;
 
-    public function __construct(AnnouncementRepo $announcementRepo){
+    public function __construct(AnnouncementRepo $announcementRepo)
+    {
         $this->announcementRepo = $announcementRepo;
     }
 
-    public function getCreateAnnouncement(SubjectInstance $subjectInstance){
-        $subject_instance_id = $subjectInstance->getId();
+    public function getCreateAnnouncement(SubjectInstance $subjectInstance)
+    {
+        try {
+            $subject_instance_id = $subjectInstance->getId();
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
+
         return view('site.pdi.announcement.edit', compact('subject_instance_id'));
     }
 
-    public function postSaveAnnouncement(Request $request){
-        $validator = Validator::make($request->all(),[
-            'title'=>'required|max:40',
-            'body'=>'required|max:500',
-            'subject_instance_id'=>'required|integer'
+    public function postSaveAnnouncement(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'title' => 'required|max:40',
+            'body' => 'required|max:500',
+            'subject_instance_id' => 'required|integer'
         ]);
 
-        if($validator->fails()){
+        if ($validator->fails()) {
             return redirect()->back()->withErrors($validator)->withInput();
         }
 
@@ -48,12 +58,12 @@ class AnnouncementController extends Controller
             $this->announcementRepo->create($announcement);
 
             DB::commit();
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
-            return redirect()->back()->with('error',__('global.post.error'));
-        }catch(\Throwable $t){
+            return redirect()->back()->with('error', __('global.post.error'));
+        } catch (\Throwable $t) {
             DB::rollBack();
-            return redirect()->back()->with('error',__('global.post.error'));
+            return redirect()->back()->with('error', __('global.post.error'));
         }
 
         $subject_instance_id = $request->input('subject_instance_id');

@@ -36,4 +36,5 @@ return[
     'cookies'=>'Para brindarte una experiencia personalizada AcmEv usa cookies. Si continúas navegando estarás aceptando el uso de cookies por parte de AcmEv.',
     'cookies.accept'=>'No volver a mostrar',
     'post.error'=>'Hubo un problema al procesar la transacción.',
+    'get.error'=>'Hubo un problema al acceder a la página.',
 ];

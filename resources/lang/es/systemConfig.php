@@ -4,6 +4,7 @@
 return[
     'edit.tab1'=>'Edición de parámetros del sistema',
     'edit.tab2'=>'Acciones del sistema',
+    'edit.dashboard'=>'Tablón de Estadísticas',
     'success'=>'Parámetros del sistema modificados correctamente.',
     'error'=>'Se ha producido un error al modificar los parámetros del sistema.',
     'increment.success'=>'La máquina de estados ha sido incrementada correctamente.',

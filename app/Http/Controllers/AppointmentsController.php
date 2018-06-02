@@ -12,30 +12,40 @@ class AppointmentsController extends Controller
 {
     protected $appointmentRepo;
 
-    public function __construct(AppointmentRepo $appointmentRepo){
+    public function __construct(AppointmentRepo $appointmentRepo)
+    {
         $this->appointmentRepo = $appointmentRepo;
     }
 
-    public function getCalendar(){
+    public function getCalendar()
+    {
         $config = SystemConfig::first();
-        return view('site.calendar',compact('config'));
+        return view('site.calendar', compact('config'));
     }
 
-    public function getCalendarData(Request $request){
-        $startDate = new Carbon($request->input('start'));
-        $endDate = new Carbon($request->input('end'));
-        return $this->appointmentRepo->getAvailableDatesForRange($startDate,$endDate);
+    public function getCalendarData(Request $request)
+    {
+        try {
+            $startDate = new Carbon($request->input('start'));
+            $endDate = new Carbon($request->input('end'));
+            return $this->appointmentRepo->getAvailableDatesForRange($startDate, $endDate);
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
     }
 
-    public function postUpdateAppointment(Request $request){
-        $appointment = Auth::check() ? $this->appointmentRepo->getModel()->where('start',$request->input('start'))->where('student_id',Auth::id())->first() : null;
-        if($appointment){
+    public function postUpdateAppointment(Request $request)
+    {
+        $appointment = Auth::check() ? $this->appointmentRepo->getModel()->where('start', $request->input('start'))->where('student_id', Auth::id())->first() : null;
+        if ($appointment) {
             try {
                 $this->appointmentRepo->delete($appointment->getId());
                 return 'true';
-            }catch(\Exception $e){
+            } catch (\Exception $e) {
                 return 'false';
-            }catch(\Throwable $t){
+            } catch (\Throwable $t) {
                 return 'false';
             }
         } else {
@@ -46,12 +56,12 @@ class AppointmentsController extends Controller
                     if (Auth::check()) $request->merge(['student_id' => Auth::user()->getId()]);
                     $this->appointmentRepo->create($request->except('_token'));
                     return 'true';
-                }catch(\Exception $e){
+                } catch (\Exception $e) {
                     return 'false';
-                }catch(\Throwable $t){
+                } catch (\Throwable $t) {
                     return 'false';
                 }
-            } elseif($has_day_appointment) {
+            } elseif ($has_day_appointment) {
                 return __('calendar.appointment.max-per-day');
             } else {
                 return __('calendar.appointment.no-availability');
@@ -59,7 +69,8 @@ class AppointmentsController extends Controller
         }
     }
 
-    public function postCancelAppointment(){
+    public function postCancelAppointment()
+    {
 
     }
 }

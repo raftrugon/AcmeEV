@@ -24,33 +24,42 @@ class SubjectController extends Controller
 
     public function __construct(SubjectRepo $subjectRepo, ControlCheckRepo $controlCheckRepo, SubjectInstanceRepo $subjectInstanceRepo)
     {
-        $this->subjectRepo=$subjectRepo;
-        $this->controlCheckRepo=$controlCheckRepo;
-        $this->subjectInstanceRepo=$subjectInstanceRepo;
+        $this->subjectRepo = $subjectRepo;
+        $this->controlCheckRepo = $controlCheckRepo;
+        $this->subjectInstanceRepo = $subjectInstanceRepo;
     }
 
-    public function getSubjectDisplay(Subject $subject){
-        $announcements = $subject->getSubjectInstances()->where('academic_year',Carbon::now()->year)->first()->getAnnouncements;
-        $controlCheckInstances = $this->controlCheckRepo->getControlCheckInstancesForStudent($subject,null)->get();
-        $controlChecks = $this->controlCheckRepo->getControlChecksForLecturer($subject)->get();
-        $canCreateControlChecks = $this->subjectInstanceRepo->canAddControlChecks(
-            $this->subjectInstanceRepo->getCurrentInstance($subject->getId())->getId());
-        if(Auth::user()->hasRole('student'))
-            return view('site.subject.display',compact('subject','announcements','controlCheckInstances'));
-        elseif(Auth::user()->hasRole('pdi'))
-            return view('site.subject.display',compact('subject','announcements','controlChecks','canCreateControlChecks'));
+    public function getSubjectDisplay(Subject $subject)
+    {
+        try {
+            $announcements = $subject->getSubjectInstances()->where('academic_year', Carbon::now()->year)->first()->getAnnouncements;
+            $controlCheckInstances = $this->controlCheckRepo->getControlCheckInstancesForStudent($subject, null)->get();
+            $controlChecks = $this->controlCheckRepo->getControlChecksForLecturer($subject)->get();
+            $canCreateControlChecks = $this->subjectInstanceRepo->canAddControlChecks(
+                $this->subjectInstanceRepo->getCurrentInstance($subject->getId())->getId());
+            if (Auth::user()->hasRole('student'))
+                return view('site.subject.display', compact('subject', 'announcements', 'controlCheckInstances'));
+            elseif (Auth::user()->hasRole('pdi'))
+                return view('site.subject.display', compact('subject', 'announcements', 'controlChecks', 'canCreateControlChecks'));
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
     }
 
-    public function getFileSystemData(Request $request){
+    public function getFileSystemData(Request $request)
+    {
         $folderId = $request->input('folderId');
         $parent = isset($folderId) ? Folder::findOrFail($folderId)->getParent : null;
         $parentId = isset($parent) ? $parent->getId() : null;
-        return ['content'=>view('site.subject.includes.filesystem-data', $this->subjectRepo->getFoldersAndFiles($request->input('subjectId'),$request->input('folderId')))->render(),
-            'parentId'=>$parentId,'currentName'=>isset($folderId) ?  Folder::findOrFail($folderId)->getName() : '/'];
+        return ['content' => view('site.subject.includes.filesystem-data', $this->subjectRepo->getFoldersAndFiles($request->input('subjectId'), $request->input('folderId')))->render(),
+            'parentId' => $parentId, 'currentName' => isset($folderId) ? Folder::findOrFail($folderId)->getName() : '/'];
     }
 
-    public function getDownloadFile(File $file){
+    public function getDownloadFile(File $file)
+    {
         $extension = \Illuminate\Support\Facades\File::extension(URL::to($file->getUrl()));
-        return Storage::download(substr($file->getUrl(),8),$file->getName().'.'.$extension);
+        return Storage::download(substr($file->getUrl(), 8), $file->getName() . '.' . $extension);
     }
 }

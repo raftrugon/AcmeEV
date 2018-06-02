@@ -36,4 +36,5 @@ return[
     'cookies'=>'To give you a tailored experience AcmEv uses cookies. By continuing to browse the site you are agreeing to our use of cookies.',
     'cookies.accept'=>'Don\'t show this again',
     'post.error'=>'There was a problem processing the transaction.',
+    'get.error'=>'There was a problem accessing the page.',
 ];

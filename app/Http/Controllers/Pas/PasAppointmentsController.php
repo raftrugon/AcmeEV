@@ -14,34 +14,60 @@ class PasAppointmentsController extends Controller
     protected $appointmentCalendarRepo;
     protected $appointmentRepo;
 
-    public function __construct(AppointmentCalendarRepo $appointmentCalendarRepo, AppointmentRepo $appointmentRepo){
+    public function __construct(AppointmentCalendarRepo $appointmentCalendarRepo, AppointmentRepo $appointmentRepo)
+    {
         $this->appointmentCalendarRepo = $appointmentCalendarRepo;
         $this->appointmentRepo = $appointmentRepo;
     }
 
-    public function getCalendar(){
-        $config = SystemConfig::first();
-        return view('site.pas.calendar',compact('config'));
+    public function getCalendar()
+    {
+        try {
+            $config = SystemConfig::first();
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
+        return view('site.pas.calendar', compact('config'));
     }
 
-    public function getCalendarData(Request $request){
-        $startDate = new Carbon($request->input('start'));
-        $endDate = new Carbon($request->input('end'));
-        return $this->appointmentCalendarRepo->getAvailableDatesForRange($startDate,$endDate)->get();
+    public function getCalendarData(Request $request)
+    {
+        try {
+            $startDate = new Carbon($request->input('start'));
+            $endDate = new Carbon($request->input('end'));
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
+
+        return $this->appointmentCalendarRepo->getAvailableDatesForRange($startDate, $endDate)->get();
     }
 
-    public function postNewCalendarDate(Request $request){
+    public function postNewCalendarDate(Request $request)
+    {
         return $this->appointmentCalendarRepo->create($request->except('_token'));
     }
 
-    public function postDeleteCalendarDate(Request $request){
+    public function postDeleteCalendarDate(Request $request)
+    {
         return $this->appointmentCalendarRepo->delete($request->input('id'));
     }
 
-    public function getAppointmentsInfo(){
-        $minutesToSub = Carbon::now()->minute - (floor(Carbon::now()->minute/5)*5);
-        $now = Carbon::now()->subMinutes($minutesToSub);
-        $appointments = $this->appointmentRepo->getAppointmentsForNow($now);
-        return view('site.pas.appointment-info',compact('appointments','now'));
+    public function getAppointmentsInfo()
+    {
+        try {
+            $minutesToSub = Carbon::now()->minute - (floor(Carbon::now()->minute / 5) * 5);
+            $now = Carbon::now()->subMinutes($minutesToSub);
+            $appointments = $this->appointmentRepo->getAppointmentsForNow($now);
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
+
+        return view('site.pas.appointment-info', compact('appointments', 'now'));
     }
 }
