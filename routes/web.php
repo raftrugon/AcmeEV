@@ -226,7 +226,6 @@ Route::group(['prefix'=>'calendar'],function() {
     Route::post('/update', 'AppointmentsController@postUpdateAppointment');
 });
 
-
 Route::group(['prefix'=>'subject'],function(){
     Route::get('{subject}','SubjectController@getSubjectDisplay')->name('subject-display');
     Route::get('/filesystem/data','SubjectController@getFileSystemData')->name('filesystem.data');
@@ -238,6 +237,7 @@ Route::group(['prefix'=>'error'],function(){
 });
 
 
+Route::get('terms','HomeController@terms');
 
 
 
