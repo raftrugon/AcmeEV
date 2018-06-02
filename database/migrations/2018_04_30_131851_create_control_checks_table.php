@@ -31,6 +31,7 @@ class CreateControlChecksTable extends Migration
             $table->foreign('room_id')->references('id')->on('rooms');
             $table->foreign('subject_instance_id')->references('id')->on('subject_instances');
 
+            $table->softDeletes();
             $table->timestamps();
         });
     }

@@ -33,7 +33,7 @@ class SystemConfigController extends Controller
         $state_next_title = 'systemConfig.state.'.$next_state.'.title';
         $state_next_body = 'systemConfig.state.'.$next_state.'.body';
 
-        return view('site.admin.systemConfig.edit', compact('system_config','state_actual_title','state_actual_body','state_next_title','state_next_body'));
+        return view('site.admin.systemConfig.edit', compact('system_config','state_actual_title','state_actual_body','state_next_title','state_next_body'),$this->systemConfigRepo->getDashboard());
     }
 
     public function postSaveSystemConfig(Request $request){
@@ -80,6 +80,8 @@ class SystemConfigController extends Controller
             return redirect()->back()->with('error',__('systemConfig.increment.error'));
         }
     }
+
+
 
 
 }
