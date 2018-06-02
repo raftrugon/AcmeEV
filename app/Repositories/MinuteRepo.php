@@ -2,9 +2,12 @@
 
 namespace App\Repositories;
 
+use App\ControlCheckInstance;
+use App\Enrollment;
 use App\Minute;
 use App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class MinuteRepo extends BaseRepo
 {
@@ -28,5 +31,73 @@ class MinuteRepo extends BaseRepo
             ->orderBy('subjects.name', 'ASC')
             ->select('minutes.*', 'subject_instances.academic_year')
             ->where('enrollments.user_id',$user->getId());
+    }
+
+    public function minutesFromControlsBatch($summon){
+
+
+        //Control checks instances por cada usuario
+        $control_checks_instances_ordered_by_user_id = ControlCheckInstance::join('users', 'control_check_instances.student_id', '=', 'users.id')
+        ->join('control_checks', 'control_check_instances.control_check_id', '=', 'control_checks.id')
+        ->join('enrollments', 'users.id', '=', 'enrollments.user_id')
+        ->select('control_checks.*', 'control_check_instances.calification as qualification', 'users.id as user_id', 'enrollments.id as enrollment_id')
+        ->get()->groupBy('user_id');
+
+        try {
+
+        DB::beginTransaction();
+
+            //Por cada User
+            foreach ($control_checks_instances_ordered_by_user_id as $control_checks_instances){
+
+                $control_checks_instances_ordered_by_enrollment_id = $control_checks_instances->groupBy('enrollment_id');
+
+                //Por cada enrollment
+                foreach ($control_checks_instances_ordered_by_enrollment_id as $control_check_instance_2){
+
+                    //Variables
+                    $enrollment_id = $control_check_instance_2->enrollment_id;
+                    $minute_qualification = 0;
+
+                    //Por cada control_check_instance se crea la nota del minute
+                    foreach ($control_check_instance_2 as $control_check_instance){
+
+                        //Variables
+                        $control_check_qualification = $control_check_instance->qualification;
+                        $minimum_mark = $control_check_instance->minimum_mark;
+                        $weight = $control_check_instance->weight;
+
+                        if($control_check_qualification >= $minimum_mark)
+                            $minute_qualification = $minute_qualification + ($control_check_instance->qualification * $weight);
+                    }
+
+                    //Creacion del minute
+                    $minute_array = array(
+                        'status'=>false,
+                        'qualification'=>$minute_qualification,
+                        'summon'=>$summon,
+                        'enrollment_id'=>$enrollment_id,
+                    );
+
+                    $this->create($minute_array);
+
+                }
+            }
+
+            DB::commit();
+
+            return true;
+
+        } catch(\Exception $e){
+            DB::rollBack();
+            dd($e);
+            throw $e;
+        } catch(\Throwable $t){
+            DB::rollBack();
+            dd($t);
+            throw $t;
+        }
+
+
     }
 }
