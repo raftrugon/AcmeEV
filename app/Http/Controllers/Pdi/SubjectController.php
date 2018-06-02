@@ -172,7 +172,19 @@ class SubjectController extends Controller
     public function createOrEdit(Degree $degree, Subject $subject = null)
     {
         $departments = Department::all();
-        return view('site.subject.create-edit', compact('subject', 'degree', 'departments'));
+
+        $pdis = null;
+        if(isset($subject)){
+            $pdis = $subject->getDepartment->getPDIs->transform(function($pdi){
+                $pdi['full_name'] = $pdi->getFullName();
+                return $pdi;
+            });
+        } else {
+        $pdis = Department::all()->first()->getPDIs->transform(function($pdi){
+            $pdi['full_name'] = $pdi->getFullName();
+            return $pdi;
+        });}
+        return view('site.subject.create-edit',compact('subject','degree','departments','pdis'));
     }
 
     public function saveSubject(Request $request)
@@ -208,6 +220,8 @@ class SubjectController extends Controller
                     'semester' => $request->input('semester') == "2" ? null : $request->input('semester'),
                     'degree_id' => $request->input('degree'),
                     'department_id' => $request->input('department'),
+                    'active' => is_null($request->input('active')) ? false : true,
+                    'coordinator_id'=>$request->input('')
                 );
                 $this->subjectRepo->create($subject);
             } else {
@@ -217,6 +231,8 @@ class SubjectController extends Controller
                 $subject->setSchoolYear($request->input('school_year'));
                 $subject->setSemester($request->input('semester') == 2 ? null : $request->input('semester'));
                 $subject->setDepartment($request->input('department'));
+                $subject->setActive(is_null($request->input('active')) ? false : true);
+                $subject->setCoordinator($request->input('coordinator'));
                 $this->subjectRepo->updateWithoutData($subject);
             }
             DB::commit();

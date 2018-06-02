@@ -40,4 +40,8 @@ class DepartmentController extends Controller{
 
         return view('site.department.display',compact('department','pdis','subjects'));
     }
+
+    public function getPdis(Request $request) {
+        return Department::where('id',$request->input('id'))->first()->getPDIs;
+    }
 }

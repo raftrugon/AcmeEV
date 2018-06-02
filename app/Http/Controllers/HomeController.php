@@ -38,4 +38,8 @@ class HomeController extends Controller
 
         return view('home', compact('can_student_enroll'));
     }
+
+    public function terms() {
+        return view('site.terms');
+    }
 }
