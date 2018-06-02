@@ -216,6 +216,7 @@ Route::group(['prefix'=>'degree'],function(){
 Route::group(['prefix'=>'department'],function(){
     Route::get('/all','DepartmentController@getAll');
     Route::get('{department}/display','DepartmentController@displayDepartment');
+    Route::get('get-pdis','DepartmentController@getPdis');
 });
 
 

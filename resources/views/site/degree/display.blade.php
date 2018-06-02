@@ -34,7 +34,9 @@
                                 <th scope="col">@lang('attributes.semester')</th>
                                 <th scope="col">@lang('attributes.type')</th>
                                 <th scope="col">@lang('attributes.code')</th>
+                                @can('manage')
                                 <th></th>
+                                @endcan
                             </tr>
                             </thead>
                             <tbody>
@@ -74,7 +76,9 @@
                                         @endif
                                     </td>
                                     <td>{{$subject->getCode()}}</td>
+                                    @can('manage')
                                     <td><a href="{{URL::to('pdi/subject/'.$degree->getId().'/edit/'.$subject->getId())}}" class="btn btn-primary">@lang('global.edit')</a></td>
+                                    @endcan
                                 </tr>
                             @endforeach
                             </tbody>
@@ -86,9 +90,10 @@
 
     </div>
 
+    @can('manage')
     <a href="{{URL::to('pdi/subject/'.$degree->getId().'/edit')}}" id="submitButton" class="fixed-bottom btn btn-success position-fixed col-sm-3" style="left:50%;transform:translate(-50%,0);bottom:20px;">
         @lang('subject.add')
     </a>
-
+    @endcan
 
 @endsection
