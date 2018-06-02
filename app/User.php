@@ -57,6 +57,32 @@ class User extends Authenticatable
         $this->email = $value;
     }
 
+    public function getPersonalEmail() {
+        return $this->personal_email;
+    }
+
+    public function setPersonalEmail($value) {
+        $this->personal_email = $value;
+    }
+
+
+    public function getAddress() {
+        return $this->address;
+    }
+
+    public function setAddress($value) {
+        $this->address = $value;
+    }
+
+
+    public function getPhoneNumber() {
+        return $this->phone_number;
+    }
+
+    public function setPhoneNumber($value) {
+        $this->phone_number = $value;
+    }
+
     public function getFullName(){
         return $this->getName() . ' ' . $this->getSurname();
     }
@@ -92,6 +118,10 @@ class User extends Authenticatable
 
     public function getIdNumber() {
         return $this->id_number;
+    }
+
+    public function setIdNumber($value){
+        $this->id_number = $value;
     }
 
     public function getSubjectInstances() {

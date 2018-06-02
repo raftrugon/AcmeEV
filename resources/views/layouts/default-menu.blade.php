@@ -33,6 +33,9 @@
         <li>
             <a class="text-light nav-link" href="{{URL::to('admin/systemconfig/edit')}}"><i class="fas fa- fa-cogs d-block text-primary"></i><span>{{__('menu.systemconfig')}}</span></a>
         </li>
+        <li>
+            <a class="text-light nav-link" href="{{URL::to('users')}}"><i class="fas fa- fa-users d-block text-primary"></i><span>{{__('menu.users')}}</span></a>
+        </li>
         @endrole
         @role('pas')
         <li>

@@ -15,6 +15,13 @@
 *   Placeholder (Optional)                  *
 *   Tooltip (Optional)                      *
 *   Align [horizontal-vertical](Optional)   *--}}
+
+@php
+    if(!isset($col)){
+        $col = 12;
+    }
+@endphp
+
 @if($type=='text')
 
     @if(!isset($name))@php $name = $id;@endphp @endif

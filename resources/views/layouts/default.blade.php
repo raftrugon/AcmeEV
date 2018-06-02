@@ -37,6 +37,8 @@
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/datetimepicker.min.css')}}">
     <!-- Chat css -->
     <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/chat.css')}}">
+    <!-- iziModal css -->
+    <link rel="stylesheet" type="text/css" media="screen" href="{{asset('css/iziModal.min.css')}}">
 
 
 
@@ -131,6 +133,8 @@
 <script src="{{asset('js/notifications/push.min.js')}}"></script>
 <!-- Charts-->
 <script src="{{asset('js/Chart.min.js')}}"></script>
+<!-- Modals -->
+<script src="{{asset('js/iziModal.min.js')}}"></script>
 
 
 <!-- CUSTOM Scripts -->

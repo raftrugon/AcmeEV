@@ -53,6 +53,17 @@ Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){
     Route::post('/degreeDelete','Admin\DegreeController@deleteDegree')->name('delete_degree');
 });
 
+/////////////////////////////////////////// Admin & Management ////////////////////////////////////////////////////////
+
+Route::group(['prefix'=>'users','middleware'=>['role:admin']],function(){
+    Route::get('/','UserController@getList');
+    Route::get('/data','UserController@getData');
+    Route::post('/delete','UserController@postDelete');
+    Route::get('/edit','UserController@getEdit');
+    Route::get('/create','UserController@getCreate');
+    Route::post('/save','UserController@postSave');
+});
+
 //////////////////////////////////////////////////////// PAS ////////////////////////////////////////////////////////
 
 Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){

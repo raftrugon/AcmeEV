@@ -144,3 +144,12 @@ div.is-invalid span.help-block{
 ::-webkit-scrollbar-thumb:hover {
     background: #007bff;
 }
+
+.invalid-tooltip{
+    top:34px;
+    right:20px;
+}
+
+.selectpicker-form-group .invalid-tooltip{
+    right:45px;
+}

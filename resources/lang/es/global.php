@@ -34,4 +34,17 @@ return[
     'ok'=>'Correcto',
     'cookies'=>'Para brindarte una experiencia personalizada AcmEv usa cookies. Si continúas navegando estarás aceptando el uso de cookies por parte de AcmEv.',
     'cookies.accept'=>'No volver a mostrar',
+
+    //Roles & Permissions
+    'roles.student'=>'Estudiante',
+    'roles.pdi'=>'PDI',
+    'roles.pas'=>'PAS',
+    'roles.admin'=>'Administrador',
+    'permissions.new'=>'Nuevo',
+    'permissions.current'=>'Actual',
+    'permissions.old'=>'Antiguo',
+    'permissions.manage'=>'Gerente',
+    'permissions.direct_department'=>'Director de Departamento',
+    'permissions.teach'=>'Profesor',
+    'permissions.have_appointments'=>'Atención en Secretaría',
 ];

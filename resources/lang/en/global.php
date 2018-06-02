@@ -34,4 +34,17 @@ return[
     'ok'=>'Success',
     'cookies'=>'To give you a tailored experience AcmEv uses cookies. By continuing to browse the site you are agreeing to our use of cookies.',
     'cookies.accept'=>'Don\'t show this again',
+
+    //Roles & Permissions
+    'roles.student'=>'Student',
+    'roles.pdi'=>'Lecturer',
+    'roles.pas'=>'PAS',
+    'roles.admin'=>'Admin',
+    'permissions.new'=>'New',
+    'permissions.current'=>'Current',
+    'permissions.old'=>'Old',
+    'permissions.manage'=>'Manage',
+    'permissions.direct_department'=>'Department Director',
+    'permissions.teach'=>'Teach',
+    'permissions.have_appointments'=>'Have Appointments',
 ];
