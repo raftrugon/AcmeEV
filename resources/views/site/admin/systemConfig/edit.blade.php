@@ -101,15 +101,6 @@
             $('.time').datetimepicker({
                 format: 'HH:mm:ss'
             });
-            $('#first_inscriptions').click(function () {
-                $.post('{{route('process_inscriptions')}}', function (data) {
-                    if (data === 'true') {
-                        success('asdf', 'asdf');
-                    } else {
-                        error('fdsa', 'fdsa');
-                    }
-                });
-            });
             $('#systemconfig_form').submit(function(){
                 if(!$('#systemconfig_form').valid()) return false;
             });

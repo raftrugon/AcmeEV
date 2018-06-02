@@ -22,12 +22,36 @@ class SystemConfigPolicy
     public function stateEditDegreesDepartmentsSubjects()
     {
         $return = true;
+        $actual_state = $this->systemConfigRepo->getActualState();
 
-        if($this->systemConfigRepo->getActualState() > 2 && $this->systemConfigRepo->getActualState() < 8)
+        if($actual_state > 2 && $actual_state < 8)
             $return = false;
 
         return $return;
     }
+
+    public function stateEditMinutes()
+    {
+        $return = false;
+        $actual_state = $this->systemConfigRepo->getActualState();
+
+        if($actual_state == 5 || $actual_state == 7)
+            $return = true;
+
+        return $return;
+    }
+
+    public function stateListInscriptions()
+    {
+        $return = false;
+        $actual_state = $this->systemConfigRepo->getActualState();
+
+        if($actual_state == 1 || $actual_state == 2)
+            $return = true;
+
+        return $return;
+    }
+
 
 
 }

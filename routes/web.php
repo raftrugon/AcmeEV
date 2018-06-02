@@ -42,35 +42,34 @@ Route::post('/cookies/accept',function(){
 
 //////////////////////////////////////////////////////// Admin ////////////////////////////////////////////////////////
 
-Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){
+Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){                               //middleware administrador
     Route::group(['prefix'=>'systemconfig'],function() {
-        Route::get('edit', 'Admin\SystemConfigController@getEditSystemConfig');
-        Route::post('save', 'Admin\SystemConfigController@postSaveSystemConfig');
-        Route::post('first_inscription_process','Admin\SystemConfigController@postInscriptionBatch')->name('process_inscriptions');
-        Route::get('increment-state','Admin\SystemConfigController@getIncrementStateMachine');
+        Route::get('edit', 'Admin\SystemConfigController@getEditSystemConfig');                         //Correct - Modificable
+        Route::post('save', 'Admin\SystemConfigController@postSaveSystemConfig');                       //Correct
+        Route::get('increment-state','Admin\SystemConfigController@getIncrementStateMachine');          //Correct
     });
 
-    Route::post('/degreeDelete','Admin\DegreeController@deleteDegree')->name('delete_degree');
+    Route::post('/degreeDelete','Admin\DegreeController@deleteDegree')->name('delete_degree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');  //Correct
 });
 
 //////////////////////////////////////////////////////// PAS ////////////////////////////////////////////////////////
 
-Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
-    Route::group(['prefix'=>'calendar','middleware'=>['permission:have_appointments']],function() {
-        Route::get('/', 'Pas\PasAppointmentsController@getCalendar');
-        Route::get('/data', 'Pas\PasAppointmentsController@getCalendarData');
-        Route::post('/new', 'Pas\PasAppointmentsController@postNewCalendarDate');
-        Route::post('/delete', 'Pas\PasAppointmentsController@postDeleteCalendarDate');
+Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){                                //middleware Pas
+
+    Route::group(['prefix'=>'calendar','middleware'=>['permission:have_appointments']],function() {             //middleware have_appointments
+        Route::get('/', 'Pas\PasAppointmentsController@getCalendar');                                       //Correct
+        Route::get('/data', 'Pas\PasAppointmentsController@getCalendarData');                               //Correct
+        Route::post('/new', 'Pas\PasAppointmentsController@postNewCalendarDate');                           //Correct
+        Route::post('/delete', 'Pas\PasAppointmentsController@postDeleteCalendarDate');                     //Correct
     });
 
-    Route::get('/appointment-info','Pas\PasAppointmentsController@getAppointmentsInfo');
-    Route::get('/inscription-list','Pas\PasController@getPrintAllLists');
-    Route::group(['prefix'=>'minute'],function(){
-        Route::get('{user}/all','Pas\MinuteController@getMinutesForStudent');
-        Route::post('/update','Pas\MinuteController@updateMinutes')->name('update_minutes');
+
+    Route::group(['middleware'=>['can:stateListInscriptions,App\SystemConfig']],function() {                    //middleware estado 1 o 2
+        Route::get('/inscription-list', 'Pas\PasController@getPrintAllLists');                              //Verificar
+        Route::get('/', 'Pas\PasController@getDashboard');                                                  //Integrada en principal, verificar y eliminar original
     });
 
-    Route::get('/','Pas\PasController@getDashboard');
+    Route::get('/appointment-info','Pas\PasAppointmentsController@getAppointmentsInfo');                    //Correct
 });
 
 //////////////////////////////////////////////////////// PDI ////////////////////////////////////////////////////////
@@ -81,11 +80,13 @@ Route::group(['prefix'=>'management','middleware'=>['permission:manage']],functi
         Route::post('save','DegreeController@postSaveDegree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');
         Route::get('{degree}/edit','DegreeController@getEditDegree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');
 
-        //ESTO SERÁ SUSTITUIDO
-        route::get('{degree}/add-next-year-subjects','Pdi\ManagementController@getDegreeEditAddNextYearSubjects');
-        route::post('/create-subject-instances','Pdi\ManagementController@createNextYearDegree')->name('post_subject_instances');
-        //ESTO SERÁ SUSTITUIDO
     });
+
+    Route::group(['prefix'=>'minute', 'middleware'=>['can:stateEditMinutes,App\SystemConfig']],function(){              //middleware por estado 5 o 7
+        Route::get('{user}/all','Pas\MinuteController@getMinutesForStudent');                               //Falla la vista
+        Route::post('/update','Pas\MinuteController@updateMinutes')->name('update_minutes');          //Verificar
+    });
+
 });
 
 

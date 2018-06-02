@@ -27,11 +27,13 @@
                             <p class="card-text">
                                 @lang('degrees.newStudentsLimit'): {{$degree->getNewStudentsLimit()  }}
                             </p>
-                            @role('admin')
-                            <button class="btn btn-danger deleteButton" id="{{$degree->getId()}}">
-                                @lang('degrees.delete')
-                            </button>
-                            @endrole
+                            @if($actual_state == 8 || $actual_state < 3)
+                                @role('admin')
+                                    <button class="btn btn-danger deleteButton" id="{{$degree->getId()}}">
+                                        @lang('degrees.delete')
+                                    </button>
+                                @endrole
+                            @endif
                             @can('manage')
                                 <div class="collapse multi-collapse">
                                     <button onclick="location.href='{{URL::to('management/degree/' . $degree->getId() . '/edit')}}'"

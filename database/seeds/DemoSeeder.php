@@ -46,7 +46,7 @@ class DemoSeeder extends Seeder
 
         ///////////////////////////////////////// ADMIN /////////////////////////////////////////
 
-        $webmaster = User::firstOrCreate([
+        $admin = User::firstOrCreate([
             'name'=>'Paco',
             'surname'=>'Polaco',
             'email'=>'admin@admin.us.es',
@@ -57,7 +57,7 @@ class DemoSeeder extends Seeder
             'password'=>bcrypt('admin')
         ]);
 
-        $webmaster->assignRole('admin');
+        $admin->assignRole('admin');
 
         ///////////////////////////////////////// PAS /////////////////////////////////////////
 
