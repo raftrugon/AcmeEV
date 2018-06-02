@@ -15,5 +15,9 @@ return[
     'second'=>'Second semester',
     'instances'=>'Instances',
     'add'=>'Add subject',
-    'edit'=>'Edit subject'
+    'edit'=>'Edit subject',
+    'department'=>'Department',
+    'active'=>'Active',
+    'coordinator'=>'Coordinator',
+
 ];

@@ -216,6 +216,7 @@ Route::group(['prefix'=>'degree'],function(){
 Route::group(['prefix'=>'department'],function(){
     Route::get('/all','DepartmentController@getAll');
     Route::get('{department}/display','DepartmentController@displayDepartment');
+    Route::get('get-pdis','DepartmentController@getPdis');
 });
 
 
@@ -224,7 +225,6 @@ Route::group(['prefix'=>'calendar'],function() {
     Route::get('/data', 'AppointmentsController@getCalendarData');
     Route::post('/update', 'AppointmentsController@postUpdateAppointment');
 });
-
 
 Route::group(['prefix'=>'subject'],function(){
     Route::get('{subject}','SubjectController@getSubjectDisplay')->name('subject-display');
@@ -237,6 +237,7 @@ Route::group(['prefix'=>'error'],function(){
 });
 
 
+Route::get('terms','HomeController@terms');
 
 
 

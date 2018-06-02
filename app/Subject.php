@@ -69,6 +69,6 @@ class Subject extends Model
         return $this->belongsTo('App\User','coordinator_id','id');
     }
     public function setCoordinator($value){
-        return $this->cooridnator_id=$value;
+        return $this->coordinator_id=$value;
     }
 }
