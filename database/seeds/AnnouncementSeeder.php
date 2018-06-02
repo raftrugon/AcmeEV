@@ -12,11 +12,11 @@ class AnnouncementSeeder extends Seeder
      */
     public function run()
     {
-        $number_of_announcements = 500;
+        $number_of_announcements = 200;
 
         //////////////////////////////////////////////////////////////
 
-        info('Seeding '.$number_of_announcements.' Announcements on random Subject Instances of this year.');
+        info('Seeding '.$number_of_announcements.' Announcements on random Subject Instances of the past year.');
 
         factory(App\Announcement::class,$number_of_announcements)->create();
     }

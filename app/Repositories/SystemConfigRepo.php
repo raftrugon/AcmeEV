@@ -14,11 +14,13 @@ class SystemConfigRepo extends BaseRepo
 
     protected $userRepo;
     protected $inscriptionRepo;
+    protected $subjectInstanceRepo;
 
-    public function __construct(UserRepo $userRepo, InscriptionRepo $inscriptionRepo)
+    public function __construct(UserRepo $userRepo, InscriptionRepo $inscriptionRepo, SubjectInstanceRepo $subjectInstanceRepo)
     {
         $this->userRepo = $userRepo;
         $this->inscriptionRepo = $inscriptionRepo;
+        $this->subjectInstanceRepo = $subjectInstanceRepo;
     }
 
     public function getModel()
@@ -63,7 +65,7 @@ class SystemConfigRepo extends BaseRepo
                     break;
 
                 case 3:
-                    //Indicar aquí auto generación de subject instances
+                    $this->subjectInstanceRepo->subjectInstancesAndGroupsBatch();  //Auto generación de subject instances, groups y conversations
                     $this->userRepo->createBatchFromInscriptions();                //Generación de usuarios con las inscripciones aceptadas
                     break;
 

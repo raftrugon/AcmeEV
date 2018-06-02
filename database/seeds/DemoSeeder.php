@@ -44,6 +44,21 @@ class DemoSeeder extends Seeder
         $webmaster->givePermissionTo('teach');
         $webmaster->givePermissionTo('have_appointments');
 
+        ///////////////////////////////////////// ADMIN /////////////////////////////////////////
+
+        $webmaster = User::firstOrCreate([
+            'name'=>'Paco',
+            'surname'=>'Polaco',
+            'email'=>'admin@admin.us.es',
+            'id_number'=>'43742618Y',
+            'address'=>'Admin direction',
+            'phone_number'=>'666022666',
+            'personal_email'=>'admin@gmail.com',
+            'password'=>bcrypt('admin')
+        ]);
+
+        $webmaster->assignRole('admin');
+
         ///////////////////////////////////////// PAS /////////////////////////////////////////
 
         $pas = User::firstOrCreate([
