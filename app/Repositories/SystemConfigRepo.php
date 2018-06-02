@@ -68,8 +68,9 @@ class SystemConfigRepo extends BaseRepo
                     break;
 
                 case 5:
-                    $this->minuteRepo->minutesFromControlsBatch(1);       //Auto computación de minutes segunda convocatoria¿?
+                    $this->minuteRepo->minutesFromControlsBatch(1);       //Auto computación de minutes primera convocatoria¿?
                     break;
+
                 case 7:
                     $this->minuteRepo->minutesFromControlsBatch(2);       //Auto computación de minutes segunda convocatoria¿?
                     break;

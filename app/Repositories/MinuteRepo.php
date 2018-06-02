@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\ControlCheck;
 use App\ControlCheckInstance;
 use App\Enrollment;
 use App\Minute;
@@ -12,9 +13,13 @@ use Illuminate\Support\Facades\DB;
 class MinuteRepo extends BaseRepo
 {
 
-    public function __construct()
-    {
+    protected $controlCheckRepo;
+    protected $controlCheckInstanceRepo;
 
+    public function __construct(ControlCheckRepo $controlCheckRepo, ControlCheckInstanceRepo $controlCheckInstanceRepo)
+    {
+        $this->controlCheckInstanceRepo = $controlCheckInstanceRepo;
+        $this->controlCheckRepo = $controlCheckRepo;
     }
 
     public function getModel()
@@ -82,6 +87,18 @@ class MinuteRepo extends BaseRepo
                     $this->create($minute_array);
 
                 }
+            }
+
+            //Control check instances soft deleting
+            $control_check_instances = ControlCheckInstance::all();
+            foreach ($control_check_instances as $control_check_instance){
+                $this->controlCheckInstanceRepo->delete($control_check_instance);
+            }
+
+            //Control checks soft deleting
+            $control_checks = ControlCheck::all();
+            foreach ($control_checks as $control_check){
+                $this->controlCheckRepo->delete($control_check);
             }
 
             DB::commit();
