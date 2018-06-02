@@ -5,7 +5,8 @@
     </h3>
 
     <!-- Sidebar Links -->
-    <ul class="list-unstyled" style="min-height:70%;overflow-y:auto;overflow-x:hidden;">
+    <div style="overflow-y:auto;direction:rtl">
+    <ul class="list-unstyled" style="direction:ltr;overflow-x:hidden;">
 
         <!------------------------- TODOS ------------------------->
         <li>
@@ -102,6 +103,7 @@
 
 
     </ul>
+    </div>
 
 
     {{------------------- PICKER DE IDIOMA -------------------}}

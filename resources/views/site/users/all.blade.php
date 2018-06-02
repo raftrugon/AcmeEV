@@ -31,7 +31,7 @@
             </div>
         </div>
     </section>
-    <section class="row pt-4">
+    <section class="row pt-4 table-responsive">
         <table id="users_table" class="table table-striped table-hover">
             <thead>
                 <tr>
@@ -107,6 +107,8 @@
             let resultsTable = $('#users_table').DataTable( {
                 "serverSide": true,
                 responsive: true,
+                search:false,
+                "bFilter": false,
                 "ajax": {
                     url: '{{URL::to('users/data')}}',
                     cache:false,
