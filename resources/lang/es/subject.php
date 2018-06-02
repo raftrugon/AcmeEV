@@ -15,5 +15,8 @@ return[
     'second'=>'Segundo cuatrimestre',
     'instances'=>'Instancias',
     'add'=>'Añadir asignatura',
-    'edit'=>'Editar asignatura'
+    'edit'=>'Editar asignatura',
+    'department'=>'Departamento',
+    'active'=>'Activa',
+    'coordinator'=>'Coordinador',
 ];

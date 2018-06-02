@@ -25,12 +25,23 @@ class DepartmentController extends Controller{
     }
 
     public function displayDepartment(Department $department) {
+        try{
         $pdis = User
             ::whereNotNull('department_id')
             ->where('department_id', $department->getId())->get();
         $subjects = Subject
             ::where('department_id', $department->getId())
             ->orderBy('school_year')->get();
+        }catch(\Exception $e){
+            return redirect()->action('HomeController@index')->with('error',__('global.get.error'));
+        }catch(\Throwable $t){
+            return redirect()->action('HomeController@index')->with('error',__('global.get.error'));
+        }
+
         return view('site.department.display',compact('department','pdis','subjects'));
+    }
+
+    public function getPdis(Request $request) {
+        return Department::where('id',$request->input('id'))->first()->getPDIs;
     }
 }

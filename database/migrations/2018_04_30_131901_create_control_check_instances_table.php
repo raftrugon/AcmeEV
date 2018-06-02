@@ -20,6 +20,8 @@ class CreateControlCheckInstancesTable extends Migration
 
             $table->foreign('control_check_id')->references('id')->on('control_checks')->onDelete('cascade');
             $table->foreign('student_id')->references('id')->on('users');
+
+            $table->softDeletes();
             $table->timestamps();
         });
     }

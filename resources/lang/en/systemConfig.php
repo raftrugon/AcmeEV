@@ -4,6 +4,7 @@
 return[
     'edit.tab1'=>'System parameters edition',
     'edit.tab2'=>'System actions',
+    'edit.dashboard'=>'DashBoard',
     'success'=>'System parameters successfully modified.',
     'error'=>'There was an error when modifying system parameters.',
     'increment.success'=>'State machine was incremented successfully.',

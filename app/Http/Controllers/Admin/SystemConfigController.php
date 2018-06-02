@@ -15,37 +15,46 @@ class SystemConfigController extends Controller
     protected $systemConfigRepo;
     protected $inscriptionRepo;
 
-    public function __construct(SystemConfigRepo $systemConfigRepo, InscriptionRepo $inscriptionRepo){
+    public function __construct(SystemConfigRepo $systemConfigRepo, InscriptionRepo $inscriptionRepo)
+    {
         $this->systemConfigRepo = $systemConfigRepo;
         $this->inscriptionRepo = $inscriptionRepo;
     }
 
 
-    public function getEditSystemConfig(){
-        $system_config = $this->systemConfigRepo->getSystemConfig();
-        $actual_state = $system_config->getActualState();
-        $next_state = $actual_state + 1;
-        if($next_state > 8)
-            $next_state = 0;
+    public function getEditSystemConfig()
+    {
+        try {
+            $system_config = $this->systemConfigRepo->getSystemConfig();
+            $actual_state = $system_config->getActualState();
+            $next_state = $actual_state + 1;
+            if ($next_state > 8)
+                $next_state = 0;
 
-        $state_actual_title = 'systemConfig.state.'.$actual_state.'.title';
-        $state_actual_body = 'systemConfig.state.'.$actual_state.'.body';
-        $state_next_title = 'systemConfig.state.'.$next_state.'.title';
-        $state_next_body = 'systemConfig.state.'.$next_state.'.body';
+            $state_actual_title = 'systemConfig.state.' . $actual_state . '.title';
+            $state_actual_body = 'systemConfig.state.' . $actual_state . '.body';
+            $state_next_title = 'systemConfig.state.' . $next_state . '.title';
+            $state_next_body = 'systemConfig.state.' . $next_state . '.body';
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
 
-        return view('site.admin.systemConfig.edit', compact('system_config','state_actual_title','state_actual_body','state_next_title','state_next_body'),$this->systemConfigRepo->getDashboard());
+        return view('site.admin.systemConfig.edit', compact('system_config', 'state_actual_title', 'state_actual_body', 'state_next_title', 'state_next_body'), $this->systemConfigRepo->getDashboard());
     }
 
-    public function postSaveSystemConfig(Request $request){
-        $validator = Validator::make($request->all(),[
-            'max_summons_number'=>'required|integer|min:1',
-            'max_annual_summons_number'=>'required|integer|min:1',
-            'building_open_time'=>'required|date_format:H:i:s',
-            'building_close_time'=>'required|date_format:H:i:s|after:building_open_time',
+    public function postSaveSystemConfig(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'max_summons_number' => 'required|integer|min:1',
+            'max_annual_summons_number' => 'required|integer|min:1',
+            'building_open_time' => 'required|date_format:H:i:s',
+            'building_close_time' => 'required|date_format:H:i:s|after:building_open_time',
         ]);
 
-        if($validator->fails()){
-            return redirect()->back()->withErrors($validator)->withInput()->with('error',__('systemConfig.error'));
+        if ($validator->fails()) {
+            return redirect()->back()->withErrors($validator)->withInput()->with('error', __('systemConfig.error'));
         }
 
         DB::beginTransaction();
@@ -61,27 +70,29 @@ class SystemConfigController extends Controller
             $this->systemConfigRepo->update($systemConfigDB, $systemConfig);
 
             DB::commit();
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
-            throw $e;
+            return redirect()->back()->with('error', __('global.post.error'));
+        } catch (\Throwable $t) {
+            DB::rollBack();
+            return redirect()->back()->with('error', __('global.post.error'));
         }
 
-        return redirect()->action('Admin\SystemConfigController@getEditSystemConfig')->with('success',__('systemConfig.success'));
+        return redirect()->action('Admin\SystemConfigController@getEditSystemConfig')->with('success', __('systemConfig.success'));
     }
 
 
-    public function getIncrementStateMachine(){
+    public function getIncrementStateMachine()
+    {
         try {
             $this->systemConfigRepo->incrementStateMachine();
-            return redirect()->back()->with('success',__('systemConfig.increment.success'));
-        }catch(\Exception $e){
-            return redirect()->back()->with('error',__('systemConfig.increment.error'));
-        }catch(\Throwable $t){
-            return redirect()->back()->with('error',__('systemConfig.increment.error'));
+            return redirect()->back()->with('success', __('systemConfig.increment.success'));
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', __('systemConfig.increment.error'));
+        } catch (\Throwable $t) {
+            return redirect()->back()->with('error', __('systemConfig.increment.error'));
         }
     }
-
-
 
 
 }

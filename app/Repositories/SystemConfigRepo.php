@@ -15,12 +15,14 @@ class SystemConfigRepo extends BaseRepo
     protected $userRepo;
     protected $inscriptionRepo;
     protected $subjectInstanceRepo;
+    protected $minuteRepo;
 
-    public function __construct(UserRepo $userRepo, InscriptionRepo $inscriptionRepo, SubjectInstanceRepo $subjectInstanceRepo)
+    public function __construct(UserRepo $userRepo, InscriptionRepo $inscriptionRepo, SubjectInstanceRepo $subjectInstanceRepo, MinuteRepo $minuteRepo)
     {
         $this->userRepo = $userRepo;
         $this->inscriptionRepo = $inscriptionRepo;
         $this->subjectInstanceRepo = $subjectInstanceRepo;
+        $this->minuteRepo = $minuteRepo;
     }
 
     public function getModel()
@@ -69,8 +71,13 @@ class SystemConfigRepo extends BaseRepo
                     $this->userRepo->createBatchFromInscriptions();                //Generación de usuarios con las inscripciones aceptadas
                     break;
 
-                case 5: break;  //Indicar aquí auto computación de minutes con control checks del primer cuatrimestre
-                case 7: break;  //Indicar aquí auto computación de minutes con control checks del segundo cuatrimestre y anuales
+                case 5:
+                    $this->minuteRepo->minutesFromControlsBatch(1);       //Auto computación de minutes primera convocatoria¿?
+                    break;
+
+                case 7:
+                    $this->minuteRepo->minutesFromControlsBatch(2);       //Auto computación de minutes segunda convocatoria¿?
+                    break;
             }
 
             DB::commit();

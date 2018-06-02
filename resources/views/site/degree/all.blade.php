@@ -27,21 +27,19 @@
                             <p class="card-text">
                                 @lang('degrees.newStudentsLimit'): {{$degree->getNewStudentsLimit()  }}
                             </p>
-                            @role('admin')
-                            <button class="btn btn-danger deleteButton" id="{{$degree->getId()}}">
-                                @lang('degrees.delete')
-                            </button>
-                            @endrole
+                            @if($actual_state == 8 || $actual_state < 3)
+                                @role('admin')
+                                    <button class="btn btn-danger deleteButton" id="{{$degree->getId()}}">
+                                        @lang('degrees.delete')
+                                    </button>
+                                @endrole
+                            @endif
                             @can('manage')
                                 <div class="collapse multi-collapse">
                                     <button onclick="location.href='{{URL::to('management/degree/' . $degree->getId() . '/edit')}}'"
                                             class="btn btn-success">@lang('degrees.edit')</button>
                                     <button class="btn btn-danger deleteButton"
                                             id="{{$degree->getId()}}">@lang('degrees.delete')</button>
-                                    @if ($degree->canCreateSubjectInstances())
-                                        <button onclick="location.href='{{URL::to('management/degree/'. $degree->getId() .'/add-next-year-subjects')}}'"
-                                                class="btn btn-success">@lang('degrees.nextYear')</button>
-                                    @endif
                                 </div>
                             @endcan
                         </div>

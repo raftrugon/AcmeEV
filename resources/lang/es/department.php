@@ -4,7 +4,7 @@
 return[
     'code'=>'Código',
     'url'=>'URL',
-    'new'=>'Editar departamento',
+    'new'=>'Nuevo Departamento',
     'subjects'=>'Asignaturas',
     'pdis'=>'Profesores',
     'lecturers'=>'Profesores',
