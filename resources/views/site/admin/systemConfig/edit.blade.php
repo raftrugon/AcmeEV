@@ -9,14 +9,18 @@
             <div class="card border-info">
                 <div class="card-header text-center border-info">
                     <ul class="nav nav-pills card-header-pills nav-fill">
-                        <li class="nav-item col-md-6" style="padding: 0; margin: 0">
+                        <li class="nav-item col-md-4" style="padding: 0; margin: 0">
                             <a class="nav-link active" data-toggle="pill" href="#tab1" role="button"
                                aria-expanded="true"
                                aria-controls="tab1"><Strong>@lang('systemConfig.edit.tab2')</Strong></a>
                         </li>
-                        <li class="nav-item col-md-6" style="padding: 0; margin: 0">
+                        <li class="nav-item col-md-4" style="padding: 0; margin: 0">
                             <a class="nav-link" data-toggle="pill" href="#tab2" role="button" aria-expanded="false"
                                aria-controls="tab2"><Strong>@lang('systemConfig.edit.tab1')</Strong></a>
+                        </li>
+                        <li class="nav-item col-md-4" style="padding: 0; margin: 0">
+                            <a class="nav-link" data-toggle="pill" href="#tab3" role="button" aria-expanded="false"
+                               aria-controls="tab3"><Strong>@lang('systemConfig.edit.dashboard')</Strong></a>
                         </li>
                     </ul>
                 </div>
@@ -77,6 +81,11 @@
                         </form>
                     </div>
 
+                    {{---------------------------------------------------------------------------------------------------- THIRD TAB ----------------------------------------------------------------------------------------------------}}
+                    <div class="tab-pane fade" id="tab3" data-parent="#accordion">
+                       @include('site.admin.systemConfig.dashboard')
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -85,9 +94,8 @@
 @endsection
 
 @section('scripts')
-    <script type="text/javascript">
-
-    </script>
+    <!-- Dashboard -->
+    <script src="{{asset('js/dashboard.js')}}"></script>
     <script>
         $(function () {
             $('.time').datetimepicker({
@@ -118,6 +126,118 @@
                     building_open_time: "{{__('validation.required',['attribute'=>__('building_open_time')])}}",
                     building_close_time: "{{__('validation.required',['attribute'=>__('building_close_time')])}}",
                 }
+            });
+        });
+    </script>
+    {{------------------ Dashboard Charts --------------------}}
+    <script>
+        $(function() {
+            let inscription_data = {
+                datasets: [{
+                    data: {{$inscription_donut_data}},
+                    backgroundColor: ['#28a745','#dc3545'],
+                }],
+
+                labels: [
+                    '@lang('global.yes')',
+                    '@lang('global.no')'
+                ],
+
+            };
+
+            let inscriptionDonut = new Chart(document.getElementById('inscriptions_donut'), {
+                type: 'doughnut',
+                data: inscription_data,
+                options: {
+                    title: {
+                        display: true,
+                        text: '@lang('dashboard.inscriptions_donut')'
+                    }
+                }
+
+            });
+
+            let enrollment_data = {
+                datasets:[{
+                    data: {!!$enrollment_tries_per_school_year['1'] !!},
+                    backgroundColor: 'rgba(61,9,145,0.5)',
+                    label: '@lang('enrollments.year.1')',
+                    showLine: true,
+                },{
+                    data: {!!$enrollment_tries_per_school_year['2'] !!},
+                    backgroundColor: 'rgba(145,61,9,0.5)',
+                    label: '@lang('enrollments.year.2')',
+                    showLine: true,
+                },{
+                    data: {!!$enrollment_tries_per_school_year['3'] !!},
+                    backgroundColor: 'rgba(9,145,61,0.5)',
+                    label: '@lang('enrollments.year.3')',
+                    showLine: true,
+                },{
+                    data: {!!$enrollment_tries_per_school_year['4'] !!},
+                    backgroundColor: 'rgba(145,9,93,0.5)',
+                    label: '@lang('enrollments.year.4')',
+                    showLine: true,
+                },
+
+                ],
+
+            };
+
+            let enrollmentBubble = new Chart(document.getElementById('enrollment_tries'), {
+                type: 'scatter',
+                data: enrollment_data,
+                options: {
+                    tooltips: {
+                        callbacks: {
+                            afterLabel: function(tooltipItem, data) {
+                                data = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+                                return '@lang('global.try'): '+data['x'];
+                            }
+                        }
+                    },
+                    title: {
+                        display: true,
+                        text: '@lang('dashboard.enrollments_bubble')'
+                    },
+
+                }
+
+            });
+
+            let appointments_data = {
+                datasets: [{
+                    data: {!!$appointments_per_hour!!},
+                    backgroundColor: '#fd7e14',
+                    borderColor: '#fd7e14',
+                    label: '@lang('dashboard.appointments_per_hour')'
+                }],
+            };
+            let appointmentsLine = new Chart(document.getElementById('appointments_per_hour'), {
+                type: 'scatter',
+                data: appointments_data,
+                options: {
+                    title: {
+                        display: true,
+                        text: '@lang('dashboard.appointments_line')'
+                    },
+                    scales: {
+                        xAxes: [{
+                            type: 'time',
+                            position: 'bottom',
+                            time:{
+                                unit: 'minute',
+                            }
+                        }],
+                        yAxes: [{
+                            ticks: {
+                                type: 'linear',
+                                min: 0,
+                            }
+                        }]
+                    }
+                }
+
             });
         });
     </script>

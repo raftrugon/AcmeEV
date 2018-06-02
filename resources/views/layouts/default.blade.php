@@ -129,6 +129,8 @@
 @endauth
 <!-- Push Notifications-->
 <script src="{{asset('js/notifications/push.min.js')}}"></script>
+<!-- Charts-->
+<script src="{{asset('js/Chart.min.js')}}"></script>
 
 
 <!-- CUSTOM Scripts -->
