@@ -63,6 +63,17 @@ class SystemConfigPolicy
         return $return;
     }
 
+    public function stateExchangeGroups()
+    {
+        $return = false;
+        $actual_state = $this->systemConfigRepo->getActualState();
+
+        if($actual_state == 4)
+            $return = true;
+
+        return $return;
+    }
+
 
 
 }

@@ -212,6 +212,7 @@ Route::group(['prefix'=>'group', 'middleware'=>['can:stateAccessTimeTable,App\Sy
 
 
     Route::group(['prefix'=>'student','middleware'=>['permission:current']],function(){         //middleware current
+
         Route::group(['prefix'=>'schedule'],function() {
             Route::get('/', 'Student\ScheduleController@getSchedule');                                      //Verificar
             Route::get('events', 'Student\ScheduleController@getScheduleEvents');                           //verificar
@@ -219,7 +220,7 @@ Route::group(['prefix'=>'group', 'middleware'=>['can:stateAccessTimeTable,App\Sy
 //            Route::get('print', 'Student\ScheduleController@getPrint');
         });
 
-        Route::group(['prefix'=>'exchange'],function() {
+        Route::group(['prefix'=>'exchange', 'middleware'=>['can:stateExchangeGroups,App\SystemConfig']],function() {
             Route::get('/create', 'Student\ExchangeController@getCreate');                                  //verificar
             Route::get('/data-and-availability', 'Student\ExchangeController@getTargetDataAndAvailability');//verificar
             Route::post('/save', 'Student\ExchangeController@postSave');                                    //verificar
