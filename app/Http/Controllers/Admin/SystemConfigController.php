@@ -54,7 +54,6 @@ class SystemConfigController extends Controller
             'building_close_time' => 'required|date_format:H:i:s|after:building_open_time',
             'name_en'=>'required',
             'name_es'=>'required',
-            'icon'=>'required',
         ]);
 
         if ($validator->fails()) {
@@ -63,7 +62,6 @@ class SystemConfigController extends Controller
 
         DB::beginTransaction();
         try {
-            $iconUrl = Storage::url(Storage::putFile('/',$request->file('icon')));
             $systemConfig = array(
                 'max_summons_number' => $request->input('max_summons_number'),
                 'max_annual_summons_number' => $request->input('max_annual_summons_number'),
@@ -71,8 +69,16 @@ class SystemConfigController extends Controller
                 'building_close_time' => $request->input('building_close_time'),
                 'name_en'=>$request->input('name_en'),
                 'name_es'=>$request->input('name_es'),
-                'icon'=>$iconUrl,
             );
+
+            if($request->file('icon')) {
+                $iconUrl = Storage::url(Storage::putFile('/',$request->file('icon')));
+                $systemConfig['icon'] = $iconUrl;
+            }
+            if($request->file('banner')) {
+                $bannerUrl = Storage::url(Storage::putFile('/',$request->file('banner')));
+                $systemConfig['banner'] = $bannerUrl;
+            }
 
             $systemConfigDB = $this->systemConfigRepo->findOrFail($request->input('id'));
             $this->systemConfigRepo->update($systemConfigDB, $systemConfig);

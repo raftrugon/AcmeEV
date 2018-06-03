@@ -28,6 +28,7 @@ class CreateSystemConfigsTable extends Migration
             $table->string('name_en');
             $table->string('name_es');
             $table->string('icon')->nullable();
+            $table->string('banner')->nullable();
 
 
             //STATE MACHINE

@@ -93,6 +93,14 @@ class SystemConfig extends Model
         $this->icon = $value;
     }
 
+    public function getBanner(){
+        return $this->banner;
+    }
+
+    public function setBanner($value){
+        $this->banner = $value;
+    }
+
 
 
 
