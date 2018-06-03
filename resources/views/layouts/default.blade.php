@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
-    <title> AcmEv </title>
-    <meta name="description" content="AcmEv">
+    @if(App::getLocale() === 'en')
+        <title> {{\App\SystemConfig::first()->getNameEn()}} </title>
+        <meta name="description" content="{{\App\SystemConfig::first()->getNameEn()}}">
+    @else
+        <title> {{\App\SystemConfig::first()->getNameEs()}} </title>
+        <meta name="description" content="{{\App\SystemConfig::first()->getNameEs()}}">
+    @endif
     <meta name="author" content="Group 16 - D&P Universidad de Sevilla">
+    <link rel="icon" type="image/png" href="{{URL::to(\App\SystemConfig::first()->getIcon())}}"/>
+    <link rel="shortcut icon" type="image/png" href="{{URL::to(\App\SystemConfig::first()->getIcon())}}"/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -86,6 +93,12 @@
         @endif
     </div>
 </div>
+<div id="tyc_modal">
+    @lang('global.termsBody')
+</div>
+<div id="privacy_modal">
+    @lang('global.privacyBody')
+</div>
 <!-- Messaging Service -->
 @includeWhen(Auth::check(),'layouts.chat')
 <!-- End of messaging -->
@@ -167,6 +180,48 @@
         $('.sidebar-btn').toggleClass('show');
         $.post('{{URL::to('sidebar')}}',{show: $('#sidebar').hasClass('show')});
     }
+    $(function() {
+        $("#tyc_modal").iziModal({
+            title: "@lang('global.terms')",
+            icon: 'icon-chat',
+            iconColor: 'white',
+            fullscreen: true,
+            width: '50%',
+            padding: 20,
+            bodyOverflow: true,
+            top: 50,
+            bottom: 50,
+            onOpening: function (modal) {
+                modal.startLoading();
+            },
+            onOpened: function (modal) {
+                modal.stopLoading();
+                setTimeout(function () {
+                    $("#modal-large .iziModal-wrap").scrollTop(0);
+                }, 1)
+            }
+        });
+        $("#privacy_modal").iziModal({
+            title: "@lang('global.privacy')",
+            icon: 'icon-chat',
+            iconColor: 'white',
+            fullscreen: true,
+            width: '50%',
+            padding: 20,
+            bodyOverflow: true,
+            top: 50,
+            bottom: 50,
+            onOpening: function (modal) {
+                modal.startLoading();
+            },
+            onOpened: function (modal) {
+                modal.stopLoading();
+                setTimeout(function () {
+                    $("#modal-large .iziModal-wrap").scrollTop(0);
+                }, 1)
+            }
+        });
+    });
 
     @guest
     $(function(){

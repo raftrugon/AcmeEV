@@ -58,7 +58,7 @@
 
                     {{---------------------------------------------------------------------------------------------------- SECOND TAB ----------------------------------------------------------------------------------------------------}}
                     <div class="tab-pane fade" id="tab2" data-parent="#accordion">
-                        <form id="systemconfig_form" action="{{URL::to('admin/systemconfig/save')}}" method="post">
+                        <form id="systemconfig_form" action="{{URL::to('admin/systemconfig/save')}}" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="row align-items-end">
                                 @include('global.input',['col'=>'6','type'=>'number','id'=>'max_summons_number','name'=>'max_summons_number','label'=>__('attributes.max_summons_number'),'placeholder'=>__('placeholder.number'),  'value'=>isset($system_config) ? $system_config->getMaxSummonsNumber() : null ])
@@ -67,6 +67,15 @@
                             <div class="row align-items-end">
                                 @include('global.input',['col'=>'6','class'=>'time','type'=>'text','id'=>'building_open_time','name'=>'building_open_time','label'=>__('attributes.building_open_time'),'placeholder'=>__('placeholder.time'),  'value'=>isset($system_config) ? $system_config->getBuildingOpenTime() : null ])
                                 @include('global.input',['col'=>'6','class'=>'time','type'=>'text','id'=>'building_close_time','name'=>'building_close_time','label'=>__('attributes.building_close_time'),'placeholder'=>__('placeholder.time'),  'value'=>isset($system_config) ? $system_config->getBuildingCloseTime() : null ])
+                            </div>
+                            <div class="row align-items-start">
+                                <div class="col-7">
+                                @include('global.input',['col'=>'12','type'=>'text','id'=>'name_en','label'=>__('attributes.name_en'),'placeholder'=>__('placeholder.name_en'),  'value'=>isset($system_config) ? $system_config->getNameEn() : null ])
+                                @include('global.input',['col'=>'12','type'=>'text','id'=>'name_es','label'=>__('attributes.name_es'),'placeholder'=>__('placeholder.name_es'),  'value'=>isset($system_config) ? $system_config->getNameEs() : null ])
+                                </div>
+                                <div class="col-5 py-3">
+                                    <input type="file" id="icon_input" name="icon" data-default-file="{{isset($system_config) ? URL::to($system_config->getIcon()) : null }}">
+                                </div>
                             </div>
 
                             @isset($system_config)
@@ -101,6 +110,7 @@
             $('.time').datetimepicker({
                 format: 'HH:mm:ss'
             });
+            $('#icon_input').dropify();
             $('#systemconfig_form').submit(function(){
                 if(!$('#systemconfig_form').valid()) return false;
             });

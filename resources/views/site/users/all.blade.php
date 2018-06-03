@@ -59,7 +59,7 @@
         $(function() {
             $("#modal").iziModal({
                 width:'80%',
-                headerColor: '#007bff',
+                headerColor: 'rgb(136, 160, 185)',
                 focusInput: true,
                 transitionIn:'bounceInDown',
                 transitionOut:'bounceOutUp',
