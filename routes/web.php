@@ -74,6 +74,8 @@ Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
         Route::post('/delete', 'Pas\PasAppointmentsController@postDeleteCalendarDate');                     //Correct
     });
 
+    Route::get('/appointment-info','Pas\PasAppointmentsController@getAppointmentsInfo');
+    Route::get('/inscription-list','Pas\PasController@getPrintAllLists');
 
     Route::group(['middleware'=>['can:stateListInscriptions,App\SystemConfig']],function() {                    //middleware estado 1 o 2
         Route::get('/inscription-list', 'Pas\PasController@getPrintAllLists');                              //Verificar
@@ -107,14 +109,13 @@ Route::group(['prefix'=>'management','middleware'=>['permission:manage']],functi
         });
 
     });
-
-    Route::group(['prefix'=>'minute', 'middleware'=>['can:stateEditMinutes,App\SystemConfig']],function(){              //middleware por estado 5 o 7
-        //Ruta para ver todos los usuarios para poder acceder a la edición
-        Route::get('{user}/all','Pas\MinuteController@getMinutesForStudent');                               //Falla la vista y tienen que aparecer los no definitivos
-        Route::post('/update','Pas\MinuteController@updateMinutes')->name('update_minutes');          //Verificar
+    Route::group(['prefix'=>'minute'],function(){
+        Route::get('{user}/all','Pdi\MinuteController@getMinutesForStudent');
+        Route::post('/update','Pdiº\MinuteController@updateMinutes')->name('update_minutes');
     });
-
-
+    Route::group(['prefix'=>'student'],function(){
+        Route::get('list','Pdi\StudentController@getStudentsWithStatusZeroMinutes');
+    });
 });
 
 
