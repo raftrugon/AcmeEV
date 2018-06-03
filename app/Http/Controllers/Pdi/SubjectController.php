@@ -243,7 +243,6 @@ class SubjectController extends Controller
             DB::rollBack();
             return redirect()->back()->with('error', __('global.post.error'));
         }
-        $degree = Degree::where('id',$saved->getDegree->getId());
-        return view("site.degree.display",compact('degree'));
+        return redirect()->action('DegreeController@displayDegree',['degree'=>$saved->getDegree->getId()]);
     }
 }
