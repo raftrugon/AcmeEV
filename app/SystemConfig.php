@@ -16,6 +16,14 @@ class SystemConfig extends Model
 
     //
 
+    public function getMaxStudentsPerGroup(){
+        return $this->max_students_per_group;
+    }
+
+    public function setMaxStudentsPerGroup($value){
+        $this->max_students_per_group = $value;
+    }
+
     public function getMaxSummonsNumber(){
         return $this->max_summons_number;
     }

@@ -65,7 +65,10 @@
                                 @include('global.input',['col'=>'6','type'=>'number','id'=>'max_annual_summons_number','name'=>'max_annual_summons_number','label'=>__('attributes.max_annual_summons_number'),'placeholder'=>__('placeholder.number'),  'value'=>isset($system_config) ? $system_config->getMaxAnnualSummonsNumber() : null ])
                             </div>
                             <div class="row align-items-end">
+                                @include('global.input',['col'=>'6','type'=>'number','id'=>'max_students_per_group','name'=>'max_students_per_group','label'=>__('attributes.max_students_per_group'),'placeholder'=>__('placeholder.number'),  'value'=>isset($system_config) ? $system_config->getMaxStudentsPerGroup() : null ])
                                 @include('global.input',['col'=>'6','class'=>'time','type'=>'text','id'=>'building_open_time','name'=>'building_open_time','label'=>__('attributes.building_open_time'),'placeholder'=>__('placeholder.time'),  'value'=>isset($system_config) ? $system_config->getBuildingOpenTime() : null ])
+                            </div>
+                            <div class="row align-items-end">
                                 @include('global.input',['col'=>'6','class'=>'time','type'=>'text','id'=>'building_close_time','name'=>'building_close_time','label'=>__('attributes.building_close_time'),'placeholder'=>__('placeholder.time'),  'value'=>isset($system_config) ? $system_config->getBuildingCloseTime() : null ])
                             </div>
                             <div class="row align-items-start">

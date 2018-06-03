@@ -14,6 +14,7 @@ class SystemConfigSeeder extends Seeder
     public function run()
     {
         SystemConfig::firstOrCreate([
+            'max_students_per_group'=>30,
             'max_summons_number'=>6,
             'max_annual_summons_number'=>3,
 

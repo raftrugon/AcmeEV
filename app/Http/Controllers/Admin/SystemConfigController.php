@@ -50,6 +50,7 @@ class SystemConfigController extends Controller
         $validator = Validator::make($request->all(), [
             'max_summons_number' => 'required|integer|min:1',
             'max_annual_summons_number' => 'required|integer|min:1',
+            'max_students_per_group' => 'required|integer|min:1',
             'building_open_time' => 'required|date_format:H:i:s',
             'building_close_time' => 'required|date_format:H:i:s|after:building_open_time',
             'name_en'=>'required',
@@ -65,6 +66,7 @@ class SystemConfigController extends Controller
             $systemConfig = array(
                 'max_summons_number' => $request->input('max_summons_number'),
                 'max_annual_summons_number' => $request->input('max_annual_summons_number'),
+                'max_students_per_group' => $request->input('max_students_per_group'),
                 'building_open_time' => $request->input('building_open_time'),
                 'building_close_time' => $request->input('building_close_time'),
                 'name_en'=>$request->input('name_en'),
@@ -86,11 +88,9 @@ class SystemConfigController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            throw($e);
             return redirect()->back()->with('error', __('global.post.error'));
         } catch (\Throwable $t) {
             DB::rollBack();
-            throw($t);
             return redirect()->back()->with('error', __('global.post.error'));
         }
 

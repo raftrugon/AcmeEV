@@ -16,7 +16,14 @@ class MinuteController extends Controller
     }
 
     public function getMinutesForStudent() {
-        $academic_years = $this->minuteRepo->getMinutesForStudent()->get()->groupBy('academic_year');
+        try{
+            $academic_years = $this->minuteRepo->getMinutesForStudent()->get()->groupBy('academic_year');
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
+
         return view('site.student.minute.my-minutes',compact('academic_years'));
     }
 }

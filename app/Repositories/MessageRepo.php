@@ -24,7 +24,7 @@ class MessageRepo extends BaseRepo
     }
 
     public function getUnreadMessages(){
-        $myGroups = $this->groupRepo->getMyGroupsForThisYear()->get()->pluck('id')->toArray();
+        $myGroups = $this->conversationRepo->getMyGroupsForThisYear()->get()->pluck('id')->toArray();
         $messages = Message::
             join('conversations','conversations.id','=','messages.conversation_id')
             ->join('users as senders','messages.sender_id','=','senders.id')

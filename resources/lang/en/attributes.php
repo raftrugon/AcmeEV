@@ -15,6 +15,7 @@ return [
     'website'=>'Website',
     'max_summons_number'=>'Maximum number of summons on a subject',
     'max_annual_summons_number'=>'Maximum annual number of summons on a subject',
+    'max_students_per_group'=>'Maximum number of students on a group',
     'building_open_time'=>'Aperture time of the building',
     'building_close_time'=>'Close time of the building',
     'inscriptions_start_date'=>'Inscriptions starting date',
@@ -32,4 +33,6 @@ return [
     'code' => 'Code',
     'type' => 'Type',
     'academic_year'=> 'Academic Year',
+    'title'=>'Title',
+    'body'=>'Body'
 ];
