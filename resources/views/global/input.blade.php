@@ -113,7 +113,7 @@
 
     @if(isset($aling) && $aling=='horizontal')
 
-        <div id="@if(isset($block_id)){{$block_id}} @endif" class="form-group @if(isset($col)) col-md-{{$col}} @endif"@if(isset($hidden)) style="display: none"@endif>
+        <div id="@if(isset($block_id)){{$block_id}} @endif" class="form-group @if(isset($col)) col-md-{{$col}} @endif number-form-group"@if(isset($hidden)) style="display: none"@endif>
             @if(isset($label))<label  class="control-label col-md-2 {{ $errors->has($name) ? 'state-error' : '' }}">{{ Lang::get($label) }}</label>@endif
             <div class="col-md-10">
                 <div class="row">
@@ -130,7 +130,7 @@
         </div>
     @else
         <div id="@if(isset($block_id)){{$block_id}}@endif"
-             class="form-group  {{ $errors->has($name) ? 'has-error has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif @if(!empty($errors->first($name))) is-invalid @endif"
+             class="number-form-group form-group  {{ $errors->has($name) ? 'has-error has-feedback' : '' }} margin-bottom-10  @if(isset($col)) col-md-{{$col}} @endif @if(!empty($errors->first($name))) is-invalid @endif"
              style="margin-bottom:16px !important; @if(isset($hidden))display: none @endif " >
 
             @if(isset($label))<label  class="control-label {{ $errors->has($name) ? 'state-error' : '' }}">{{ Lang::get($label) }}</label>@endif

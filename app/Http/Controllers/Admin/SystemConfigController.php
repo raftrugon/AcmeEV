@@ -7,6 +7,7 @@ use App\Repositories\SystemConfigRepo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class SystemConfigController extends Controller
@@ -52,6 +53,9 @@ class SystemConfigController extends Controller
             'max_students_per_group' => 'required|integer|min:1',
             'building_open_time' => 'required|date_format:H:i:s',
             'building_close_time' => 'required|date_format:H:i:s|after:building_open_time',
+            'name_en'=>'required',
+            'name_es'=>'required',
+            'icon'=>'required',
         ]);
 
         if ($validator->fails()) {
@@ -60,12 +64,16 @@ class SystemConfigController extends Controller
 
         DB::beginTransaction();
         try {
+            $iconUrl = Storage::url(Storage::putFile('/',$request->file('icon')));
             $systemConfig = array(
                 'max_summons_number' => $request->input('max_summons_number'),
                 'max_annual_summons_number' => $request->input('max_annual_summons_number'),
                 'max_students_per_group' => $request->input('max_students_per_group'),
                 'building_open_time' => $request->input('building_open_time'),
                 'building_close_time' => $request->input('building_close_time'),
+                'name_en'=>$request->input('name_en'),
+                'name_es'=>$request->input('name_es'),
+                'icon'=>$iconUrl,
             );
 
             $systemConfigDB = $this->systemConfigRepo->findOrFail($request->input('id'));
@@ -74,9 +82,11 @@ class SystemConfigController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+            throw($e);
             return redirect()->back()->with('error', __('global.post.error'));
         } catch (\Throwable $t) {
             DB::rollBack();
+            throw($t);
             return redirect()->back()->with('error', __('global.post.error'));
         }
 

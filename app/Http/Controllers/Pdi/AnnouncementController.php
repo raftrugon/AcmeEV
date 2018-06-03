@@ -66,8 +66,7 @@ class AnnouncementController extends Controller
             return redirect()->back()->with('error', __('global.post.error'));
         }
 
-        $subject_instance_id = $request->input('subject_instance_id');
-        return redirect()->action('Logged\AnnouncementController@getAllBySubjectInstance', compact('subject_instance_id'));
+        return redirect()->back();
     }
 
 }

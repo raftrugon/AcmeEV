@@ -1,10 +1,4 @@
-@extends('layouts.default')
-
-@section('content')
-
-
-
-    <div class="row justify-content-center">
+ <div class="row justify-content-center">
         <div class="col-md-10">
 
             <form id="announcement_form" action="{{URL::to('pdi/announcement/save')}}" method="post"
@@ -17,16 +11,8 @@
                 </div>
 
                 <div class="card-footer border-info p-0">
-                    <button type="submit" class="btn btn-success btn-block rounded-0">@lang('global.submit')</button>
+                    <button type="submit" class="btn btn-success btn-block rounded-0" id="announcementSubmit">@lang('global.submit')</button>
                 </div>
             </form>
         </div>
     </div>
-
-@endsection
-
-@section('scripts')
-    <script type="text/javascript">
-        $('#announcement_form').validate();
-    </script>
-@endsection

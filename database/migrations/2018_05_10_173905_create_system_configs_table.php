@@ -25,6 +25,11 @@ class CreateSystemConfigsTable extends Migration
             $table->time('building_open_time');
             $table->time('building_close_time');
 
+            //University Config
+            $table->string('name_en');
+            $table->string('name_es');
+            $table->string('icon')->nullable();
+
 
             //STATE MACHINE
             $table->integer('actual_state')->default(0);

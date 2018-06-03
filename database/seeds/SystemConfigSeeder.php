@@ -22,6 +22,9 @@ class SystemConfigSeeder extends Seeder
             'building_open_time'=>'09:00',
             'building_close_time'=>'20:00',
 
+            'name_es'=>'Universidad de Sevilla',
+            'name_en'=>'Seville University',
+
         ]);
     }
 }
