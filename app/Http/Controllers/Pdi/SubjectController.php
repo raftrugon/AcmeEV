@@ -178,7 +178,7 @@ class SubjectController extends Controller {
                     'active' => is_null($request->input('active')) ? false : true,
                     'coordinator_id'=>$request->input('')
                 );
-                $this->subjectRepo->create($subject);
+                $saved = $this->subjectRepo->create($subject);
             } else {
                 $subject  =Subject::where('id',$request->input('id'))->first();
                 $subject->setName($request->input('name'));
@@ -188,14 +188,14 @@ class SubjectController extends Controller {
                 $subject->setDepartment($request->input('department'));
                 $subject->setActive(is_null($request->input('active')) ? false : true);
                 $subject->setCoordinator($request->input('coordinator'));
-                $this->subjectRepo->updateWithoutData($subject);
+                $saved = $this->subjectRepo->updateWithoutData($subject);
             }
             DB::commit();
         }catch(\Exception $e){
             DB::rollBack();
             throw $e;
         }
-        $departments = Department::all();
-        return view("site.department.all",compact('departments'));
+        $degree = Degree::where('id',$saved->getDegree->getId());
+        return view("site.degree.display",compact('degree'));
     }
 }

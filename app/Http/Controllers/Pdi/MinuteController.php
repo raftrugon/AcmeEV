@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Pas;
+namespace App\Http\Controllers\Pdi;
 
 use App\Http\Controllers\Controller;
 use App\Minute;

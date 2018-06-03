@@ -20,7 +20,9 @@ return[
     'confirm'=>'Confirmar',
     'anonymous'=>'Anónimo',
     'new_ingress'=>'Nuevo Ingreso',
+    'studentList'=>'Estudiantes',
     'idNumber'=>'Número de identificación',
+    'fullName'=>'Nombre completo',
     'student'=>'Estudiante',
     'welcome-heading'=>'Bienvenido a la Plataforma de Enseñanza Virtual',
     'welcome-body'=>'Esta página web ha sido diseñada para los estudiantes de la universidad

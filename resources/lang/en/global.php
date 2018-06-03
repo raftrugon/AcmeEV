@@ -20,7 +20,9 @@ return[
     'confirm'=>'Confirm',
     'anonymous'=>'Anonymous',
     'new_ingress'=>'New Ingress',
+    'studentList'=>'Students',
     'idNumber'=>'Id number',
+    'fullName'=>'Full name',
     'student'=>'Student',
     'welcome-heading'=>'Welcome to the virtual teaching platform',
     'welcome-body'=>'This web page is designed for students and university\'s internal 
