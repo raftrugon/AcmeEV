@@ -56,7 +56,7 @@ class SubjectInstanceRepo extends BaseRepo {
                 ->sum('weight')<1 ? 1:0;
     }
 
-    public function subjectInstancesAndGroupsBatch(){
+    public function subjectInstancesBatch(){
 
         $subjects_ids = Subject::where('active', true)->get()->pluck('id');
         $academic_year = $this->getAcademicYear();                 //Año de las instancias
@@ -78,7 +78,7 @@ class SubjectInstanceRepo extends BaseRepo {
 
 
                 $subject_instance = $this->create($subject_instance_array);
-
+                /*
                 //Generación de grupos y conversaciones
                 for($i = 1; $i <= $number_of_groups_per_subject_instance; $i++){
 
@@ -100,7 +100,7 @@ class SubjectInstanceRepo extends BaseRepo {
 
                     $this->conversationRepo->create($conversation_array);
 
-                }
+                }*/
 
             }
 
