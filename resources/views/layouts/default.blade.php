@@ -84,13 +84,6 @@
         @endif
         <!-- End Notifications -->
         @yield('content')
-
-        @if(is_null(\Illuminate\Support\Facades\Session::get('cookies')))
-            <div class="alert alert-warning text-center alert-cookies" style="opacity: 0.6;position:absolute;right:1%;width:98%;padding:20px; @guest bottom:5px; @endguest @auth bottom:30px; @endauth">
-                <strong>@lang('global.cookies')</strong>
-                <a href="#" id="accept_cookies_btn" class="float-right btn btn-light text-primary">@lang('global.cookies.accept')</a>
-            </div>
-        @endif
     </div>
 </div>
 <div id="tyc_modal">
@@ -99,6 +92,7 @@
 <div id="privacy_modal">
     @lang('global.privacyBody')
 </div>
+<div id="cookies_modal"></div>
 <!-- Messaging Service -->
 @includeWhen(Auth::check(),'layouts.chat')
 <!-- End of messaging -->
@@ -221,6 +215,37 @@
                 }, 1)
             }
         });
+        $("#cookies_modal").iziModal({
+            title: '@lang('global.cookies')',
+            icon: 'fas fa-exclamation-triangle',
+            iconColor: 'white',
+            width: '70%',
+            bodyOverflow: true,
+            bottom: 0,
+            overlay:false,
+            overlayClose:false,
+            headerColor:'#fd7e14',
+            onOpening: function (modal) {
+                modal.startLoading();
+            },
+            onOpened: function (modal) {
+                modal.stopLoading();
+            },
+            afterRender:function(modal){
+                $('#cookies_modal').find('.iziModal-header-buttons').html('<a href="#" id="accept_cookies_btn" class="float-right btn btn-light text-primary">@lang('global.cookies.accept')</a>');
+                $('#accept_cookies_btn').click(function(){
+                    $.post(urlAcceptCookies,function(data){
+                        if(data === 'true'){
+                            $('#cookies_modal').iziModal('close');
+                        }
+                    });
+                });
+            }
+        });
+
+        @if(is_null(\Illuminate\Support\Facades\Session::get('cookies')))
+            $("#cookies_modal").iziModal('open');
+        @endif
     });
 
     @guest
