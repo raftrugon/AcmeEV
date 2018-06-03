@@ -8,12 +8,14 @@ jQuery.validator.setDefaults({
         //var form_group = label.closest( ".form-group" );
         $(element).removeClass( 'is-invalid' ).addClass( 'is-valid' );
         $(element).closest('.form-group').find('.invalid-tooltip').remove();
+        $(element).closest('.form-group').append('<div class="valid-tooltip" style="display:block"><i class="fas fa-check"></i></div>');
 
     },
     errorPlacement: function ( error, element ) {
         //var input = element.closest(".input");
         var form_group= element.closest(".form-group");
         form_group.append(error);
+        $(element).closest('.form-group').find('.valid-tooltip').remove();
     },
     highlight: function ( element, errorClass, validClass ) {
         // var form_group = element.closest( ".form-group");

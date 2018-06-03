@@ -146,11 +146,45 @@ div.is-invalid span.help-block{
     background: #007bff;
 }
 
-.invalid-tooltip{
+.invalid-tooltip, .valid-tooltip{
     top:34px;
     right:20px;
 }
 
-.selectpicker-form-group .invalid-tooltip{
-    right:45px;
+.selectpicker-form-group .invalid-tooltip, .selectpicker-form-group .valid-tooltip{
+    right:35px;
+}
+
+.number-form-group:hover .invalid-tooltip, .number-form-group:hover .valid-tooltip{
+    right:50px;
+}
+
+.selectpicker-form-group{
+    position: relative;
+}
+
+.menu-logo{
+    max-height:40px;
+    max-width:40px;
+}
+
+#sidebar.show .menu-logo{
+    max-height:70px;
+    max-width:70px;
+}
+
+.menu-modal-link{
+    cursor:pointer;
+}
+
+.menu-modal-link:hover{
+    color: #007bff!important;
+}
+
+#sidebar .tycprivacy-div{
+    display:none;
+}
+
+#sidebar.show .tycprivacy-div{
+    display:block;
 }

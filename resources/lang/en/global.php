@@ -26,7 +26,7 @@ return[
     'student'=>'Student',
     'welcome-heading'=>'Welcome to the virtual teaching platform',
     'welcome-body'=>'This web page is designed for students and university\'s internal 
-        stuff to manage the subjects making the teaching experience easier and 
+        staff to manage the subjects making the teaching experience easier and 
         more accessible. Also you can request appointments to the secretariat even 
         if you are not registered in the system. ',
     'adjudication.title'=>'Adjudication list available',
@@ -35,7 +35,7 @@ return[
     'enroll.link'=>'Press <a href="'.URL::to('student/enrollment/enroll').'">here</a> to enroll.',
     'ok'=>'Success',
     'cookies'=>'To give you a tailored experience AcmEv uses cookies. By continuing to browse the site you are agreeing to our use of cookies.',
-    'cookies.accept'=>'Don\'t show this again',
+    'cookies.accept'=>'Don\\\'t show this again',
     'post.error'=>'There was a problem processing the transaction.',
     'get.error'=>'There was a problem accessing the page.',
     'terms'=>'Terms and conditions',

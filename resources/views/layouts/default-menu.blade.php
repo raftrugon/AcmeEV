@@ -1,8 +1,6 @@
 <nav id="sidebar" class="bg-dark text-light d-flex flex-column @if(Session::get('sidebar','true') == 'true') show @endif">
     <!-- Sidebar Header -->
-    <h3 class="mb-4 mt-4" style="display:none">
-        AcmEv
-    </h3>
+    <img class="menu-logo mx-auto my-3" src="{{URL::to(\App\SystemConfig::first()->getIcon())}}">
 
     <!-- Sidebar Links -->
     <div style="overflow-y:auto;direction:rtl">
@@ -135,7 +133,7 @@
             <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                @if(App::isLocale('en')) <span class="full">English</span><span class="short">en</span> @else <span class="full">Español</span><span class="short">es</span> @endif
             </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="min-width: 100%!important;text-align:center;">
                 @if(App::isLocale('en'))
                 <a class="dropdown-item" href="{{URL::to('lang')}}/es"><span class="full">Español</span><span class="short">es</span></a>
                 @else
@@ -144,6 +142,14 @@
             </div>
         </li>
 
+        {{-----------------T&C & privacidad -------------}}
+        <div class="tycprivacy-div">
+        <hr class="border-light">
+
+        <a class="menu-modal-link" data-izimodal-open="#tyc_modal">T&C</a>
+        |
+        <a class="menu-modal-link" data-izimodal-open="#privacy_modal">Cookies</a>
+        </div>
         {{------------------- LOGIN -------------------}}
 
         <hr class="border-light">

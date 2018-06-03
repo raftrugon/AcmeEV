@@ -69,6 +69,32 @@ class SystemConfig extends Model
         $this->inscriptions_list_status = $value;
     }
 
+    public function getNameEn(){
+        return $this->name_en;
+    }
+
+    public function setNameEn($value){
+        $this->name_en = $value;
+    }
+
+    public function getNameEs(){
+        return $this->name_es;
+    }
+
+    public function setNameEs($value){
+        $this->name_es = $value;
+    }
+
+    public function getIcon(){
+        return $this->icon;
+    }
+
+    public function setIcon($value){
+        $this->icon = $value;
+    }
+
+
+
 
 
 
