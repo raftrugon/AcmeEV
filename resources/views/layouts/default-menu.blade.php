@@ -94,6 +94,11 @@
             <li>
                 <a class="text-light nav-link" href="{{URL::to('degree/all')}}"><i class="fa fa- fa-graduation-cap d-block text-primary"></i><span>{{__('menu.degrees')}}</span></a>
             </li>
+            @if($actual_state == 5 || $actual_state == 7)
+                <li>
+                    <a class="text-light nav-link" href="{{URL::to('management/student/list')}}"><i class="fas fa-file-alt d-block text-primary"></i><span>{{__('menu.minutes.edit')}}</span></a>
+                </li>
+            @endif
             @if($actual_state == 4)
                 <li>
                     <a class="text-light nav-link" href="{{URL::to('group/manage/timetable')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.group.timetable')}}</span></a>
