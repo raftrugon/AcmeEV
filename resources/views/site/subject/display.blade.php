@@ -348,6 +348,13 @@
             });
         });
 
+        $(function(){
+            $('#announcement_form').validate();
+
+            $('#announcementSubmit').click(function(){
+                $('#newAnnouncementModal').modal('hide');
+            });
+        });
     </script>
 
 @endsection

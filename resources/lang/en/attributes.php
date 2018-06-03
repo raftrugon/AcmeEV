@@ -32,4 +32,6 @@ return [
     'code' => 'Code',
     'type' => 'Type',
     'academic_year'=> 'Academic Year',
+    'title'=>'Title',
+    'body'=>'Body'
 ];
