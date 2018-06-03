@@ -5,7 +5,8 @@
     </h3>
 
     <!-- Sidebar Links -->
-    <ul class="list-unstyled" style="min-height:70%;overflow-y:auto;overflow-x:hidden;">
+    <div style="overflow-y:auto;direction:rtl">
+    <ul class="list-unstyled" style="direction:ltr;overflow-x:hidden;">
 
         <!------------------------- TODOS ------------------------->
         <li>
@@ -31,13 +32,25 @@
         <!------------------------- ROLES ------------------------->
         @role('admin')
         <li>
+            <a class="text-light nav-link" href="{{URL::to('degree/all')}}"><i class="fa fa- fa-graduation-cap d-block text-primary"></i><span>{{__('menu.degrees')}}</span></a>
+        </li>
+        <li>
             <a class="text-light nav-link" href="{{URL::to('admin/systemconfig/edit')}}"><i class="fas fa- fa-cogs d-block text-primary"></i><span>{{__('menu.systemconfig')}}</span></a>
+        </li>
+        <li>
+            <a class="text-light nav-link" href="{{URL::to('users')}}"><i class="fas fa- fa-users d-block text-primary"></i><span>{{__('menu.users')}}</span></a>
         </li>
         @endrole
         @role('pas')
-        <li>
-            <a class="text-light nav-link" href="{{URL::to('administration')}}"><i class="fas fa- fa-cogs d-block text-primary"></i><span>{{__('menu.administration')}}</span></a>
-        </li>
+            @if($actual_state == 1 || $actual_state == 2)
+            <li>
+                <a class="text-light nav-link" href="{{URL::to('administration/inscription-list')}}"><i class="fas fa-address-book d-block text-primary"></i><span>{{__('menu.inscriptions.all')}}</span></a>
+            </li>
+            <li>
+                <a href="#" class="text-light nav-link print-inscriptions"><i class="fas fa-address-book d-block text-primary"></i><span>{{__('menu.inscriptions.select')}}</span></a>
+            </li>
+            <a id="download_link" href="#" download="inscriptions" style="visibility:hidden"></a>
+            @endif
         @endrole
 
         @role('student')
@@ -77,9 +90,11 @@
             <li>
                 <a class="text-light nav-link" href="{{URL::to('degree/all')}}"><i class="fa fa- fa-graduation-cap d-block text-primary"></i><span>{{__('menu.degrees')}}</span></a>
             </li>
-            <li>
-                <a class="text-light nav-link" href="{{URL::to('group/manage/timetable')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.group.timetable')}}</span></a>
-            </li>
+            @if($actual_state > 2 && $actual_state < 8)
+                <li>
+                    <a class="text-light nav-link" href="{{URL::to('group/manage/timetable')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.group.timetable')}}</span></a>
+                </li>
+            @endif
         @endcan
         @can('current')
             <li>
@@ -99,6 +114,7 @@
 
 
     </ul>
+    </div>
 
 
     {{------------------- PICKER DE IDIOMA -------------------}}
@@ -142,3 +158,42 @@
     <i class="fas fa-chevron-left left"></i>
     <i class="fas fa-chevron-right right"></i>
 </div>
+
+
+@if($actual_state == 1 || $actual_state == 2)
+    @section('scripts')
+        <script>
+
+            $(function(){
+                $('.print-inscriptions').click(function(){
+                    iziToast.question({
+                        timeout: false,
+                        zindex: 999,
+                        title: '@lang('menu.inscriptions.select.title')',
+                        message: '',
+                        position: 'center',
+                        color: '#17a2b8',
+                        titleColor: 'white',
+                        iconColor: 'white',
+                        inputs:[
+                            ['<select class="selectpicker" multiple data-style="btn-light" data-width="auto">  @foreach(\App\Degree::all() as $degree) <option value="{{$degree->getId()}}">{{$degree->getName()}}</option> @endforeach  </select>',true]
+                        ],
+                        buttons: [
+                            ['<button style="color:white">@lang('global.go')</button>', function(instance,toast){
+                                document.getElementById('download_link').click();
+                                return true;
+                            }],
+                        ],
+                        onOpened: function(){
+                            $('.selectpicker').selectpicker('render');
+                            $('.selectpicker').on('changed.bs.select',function(e){
+                                $('#download_link').attr('href','{{URL::to('administration/inscription-list')}}?degree_ids='+$('.selectpicker').selectpicker('val'));
+                            });
+                        }
+                    });
+                });
+            });
+
+        </script>
+    @endsection
+@endif

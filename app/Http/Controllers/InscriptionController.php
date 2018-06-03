@@ -84,7 +84,10 @@ class InscriptionController extends Controller
             DB::commit();
         }catch(\Exception $e){
             DB::rollBack();
-            return redirect()->action('HomeController@index')->with('error',__('inscription.error'));
+            return redirect()->back()->with('error',__('global.post.error'));
+        }catch(\Throwable $t){
+            DB::rollBack();
+            return redirect()->back()->with('error',__('global.post.error'));
         }
         return redirect()->action('HomeController@index')->with('success',__('inscription.success'));
     }
@@ -130,6 +133,8 @@ class InscriptionController extends Controller
             $this->inscriptionRepo->updateWithoutData($inscription);
             return 'true';
         }catch(\Exception $e){
+            return 'false';
+        }catch(\Throwable $t){
             return 'false';
         }
     }

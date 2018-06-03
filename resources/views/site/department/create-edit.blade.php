@@ -2,7 +2,7 @@
 
 @section('content')
 
-    <form id="degree_form" action="{{URL::to('pdi/department/save')}}" method="post" novalidate>
+    <form id="department_form" action="{{URL::to('management/department/save')}}" method="post" novalidate>
         {{csrf_field()}}
         <div class="row justify-content-center">
             <div class="col-md-7">

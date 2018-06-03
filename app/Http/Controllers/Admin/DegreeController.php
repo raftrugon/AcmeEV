@@ -17,9 +17,17 @@ class DegreeController extends Controller
     }
 
     public function deleteDegree(Request $request) {
-        $degree = Degree::where('id',$request->input('id'))->first();
-        $degree->delete();
-        $this->degreeRepo->updateWithoutData($degree);
+
+        try{
+            $degree = Degree::where('id',$request->input('id'))->first();
+            $degree->delete();
+            $this->degreeRepo->updateWithoutData($degree);
+        }catch(\Exception $e){
+            return 'false';
+        }catch(\Throwable $t){
+            return 'false';
+        }
+
         return 'true';
     }
 

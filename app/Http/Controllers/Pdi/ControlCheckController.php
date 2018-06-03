@@ -22,27 +22,37 @@ class ControlCheckController extends Controller
     protected $controlCheckInstanceRepo;
     protected $fileRepo;
 
-    public function __construct(ControlCheckRepo $controlCheckRepo,ControlCheckInstanceRepo $controlCheckInstanceRepo, FileRepo $fileRepo)
+    public function __construct(ControlCheckRepo $controlCheckRepo, ControlCheckInstanceRepo $controlCheckInstanceRepo, FileRepo $fileRepo)
     {
-        $this->controlCheckRepo=$controlCheckRepo;
-        $this->controlCheckInstanceRepo=$controlCheckInstanceRepo;
-        $this->fileRepo=$fileRepo;
+        $this->controlCheckRepo = $controlCheckRepo;
+        $this->controlCheckInstanceRepo = $controlCheckInstanceRepo;
+        $this->fileRepo = $fileRepo;
     }
 
-    public function getControlChecksForStudent(Group $group) {
-        $controlChecks = ControlCheck::where('subject_instance_id',$group->getSubjectInstance()->getId());
-        return view('site.student.subjectInstance.controlChecks.all',compact('controlChecks'));
-    }
-
-    public function createOrEdit(SubjectInstance $subjectInstance, ControlCheck $controlCheck=null) {
-        $rooms = Room::all();
-        return view('site.pdi.controlCheck.create-edit',compact('subjectInstance','controlCheck','rooms'));
-    }
-
-    public function postControlCheck(Request $request) {
-        $subjectInstance = SubjectInstance::where('id',$request->input('subjectInstance'))->first();
+    public function getControlChecksForStudent(Group $group)
+    {
         try {
-            if($request->input('id')=="0") {
+            $controlChecks = ControlCheck::where('subject_instance_id', $group->getSubjectInstance()->getId());
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
+
+        return view('site.student.subjectInstance.controlChecks.all', compact('controlChecks'));
+    }
+
+    public function createOrEdit(SubjectInstance $subjectInstance, ControlCheck $controlCheck = null)
+    {
+        $rooms = Room::all();
+        return view('site.pdi.controlCheck.create-edit', compact('subjectInstance', 'controlCheck', 'rooms'));
+    }
+
+    public function postControlCheck(Request $request)
+    {
+        $subjectInstance = SubjectInstance::where('id', $request->input('subjectInstance'))->first();
+        try {
+            if ($request->input('id') == "0") {
                 $controlCheck = array(
                     'name' => $request->input('name'),
                     'description' => $request->input('description'),
@@ -67,7 +77,7 @@ class ControlCheckController extends Controller
                 }
                 DB::commit();
             } else {
-                $controlCheck = ControlCheck::where('id',$request->input('id'))->first();
+                $controlCheck = ControlCheck::where('id', $request->input('id'))->first();
                 $controlCheck->setName($request->input('name'));
                 $controlCheck->setDescription($request->input('description'));
                 $controlCheck->setRoom($request->input('room'));
@@ -77,31 +87,38 @@ class ControlCheckController extends Controller
                 $controlCheck->setMinimumMark($request->input('minimumMark'));
                 $this->controlCheckRepo->updateWithoutData($controlCheck);
             }
-        }catch(\Exception $e){
+        } catch (\Exception $e) {
             DB::rollBack();
-            throw $e;
+            return redirect()->back()->with('error', __('global.post.error'));
+        } catch (\Throwable $t) {
+            DB::rollBack();
+            return redirect()->back()->with('error', __('global.post.error'));
         }
-        $subject = SubjectInstance::where('id',$request->input('subjectInstance'))->first()->getSubject;
-        $announcements = $subject->getSubjectInstances()->where('academic_year',Carbon::now()->year)->first()->getAnnouncements;
+
+        $subject = SubjectInstance::where('id', $request->input('subjectInstance'))->first()->getSubject;
+        $announcements = $subject->getSubjectInstances()->where('academic_year', Carbon::now()->year)->first()->getAnnouncements;
         $controlChecks = $this->controlCheckRepo->getControlChecksForLecturer($subject)->get();
-        return view('site.subject.display',compact('subject','announcements','controlChecks'));
+        return view('site.subject.display', compact('subject', 'announcements', 'controlChecks'));
     }
 
     public function importGradesFromCsv(Request $request)
     {
-        return $this->fileRepo->importGradesFromCsv($request->file('url'),$request->input('id'));
+        return $this->fileRepo->importGradesFromCsv($request->file('url'), $request->input('id'));
     }
 
-    public function correctControlCheck(ControlCheck $controlCheck){
+    public function correctControlCheck(ControlCheck $controlCheck)
+    {
         $controlCheckInstances = $controlCheck->getControlCheckInstances;
-        return view('site.pdi.controlCheck.correct',compact('controlCheckInstances'));
+        return view('site.pdi.controlCheck.correct', compact('controlCheckInstances'));
     }
 
-    public function updateQualifications(Request $request) {
-        return $this->controlCheckInstanceRepo->updateQualifications($request->input('ids'),$request->input('qualifications'));
+    public function updateQualifications(Request $request)
+    {
+        return $this->controlCheckInstanceRepo->updateQualifications($request->input('ids'), $request->input('qualifications'));
     }
 
-    public function deleteControlCheck(Request $request) {
+    public function deleteControlCheck(Request $request)
+    {
         return $this->controlCheckRepo->deleteControlCheck($request->input('id'));
     }
 }

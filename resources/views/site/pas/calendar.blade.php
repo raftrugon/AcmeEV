@@ -21,6 +21,7 @@
         height:'auto',
         minTime: '{{$config->getBuildingOpenTime()}}',
         maxTime: '{{$config->getBuildingCloseTime()}}',
+        schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
         select: function(startDate,endDate){
             $.post(
                 '{{URL::to('administration/calendar/new')}}',
@@ -44,7 +45,6 @@
                 color: '#17a2b8',
                 titleColor: 'white',
                 iconColor: 'white',
-                schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
                 buttons: [
                     ['<button style="color:white"><b>@lang('global.yes')</b></button>', function (instance, toast) {
 

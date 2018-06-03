@@ -45,6 +45,12 @@
     background:white;
 }
 
+@media (max-width: 460px) {
+    .chat-container {
+        width: 100vw;
+    }
+}
+
 .chat-window{
     display:none;
     padding: .75rem;
