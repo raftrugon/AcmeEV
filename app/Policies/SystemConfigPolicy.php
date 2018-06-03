@@ -54,11 +54,11 @@ class SystemConfigPolicy
 
     public function stateAccessTimeTable()
     {
-        $return = true;
+        $return = false;
         $actual_state = $this->systemConfigRepo->getActualState();
 
-        if($actual_state < 4 || $actual_state == 8)
-            $return = false;
+        if($actual_state == 4)
+            $return = true;
 
         return $return;
     }
