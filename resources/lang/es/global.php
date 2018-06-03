@@ -70,8 +70,19 @@ return[
         </br>&emsp;2. Estas Condiciones Generales estarán vigentes justo desde el momento de su publicación hasta su modificación, momento en el que pasarán a estar vigentes las nuevas Condiciones Generales.
         </br><strong>9. GENERALIDADES</strong>
         </br>&emsp;Los títulos de los distintos apartados de las Condiciones Generales son méramente informativos, sin tener repercusión alguna en las Condiciones Generales.
-        </br><strong>10. NORMATIVA</strong>
-        </br>&emsp;Estas Condiciones Generales han sido establecidas mediante la legislación vigente.',
+        ',
+    'privacy'=>'Política de privacidad',
+    'privacyBody'=>'</br><strong>10. NORMATIVA</strong>
+        </br>&emsp;Estas Condiciones Generales han sido establecidas mediante la legislación vigente.
+        </br><strong>1. DATOS IDENTIFICATIVOS</strong>
+        </br>&emsp;AcmEv, organización ficitia formada para la asignatura Diseño y Pruebas, del departamento de Lenguajes y Sistemas Informáticos (LSI) de la titulación Grado en Ingeniería Informática-Ingeniería del Software.
+        </br><strong>2. TRATAMIENTO DE DATOS DE CARÁCTER PERSONAL</strong>
+        </br>&emsp;1. Según la legislación vigente, los datos proporcionados en el registro de un usuario y los modificados durante el periodo que éste siga siendo usuario, se recogerán en ficheros de datos titularidad de AcmEv.
+        </br>&emsp;2. Si usted no está de acuerdo en la recogida de sus datos personales, puede ponerse en contacto con nosotros mediante el apartado de Contacto.
+        </br><strong>3. CONFIDENCIALIDAD</strong>
+        </br>&emsp;1. AcmEv se compromete a optar todas las medidas de seguridad necesarias para que los datos proporcionados por los usuarios no sean alterados, pérdidos o modificados por personas ajenas al usuario. Todas estas medidas se realizarán de manera confidencial.
+        </br>&emsp;2. El usuario debe proporcionar sus datos de forma veraz y tenerlos totalmente actualizados, informando a AcmEv en caso de ocurra lo mencionado en el apartado anterior.
+',
 
     //Roles & Permissions
     'roles.student'=>'Estudiante',
