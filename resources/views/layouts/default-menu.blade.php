@@ -126,7 +126,7 @@
             <button id="btnGroupDrop1" type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                @if(App::isLocale('en')) <span class="full">English</span><span class="short">en</span> @else <span class="full">Español</span><span class="short">es</span> @endif
             </button>
-            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+            <div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="min-width: 100%!important;text-align:center;">
                 @if(App::isLocale('en'))
                 <a class="dropdown-item" href="{{URL::to('lang')}}/es"><span class="full">Español</span><span class="short">es</span></a>
                 @else

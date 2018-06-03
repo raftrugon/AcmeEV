@@ -79,7 +79,7 @@
         @yield('content')
 
         @if(is_null(\Illuminate\Support\Facades\Session::get('cookies')))
-            <div class="alert alert-warning text-center alert-cookies" style="opacity: 0.6;position:absolute;bottom:30px;right:1%;width:98%;padding:20px;">
+            <div class="alert alert-warning text-center alert-cookies" style="opacity: 0.6;position:absolute;right:1%;width:98%;padding:20px; @guest bottom:5px; @endguest @auth bottom:30px; @endauth">
                 <strong>@lang('global.cookies')</strong>
                 <a href="#" id="accept_cookies_btn" class="float-right btn btn-light text-primary">@lang('global.cookies.accept')</a>
             </div>
