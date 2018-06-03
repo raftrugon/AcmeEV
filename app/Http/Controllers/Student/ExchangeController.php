@@ -20,27 +20,40 @@ class ExchangeController extends Controller
     }
 
     public function getCreate(Request $request){
-        $source = Group::findOrFail($request->input('group_id'));
-        $target_options = Group::where('subject_instance_id',$source->getSubjectInstance->getId())->where('id','<>',$source->getId())->get()->map(function($group){
-            return '<option value="'.$group->getId().'">'.__('group.number').': '.$group->getNumber().'</option>';
-        })->toArray();
-        $source_id = $source->getId();
-        $source_number = $source->getNumber();
-        $source_subject = $source->getSubjectInstance->getSubject->getName();
-        $source_period_times = $source->getPeriodTimes->map(function($period){
-           return $period->day . $period->start . $period->end;
-        });
-        array_unshift($target_options,'<option value="" selected disabled>'.__('group.select.default').'</option>');
+        try{
+            $source = Group::findOrFail($request->input('group_id'));
+            $target_options = Group::where('subject_instance_id',$source->getSubjectInstance->getId())->where('id','<>',$source->getId())->get()->map(function($group){
+                return '<option value="'.$group->getId().'">'.__('group.number').': '.$group->getNumber().'</option>';
+            })->toArray();
+            $source_id = $source->getId();
+            $source_number = $source->getNumber();
+            $source_subject = $source->getSubjectInstance->getSubject->getName();
+            $source_period_times = $source->getPeriodTimes->map(function($period){
+               return $period->day . $period->start . $period->end;
+            });
+            array_unshift($target_options,'<option value="" selected disabled>'.__('group.select.default').'</option>');
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
 
         return compact('target_options','source_number','source_period_times','source_subject','source_id');
     }
 
     public function getTargetDataAndAvailability(Request $request){
-        $target = Group::findOrFail($request->input('group_id'));
-        $target_period_times = $target->getPeriodTimes->map(function($period){
-            return $period->day . $period->start . $period->end;
-        });
-        $availability = $target->getMaxStudents() > $target->getStudents->count();
+        try{
+            $target = Group::findOrFail($request->input('group_id'));
+            $target_period_times = $target->getPeriodTimes->map(function($period){
+                return $period->day . $period->start . $period->end;
+            });
+            $availability = $target->getMaxStudents() > $target->getStudents->count();
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
+
         return compact('availability','target_period_times');
     }
 
@@ -83,7 +96,9 @@ class ExchangeController extends Controller
         }catch(Exception $e){
             DB::rollback();
             return false;
+        }catch(\Throwable $t){
+            DB::rollback();
+            return false;
         }
-
     }
 }

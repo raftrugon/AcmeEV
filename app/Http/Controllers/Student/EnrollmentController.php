@@ -34,20 +34,33 @@ class EnrollmentController extends Controller
 
     public function getMyEnrollments()
     {
-        $academic_years = $this->enrollmentRepo->getMyEnrollments()->orderBy('academic_year', 'DESC')->get()->groupBy('academic_year');
+        try{
+            $academic_years = $this->enrollmentRepo->getMyEnrollments()->orderBy('academic_year', 'DESC')->get()->groupBy('academic_year');
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
+
         return view('site.student.enrollment.my-enrollments', compact('academic_years'));
     }
 
 
     public function getEnroll()
     {
-        $subjects_years = $this->subjectRepo->getMyNonPassedSubjects()->get()->groupBy('school_year');//Subject::all()->groupBy('school_year');
+        try{
+            $subjects_years = $this->subjectRepo->getMyNonPassedSubjects()->get()->groupBy('school_year');//Subject::all()->groupBy('school_year');
+        } catch (\Exception $e) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        } catch (\Throwable $t) {
+            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+        }
+
         return view('site.student.enrollment.enroll', compact('subjects_years'));
     }
 
     public function postPostEnroll(Request $request)
     {
-        $faker = Factory::create();
 
         DB::beginTransaction();
         try {
@@ -72,9 +85,6 @@ class EnrollmentController extends Controller
 
                 $this->enrollmentRepo->create($enrollment);
 
-                $group_id = $faker->randomElement($subject_instance->getGroups()->pluck('id')->toArray());
-                $user->getGroups()->attach($group_id);
-
             }
 
             if($user->can('new')) {
@@ -86,7 +96,10 @@ class EnrollmentController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            throw $e;
+            return redirect()->back()->with('error', __('global.post.error'));
+        } catch (\Throwable $t) {
+            DB::rollBack();
+            return redirect()->back()->with('error', __('global.post.error'));
         }
 
         return redirect()->action('Student\EnrollmentController@getMyEnrollments');

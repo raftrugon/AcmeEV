@@ -82,11 +82,9 @@ class SystemConfigController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
-            throw($e);
             return redirect()->back()->with('error', __('global.post.error'));
         } catch (\Throwable $t) {
             DB::rollBack();
-            throw($t);
             return redirect()->back()->with('error', __('global.post.error'));
         }
 
