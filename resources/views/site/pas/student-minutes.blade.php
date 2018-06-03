@@ -57,7 +57,7 @@
                 function(data) {
                     if(data === 'true'){
                         success('@lang('global.success')','@lang('minute.updated')');
-                        location.reload();
+                        window.location.href = '../../../management/student/list';
                     } else {
                         error('@lang('global.error')','@lang('minute.updateFail')');
                     }

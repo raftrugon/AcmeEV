@@ -67,7 +67,7 @@ class SystemConfigRepo extends BaseRepo
                     break;
 
                 case 3:
-                    $this->subjectInstanceRepo->subjectInstancesAndGroupsBatch();  //Auto generación de subject instances, groups y conversations
+                    $this->subjectInstanceRepo->subjectInstancesBatch();  //Auto generación de subject instances, groups y conversations
                     $this->userRepo->createBatchFromInscriptions();                //Generación de usuarios con las inscripciones aceptadas
                     break;
 

@@ -12,6 +12,7 @@ return [
     'administration'=>'Administración',
     'subjects'=>'Asignaturas',
     'minutes'=>'Calificaciones',
+    'minutes.edit'=>'Editar Actas',
     'inscriptions.all'=> 'Inscr. Aceptadas',
     'inscriptions.select'=> 'Inscr. por Grado',
     'inscriptions.select.title' => 'Seleccione los grados para crear la lista.',
