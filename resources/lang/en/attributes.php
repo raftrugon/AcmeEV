@@ -34,5 +34,7 @@ return [
     'type' => 'Type',
     'academic_year'=> 'Academic Year',
     'title'=>'Title',
-    'body'=>'Body'
+    'body'=>'Body',
+    'name_es'=>'Spanish University Name',
+    'name_en'=>'English University Name',
 ];

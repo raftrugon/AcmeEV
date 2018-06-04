@@ -175,22 +175,22 @@
                 datasets:[{
                     data: {!!$enrollment_tries_per_school_year['1'] !!},
                     backgroundColor: 'rgba(61,9,145,0.5)',
-                    label: '@lang('enrollments.year.1')',
+                    label: '@lang('enrollment.year_1')',
                     showLine: true,
                 },{
                     data: {!!$enrollment_tries_per_school_year['2'] !!},
                     backgroundColor: 'rgba(145,61,9,0.5)',
-                    label: '@lang('enrollments.year.2')',
+                    label: '@lang('enrollment.year_2')',
                     showLine: true,
                 },{
                     data: {!!$enrollment_tries_per_school_year['3'] !!},
                     backgroundColor: 'rgba(9,145,61,0.5)',
-                    label: '@lang('enrollments.year.3')',
+                    label: '@lang('enrollment.year_3')',
                     showLine: true,
                 },{
                     data: {!!$enrollment_tries_per_school_year['4'] !!},
                     backgroundColor: 'rgba(145,9,93,0.5)',
-                    label: '@lang('enrollments.year.4')',
+                    label: '@lang('enrollment.year_4')',
                     showLine: true,
                 },
 
