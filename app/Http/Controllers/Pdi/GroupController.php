@@ -12,6 +12,7 @@ use App\Room;
 use App\SubjectInstance;
 use App\User;
 use Carbon\Carbon;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -80,7 +81,7 @@ class GroupController extends Controller
 
     public function getAvailableSubjectsAndRooms(Request $request)
     {
-        try {
+//        try {
             $subject_instances = SubjectInstance::join('subjects', 'subject_instances.subject_id', '=', 'subjects.id')
                 ->join('groups', 'subject_instances.id', '=', 'groups.subject_instance_id')
                 ->where('subjects.degree_id', $request->input('degree_id'))
@@ -116,14 +117,13 @@ class GroupController extends Controller
                         })
                         ->whereRaw('period_times.room_id = rooms.id');
                 })
-                ->orderBy('name', 'ASC')
                 ->groupBy('rooms.id')
-                ->get();
-        } catch (\Exception $e) {
-            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
-        } catch (\Throwable $t) {
-            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
-        }
+                ->get()->sortBy('name');
+//        } catch (\Exception $e) {
+//            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+//        } catch (\Throwable $t) {
+//            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
+//        }
 
         return compact('subject_instances', 'rooms');
     }
