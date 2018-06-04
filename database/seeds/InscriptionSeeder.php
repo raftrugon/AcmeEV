@@ -20,7 +20,7 @@ class InscriptionSeeder extends Seeder
 
         $faker = Faker\Factory::create();
 
-        factory(App\Inscription::class,40)
+        factory(App\Inscription::class,310)
             ->create()
             ->each(function($inscription) use($faker) {
                 for ($i = 1; $i <= $faker->numberBetween(1,5); $i++){

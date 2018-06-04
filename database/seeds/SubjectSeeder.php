@@ -20,7 +20,7 @@ class SubjectSeeder extends Seeder{
 
         $subject_part_1 = ['Ingeniería de ', 'Teoría de ', 'Investigación de ', 'Prácticas con ', 'Investigación experimental de ', 'Teorización con '];
         $subject_part_2 = ['Materiales ', 'Software ', 'Hardware ', 'la Salud ', 'Aviones ', 'Coches ', 'Locomotoras ', 'Periféricos '];
-        $subject_part_3 = ['Nivel Básico', 'Nivel Avanzado', 'Nivel Elemental', 'Nivel Superior'];
+        $subject_part_3 = ['Nivel Básico', 'Nivel Avanzado', 'Nivel Elemental', 'Nivel Superior', ''];
 
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////

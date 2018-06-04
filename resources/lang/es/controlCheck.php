@@ -9,7 +9,7 @@ return[
     'weight'=>'Peso',
     'minimumMark'=>'Nota mínima',
     'new'=>'Nuevo Control',
-    'calification'=>'Calificación',
+    'qualification'=>'Calificación',
     'upload'=>'Enviar control',
     'uploaded'=>'Archivo enviado con éxito',
     'uploadFail'=>'No se pudo enviar el archivo',

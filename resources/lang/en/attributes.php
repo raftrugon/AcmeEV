@@ -13,8 +13,6 @@ return [
     'password.repeat'=>'Repeat your password',
     'new_students_limit'=>'Maximum number of students',
     'website'=>'Website',
-    'max_summons_number'=>'Maximum number of summons on a subject',
-    'max_annual_summons_number'=>'Maximum annual number of summons on a subject',
     'max_students_per_group'=>'Maximum number of students on a group',
     'building_open_time'=>'Aperture time of the building',
     'building_close_time'=>'Close time of the building',

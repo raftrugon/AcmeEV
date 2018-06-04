@@ -17,12 +17,12 @@ class ControlCheckInstance extends Model
         return $this->id;
     }
 
-    public function getCalification() {
-        return $this->calification;
+    public function getQualification() {
+        return $this->qualification;
     }
 
-    public function setCalification($value) {
-        $this->calification=$value;
+    public function setQualification($value) {
+        $this->qualification=$value;
     }
 
     public function getControlCheck() {

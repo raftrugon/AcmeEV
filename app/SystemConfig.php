@@ -24,24 +24,6 @@ class SystemConfig extends Model
         $this->max_students_per_group = $value;
     }
 
-    public function getMaxSummonsNumber(){
-        return $this->max_summons_number;
-    }
-
-    public function setMaxSummonsNumber($value){
-        $this->max_summons_number = $value;
-    }
-
-
-    public function getMaxAnnualSummonsNumber(){
-        return $this->max_annual_summons_number;
-    }
-
-    public function setMaxAnnualSummonsNumber($value){
-        $this->max_annual_summons_number = $value;
-    }
-
-
     public function getBuildingOpenTime(){
         return $this->building_open_time;
     }

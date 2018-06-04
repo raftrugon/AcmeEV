@@ -16,7 +16,7 @@
                     <tr>
                         <td>{{$cci->getStudent->getIdNumber()}}</td>
                         <td>
-                            <input class="form-control qualification" type="number" step="0.1" value="{{$cci->getCalification()}}" id="{{$cci->getId()}}"/>
+                            <input class="form-control qualification" type="number" step="0.1" value="{{$cci->getQualification()}}" id="{{$cci->getId()}}"/>
                         </td>
                     </tr>
                 @endforeach
