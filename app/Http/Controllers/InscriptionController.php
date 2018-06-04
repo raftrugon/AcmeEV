@@ -96,7 +96,7 @@ class InscriptionController extends Controller
         return view('site.inscriptions.list');
     }
 
-    public function getResultsInscriptionData(Request $request){
+    public function postGetResultsInscriptionData(Request $request){
         $results = $this->inscriptionRepo->getResultsForUser($request->input('id_number'),$request->input('password'));
         $priorityOfAccepted = $results->get()->pluck('accepted')->search(true);
         return DataTables::of($results)

@@ -50,7 +50,13 @@
                         d.id_number = $('#id_number').val();
                         d.password = $('#password').val();
                     },
-                    type:"post"
+                    type:"post",
+                    dataSrc: function(response){
+                        if($('#id_number').val() !== '' && $('#password').val() !== '' && response.data.length === 0){
+                            error('@lang('global.error')','@lang('inscription.result.accept.credentials')');
+                        }
+                        return response;
+                    }
                 },
                 columns: [
                     {data:'priority',"width":"10%"},
@@ -74,8 +80,19 @@
             });
 
             $('#results_form button').click(function(){
-                resultsTable.ajax.reload();
+                if($('#results_form').valid()) resultsTable.ajax.reload();
             });
+
+            $('#results_form').validate({
+                rules:{
+                    id_number:'required',
+                    password:'required',
+                },
+                messages:{
+                    id_number:"{{__('validation.required',['attribute'=>__('attributes.id_number')])}}",
+                    password:"{{__('validation.required',['attribute'=>__('attributes.password')])}}",
+                }
+            })
         });
     </script>
 @endsection
