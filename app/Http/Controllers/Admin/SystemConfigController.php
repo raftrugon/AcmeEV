@@ -104,9 +104,11 @@ class SystemConfigController extends Controller
             $this->systemConfigRepo->incrementStateMachine();
             return redirect()->back()->with('success', __('systemConfig.increment.success'));
         } catch (\Exception $e) {
-            return redirect()->back()->with('error', __('systemConfig.increment.error'));
+            dd($e);
+            //return redirect()->back()->with('error', __('systemConfig.increment.error'));
         } catch (\Throwable $t) {
-            return redirect()->back()->with('error', __('systemConfig.increment.error'));
+            dd($t);
+            //return redirect()->back()->with('error', __('systemConfig.increment.error'));
         }
     }
 

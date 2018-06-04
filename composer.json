@@ -14,7 +14,8 @@
         "laravel/tinker": "^1.0",
         "spatie/laravel-permission": "^2.12",
         "techlab/smartwizard": "^4.3",
-        "yajra/laravel-datatables-oracle": "^8.5"
+        "yajra/laravel-datatables-oracle": "^8.5",
+        "phpmailer/phpmailer": "dev-master"
     },
     "require-dev": {
         "filp/whoops": "^2.0",

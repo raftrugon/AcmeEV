@@ -278,3 +278,8 @@ Route::group(['prefix'=>'error'],function(){
 
 
 Route::get('terms','HomeController@terms');
+
+
+Route::get('mailtest',function(){
+   return view('mails.usercreation',['nombre'=>'Pablo Tabares','newEmail'=>'pabtabgar@alum.us.es']);
+});
