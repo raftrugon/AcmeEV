@@ -38,7 +38,6 @@ class DemoSeeder extends Seeder
         $webmaster->assignRole('admin');
         $webmaster->givePermissionTo('new');
         $webmaster->givePermissionTo('current');
-        $webmaster->givePermissionTo('old');
         $webmaster->givePermissionTo('manage');
         $webmaster->givePermissionTo('direct_department');
         $webmaster->givePermissionTo('teach');
@@ -194,6 +193,22 @@ class DemoSeeder extends Seeder
 
         $student2->assignRole('student');
         $student2->givePermissionTo('current');
+
+
+        $student3 = User::firstOrCreate([
+            'name'=>'Miguela',
+            'surname'=>'Gómez',
+            'email'=>'student3@alum.us.es',
+            'id_number'=>$faker->unique()->regexify('[0-9]{8}[A-Z]{1}'),
+            'address'=>$faker->address,
+            'phone_number'=>$faker->phoneNumber,
+            'personal_email'=>$faker->email,
+            'degree_id' => 1,
+            'password'=>bcrypt('student')
+        ]);
+
+        $student3->assignRole('student');
+        $student3->givePermissionTo('current');
 
 
 

@@ -22,7 +22,6 @@ class PermissionsAndRolesSeeder extends Seeder
         //Permissions
         $pnew = Permission::firstOrCreate(['id'=>1,'name'=>'new']);
         $pcurrent = Permission::firstOrCreate(['id'=>2,'name'=>'current']);
-        $pold = Permission::firstOrCreate(['id'=>3,'name'=>'old']);
 
         $pmanage = Permission::firstOrCreate(['id'=>5,'name'=>'manage']);
         $pdirect_department = Permission::firstOrCreate(['id'=>6,'name'=>'direct_department']);

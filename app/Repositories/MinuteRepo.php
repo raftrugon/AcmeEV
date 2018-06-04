@@ -46,7 +46,7 @@ class MinuteRepo extends BaseRepo
         $control_checks_instances_ordered_by_user_id = ControlCheckInstance::join('users', 'control_check_instances.student_id', '=', 'users.id')
         ->join('control_checks', 'control_check_instances.control_check_id', '=', 'control_checks.id')
         ->join('enrollments', 'users.id', '=', 'enrollments.user_id')
-        ->select('control_checks.*', 'control_check_instances.calification as qualification', 'users.id as user_id', 'enrollments.id as enrollment_id')
+        ->select('control_checks.*', 'control_check_instances.qualification as qualification', 'users.id as user_id', 'enrollments.id as enrollment_id')
         ->get()->groupBy('user_id');
 
         try {

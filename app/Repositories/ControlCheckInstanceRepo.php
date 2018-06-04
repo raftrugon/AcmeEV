@@ -27,7 +27,7 @@ class ControlCheckInstanceRepo extends BaseRepo
     public function updateQualifications($ids,$qualifications) {
         for($i = 0; $i < count($ids); $i++) {
             $controlCheckInstance = ControlCheckInstance::where('id',$ids[$i])->first();
-            $controlCheckInstance->setCalification($qualifications[$i]);
+            $controlCheckInstance->setQualification($qualifications[$i]);
             $this->updateWithoutData($controlCheckInstance);
         }
         return 'true';

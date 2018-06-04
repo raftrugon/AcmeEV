@@ -3,13 +3,17 @@
 namespace App\Repositories;
 
 use App\Inscription;
+use App\Jobs\EnviarMail;
 use App\Request;
 use App\SystemConfig;
 use App\User;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Foundation\Bus\DispatchesJobs;
 
 class UserRepo extends BaseRepo
 {
+    use DispatchesJobs;
+
     protected $subjectRepo;
     protected $enrollmentRepo;
     protected $inscriptionRepo;
@@ -78,8 +82,15 @@ class UserRepo extends BaseRepo
             foreach ($inscriptions as $inscription){
                 try {
 
-                    //Email is generated with the first part of the users personal email
-                    $split_email = explode('@',$inscription->email);
+                    //Email is generated with the first part of the users name and surname (it checks for matches and adds a number to the end)
+                    $newEmailTxt = strtolower(substr($inscription->name,0,3)).strtolower(substr($inscription->surname,0,3));
+                    $i=1;
+                    $newEmail = $newEmailTxt;
+                    while(User::where('email',$newEmail.'@alum.us.es')->count() > 0){
+                        $newEmail = $newEmailTxt.$i;
+                        $i++;
+                    }
+                    $newEmail = $newEmail.'@alum.us.es';
 
 
                     //Student creation
@@ -92,11 +103,26 @@ class UserRepo extends BaseRepo
                         'phone_number' => $inscription->phone_number,
                         'personal_email' => $inscription->email,
                         'degree_id' => $inscription->degree_id,
-
-                        'email' => $split_email[0].'@alum.us.es',
+                        'email' => $newEmail,
                     );
 
                     $student = $this->create($student_array);
+
+                    $nombre = $inscription->name. ' '.$inscription->surname;
+
+                    $contenido=\View::make('mails.usercreation', compact('newEmail', 'nombre'))->render();
+
+                    $datos=[$inscription->email,
+                        $nombre,
+                        'admisiones@us.es',
+                        SystemConfig::first()->getNameEs(),
+                        'Admisión '.SystemConfig::first()->getNameEs(),
+                        $contenido,
+                        null,
+                        null];
+
+                    $mail=new EnviarMail($datos);
+                    $this->dispatch($mail);
 
 
                     //Roles and permissions

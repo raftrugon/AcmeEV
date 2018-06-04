@@ -67,7 +67,7 @@ class ControlCheckController extends Controller
                 foreach ($subjectInstance->getGroups as $group) {
                     foreach ($group->getStudents as $student) {
                         $controlCheckInstance = array(
-                            'calification' => null,
+                            'qualification' => null,
                             'control_check_id' => $saved->getId(),
                             'student_id' => $student->getId(),
                             'url' => null,

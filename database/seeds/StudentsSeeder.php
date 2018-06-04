@@ -14,7 +14,7 @@ class StudentsSeeder extends Seeder
     {
         $faker = Factory::create();
 
-        $minimum_number_students = 4;
+        $minimum_number_students = 6;
         $maximum_number_students = 10;
 
         //////////////////////////////////////////////////////////////////////////////////////////////////////

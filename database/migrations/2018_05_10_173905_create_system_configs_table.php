@@ -18,8 +18,6 @@ class CreateSystemConfigsTable extends Migration
 
             //Integers
             $table->integer('max_students_per_group');
-            $table->integer('max_summons_number');
-            $table->integer('max_annual_summons_number');
 
             //Times
             $table->time('building_open_time');

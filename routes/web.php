@@ -241,7 +241,7 @@ Route::group(['prefix'=>'inscription'],function(){
     Route::get('new','InscriptionController@getNewInscription');
     Route::post('save','InscriptionController@postSaveInscription');
     Route::get('/results','InscriptionController@getResultsInscription');
-    Route::post('/results/data','InscriptionController@getResultsInscriptionData');
+    Route::post('/results/data','InscriptionController@postGetResultsInscriptionData');
     Route::post('/results/agree','InscriptionController@postAgreeToInscription');
 });
 
@@ -278,3 +278,8 @@ Route::group(['prefix'=>'error'],function(){
 
 
 Route::get('terms','HomeController@terms');
+
+
+Route::get('mailtest',function(){
+   return view('mails.usercreation',['nombre'=>'Pablo Tabares','newEmail'=>'pabtabgar@alum.us.es']);
+});
