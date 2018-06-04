@@ -44,7 +44,7 @@
                             <tbody>
                             @foreach($subjects as $subject)
                                 @php ($index++)
-                                <tr>
+                                <tr @if(!$subject->isActive()) class="bg-danger text-light" @endif>
                                     <th scope="row">{{$index}}</th>
                                     <td>{{$subject->getName()}}</td>
                                     <td><a href="{{URL::to('department/' . $subject->getDepartment->getId() . '/display')}}">{{$subject->getDepartment->getName()}}</a></td>
