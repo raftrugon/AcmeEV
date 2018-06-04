@@ -70,10 +70,10 @@ return[
         </br>&emsp;2. Estas Condiciones Generales estarán vigentes justo desde el momento de su publicación hasta su modificación, momento en el que pasarán a estar vigentes las nuevas Condiciones Generales.
         </br><strong>9. GENERALIDADES</strong>
         </br>&emsp;Los títulos de los distintos apartados de las Condiciones Generales son méramente informativos, sin tener repercusión alguna en las Condiciones Generales.
-        ',
+        </br><strong>10. NORMATIVA</strong>
+        </br>&emsp;Estas Condiciones Generales han sido establecidas mediante la legislación vigente.',
     'privacy'=>'Política de privacidad',
-    'privacyBody'=>'</br><strong>10. NORMATIVA</strong>
-        </br>&emsp;Estas Condiciones Generales han sido establecidas mediante la legislación vigente.
+    'privacyBody'=>'
         </br><strong>1. DATOS IDENTIFICATIVOS</strong>
         </br>&emsp;AcmEv, organización ficitia formada para la asignatura Diseño y Pruebas, del departamento de Lenguajes y Sistemas Informáticos (LSI) de la titulación Grado en Ingeniería Informática-Ingeniería del Software.
         </br><strong>2. TRATAMIENTO DE DATOS DE CARÁCTER PERSONAL</strong>

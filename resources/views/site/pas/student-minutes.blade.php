@@ -2,6 +2,7 @@
 
 @section('content')
 
+
     @foreach($academic_years as $minutes)
         <div class="row">
             <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 col-sm-12 " style="padding: 0 0 40px 0;">
@@ -49,19 +50,28 @@
             e.preventDefault();
             let ids=[];
             let qualifications=[];
+            let anyNegative = false;
             $('.qualification-changed').each(function(index){
                 ids[index] = $(this).attr('id');
                 qualifications[index] = $(this).val();
+                if(parseInt(qualifications[index]) < 0){
+                    anyNegative=true;
+                    $(this).css( "border", "solid 2px #FF0000" );
+                }
             });
-            $.post('{{route('update_minutes')}}',{ids:ids,qualifications:qualifications},
-                function(data) {
-                    if(data === 'true'){
-                        success('@lang('global.success')','@lang('minute.updated')');
-                        window.location.href = '../../../management/student/list';
-                    } else {
-                        error('@lang('global.error')','@lang('minute.updateFail')');
-                    }
-                });
+            if(!anyNegative){
+                $.post('{{route('update_minutes')}}',{ids:ids,qualifications:qualifications},
+                    function(data) {
+                        if(data === 'true'){
+                            success('@lang('global.success')','@lang('minute.updated')');
+                            window.location.href = '../../../management/student/list';
+                        } else {
+                            error('@lang('global.error')','@lang('minute.updateFail')');
+                        }
+                    });
+            } else {
+                error('@lang('global.error')','@lang('minute.negativeValueFail')');
+            }
         });
     </script>
 @endsection

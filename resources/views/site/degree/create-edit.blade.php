@@ -16,7 +16,7 @@
                         @isset($degree)
                             <input type="hidden" name="id" id="id" value="{{$degree->getId()}}">
                         @endisset
-                        <button>@lang('global.submit')</button>
+                        <button class="btn btn-success">@lang('global.submit')</button>
                     </div>
                 </div>
             </div>
@@ -32,13 +32,17 @@ $('#degree_form').submit();
 
 $('#degree_form').validate({
 rules:{
-name : required,
-new_students_limit : required
+    name : {required:true},
+    new_students_limit :{
+        min: 1}
 },
 
 messages:{
-name: "{{__('validation.required',['attribute'=>'attributes.name'])}}",
-new_students_limit: "{{__('validation.required',['attribute'=>__('new_students_limit')])}}",
+    name: "{{__('validation.required',['attribute'=>'attributes.name'])}}",
+    new_students_limit: {
+        required: "{{__('validation.required',['attribute'=>'attributes.new_students_limit'])}}",
+        min: "{{__('validation.min.numeric',['attribute'=>__('attributes.grade'),'min'=>0])}}",
+    },
 }
 });
 </script>

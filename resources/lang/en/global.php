@@ -76,10 +76,10 @@ return[
     'privacy'=>'Privacy Policy',
     'privacyBody'=>'</br><strong>1. IDENTIFICATION DATA</strong>
         </br>&emsp;AcmEv, fictitious organization formed for the subject Design and Testing, Department of Languages and Systems (LSI) of the degree in Computer Engineering-Engineering Software.
-        </br><strong>1. PROCESSING OF PERSONAL DATA</strong>
+        </br><strong>2. PROCESSING OF PERSONAL DATA</strong>
         </br>&emsp;1. Under current legislation, the data provided in the user registration and modified during the period that it remains user, data collected in files owned by AcmEv.
         </br>&emsp;2. If you do not agree to the collection of personal data, you can contact us using the Contact section.
-        </br><strong>1. CONFIDENTIALITY</strong>
+        </br><strong>3. CONFIDENTIALITY</strong>
         </br>&emsp;1. AcmEv agrees to choose all necessary security measures for the data provided by users are not altered, lost or modified by non-user. All these measures will be conducted confidentially.
         </br>&emsp;2. The user must provide their data is accurate and keep them fully updated, informing AcmEv if mentioned in the preceding paragraph occurs.
         </br>',

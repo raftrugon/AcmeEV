@@ -111,7 +111,7 @@ Route::group(['prefix'=>'management','middleware'=>['permission:manage']],functi
     });
     Route::group(['prefix'=>'minute'],function(){
         Route::get('{user}/all','Pdi\MinuteController@getMinutesForStudent');
-        Route::post('/update','Pdiº\MinuteController@updateMinutes')->name('update_minutes');
+        Route::post('/update','Pdi\MinuteController@updateMinutes')->name('update_minutes');
     });
     Route::group(['prefix'=>'student'],function(){
         Route::get('list','Pdi\StudentController@getStudentsWithStatusZeroMinutes');
