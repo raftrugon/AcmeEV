@@ -60,9 +60,9 @@
                                     {{ __('auth.login') }}
                                 </button>
 
-                                <a class="btn btn-link" href="{{ route('password.request') }}">
-                                    {{ __('auth.forgot') }}
-                                </a>
+                                {{--<a class="btn btn-link" href="{{ route('password.request') }}">--}}
+                                    {{--{{ __('auth.forgot') }}--}}
+                                {{--</a>--}}
                             </div>
                         </div>
                     </form>

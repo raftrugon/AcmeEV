@@ -20,11 +20,13 @@ return[
     'confirm'=>'Confirm',
     'anonymous'=>'Anonymous',
     'new_ingress'=>'New Ingress',
+    'studentList'=>'Students',
     'idNumber'=>'Id number',
+    'fullName'=>'Full name',
     'student'=>'Student',
     'welcome-heading'=>'Welcome to the virtual teaching platform',
     'welcome-body'=>'This web page is designed for students and university\'s internal 
-        stuff to manage the subjects making the teaching experience easier and 
+        staff to manage the subjects making the teaching experience easier and 
         more accessible. Also you can request appointments to the secretariat even 
         if you are not registered in the system. ',
     'adjudication.title'=>'Adjudication list available',
@@ -33,7 +35,7 @@ return[
     'enroll.link'=>'Press <a href="'.URL::to('student/enrollment/enroll').'">here</a> to enroll.',
     'ok'=>'Success',
     'cookies'=>'To give you a tailored experience AcmEv uses cookies. By continuing to browse the site you are agreeing to our use of cookies.',
-    'cookies.accept'=>'Don\'t show this again',
+    'cookies.accept'=>'Don\\\'t show this again',
     'post.error'=>'There was a problem processing the transaction.',
     'get.error'=>'There was a problem accessing the page.',
     'terms'=>'Terms and conditions',
@@ -70,6 +72,16 @@ return[
         </br>&emsp;The titles of the different sections of the General Conditions are purely informational, without having any impact on the General Conditions.
         </br><strong>10. NORMATIVE</strong>
         </br>&emsp;These General Conditions have been established by current legislation.
+        ',
+    'privacy'=>'Privacy Policy',
+    'privacyBody'=>'</br><strong>1. IDENTIFICATION DATA</strong>
+        </br>&emsp;AcmEv, fictitious organization formed for the subject Design and Testing, Department of Languages and Systems (LSI) of the degree in Computer Engineering-Engineering Software.
+        </br><strong>1. PROCESSING OF PERSONAL DATA</strong>
+        </br>&emsp;1. Under current legislation, the data provided in the user registration and modified during the period that it remains user, data collected in files owned by AcmEv.
+        </br>&emsp;2. If you do not agree to the collection of personal data, you can contact us using the Contact section.
+        </br><strong>1. CONFIDENTIALITY</strong>
+        </br>&emsp;1. AcmEv agrees to choose all necessary security measures for the data provided by users are not altered, lost or modified by non-user. All these measures will be conducted confidentially.
+        </br>&emsp;2. The user must provide their data is accurate and keep them fully updated, informing AcmEv if mentioned in the preceding paragraph occurs.
         </br>',
 
     //Roles & Permissions

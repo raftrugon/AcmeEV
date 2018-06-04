@@ -200,7 +200,9 @@
                 grade:{
                     required: function(){
                         return $('#smartwizard li:first-child').hasClass('active');
-                    }
+                    },
+                    min: 5,
+                    max: 14
                 },
                 option1:{
                     required: function(){
@@ -235,7 +237,11 @@
                     required: "{{__('validation.required',['attribute'=>__('attributes.email')])}}",
                     email: "{{__('validation.email',['attribute'=>__('attributes.email')])}}",
                 },
-                grade: "{{__('validation.required',['attribute'=>__('attributes.grade')])}}",
+                grade:{
+                    required: "{{__('validation.required',['attribute'=>__('attributes.grade')])}}",
+                    min: "{{__('validation.min.numeric',['attribute'=>__('attributes.grade'),'min'=>5])}}",
+                    max: "{{__('validation.max.numeric',['attribute'=>__('attributes.grade'),'max'=>14])}}",
+                },
                 option1: "{{__('validation.required',['attribute'=>__('global.option',['number'=>1])])}}",
                 password: "{{__('validation.required',['attribute'=>__('attributes.password')])}}",
                 password_repeat:{

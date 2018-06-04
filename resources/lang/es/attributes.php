@@ -3,7 +3,7 @@
 return [
     'name'=>'Nombre',
     'surname'=>'Apellidos',
-    'id_number'=>'D.N.I.',
+    'id_number'=>'N.I.F.',
     'address'=>'Dirección',
     'phone_number'=>'Nº Teléfono',
     'email'=>'Correo electrónico',
@@ -14,7 +14,8 @@ return [
     'new_students_limit'=>'Número máximo de estudiantes',
     'website'=>'Página web',
     'max_summons_number'=>'Número máximo de convocatorias de una asignatura',
-    'max_annual_summons_number'=>'Número máximo de convocatorias de una asignatura en un curso',
+    'max_annual_summons_number'=>'Número máx. de convocatorias por asignatura en un curso',
+    'max_students_per_group'=>'Número máximo de estudiantes por grupo',
     'building_open_time'=>'Hora de apertura del edificio',
     'building_close_time'=>'Hora de cierre del edificio',
     'inscriptions_start_date'=>'Fecha de comienzo de nuevas inscripciones',
@@ -32,4 +33,6 @@ return [
     'code' => 'Código',
     'type' => 'Tipo',
     'academic_year'=> 'Año Académico',
+    'title'=>'Título',
+    'body'=>'Cuerpo'
 ];

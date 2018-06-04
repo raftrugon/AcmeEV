@@ -1,9 +1,16 @@
 <!DOCTYPE html>
 <head>
     <meta charset="utf-8">
-    <title> AcmEv </title>
-    <meta name="description" content="AcmEv">
+    @if(App::getLocale() === 'en')
+        <title> {{\App\SystemConfig::first()->getNameEn()}} </title>
+        <meta name="description" content="{{\App\SystemConfig::first()->getNameEn()}}">
+    @else
+        <title> {{\App\SystemConfig::first()->getNameEs()}} </title>
+        <meta name="description" content="{{\App\SystemConfig::first()->getNameEs()}}">
+    @endif
     <meta name="author" content="Group 16 - D&P Universidad de Sevilla">
+    <link rel="icon" type="image/png" href="{{URL::to(\App\SystemConfig::first()->getIcon())}}"/>
+    <link rel="shortcut icon" type="image/png" href="{{URL::to(\App\SystemConfig::first()->getIcon())}}"/>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
@@ -77,15 +84,15 @@
         @endif
         <!-- End Notifications -->
         @yield('content')
-
-        @if(is_null(\Illuminate\Support\Facades\Session::get('cookies')))
-            <div class="alert alert-warning text-center alert-cookies" style="opacity: 0.6;position:absolute;bottom:30px;right:1%;width:98%;padding:20px;">
-                <strong>@lang('global.cookies')</strong>
-                <a href="#" id="accept_cookies_btn" class="float-right btn btn-light text-primary">@lang('global.cookies.accept')</a>
-            </div>
-        @endif
     </div>
 </div>
+<div id="tyc_modal">
+    @lang('global.termsBody')
+</div>
+<div id="privacy_modal">
+    @lang('global.privacyBody')
+</div>
+<div id="cookies_modal"></div>
 <!-- Messaging Service -->
 @includeWhen(Auth::check(),'layouts.chat')
 <!-- End of messaging -->
@@ -167,6 +174,79 @@
         $('.sidebar-btn').toggleClass('show');
         $.post('{{URL::to('sidebar')}}',{show: $('#sidebar').hasClass('show')});
     }
+    $(function() {
+        $("#tyc_modal").iziModal({
+            title: "@lang('global.terms')",
+            icon: 'icon-chat',
+            iconColor: 'white',
+            fullscreen: true,
+            width: '50%',
+            padding: 20,
+            bodyOverflow: true,
+            top: 50,
+            bottom: 50,
+            onOpening: function (modal) {
+                modal.startLoading();
+            },
+            onOpened: function (modal) {
+                modal.stopLoading();
+                setTimeout(function () {
+                    $("#modal-large .iziModal-wrap").scrollTop(0);
+                }, 1)
+            }
+        });
+        $("#privacy_modal").iziModal({
+            title: "@lang('global.privacy')",
+            icon: 'icon-chat',
+            iconColor: 'white',
+            fullscreen: true,
+            width: '50%',
+            padding: 20,
+            bodyOverflow: true,
+            top: 50,
+            bottom: 50,
+            onOpening: function (modal) {
+                modal.startLoading();
+            },
+            onOpened: function (modal) {
+                modal.stopLoading();
+                setTimeout(function () {
+                    $("#modal-large .iziModal-wrap").scrollTop(0);
+                }, 1)
+            }
+        });
+        $("#cookies_modal").iziModal({
+            title: '@lang('global.cookies')',
+            icon: 'fas fa-exclamation-triangle',
+            iconColor: 'white',
+            width: '70%',
+            bodyOverflow: true,
+            bottom: 0,
+            overlay:false,
+            overlayClose:false,
+            headerColor:'#fd7e14',
+            onOpening: function (modal) {
+                modal.startLoading();
+            },
+            onOpened: function (modal) {
+                modal.stopLoading();
+            },
+            afterRender:function(modal){
+                $('#cookies_modal').find('.iziModal-header-buttons').html('<a href="#" id="accept_cookies_btn" class="float-right btn btn-light text-primary">@lang('global.cookies.accept')</a>');
+                $('#accept_cookies_btn').click(function(){
+                    $.post(urlAcceptCookies,function(data){
+                        if(data === 'true'){
+                            $('#cookies_modal').iziModal('close');
+                        }
+                    });
+                });
+            }
+        });
+
+        @if(is_null(\Illuminate\Support\Facades\Session::get('cookies')))
+            $("#cookies_modal").iziModal('open');
+        @endif
+    });
 
     @guest
     $(function(){

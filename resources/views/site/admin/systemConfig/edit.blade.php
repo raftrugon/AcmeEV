@@ -58,15 +58,32 @@
 
                     {{---------------------------------------------------------------------------------------------------- SECOND TAB ----------------------------------------------------------------------------------------------------}}
                     <div class="tab-pane fade" id="tab2" data-parent="#accordion">
-                        <form id="systemconfig_form" action="{{URL::to('admin/systemconfig/save')}}" method="post">
+                        <form id="systemconfig_form" action="{{URL::to('admin/systemconfig/save')}}" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="row align-items-end">
                                 @include('global.input',['col'=>'6','type'=>'number','id'=>'max_summons_number','name'=>'max_summons_number','label'=>__('attributes.max_summons_number'),'placeholder'=>__('placeholder.number'),  'value'=>isset($system_config) ? $system_config->getMaxSummonsNumber() : null ])
                                 @include('global.input',['col'=>'6','type'=>'number','id'=>'max_annual_summons_number','name'=>'max_annual_summons_number','label'=>__('attributes.max_annual_summons_number'),'placeholder'=>__('placeholder.number'),  'value'=>isset($system_config) ? $system_config->getMaxAnnualSummonsNumber() : null ])
                             </div>
                             <div class="row align-items-end">
+                                @include('global.input',['col'=>'6','type'=>'number','id'=>'max_students_per_group','name'=>'max_students_per_group','label'=>__('attributes.max_students_per_group'),'placeholder'=>__('placeholder.number'),  'value'=>isset($system_config) ? $system_config->getMaxStudentsPerGroup() : null ])
                                 @include('global.input',['col'=>'6','class'=>'time','type'=>'text','id'=>'building_open_time','name'=>'building_open_time','label'=>__('attributes.building_open_time'),'placeholder'=>__('placeholder.time'),  'value'=>isset($system_config) ? $system_config->getBuildingOpenTime() : null ])
+                            </div>
+                            <div class="row align-items-end">
                                 @include('global.input',['col'=>'6','class'=>'time','type'=>'text','id'=>'building_close_time','name'=>'building_close_time','label'=>__('attributes.building_close_time'),'placeholder'=>__('placeholder.time'),  'value'=>isset($system_config) ? $system_config->getBuildingCloseTime() : null ])
+                            </div>
+                            <div class="row align-items-start">
+                                <div class="col-7 pl-0">
+                                @include('global.input',['col'=>'12','type'=>'text','id'=>'name_en','label'=>__('attributes.name_en'),'placeholder'=>__('placeholder.name_en'),  'value'=>isset($system_config) ? $system_config->getNameEn() : null ])
+                                @include('global.input',['col'=>'12','type'=>'text','id'=>'name_es','label'=>__('attributes.name_es'),'placeholder'=>__('placeholder.name_es'),  'value'=>isset($system_config) ? $system_config->getNameEs() : null ])
+                                </div>
+                                <div class="col-5 py-3">
+                                    <input type="file" id="icon_input" name="icon" @if(isset($system_config) && !is_null($system_config->getIcon())) data-default-file="{{URL::to($system_config->getIcon())}}" @endif>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <div class="col w-100">
+                                <input type="file" id="banner_input" name="banner" @if(isset($system_config) && !is_null($system_config->getBanner())) data-default-file="{{URL::to($system_config->getBanner())}}" @endif>
+                                </div>
                             </div>
 
                             @isset($system_config)
@@ -101,6 +118,8 @@
             $('.time').datetimepicker({
                 format: 'HH:mm:ss'
             });
+            $('#icon_input').dropify();
+            $('#banner_input').dropify();
             $('#systemconfig_form').submit(function(){
                 if(!$('#systemconfig_form').valid()) return false;
             });
@@ -110,12 +129,16 @@
                     max_annual_summons_number: 'required',
                     building_open_time: 'required',
                     building_close_time: 'required',
+                    name_en: 'required',
+                    name_es: 'required',
                 },
                 messages: {
                     max_summons_number: "{{__('validation.required',['attribute'=>__('max_summons_number')])}}",
                     max_annual_summons_number: "{{__('validation.required',['attribute'=>__('max_annual_summons_number')])}}",
                     building_open_time: "{{__('validation.required',['attribute'=>__('building_open_time')])}}",
                     building_close_time: "{{__('validation.required',['attribute'=>__('building_close_time')])}}",
+                    name_en: "{{__('validation.required',['attribute'=>__('name_en')])}}",
+                    name_es: "{{__('validation.required',['attribute'=>__('name_es')])}}",
                 }
             });
         });

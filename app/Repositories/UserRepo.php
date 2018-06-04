@@ -144,6 +144,14 @@ class UserRepo extends BaseRepo
 
     }
 
+    public function getStudentsWithStatusZeroMinutes() {
+        return User
+            ::join('enrollments','enrollments.user_id','=','users.id')
+            ->join('minutes','minutes.enrollment_id','=','enrollments.id')
+            ->where('minutes.status','0')
+            ->select('users.*')
+            ->distinct('users.id');
+    }
     public function getDataTable($request){
         $query = $this->getModel()
                 ->join('model_has_roles','users.id','=','model_has_roles.model_id')

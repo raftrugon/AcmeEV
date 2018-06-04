@@ -16,13 +16,15 @@ class SystemConfigRepo extends BaseRepo
     protected $inscriptionRepo;
     protected $subjectInstanceRepo;
     protected $minuteRepo;
+    protected $groupRepo;
 
-    public function __construct(UserRepo $userRepo, InscriptionRepo $inscriptionRepo, SubjectInstanceRepo $subjectInstanceRepo, MinuteRepo $minuteRepo)
+    public function __construct(UserRepo $userRepo, InscriptionRepo $inscriptionRepo, SubjectInstanceRepo $subjectInstanceRepo, MinuteRepo $minuteRepo, GroupRepo $groupRepo)
     {
         $this->userRepo = $userRepo;
         $this->inscriptionRepo = $inscriptionRepo;
         $this->subjectInstanceRepo = $subjectInstanceRepo;
         $this->minuteRepo = $minuteRepo;
+        $this->groupRepo = $groupRepo;
     }
 
     public function getModel()
@@ -67,16 +69,28 @@ class SystemConfigRepo extends BaseRepo
                     break;
 
                 case 3:
-                    $this->subjectInstanceRepo->subjectInstancesAndGroupsBatch();  //Auto generación de subject instances, groups y conversations
+                    $this->subjectInstanceRepo->subjectInstancesBatch();            //Auto generación de subject instances
                     $this->userRepo->createBatchFromInscriptions();                //Generación de usuarios con las inscripciones aceptadas
+                    break;
+
+                case 4:
+                    $this->groupRepo->subjectInstancesBatch();//Auto generación de  groups y conversations con asignación de alumnos
                     break;
 
                 case 5:
                     $this->minuteRepo->minutesFromControlsBatch(1);       //Auto computación de minutes primera convocatoria¿?
                     break;
 
+                case 6:
+                    $this->minuteRepo->setAllStatusTrue();                          //Auto computación de minutes a status 1
+                    break;
+
                 case 7:
                     $this->minuteRepo->minutesFromControlsBatch(2);       //Auto computación de minutes segunda convocatoria¿?
+                    break;
+
+                case 8:
+                    $this->minuteRepo->setAllStatusTrue();                          //Auto computación de minutes a status 1
                     break;
             }
 
