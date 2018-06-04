@@ -10,7 +10,7 @@ class CreateControlCheckInstancesTable extends Migration
     {
         Schema::create('control_check_instances', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('calification')->nullable();
+            $table->integer('qualification')->nullable();
             $table->integer('control_check_id')->unsigned();
             $table->integer('student_id')->unsigned();
             $table->string('url')->nullable();

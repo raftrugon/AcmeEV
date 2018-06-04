@@ -19,7 +19,7 @@ class DepartmentSeeder extends Seeder
         Department::firstOrCreate(['name'=>'Matemática aplicada','code'=>'USD000005','website'=>'http://www.ma1.us.es/']);
         Department::firstOrCreate(['name'=>'Psicología','code'=>'USD000006','website'=>'http://www.lsi.us.es/']);
         Department::firstOrCreate(['name'=>'Pediatría','code'=>'USD000007','website'=>'http://departamento.us.es/dfisap1/etsii.htm']);
-        Department::firstOrCreate(['name'=>'Algebra','code'=>'USD000008','website'=>'https://www.dte.us.es/']);
+        Department::firstOrCreate(['name'=>'Álgebra','code'=>'USD000008','website'=>'https://www.dte.us.es/']);
         Department::firstOrCreate(['name'=>'Análisis numérico y ecuaciones diferenciales','code'=>'USD000009','website'=>'https://www.cs.us.es/']);
         Department::firstOrCreate(['name'=>'Estadística e investigación operativa','code'=>'USD000010','website'=>'http://www.ma1.us.es/']);
 
@@ -28,8 +28,6 @@ class DepartmentSeeder extends Seeder
         //////////////////////////////////////////////////////////////
 
         info('Seeding '.$number_of_departments.' Departments.');
-
-        //factory(App\Department::class,$number_of_departments)->create();
 
 
     }

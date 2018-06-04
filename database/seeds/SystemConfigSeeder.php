@@ -15,9 +15,6 @@ class SystemConfigSeeder extends Seeder
     {
         SystemConfig::firstOrCreate([
             'max_students_per_group'=>30,
-            'max_summons_number'=>6,
-            'max_annual_summons_number'=>3,
-
 
             'building_open_time'=>'09:00',
             'building_close_time'=>'20:00',

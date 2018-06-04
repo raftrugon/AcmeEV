@@ -46,7 +46,7 @@ class FileRepo extends BaseRepo
             {
                 $controlCheckInstance = $this->controlCheckInstanceRepo
                     ->getControlCheckInstanceForStudent($control_check_id,$row['id_number']);
-                $controlCheckInstance->setCalification($row['qualification']);
+                $controlCheckInstance->setQualification($row['qualification']);
                 $this->controlCheckInstanceRepo->updateWithoutData($controlCheckInstance);
             }
             return 'true';

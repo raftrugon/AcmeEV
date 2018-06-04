@@ -61,15 +61,11 @@
                         <form id="systemconfig_form" action="{{URL::to('admin/systemconfig/save')}}" method="post" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             <div class="row align-items-end">
-                                @include('global.input',['col'=>'6','type'=>'number','id'=>'max_summons_number','name'=>'max_summons_number','label'=>__('attributes.max_summons_number'),'placeholder'=>__('placeholder.number'),  'value'=>isset($system_config) ? $system_config->getMaxSummonsNumber() : null ])
-                                @include('global.input',['col'=>'6','type'=>'number','id'=>'max_annual_summons_number','name'=>'max_annual_summons_number','label'=>__('attributes.max_annual_summons_number'),'placeholder'=>__('placeholder.number'),  'value'=>isset($system_config) ? $system_config->getMaxAnnualSummonsNumber() : null ])
+                                @include('global.input',['col'=>'6','class'=>'time','type'=>'text','id'=>'building_open_time','name'=>'building_open_time','label'=>__('attributes.building_open_time'),'placeholder'=>__('placeholder.time'),  'value'=>isset($system_config) ? $system_config->getBuildingOpenTime() : null ])
+                                @include('global.input',['col'=>'6','class'=>'time','type'=>'text','id'=>'building_close_time','name'=>'building_close_time','label'=>__('attributes.building_close_time'),'placeholder'=>__('placeholder.time'),  'value'=>isset($system_config) ? $system_config->getBuildingCloseTime() : null ])
                             </div>
                             <div class="row align-items-end">
                                 @include('global.input',['col'=>'6','type'=>'number','id'=>'max_students_per_group','name'=>'max_students_per_group','label'=>__('attributes.max_students_per_group'),'placeholder'=>__('placeholder.number'),  'value'=>isset($system_config) ? $system_config->getMaxStudentsPerGroup() : null ])
-                                @include('global.input',['col'=>'6','class'=>'time','type'=>'text','id'=>'building_open_time','name'=>'building_open_time','label'=>__('attributes.building_open_time'),'placeholder'=>__('placeholder.time'),  'value'=>isset($system_config) ? $system_config->getBuildingOpenTime() : null ])
-                            </div>
-                            <div class="row align-items-end">
-                                @include('global.input',['col'=>'6','class'=>'time','type'=>'text','id'=>'building_close_time','name'=>'building_close_time','label'=>__('attributes.building_close_time'),'placeholder'=>__('placeholder.time'),  'value'=>isset($system_config) ? $system_config->getBuildingCloseTime() : null ])
                             </div>
                             <div class="row align-items-start">
                                 <div class="col-7 pl-0">
@@ -125,16 +121,12 @@
             });
             $('#systemconfig_form').validate({
                 rules: {
-                    max_summons_number: 'required',
-                    max_annual_summons_number: 'required',
                     building_open_time: 'required',
                     building_close_time: 'required',
                     name_en: 'required',
                     name_es: 'required',
                 },
                 messages: {
-                    max_summons_number: "{{__('validation.required',['attribute'=>__('max_summons_number')])}}",
-                    max_annual_summons_number: "{{__('validation.required',['attribute'=>__('max_annual_summons_number')])}}",
                     building_open_time: "{{__('validation.required',['attribute'=>__('building_open_time')])}}",
                     building_close_time: "{{__('validation.required',['attribute'=>__('building_close_time')])}}",
                     name_en: "{{__('validation.required',['attribute'=>__('name_en')])}}",

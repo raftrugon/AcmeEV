@@ -36,7 +36,7 @@
                   </div>
                   <div class="card-body p-0 text-center">
                       <p>
-                          @lang('controlCheck.calification'): @if($cci->getCalification()==null)<strong> -</strong>@else {{$cci->getCalification()}}@endif
+                          @lang('controlCheck.qualification'): @if($cci->getQualification()==null)<strong> -</strong>@else {{$cci->getQualification()}}@endif
                       </p>
                   </div>
                   @if($cci->getControlCheck->getIsSubmittable() and $cci->getURL()===null)

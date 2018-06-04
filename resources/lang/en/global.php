@@ -91,7 +91,6 @@ return[
     'roles.admin'=>'Admin',
     'permissions.new'=>'New',
     'permissions.current'=>'Current',
-    'permissions.old'=>'Old',
     'permissions.manage'=>'Manage',
     'permissions.direct_department'=>'Department Director',
     'permissions.teach'=>'Teach',
