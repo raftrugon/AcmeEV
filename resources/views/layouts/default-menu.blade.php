@@ -1,6 +1,6 @@
 <nav id="sidebar" class="bg-dark text-light d-flex flex-column @if(Session::get('sidebar','true') == 'true') show @endif">
     <!-- Sidebar Header -->
-    <img class="menu-logo mx-auto my-3" src="{{URL::to(\App\SystemConfig::first()->getIcon())}}">
+    <img class="menu-logo mx-auto my-3" src="{{URL::to(\App\SystemConfig::first()->getIcon())}}" alt="">
 
     <!-- Sidebar Links -->
     <div style="overflow-y:auto;direction:rtl">

@@ -54,7 +54,7 @@ Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){   
 
 /////////////////////////////////////////// Admin & Management ////////////////////////////////////////////////////////
 
-Route::group(['prefix'=>'users','middleware'=>['role:admin']],function(){
+Route::group(['prefix'=>'users','middleware'=>['role:admin']],function(){////POLICY
     Route::get('/','UserController@getList');
     Route::get('/data','UserController@getData');
     Route::post('/delete','UserController@postDelete');
@@ -109,12 +109,17 @@ Route::group(['prefix'=>'management','middleware'=>['permission:manage']],functi
         });
 
     });
-    Route::group(['prefix'=>'minute'],function(){
-        Route::get('{user}/all','Pdi\MinuteController@getMinutesForStudent');
-        Route::post('/update','Pdi\MinuteController@updateMinutes')->name('update_minutes');
-    });
-    Route::group(['prefix'=>'student'],function(){
-        Route::get('list','Pdi\StudentController@getStudentsWithStatusZeroMinutes');
+
+    Route::group(['middleware'=>['can:stateEditMinutes,App\SystemConfig']],function() {
+
+        Route::group(['prefix'=>'minute'],function(){
+            Route::get('{user}/all','Pdi\MinuteController@getMinutesForStudent');
+            Route::post('/update','Pdi\MinuteController@updateMinutes')->name('update_minutes');
+        });
+
+        Route::group(['prefix'=>'student'],function(){
+            Route::get('list','Pdi\StudentController@getStudentsWithStatusZeroMinutes');
+        });
     });
 });
 

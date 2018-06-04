@@ -8,11 +8,8 @@ use Illuminate\Support\Facades\Auth;
 class ConversationRepo extends BaseRepo
 {
 
-    protected $groupRepo;
-
-    public function __construct(GroupRepo $groupRepo)
+    public function __construct()
     {
-        $this->groupRepo = $groupRepo;
     }
 
     public function getModel()
@@ -21,7 +18,7 @@ class ConversationRepo extends BaseRepo
     }
 
     public function getMyConversations(){
-        $myGroups = $this->groupRepo->getMyGroupsForThisYear()->get()->pluck('id')->toArray();
+        $myGroups = $this->getMyGroupsForThisYear()->get()->pluck('id')->toArray();
         return Conversation::where(function($subquery) use ($myGroups){
             $subquery->where('user1_id',Auth::id())
                 ->orWhere('user2_id',Auth::id())
@@ -35,5 +32,12 @@ class ConversationRepo extends BaseRepo
                             })->orWhere(function($sub2) use ($usery,$userx){
                                 $sub2->where('user1_id',$usery)->where('user2_id',$userx);
         });
+    }
+
+    public function getMyGroupsForThisYear(){
+        return Auth::user()->getGroups()
+            ->join('subject_instances','groups.subject_instance_id','=','subject_instances.id')
+            ->where('academic_year',$this->getAcademicYear())
+            ->select('groups.*');
     }
 }

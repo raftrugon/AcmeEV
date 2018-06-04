@@ -5,7 +5,7 @@ namespace Tests\Unit;
 use App\Announcement;
 use App\SubjectInstance;
 use App\Repositories\AnnouncementRepo as AnnouncementRepo ;
-use PHPUnit\Framework\TestCase;
+use Tests\TestCase;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 /**
@@ -21,7 +21,6 @@ class Announcement2Test extends TestCase{
     }
 
     function setUp(){
-
         $this::$capsule->connection()->beginTransaction();
     }
 
@@ -54,7 +53,7 @@ class Announcement2Test extends TestCase{
         $count_before = $announcements->count();
         echo("Total: ".$count_before."\n");
 
-        $new_announcement = new Announcement();
+        $new_announcement =  AnnouncementRepo::getModel();
         $new_announcement->setTitle("Announcement Test");
         if($expected_exception)
             $new_announcement->setSubjectInstance($subject_instance_id+1);
@@ -101,9 +100,9 @@ class Announcement2Test extends TestCase{
         print("\n");
 
         return [
-            [$this->getSubjectInstanceId(1, 2018), false,
+            [$this->getSubjectInstanceId(1, 2017), false,
                 "Obtener anuncios pertenecientes a una misma asignatura."],
-            [$this->getSubjectInstanceId(2, 2018), true,
+            [$this->getSubjectInstanceId(2, 2017), true,
                 "Guardar un nuevo anuncio no perteneciente a la misma asignatura."],
         ];
     }

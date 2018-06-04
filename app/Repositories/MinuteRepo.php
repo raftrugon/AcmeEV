@@ -108,14 +108,29 @@ class MinuteRepo extends BaseRepo
 
         } catch(\Exception $e){
             DB::rollBack();
-            dd($e);
             throw $e;
         } catch(\Throwable $t){
             DB::rollBack();
-            dd($t);
             throw $t;
         }
 
 
+    }
+
+    public function setAllStatusTrue(){
+        try {
+
+            DB::beginTransaction();
+            Minute::where('status', 0)->update(['status'=>1]);
+            DB::commit();
+            return true;
+
+        } catch(\Exception $e){
+            DB::rollBack();
+            throw $e;
+        } catch(\Throwable $t){
+            DB::rollBack();
+            throw $t;
+        }
     }
 }

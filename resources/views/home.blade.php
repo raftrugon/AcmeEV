@@ -28,7 +28,7 @@
         @endif
 
         <div class="card">
-            <img src="{{asset('img/mainpage.png')}}" class="card-img-top" alt="Card image cap">
+            <img src="{{URL::to(\App\SystemConfig::first()->getBanner())}}" class="card-img-top" alt="">
             <div class="card-body">
                 <h1 class="card-title text-center font-weight-bold">@lang('global.welcome-heading')</h1>
                 <p class="card-text text-justify">@lang('global.welcome-body')</p>
