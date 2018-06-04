@@ -33,19 +33,19 @@
     </div>
     <nav>
         <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
-            <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">@lang('subject.announcements')</a>
+            <a class="nav-item nav-link active" id="nav-announcements-tab" data-toggle="tab" href="#nav-announcements" role="tab" aria-controls="nav-announcements" aria-selected="true">@lang('subject.announcements')</a>
             <a class="nav-item nav-link" id="nav-filesystem-tab" data-toggle="tab" href="#nav-filesystem" role="tab" aria-controls="nav-filesystem" aria-selected="false">@lang('filesystem.tab')</a>
-            <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">@lang('filesystem.controlchecks')</a>
+            <a class="nav-item nav-link" id="nav-controlchecks-tab" data-toggle="tab" href="#nav-controlchecks" role="tab" aria-controls="nav-controlchecks" aria-selected="false">@lang('filesystem.controlchecks')</a>
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
-        <div class="tab-pane fade show active pt-3" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+        <div class="tab-pane fade show active pt-3" id="nav-announcements" role="tabpanel" aria-labelledby="nav-home-tab">
             @include('site.subject.includes.announcements')
         </div>
         <div class="tab-pane fade pt-3" id="nav-filesystem" role="tabpanel" data-id-current="" aria-labelledby="nav-filesystem-tab">
             @include('site.subject.includes.filesystem')
         </div>
-        <div class="tab-pane fade pt-3" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
+        <div class="tab-pane fade pt-3" id="nav-controlchecks" role="tabpanel" aria-labelledby="nav-contact-tab">
             @include('site.subject.includes.controlchecks')
         </div>
     </div>

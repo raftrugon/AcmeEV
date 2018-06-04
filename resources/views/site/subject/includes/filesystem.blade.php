@@ -6,6 +6,7 @@
         <h3 id="folder-title"></h3>
     </div>
     <div class="toolbar-right">
+        @role('pdi')
         <button id="btnDropAdd" type="button" class="btn btn-outline-success dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fas fa-plus"></i> @lang('filesystem.add')
         </button>
@@ -13,6 +14,7 @@
             <a class="dropdown-item" data-toggle="modal" data-target="#newFolderModal">@lang('filesystem.folder')</a>
             <a id="new_file_modal_btn" class="dropdown-item" data-toggle="modal" data-target="#newFileModal">@lang('filesystem.file')</a>
         </div>
+        @endrole
     </div>
 </div>
 <hr>

@@ -1,7 +1,9 @@
-<div class="p-2">
+<div class="p-2 d-flex justify-content-end">
+    @role('pdi')
     <button class="btn btn-success" id="newAnnouncementButton" data-toggle="modal" data-target="#newAnnouncementModal">
         @lang('announcement.new')
     </button>
+    @endrole
 </div>
 <div class="row">
     <div class="card-deck">
@@ -48,6 +50,7 @@
                         <button type="submit" class="btn btn-success btn-block rounded-0" id="announcementSubmit">@lang('global.submit')</button>
                     </div>
                 </form>
+            </div>
         </div>
     </div>
 </div>
