@@ -169,7 +169,7 @@ Route::group(['prefix'=>'student','middleware'=>['role:student']],function(){
         Route::get('my-minutes','Student\MinuteController@getMinutesForStudent')->middleware('permission:current');             //Correct
     });
 
-    Route::get('my-subjects', 'Student\SubjectInstanceController@getMySubjectInstances')->middleware('permission:current');     //Correct
+    Route::get('my-subjects', 'Student\SubjectInstanceController@getMySubjectInstances')->middleware('permission:current')->middleware('can:stateCanListSubjects,App\SystemConfig');     //Correct
 });
 
 //////////////////////////////////////////////////////// Logged ////////////////////////////////////////////////////////
@@ -194,7 +194,7 @@ Route::group(['prefix'=>'chat','middleware'=>['can:userLogged,App\SystemConfig']
 
 //////////////////////////////////////////////////////// GRUPOS ////////////////////////////////////////////////////////
 
-Route::group(['prefix'=>'group'],function(){   //middleware estado 3 - 7
+Route::group(['prefix'=>'group'],function(){
 
     Route::group(['middleware'=>['can:stateChangeTimeTableAndLecturers,App\SystemConfig']],function(){   //middleware estado 4
         Route::group(['middleware'=>['role:pdi']],function(){                                            //middleware pdi
@@ -210,7 +210,7 @@ Route::group(['prefix'=>'group'],function(){   //middleware estado 3 - 7
             });
 
             //Asignación de profesores a grupos PUEDE coordinador
-            Route::group(['middleware'=>['permission:direct_department']],function(){                     //middleware coordinador
+            Route::group(['middleware'=>['can:exchangeGroup,group']],function(){                     //middleware coordinador
                 Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');                                //verificar
                 Route::post('{group}/save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');     //verificar
             });
@@ -243,11 +243,11 @@ Route::group(['prefix'=>'group'],function(){   //middleware estado 3 - 7
 
 
 Route::group(['prefix'=>'inscription'],function(){
-    Route::get('new','InscriptionController@getNewInscription');
-    Route::post('save','InscriptionController@postSaveInscription');
-    Route::get('/results','InscriptionController@getResultsInscription');
-    Route::post('/results/data','InscriptionController@postGetResultsInscriptionData');
-    Route::post('/results/agree','InscriptionController@postAgreeToInscription');
+    Route::get('new','InscriptionController@getNewInscription')->middleware('can:inscribe,App\SystemConfig');
+    Route::post('save','InscriptionController@postSaveInscription')->middleware('can:inscribe,App\SystemConfig');
+    Route::get('/results','InscriptionController@getResultsInscription')->middleware('can:viewInscriptions,App\SystemConfig');
+    Route::post('/results/data','InscriptionController@postGetResultsInscriptionData')->middleware('can:viewInscriptions,App\SystemConfig');
+    Route::post('/results/agree','InscriptionController@postAgreeToInscription')->middleware('can:viewInscriptions,App\SystemConfig');
 });
 
 
@@ -271,10 +271,13 @@ Route::group(['prefix'=>'calendar'],function() {
     Route::post('/update', 'AppointmentsController@postUpdateAppointment');
 });
 
-Route::group(['prefix'=>'subject'],function(){
-    Route::get('{subject}','SubjectController@getSubjectDisplay')->name('subject-display')->middleware('can:view,subject');
-    Route::get('/filesystem/data','SubjectController@getFileSystemData')->name('filesystem.data');
-    Route::get('file/download/{file}','SubjectController@getDownloadFile');
+
+Route::group(['middleware'=>['can:stateCanListSubjects,App\SystemConfig']],function(){                     //middleware estado 3-9
+    Route::group(['prefix'=>'subject'],function(){
+        Route::get('{subject}','SubjectController@getSubjectDisplay')->name('subject-display')->middleware('can:view,subject');
+        Route::get('/filesystem/data','SubjectController@getFileSystemData')->name('filesystem.data');
+        Route::get('file/download/{file}','SubjectController@getDownloadFile');
+    });
 });
 
 Route::group(['prefix'=>'error'],function(){

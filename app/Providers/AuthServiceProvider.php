@@ -17,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
         'App\Enrollment' => 'App\Policies\EnrollmentPolicy',
         'App\SystemConfig' => 'App\Policies\SystemConfigPolicy',
         'App\Subject' => 'App\Policies\SubjectPolicy',
+        'App\Group' => 'App\Policies\GroupPolicy',
     ];
 
     /**
