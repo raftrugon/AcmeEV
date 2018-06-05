@@ -89,6 +89,17 @@ class SystemConfigPolicy
         return $return;
     }
 
+    public function stateCanListSubjects()
+    {
+        $return = false;
+        $actual_state = $this->systemConfigRepo->getActualState();
+
+        if($actual_state > 2 && $actual_state < 10)
+            $return = true;
+
+        return $return;
+    }
+
 
 
 }

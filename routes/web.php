@@ -169,7 +169,7 @@ Route::group(['prefix'=>'student','middleware'=>['role:student']],function(){
         Route::get('my-minutes','Student\MinuteController@getMinutesForStudent')->middleware('permission:current');             //Correct
     });
 
-    Route::get('my-subjects', 'Student\SubjectInstanceController@getMySubjectInstances')->middleware('permission:current');     //Correct
+    Route::get('my-subjects', 'Student\SubjectInstanceController@getMySubjectInstances')->middleware('permission:current')->middleware('can:stateCanListSubjects,App\SystemConfig');     //Correct
 });
 
 //////////////////////////////////////////////////////// Logged ////////////////////////////////////////////////////////
@@ -271,10 +271,13 @@ Route::group(['prefix'=>'calendar'],function() {
     Route::post('/update', 'AppointmentsController@postUpdateAppointment');
 });
 
-Route::group(['prefix'=>'subject'],function(){
-    Route::get('{subject}','SubjectController@getSubjectDisplay')->name('subject-display');
-    Route::get('/filesystem/data','SubjectController@getFileSystemData')->name('filesystem.data');
-    Route::get('file/download/{file}','SubjectController@getDownloadFile');
+
+Route::group(['middleware'=>['can:stateCanListSubjects,App\SystemConfig']],function(){                     //middleware estado 3-9
+    Route::group(['prefix'=>'subject'],function(){
+        Route::get('{subject}','SubjectController@getSubjectDisplay')->name('subject-display');
+        Route::get('/filesystem/data','SubjectController@getFileSystemData')->name('filesystem.data');
+        Route::get('file/download/{file}','SubjectController@getDownloadFile');
+    });
 });
 
 Route::group(['prefix'=>'error'],function(){
