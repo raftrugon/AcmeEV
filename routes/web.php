@@ -243,11 +243,11 @@ Route::group(['prefix'=>'group'],function(){
 
 
 Route::group(['prefix'=>'inscription'],function(){
-    Route::get('new','InscriptionController@getNewInscription');
-    Route::post('save','InscriptionController@postSaveInscription');
-    Route::get('/results','InscriptionController@getResultsInscription');
-    Route::post('/results/data','InscriptionController@postGetResultsInscriptionData');
-    Route::post('/results/agree','InscriptionController@postAgreeToInscription');
+    Route::get('new','InscriptionController@getNewInscription')->middleware('can:inscribe,App\SystemConfig');
+    Route::post('save','InscriptionController@postSaveInscription')->middleware('can:inscribe,App\SystemConfig');
+    Route::get('/results','InscriptionController@getResultsInscription')->middleware('can:viewInscriptions,App\SystemConfig');
+    Route::post('/results/data','InscriptionController@postGetResultsInscriptionData')->middleware('can:viewInscriptions,App\SystemConfig');
+    Route::post('/results/agree','InscriptionController@postAgreeToInscription')->middleware('can:viewInscriptions,App\SystemConfig');
 });
 
 
