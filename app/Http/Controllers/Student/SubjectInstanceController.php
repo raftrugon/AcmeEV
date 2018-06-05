@@ -16,13 +16,14 @@ class SubjectInstanceController extends Controller
 
     public function getMySubjectInstances(){
         try{
-        $academic_years = $this->enrollmentRepo->getMyEnrollments()->orderBy('academic_year', 'DESC')->get()->groupBy('academic_year');
+            $academic_years = $this->enrollmentRepo->getMyEnrollments()->orderBy('academic_year', 'DESC')->get()->groupBy('academic_year');
+            $actual_academic_year = $this->enrollmentRepo->getAcademicYear();
         } catch (\Exception $e) {
             return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
         } catch (\Throwable $t) {
             return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
         }
 
-        return view('site.student.subjectInstance.my-subjects', compact('academic_years'));
+        return view('site.student.subjectInstance.my-subjects', compact('academic_years', 'actual_academic_year'));
     }
 }
