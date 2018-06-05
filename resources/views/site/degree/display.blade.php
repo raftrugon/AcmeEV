@@ -76,12 +76,12 @@
                                             </small>
                                         @endif
                                     </td>
-                                    <td>{{$subject->getCode()}}</td>
+                                    <td><small class="font-weight-light">{{$subject->getCode()}}</small></td>
                                     <td>
                                         @if($subject->isActive())
                                             @lang('global.yes')
                                         @else
-                                            @lang('global.yes')
+                                            @lang('global.no')
                                         @endif
                                     </td>
                                     @if($actual_state < 3 || $actual_state == 10)
