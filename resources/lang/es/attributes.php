@@ -32,5 +32,7 @@ return [
     'type' => 'Tipo',
     'academic_year'=> 'Año Académico',
     'title'=>'Título',
-    'body'=>'Cuerpo'
+    'body'=>'Cuerpo',
+    'name_es'=>'Nombre español de la universidad',
+    'name_en'=>'Nombre inglés de la universidad',
 ];
