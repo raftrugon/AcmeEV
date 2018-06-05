@@ -24,7 +24,7 @@ class SystemConfigPolicy
         $return = true;
         $actual_state = $this->systemConfigRepo->getActualState();
 
-        if($actual_state > 2 && $actual_state < 8)
+        if($actual_state > 2 && $actual_state < 10)
             $return = false;
 
         return $return;
@@ -35,7 +35,7 @@ class SystemConfigPolicy
         $return = false;
         $actual_state = $this->systemConfigRepo->getActualState();
 
-        if($actual_state == 5 || $actual_state == 7)
+        if($actual_state == 7 || $actual_state == 9)
             $return = true;
 
         return $return;
@@ -68,7 +68,7 @@ class SystemConfigPolicy
         $return = false;
         $actual_state = $this->systemConfigRepo->getActualState();
 
-        if($actual_state == 4)
+        if($actual_state == 5)
             $return = true;
 
         return $return;

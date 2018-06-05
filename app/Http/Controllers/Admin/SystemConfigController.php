@@ -29,7 +29,7 @@ class SystemConfigController extends Controller
             $system_config = $this->systemConfigRepo->getSystemConfig();
             $actual_state = $system_config->getActualState();
             $next_state = $actual_state + 1;
-            if ($next_state > 8)
+            if ($next_state > 10)
                 $next_state = 0;
 
             $state_actual_title = 'systemConfig.state.' . $actual_state . '.title';
