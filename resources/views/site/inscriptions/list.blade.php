@@ -55,7 +55,7 @@
                         if($('#id_number').val() !== '' && $('#password').val() !== '' && response.data.length === 0){
                             error('@lang('global.error')','@lang('inscription.result.accept.credentials')');
                         }
-                        return response;
+                        return response.data;
                     }
                 },
                 columns: [
