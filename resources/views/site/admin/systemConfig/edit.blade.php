@@ -22,6 +22,12 @@
                             <a class="nav-link" data-toggle="pill" href="#tab3" role="button" aria-expanded="false"
                                aria-controls="tab3"><Strong>@lang('systemConfig.edit.dashboard')</Strong></a>
                         </li>
+                        @if(Auth::id() === 1)
+                        <li class="nav-item col-md-4" style="padding: 0; margin: 0">
+                            <a class="nav-link" data-toggle="pill" href="#tab4" role="button" aria-expanded="false"
+                               aria-controls="tab4"><Strong>@lang('systemConfig.edit.demo')</Strong></a>
+                        </li>
+                        @endif
                     </ul>
                 </div>
                 <div class="card-body tab-content">
@@ -96,7 +102,12 @@
 
                     {{---------------------------------------------------------------------------------------------------- THIRD TAB ----------------------------------------------------------------------------------------------------}}
                     <div class="tab-pane fade" id="tab3" data-parent="#accordion">
-                       @include('site.admin.systemConfig.dashboard')
+                        @include('site.admin.systemConfig.dashboard')
+                    </div>
+
+                    {{---------------------------------------------------------------------------------------------------- DEMO TAB ----------------------------------------------------------------------------------------------------}}
+                    <div class="tab-pane fade" id="tab4" data-parent="#accordion">
+                        @include('site.admin.systemConfig.demo')
                     </div>
 
                 </div>

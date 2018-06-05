@@ -37,10 +37,10 @@
             let lecturers = [];
             lecturers[0] = $('#select1').selectpicker('val');
             lecturers[1] = $('#select2').selectpicker('val');
-            $.post('{{route('edit_group_lecturers')}}',{lecturers:lecturers,group:groupId},function(data){
+            $.post('{{route('edit_group_lecturers',['group'=>$group->getId()])}}',{lecturers:lecturers,group:groupId},function(data){
                 if(data==='true'){
                     success('@lang('global.success')','@lang('group.successMessage')');
-                    window.location.replace('{{URL::to('subject/coordinator/all')}}');
+                    window.location.replace('{{URL::to('pdi/subject/list')}}');
                 } else {
                     error('@lang('global.error')','@lang('group.commitError')');
                 }

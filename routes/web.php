@@ -212,7 +212,7 @@ Route::group(['prefix'=>'group'],function(){   //middleware estado 3 - 7
             //Asignación de profesores a grupos PUEDE coordinador
             Route::group(['middleware'=>['permission:direct_department']],function(){                     //middleware coordinador
                 Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');                                //verificar
-                Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');     //verificar
+                Route::post('{group}/save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');     //verificar
             });
 
         });

@@ -58,10 +58,9 @@ class GroupController extends Controller
         return view('site.pdi.group.edit', compact('theory_lecturer', 'practice_lecturer', 'department_lecturers', 'group'));
     }
 
-    public function saveGroup(Request $request)
+    public function saveGroup(Request $request, Group $group)
     {
         try {
-            $group = Group::where('id', $request->input('group'))->first();
             $group->setTheoryLecturer($request->input('lecturers')[0]);
             $group->setPracticeLecturer($request->input('lecturers')[1]);
             $this->groupRepo->updateWithoutData($group);
