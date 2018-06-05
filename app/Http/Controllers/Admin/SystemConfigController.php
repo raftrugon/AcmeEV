@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Repositories\InscriptionRepo;
 use App\Repositories\SystemConfigRepo;
+use App\SystemConfig;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
@@ -36,13 +37,14 @@ class SystemConfigController extends Controller
             $state_actual_body = 'systemConfig.state.' . $actual_state . '.body';
             $state_next_title = 'systemConfig.state.' . $next_state . '.title';
             $state_next_body = 'systemConfig.state.' . $next_state . '.body';
+            $demo = $this->getDemo();
         } catch (\Exception $e) {
             return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
         } catch (\Throwable $t) {
             return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
         }
 
-        return view('site.admin.systemConfig.edit', compact('system_config', 'state_actual_title', 'state_actual_body', 'state_next_title', 'state_next_body'), $this->systemConfigRepo->getDashboard());
+        return view('site.admin.systemConfig.edit', compact('system_config', 'state_actual_title', 'state_actual_body', 'state_next_title', 'state_next_body','demo'), $this->systemConfigRepo->getDashboard());
     }
 
     public function postSaveSystemConfig(Request $request)
@@ -100,11 +102,25 @@ class SystemConfigController extends Controller
             $this->systemConfigRepo->incrementStateMachine();
             return redirect()->back()->with('success', __('systemConfig.increment.success'));
         } catch (\Exception $e) {
-            dd($e);
-            //return redirect()->back()->with('error', __('systemConfig.increment.error'));
+            return redirect()->back()->with('error', __('systemConfig.increment.error'));
         } catch (\Throwable $t) {
-            dd($t);
-            //return redirect()->back()->with('error', __('systemConfig.increment.error'));
+            return redirect()->back()->with('error', __('systemConfig.increment.error'));
+        }
+    }
+
+    public function getDemo(){
+        switch(SystemConfig::first()->getActualState()){
+            case 0:
+                return view('site.admin.demo.0')->render();
+                break;
+            case 1:
+                $inscriptions = $this->systemConfigRepo->getDataDemo1and2();
+                return view('site.admin.demo.1',compact('inscriptions'))->render();
+                break;
+            case 2:
+                $inscriptions = $this->systemConfigRepo->getDataDemo1and2();
+                return view('site.admin.demo.2',compact('inscriptions'))->render();
+                break;
         }
     }
 

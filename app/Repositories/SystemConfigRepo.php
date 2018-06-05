@@ -153,4 +153,11 @@ class SystemConfigRepo extends BaseRepo
 
     }
 
+    public function getDataDemo1and2(){
+       $inscriptions = Inscription::all()->filter(function($inscription){
+           return Carbon::createFromFormat('Y-m-d H:i:s',$inscription->created_at)->addMinutes(20)->gte(Carbon::now());
+        });
+       return $inscriptions;
+    }
+
 }
