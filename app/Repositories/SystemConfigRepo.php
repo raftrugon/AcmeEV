@@ -47,7 +47,7 @@ class SystemConfigRepo extends BaseRepo
             $DB_actual_state = $DB_system_config->getActualState();
 
             $new_state = $DB_actual_state + 1;
-            if($new_state > 8)
+            if($new_state > 9)
                 $new_state = 0;
 
             $new_system_config = array(
@@ -77,19 +77,19 @@ class SystemConfigRepo extends BaseRepo
                     $this->groupRepo->subjectInstancesBatch();//Auto generación de  groups y conversations con asignación de alumnos
                     break;
 
-                case 5:
+                case 6:
                     $this->minuteRepo->minutesFromControlsBatch(1);       //Auto computación de minutes primera convocatoria¿?
                     break;
 
-                case 6:
+                case 7:
                     $this->minuteRepo->setAllStatusTrue();                          //Auto computación de minutes a status 1
                     break;
 
-                case 7:
+                case 8:
                     $this->minuteRepo->minutesFromControlsBatch(2);       //Auto computación de minutes segunda convocatoria¿?
                     break;
 
-                case 8:
+                case 9:
                     $this->minuteRepo->setAllStatusTrue();                          //Auto computación de minutes a status 1
                     break;
             }
