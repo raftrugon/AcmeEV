@@ -58,7 +58,7 @@ class SystemConfigRepo extends BaseRepo
 
 
 
-            /*switch ($new_state)
+            switch ($new_state)
             {
                 case 1:
                     $this->inscriptionRepo->inscriptionBatch(1);       //Auto computación primera de inscripciones
@@ -93,7 +93,7 @@ class SystemConfigRepo extends BaseRepo
                 case 10:
                     $this->minuteRepo->setAllStatusTrue();                         //Auto computación de minutes a status 1
                     break;
-            }*/
+            }
 
             DB::commit();
         } catch(\Exception $e){
