@@ -267,7 +267,7 @@ Route::group(['prefix'=>'calendar'],function() {
 });
 
 Route::group(['prefix'=>'subject'],function(){
-    Route::get('{subject}','SubjectController@getSubjectDisplay')->name('subject-display');
+    Route::get('{subject}','SubjectController@getSubjectDisplay')->name('subject-display')->middleware('can:view,subject');
     Route::get('/filesystem/data','SubjectController@getFileSystemData')->name('filesystem.data');
     Route::get('file/download/{file}','SubjectController@getDownloadFile');
 });
