@@ -67,7 +67,7 @@ class SystemConfigPolicy
         return $return;
     }
 
-    public function stateAccessTimeTable()
+    public function stateChangeTimeTableAndLecturers()
     {
         $return = false;
         $actual_state = $this->systemConfigRepo->getActualState();

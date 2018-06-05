@@ -194,29 +194,35 @@ Route::group(['prefix'=>'chat','middleware'=>['can:userLogged,App\SystemConfig']
 
 //////////////////////////////////////////////////////// GRUPOS ////////////////////////////////////////////////////////
 
-Route::group(['prefix'=>'group', 'middleware'=>['can:stateAccessTimeTable,App\SystemConfig']],function(){   //middleware estado 3 - 7
+Route::group(['prefix'=>'group'],function(){   //middleware estado 3 - 7
 
-    Route::group(['middleware'=>['role:pdi']],function(){                                       //middleware pdi
-        Route::group(['prefix'=>'manage','middleware'=>['permission:manage']],function(){       //middleware management
-            Route::group(['prefix'=>'timetable'],function(){
-                Route::get('/','Pdi\GroupController@getSchedulingView');                                    //verificar
-                Route::get('data','Pdi\GroupController@getAvailableSubjectsAndRooms');                      //verificar
-                Route::get('resources','Pdi\GroupController@getGroupsForYearAndDegree');                    //verificar
-                Route::get('events','Pdi\GroupController@getScheduledForDegreeAndYear');                    //verificar
-                Route::post('new','Pdi\GroupController@postNewTimetableTime');                              //verificar
+    Route::group(['middleware'=>['can:stateChangeTimeTableAndLecturers,App\SystemConfig']],function(){   //middleware estado 4
+        Route::group(['middleware'=>['role:pdi']],function(){                                            //middleware pdi
+            //Asignar horarios y rooms PUEDE Manager
+            Route::group(['prefix'=>'manage','middleware'=>['permission:manage']],function(){            //middleware management
+                Route::group(['prefix'=>'timetable'],function(){
+                    Route::get('/','Pdi\GroupController@getSchedulingView');                                    //verificar
+                    Route::get('data','Pdi\GroupController@getAvailableSubjectsAndRooms');                      //verificar
+                    Route::get('resources','Pdi\GroupController@getGroupsForYearAndDegree');                    //verificar
+                    Route::get('events','Pdi\GroupController@getScheduledForDegreeAndYear');                    //verificar
+                    Route::post('new','Pdi\GroupController@postNewTimetableTime');                              //verificar
+                });
             });
-        });
 
-        Route::group(['middleware'=>['permission:direct_department']],function(){
-            Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');                                //verificar
-            Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');     //verificar
-        });
+            //Asignación de profesores a grupos PUEDE coordinador
+            Route::group(['middleware'=>['permission:direct_department']],function(){                     //middleware coordinador
+                Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');                                //verificar
+                Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');     //verificar
+            });
 
+        });
     });
+
 
 
     Route::group(['prefix'=>'student','middleware'=>['permission:current']],function(){         //middleware current
 
+        //Horario de clases STUDENT
         Route::group(['prefix'=>'schedule'],function() {
             Route::get('/', 'Student\ScheduleController@getSchedule');                                      //Verificar
             Route::get('events', 'Student\ScheduleController@getScheduleEvents');                           //verificar
@@ -224,6 +230,7 @@ Route::group(['prefix'=>'group', 'middleware'=>['can:stateAccessTimeTable,App\Sy
 //            Route::get('print', 'Student\ScheduleController@getPrint');
         });
 
+        //Permutar STUDENT
         Route::group(['prefix'=>'exchange', 'middleware'=>['can:stateExchangeGroups,App\SystemConfig']],function() {
             Route::get('/create', 'Student\ExchangeController@getCreate');                                  //verificar
             Route::get('/data-and-availability', 'Student\ExchangeController@getTargetDataAndAvailability');//verificar

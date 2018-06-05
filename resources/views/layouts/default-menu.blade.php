@@ -50,14 +50,19 @@
 
         @role('student')
             @can('current')
-            @if($actual_state > 2 && $actual_state < 10)
-                <li>
-                    <a class="text-light nav-link" href="{{URL::to('student/my-subjects')}}"><i class="fas fa-book d-block text-primary"></i><span>{{__('menu.my.subjects')}}</span></a>
-                </li>
-                <li>
-                    <a class="text-light nav-link" href="{{URL::to('student/enrollment/my-enrollments')}}"><i class="fas fa-address-card d-block text-primary"></i><span>{{__('menu.enrollments')}}</span></a>
-                </li>
-            @endif
+                @if($actual_state > 2 && $actual_state < 10)
+                    <li>
+                        <a class="text-light nav-link" href="{{URL::to('student/my-subjects')}}"><i class="fas fa-book d-block text-primary"></i><span>{{__('menu.my.subjects')}}</span></a>
+                    </li>
+                    <li>
+                        <a class="text-light nav-link" href="{{URL::to('student/enrollment/my-enrollments')}}"><i class="fas fa-address-card d-block text-primary"></i><span>{{__('menu.enrollments')}}</span></a>
+                    </li>
+                @endif
+                @if($actual_state > 4 && $actual_state < 10)
+                    <li>
+                        <a class="text-light nav-link" href="{{URL::to('group/student/schedule')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.student.schedule')}}</span></a>
+                    </li>
+                @endif
                 <li>
                     <a class="text-light nav-link" href="{{URL::to('student/minute/my-minutes')}}"><i class="fas fa-graduation-cap d-block text-primary"></i><span>{{__('menu.minutes')}}</span></a>
                 </li>
@@ -101,11 +106,6 @@
                     <a class="text-light nav-link" href="{{URL::to('group/manage/timetable')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.group.timetable')}}</span></a>
                 </li>
             @endif
-        @endcan
-        @can('current')
-            <li>
-                <a class="text-light nav-link" href="{{URL::to('group/student/schedule')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.student.schedule')}}</span></a>
-            </li>
         @endcan
 
 
