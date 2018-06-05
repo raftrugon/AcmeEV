@@ -194,7 +194,7 @@ Route::group(['prefix'=>'chat','middleware'=>['can:userLogged,App\SystemConfig']
 
 //////////////////////////////////////////////////////// GRUPOS ////////////////////////////////////////////////////////
 
-Route::group(['prefix'=>'group'],function(){   //middleware estado 3 - 7
+Route::group(['prefix'=>'group'],function(){
 
     Route::group(['middleware'=>['can:stateChangeTimeTableAndLecturers,App\SystemConfig']],function(){   //middleware estado 4
         Route::group(['middleware'=>['role:pdi']],function(){                                            //middleware pdi
@@ -211,7 +211,7 @@ Route::group(['prefix'=>'group'],function(){   //middleware estado 3 - 7
 
             //Asignación de profesores a grupos PUEDE coordinador
             Route::group(['middleware'=>['permission:direct_department']],function(){                     //middleware coordinador
-                Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');                                //verificar
+                Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers')->middleware('can:exchangeGroup,group');       //verificar
                 Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');     //verificar
             });
 

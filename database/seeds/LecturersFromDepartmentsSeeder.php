@@ -51,7 +51,7 @@ class LecturersFromDepartmentsSeeder extends Seeder
 
                 //Permisos
                 if($coordinator){
-                    $pas->givePermissionTo('teach','direct_department');        //El primero es coordinador
+                    $pas->givePermissionTo('teach','direct_department');        //El primero es director de departamento
                     $coordinator = false;
                 } else {
                     $pas->givePermissionTo('teach');
