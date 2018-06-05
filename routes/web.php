@@ -52,9 +52,9 @@ Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){   
     Route::post('/degreeDelete','Admin\DegreeController@deleteDegree')->name('delete_degree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');  //Correct
 });
 
-/////////////////////////////////////////// Admin & Management ////////////////////////////////////////////////////////
+/////////////////////////////////////////// Admin User Management ////////////////////////////////////////////////////////
 
-Route::group(['prefix'=>'users','middleware'=>['role:admin']],function(){////POLICY
+Route::group(['prefix'=>'users','middleware'=>['role:admin']],function(){
     Route::get('/','UserController@getList');
     Route::get('/data','UserController@getData');
     Route::post('/delete','UserController@postDelete');
@@ -74,22 +74,16 @@ Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
         Route::post('/delete', 'Pas\PasAppointmentsController@postDeleteCalendarDate');                     //Correct
     });
 
-    Route::get('/appointment-info','Pas\PasAppointmentsController@getAppointmentsInfo');
-    Route::get('/inscription-list','Pas\PasController@getPrintAllLists');
-
-    Route::group(['middleware'=>['can:stateListInscriptions,App\SystemConfig']],function() {                    //middleware estado 1 o 2
-        Route::get('/inscription-list', 'Pas\PasController@getPrintAllLists');                              //Verificar
-        Route::get('/', 'Pas\PasController@getDashboard');                                                  //Integrada en principal, verificar y eliminar original
-    });
-
     Route::get('/appointment-info','Pas\PasAppointmentsController@getAppointmentsInfo');                    //Correct
+    Route::get('/inscription-list', 'Pas\PasController@getPrintAllLists')->middleware('can:stateListInscriptions,App\SystemConfig');  //Correct //middleware estado 1 o 2
+
 });
 
 //////////////////////////////////////////////////////// PDI ////////////////////////////////////////////////////////
 
 Route::group(['prefix'=>'management','middleware'=>['permission:manage']],function(){
 
-    Route::group(['middleware'=>['can:stateEditDegreesDepartmentsSubjects,App\SystemConfig']],function() {  //middleware por estado 8 o 0-2
+    Route::group(['middleware'=>['can:stateEditDegreesDepartmentsSubjects,App\SystemConfig']],function() {  //middleware por estado 10 o 0-2
 
         Route::group(['prefix'=>'degree'],function() {
             Route::get('new','DegreeController@getNewDegree');                                                  //Correct
@@ -212,8 +206,11 @@ Route::group(['prefix'=>'group', 'middleware'=>['can:stateAccessTimeTable,App\Sy
             });
         });
 
-        Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');                                //verificar
-        Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');     //verificar
+        Route::group(['middleware'=>['permission:direct_department']],function(){
+            Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');                                //verificar
+            Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');     //verificar
+        });
+
     });
 
 

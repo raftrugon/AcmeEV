@@ -42,9 +42,6 @@
         @role('pas')
             @if($actual_state == 1 || $actual_state == 2)
             <li>
-                <a class="text-light nav-link" href="{{URL::to('administration/inscription-list')}}"><i class="fas fa-address-book d-block text-primary"></i><span>{{__('menu.inscriptions.all')}}</span></a>
-            </li>
-            <li>
                 <a href="#" class="text-light nav-link print-inscriptions"><i class="fas fa-address-book d-block text-primary"></i><span>{{__('menu.inscriptions.select')}}</span></a>
             </li>
             <a id="download_link" href="#" download="inscriptions" style="visibility:hidden"></a>

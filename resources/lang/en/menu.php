@@ -13,7 +13,6 @@ return [
     'subjects'=>'Subjects',
     'minutes'=>'Minutes',
     'minutes.edit'=>'Edit Minutes',
-    'inscriptions.all'=> 'Accepted Inscr.',
     'inscriptions.select'=> 'Inscr. by Degree',
     'inscriptions.select.title' => 'Select the degrees to create the list.',
 ];
