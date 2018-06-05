@@ -6,6 +6,7 @@ use App\Repositories\SystemConfigRepo;
 use App\User;
 use App\SystemConfig;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class SystemConfigPolicy
 {
@@ -18,6 +19,20 @@ class SystemConfigPolicy
         $this->systemConfigRepo = $systemConfigRepo;
     }
 
+    public function userLogged()
+    {
+        $return = true;
+
+        try{
+            Auth::user()->getId();
+        } catch (\Exception $e){
+            $return = false;
+        } catch (\Throwable $t){
+            $return = false;
+        }
+
+        return $return;
+    }
 
     public function stateEditDegreesDepartmentsSubjects()
     {

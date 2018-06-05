@@ -7,8 +7,6 @@
             @php ($first = 1)
             @php ($index = 1)
             @foreach($academic_years as $enrollments)
-
-
                 <div class="card">
                     <div class="card-header" id="heading{{$index}}">
                         <h5 class="mb-0">
@@ -37,14 +35,23 @@
                             <div class="card-body">
                                 @foreach($enrollments as $enrollment)
                                     @php ($subject = $enrollment->getSubjectInstance->getSubject)
-                                    <a href="{{URL::to('subject/'.$subject->getId())}}">{{--<a href="{{URL::to('subject/'.$enrollment->getSubjectInstance->getId())}}">--}}
-                                        <div class="card border-primary mb-3">
-                                            <div class="card-body text-primary">
+                                    @if($enrollment->getSubjectInstance->getAcademicYear() == ($actual_academic_year))
+                                        <a href="{{URL::to('subject/'.$subject->getId())}}">
+                                            <div class="card border-primary mb-3">
+                                                <div class="card-body text-primary">
+                                                    <h5 class="card-title">{{$subject->getName()}}</h5>
+                                                    <p class="card-text"><strong>@lang('attributes.department'): </strong>{{$subject->getDepartment->getName()}}</p>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    @else
+                                        <div class="card border-dark mb-3">
+                                            <div class="card-body text-dark">
                                                 <h5 class="card-title">{{$subject->getName()}}</h5>
                                                 <p class="card-text"><strong>@lang('attributes.department'): </strong>{{$subject->getDepartment->getName()}}</p>
                                             </div>
                                         </div>
-                                    </a>
+                                    @endif
                                 @endforeach
 
                             </div>

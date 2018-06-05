@@ -156,30 +156,31 @@ Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
 
 Route::group(['prefix'=>'student','middleware'=>['role:student']],function(){
     Route::group(['prefix'=>'enrollment'],function() {
-        Route::get('my-enrollments', 'Student\EnrollmentController@getMyEnrollments')->middleware('permission:current||old');
-        Route::get('enroll', 'Student\EnrollmentController@getEnroll')->middleware('can:enroll,App\Enrollment');
-        Route::post('post-enroll', 'Student\EnrollmentController@postPostEnroll')->middleware('can:enroll,App\Enrollment');
+        Route::get('my-enrollments', 'Student\EnrollmentController@getMyEnrollments')->middleware('permission:current');        //Correct
+        Route::get('enroll', 'Student\EnrollmentController@getEnroll')->middleware('can:enroll,App\Enrollment');                //Correct
+        Route::post('post-enroll', 'Student\EnrollmentController@postPostEnroll')->middleware('can:enroll,App\Enrollment');     //Correct
     });
 
     Route::group(['prefix'=>'subject'],function() {
-        Route::post('control-check/upload','Student\ControlCheckController@uploadControlCheck')->name('upload_control_check');
+        Route::post('control-check/upload','Student\ControlCheckController@uploadControlCheck')->name('upload_control_check');      //Verificar
     });
 
-    Route::get('my-subjects', 'Student\SubjectInstanceController@getMySubjectInstances');
     Route::group(['prefix'=>'minute'], function() {
-        Route::get('my-minutes','Student\MinuteController@getMinutesForStudent');
+        Route::get('my-minutes','Student\MinuteController@getMinutesForStudent')->middleware('permission:current');             //Correct
     });
+
+    Route::get('my-subjects', 'Student\SubjectInstanceController@getMySubjectInstances')->middleware('permission:current');     //Correct
 });
 
 //////////////////////////////////////////////////////// Logged ////////////////////////////////////////////////////////
 
-Route::group(['prefix'=>'logged'/*,'middleware'=>'auth'*/],function(){
+Route::group(['prefix'=>'logged','middleware'=>['can:userLogged,App\SystemConfig']],function(){
     Route::group(['prefix'=>'announcement'],function() {
         Route::get('{subjectInstance}/list', 'Logged\AnnouncementController@getAllBySubjectInstance');
     });
 });
 
-Route::group(['prefix'=>'chat','middleware','middleware'=>'auth'],function(){
+Route::group(['prefix'=>'chat','middleware'=>['can:userLogged,App\SystemConfig']],function(){
     Route::post('new','ChatController@postNewChat');
     Route::get('load','ChatController@getLoadChats');
     Route::post('close','ChatController@postCloseChat');
