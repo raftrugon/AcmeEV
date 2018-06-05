@@ -37,8 +37,7 @@ class MinuteRepo extends BaseRepo
             ->orderBy('subject_instances.academic_year', 'DESC')
             ->orderBy('subjects.name', 'ASC')
             ->select('minutes.*', 'subject_instances.academic_year')
-            ->where('enrollments.user_id',$user->getId())
-            ->where('minutes.status','0');
+            ->where('enrollments.user_id',$user->getId());
     }
 
     public function minutesFromControlsBatch($summon){

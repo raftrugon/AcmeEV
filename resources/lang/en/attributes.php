@@ -31,6 +31,7 @@ return [
     'code' => 'Code',
     'type' => 'Type',
     'academic_year'=> 'Academic Year',
+    'active'=>'Active',
     'title'=>'Title',
     'body'=>'Body',
     'name_es'=>'Spanish University Name',

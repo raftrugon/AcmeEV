@@ -10,15 +10,24 @@ use App\SystemConfig;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ExchangeController extends Controller
 {
     protected $exchangeRepo;
+    protected $days;
 
     public function __construct(ExchangeRepo $exchangeRepo){
         $this->exchangeRepo = $exchangeRepo;
+
+        $this->days = array();
+        if(App::getLocale() == 'en'){
+            $this->days = ['M','T','W','Th','F'];
+        }else{
+            $this->days = ['L','M','X','J','V'];
+        }
     }
 
     public function getCreate(Request $request){
@@ -30,8 +39,9 @@ class ExchangeController extends Controller
             $source_id = $source->getId();
             $source_number = $source->getNumber();
             $source_subject = $source->getSubjectInstance->getSubject->getName();
-            $source_period_times = $source->getPeriodTimes->map(function($period){
-               return $period->day . $period->start . $period->end;
+            $days = $this->days;
+            $source_period_times = $source->getPeriodTimes->map(function($period) use ($days){
+               return $days[$period->day] . ': ' . substr($period->start,0,5) . ' - ' . substr($period->end,0,5);
             });
             array_unshift($target_options,'<option value="" selected disabled>'.__('group.select.default').'</option>');
         } catch (\Exception $e) {
@@ -46,8 +56,9 @@ class ExchangeController extends Controller
     public function getTargetDataAndAvailability(Request $request){
         try{
             $target = Group::findOrFail($request->input('group_id'));
-            $target_period_times = $target->getPeriodTimes->map(function($period){
-                return $period->day . $period->start . $period->end;
+            $days = $this->days;
+            $target_period_times = $target->getPeriodTimes->map(function($period) use ($days){
+                return $days[$period->day] . ': ' . substr($period->start,0,5) . ' - ' . substr($period->end,0,5);
             });
             $availability = $target->getMaxStudents() > $target->getStudents->count();
         } catch (\Exception $e) {
