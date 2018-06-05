@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Student;
 
 use App\Exchange;
 use App\Group;
+use App\Policies\SystemConfigPolicy;
 use App\Repositories\ExchangeRepo;
+use App\SystemConfig;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -73,17 +75,16 @@ class ExchangeController extends Controller
                                     ->oldest()
                                     ->first();
         DB::beginTransaction();
-        try {
-            $done = true;
+            $done = 'true';
             if (!is_null($permutaExistente)) {
                 $permutaExistente->setIsApproved(1);
                 $this->exchangeRepo->updateWithoutData($permutaExistente);
                 $permutaExistente->getUser->getGroups()->toggle([$target->getId(), $source->getId()]);
                 Auth::user()->getGroups()->toggle([$target->getId(), $source->getId()]);
-            } else if ($target->getMaxStudents() > $target->getStudents->count()) {
+            } else if (SystemConfig::first()->getMaxStudentsPerGroup() > $target->getStudents->count()) {
                 Auth::user()->getGroups()->toggle([$target->getId(), $source->getId()]);
             } else {
-                $done = false;
+                $done = 'false';
                 $permuta = new Exchange();
                 $permuta->setSource($source->getId());
                 $permuta->setTarget($target->getId());
@@ -93,12 +94,6 @@ class ExchangeController extends Controller
             DB::commit();
             if($done) return 'true';
             else return 'waiting';
-        }catch(Exception $e){
-            DB::rollback();
-            return false;
-        }catch(\Throwable $t){
-            DB::rollback();
-            return false;
-        }
+
     }
 }

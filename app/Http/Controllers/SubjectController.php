@@ -35,12 +35,10 @@ class SubjectController extends Controller
             $announcements = $subject->getSubjectInstances()->where('academic_year', Carbon::now()->year)->first()->getAnnouncements;
             $controlCheckInstances = $this->controlCheckRepo->getControlCheckInstancesForStudent($subject, null)->get();
             $controlChecks = $this->controlCheckRepo->getControlChecksForLecturer($subject)->get();
-            $canCreateControlChecks = $this->subjectInstanceRepo->canAddControlChecks(
-                $this->subjectInstanceRepo->getCurrentInstance($subject->getId())->getId());
             if (Auth::user()->hasRole('student'))
                 return view('site.subject.display', compact('subject', 'announcements', 'controlCheckInstances'));
             elseif (Auth::user()->hasRole('pdi'))
-                return view('site.subject.display', compact('subject', 'announcements', 'controlChecks', 'canCreateControlChecks'));
+                return view('site.subject.display', compact('subject', 'announcements', 'controlChecks'));
         } catch (\Exception $e) {
             return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
         } catch (\Throwable $t) {

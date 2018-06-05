@@ -47,7 +47,8 @@
 @section('scripts')
     <script type="text/javascript">
         $('.datetimepicker').datetimepicker({
-            format: 'YYYY-MM-DD'
+            format: 'YYYY-MM-DD',
+            minDate: new Date()
         });
         $('.time').datetimepicker({
             format: 'HH:mm:ss'
