@@ -32,7 +32,8 @@ class ExampleTest extends TestCase
     }
 
     function tearDown(){
-        echo("EMPIEZA2");
+        echo("TERMINA1");
         parent::tearDown();
     }
+
 }
