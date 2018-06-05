@@ -30,10 +30,10 @@
                                 <th scope="col">#</th>
                                 <th scope="col">@lang('attributes.name')</th>
                                 <th scope="col">@lang('attributes.department')</th>
-                                <th scope="col">@lang('attributes.school_year')</th>
                                 <th scope="col">@lang('attributes.semester')</th>
                                 <th scope="col">@lang('attributes.type')</th>
                                 <th scope="col">@lang('attributes.code')</th>
+                                <th scope="col">@lang('attributes.active')</th>
                                 @if($actual_state < 3 || $actual_state == 10)
                                     @can('manage')
                                         <th></th>
@@ -48,7 +48,6 @@
                                     <th scope="row">{{$index}}</th>
                                     <td>{{$subject->getName()}}</td>
                                     <td><a href="{{URL::to('department/' . $subject->getDepartment->getId() . '/display')}}">{{$subject->getDepartment->getName()}}</a></td>
-                                    <td>{{$subject->getSchoolYear()}}</td>
                                     <td>
                                         @if (is_null($subject->getSemester()))
                                             @lang('subject.annual')
@@ -61,23 +60,30 @@
                                     <td>
                                         @if($subject->getSubjectType()=='OBLIGATORY')
                                             <small class="font-weight-light">
-                                                @lang('subject.obligatory')</br>
+                                                @lang('subject.obligatory')
                                             </small>
                                         @elseif($subject->getSubjectType()=='BASIC')
                                             <small class="font-weight-light">
-                                                @lang('subject.basic')</br>
+                                                @lang('subject.basic')
                                             </small>
                                         @elseif($subject->getSubjectType()=='OPTATIVE')
                                             <small class="font-weight-light">
-                                                @lang('subject.optative')</br>
+                                                @lang('subject.optative')
                                             </small>
                                         @elseif($subject->getSubjectType()=='EDP')
                                             <small class="font-weight-light">
-                                                @lang('subject.dt')</br>
+                                                @lang('subject.dt')
                                             </small>
                                         @endif
                                     </td>
                                     <td>{{$subject->getCode()}}</td>
+                                    <td>
+                                        @if($subject->isActive())
+                                            @lang('global.yes')
+                                        @else
+                                            @lang('global.yes')
+                                        @endif
+                                    </td>
                                     @if($actual_state < 3 || $actual_state == 10)
                                         @can('manage')
                                             <td><a href="{{URL::to('management/subject/'.$degree->getId().'/edit/'.$subject->getId())}}" class="btn btn-primary">@lang('global.edit')</a></td>
