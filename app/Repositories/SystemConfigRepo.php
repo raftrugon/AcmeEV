@@ -77,19 +77,19 @@ class SystemConfigRepo extends BaseRepo
                     $this->groupRepo->subjectInstancesBatch();//Auto generación de  groups y conversations con asignación de alumnos
                     break;
 
-                case 6:
+                case 7:
                     $this->minuteRepo->minutesFromControlsBatch(1);       //Auto computación de minutes primera convocatoria¿?
                     break;
 
-                case 7:
+                case 8:
                     $this->minuteRepo->setAllStatusTrue();                          //Auto computación de minutes a status 1
                     break;
 
-                case 8:
+                case 9:
                     $this->minuteRepo->minutesFromControlsBatch(2);       //Auto computación de minutes segunda convocatoria¿?
                     break;
 
-                case 9:
+                case 10:
                     $this->minuteRepo->setAllStatusTrue();                          //Auto computación de minutes a status 1
                     break;
             }
