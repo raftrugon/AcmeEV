@@ -33,11 +33,11 @@ class SystemConfigRepo extends BaseRepo
     }
 
     public function getSystemConfig(){
-        return SystemConfig::first();//DB::table('system_configs')->first();//
+        return SystemConfig::first();
     }
 
     public function getActualState(){
-        return SystemConfig::first()->getActualState();//DB::table('system_configs')->first();//
+        return SystemConfig::first()->getActualState();
     }
 
     public function incrementStateMachine(){
@@ -47,7 +47,7 @@ class SystemConfigRepo extends BaseRepo
             $DB_actual_state = $DB_system_config->getActualState();
 
             $new_state = $DB_actual_state + 1;
-            if($new_state > 9)
+            if($new_state > 10)
                 $new_state = 0;
 
             $new_system_config = array(
@@ -61,36 +61,37 @@ class SystemConfigRepo extends BaseRepo
             switch ($new_state)
             {
                 case 1:
-                    $this->inscriptionRepo->inscriptionBatch(1);        //Auto computación primera de inscripciones
+                    $this->inscriptionRepo->inscriptionBatch(1);       //Auto computación primera de inscripciones
                     break;
 
                 case 2:
-                    $this->inscriptionRepo->inscriptionBatch(2);        //Auto computación segunda de inscripciones
+                    $this->inscriptionRepo->inscriptionBatch(2);       //Auto computación segunda de inscripciones
                     break;
 
                 case 3:
-                    $this->subjectInstanceRepo->subjectInstancesBatch();            //Auto generación de subject instances
+                    $this->subjectInstanceRepo->subjectInstancesBatch();           //Auto generación de subject instances
                     $this->userRepo->createBatchFromInscriptions();                //Generación de usuarios con las inscripciones aceptadas
                     break;
 
                 case 4:
-                    $this->groupRepo->subjectInstancesBatch();//Auto generación de  groups y conversations con asignación de alumnos
+                    $this->groupRepo->subjectInstancesBatch();                     //Auto generación de  groups y conversations con asignación de alumnos
                     break;
 
+
                 case 7:
-                    $this->minuteRepo->minutesFromControlsBatch(1);       //Auto computación de minutes primera convocatoria¿?
+                    $this->minuteRepo->minutesFromControlsBatch(1);       //Auto computación de minutes primera convocatoria
                     break;
 
                 case 8:
-                    $this->minuteRepo->setAllStatusTrue();                          //Auto computación de minutes a status 1
+                    $this->minuteRepo->setAllStatusTrue();                         //Auto computación de minutes a status 1
                     break;
 
                 case 9:
-                    $this->minuteRepo->minutesFromControlsBatch(2);       //Auto computación de minutes segunda convocatoria¿?
+                    $this->minuteRepo->minutesFromControlsBatch(2);       //Auto computación de minutes segunda convocatoria
                     break;
 
                 case 10:
-                    $this->minuteRepo->setAllStatusTrue();                          //Auto computación de minutes a status 1
+                    $this->minuteRepo->setAllStatusTrue();                         //Auto computación de minutes a status 1
                     break;
             }
 

@@ -15,7 +15,7 @@
                             <strong>@lang('department.code'): </strong> {{$department->getCode()  }}</br>
                             <strong>@lang('department.url'): </strong> <a href="{{$department->getWebsite()}}">{{$department->getWebsite()}}</a>
                         </p>
-                        @if($actual_state < 3 || $actual_state == 8)
+                        @if($actual_state < 3 || $actual_state == 10)
                             @can('manage')
                                 <a href="{{URL::to('management/department/edit/'.$department->getId())}}" class="btn btn-success">
                                     @lang('global.edit')
@@ -30,7 +30,7 @@
     </div>
 
 
-    @if($actual_state < 3 || $actual_state == 8)
+    @if($actual_state < 3 || $actual_state == 10)
         @can('manage')
             <a href="{{ URL::to('management/department/edit') }}" id="submitButton" class="col-sm-3 fixed-bottom btn btn-success position-fixed" style="left:50%;transform:translate(-50%,0);bottom:20px;">
                 @lang('department.new')
