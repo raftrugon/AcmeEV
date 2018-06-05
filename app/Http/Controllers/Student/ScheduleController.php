@@ -24,13 +24,7 @@ class ScheduleController extends Controller
     }
 
     public function getScheduleEvents(Request $request){
-        try{
             return $this->groupRepo->getMySchedule($request->input('start'));
-        } catch (\Exception $e) {
-            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
-        } catch (\Throwable $t) {
-            return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
-        }
     }
 
     public function getScheduleResources(Request $request){
