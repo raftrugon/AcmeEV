@@ -6,6 +6,7 @@ use App\Repositories\SystemConfigRepo;
 use App\User;
 use App\SystemConfig;
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Support\Facades\Auth;
 
 class SystemConfigPolicy
 {
@@ -18,13 +19,27 @@ class SystemConfigPolicy
         $this->systemConfigRepo = $systemConfigRepo;
     }
 
+    public function userLogged()
+    {
+        $return = true;
+
+        try{
+            Auth::user()->getId();
+        } catch (\Exception $e){
+            $return = false;
+        } catch (\Throwable $t){
+            $return = false;
+        }
+
+        return $return;
+    }
 
     public function stateEditDegreesDepartmentsSubjects()
     {
         $return = true;
         $actual_state = $this->systemConfigRepo->getActualState();
 
-        if($actual_state > 2 && $actual_state < 8)
+        if($actual_state > 2 && $actual_state < 10)
             $return = false;
 
         return $return;
@@ -35,7 +50,7 @@ class SystemConfigPolicy
         $return = false;
         $actual_state = $this->systemConfigRepo->getActualState();
 
-        if($actual_state == 5 || $actual_state == 7)
+        if($actual_state == 7 || $actual_state == 9)
             $return = true;
 
         return $return;
@@ -52,7 +67,7 @@ class SystemConfigPolicy
         return $return;
     }
 
-    public function stateAccessTimeTable()
+    public function stateChangeTimeTableAndLecturers()
     {
         $return = false;
         $actual_state = $this->systemConfigRepo->getActualState();
@@ -68,7 +83,7 @@ class SystemConfigPolicy
         $return = false;
         $actual_state = $this->systemConfigRepo->getActualState();
 
-        if($actual_state == 4)
+        if($actual_state == 5)
             $return = true;
 
         return $return;

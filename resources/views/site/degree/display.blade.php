@@ -34,7 +34,7 @@
                                 <th scope="col">@lang('attributes.semester')</th>
                                 <th scope="col">@lang('attributes.type')</th>
                                 <th scope="col">@lang('attributes.code')</th>
-                                @if($actual_state < 3 || $actual_state == 8)
+                                @if($actual_state < 3 || $actual_state == 10)
                                     @can('manage')
                                         <th></th>
                                     @endcan
@@ -78,7 +78,7 @@
                                         @endif
                                     </td>
                                     <td>{{$subject->getCode()}}</td>
-                                    @if($actual_state < 3 || $actual_state == 8)
+                                    @if($actual_state < 3 || $actual_state == 10)
                                         @can('manage')
                                             <td><a href="{{URL::to('management/subject/'.$degree->getId().'/edit/'.$subject->getId())}}" class="btn btn-primary">@lang('global.edit')</a></td>
                                         @endcan
@@ -94,7 +94,7 @@
 
     </div>
 
-    @if($actual_state < 3 || $actual_state == 8)
+    @if($actual_state < 3 || $actual_state == 10)
         @can('manage')
             <a href="{{URL::to('management/subject/'.$degree->getId().'/edit')}}" id="submitButton" class="fixed-bottom btn btn-success position-fixed col-sm-3" style="left:50%;transform:translate(-50%,0);bottom:20px;">
                 @lang('subject.add')
