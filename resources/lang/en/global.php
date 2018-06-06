@@ -26,6 +26,7 @@ return[
     'idNumber'=>'Id number',
     'fullName'=>'Full name',
     'student'=>'Student',
+    'demo.no-info'=>'There are no items to show.',
     'welcome-heading'=>'Welcome to the virtual teaching platform',
     'welcome-body'=>'This web page is designed for students and university\'s internal 
         staff to manage the subjects making the teaching experience easier and 

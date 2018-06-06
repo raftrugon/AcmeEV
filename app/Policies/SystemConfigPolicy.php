@@ -101,28 +101,4 @@ class SystemConfigPolicy
     }
 
 
-    public function inscribe()
-    {
-        $return = false;
-        $actual_state = $this->systemConfigRepo->getActualState();
-
-        if($actual_state == 0)
-            $return = true;
-
-        return $return;
-    }
-
-
-    public function viewInscriptions()
-    {
-        $return = false;
-        $actual_state = $this->systemConfigRepo->getActualState();
-
-        if($actual_state == 1 || $actual_state == 2)
-            $return = true;
-
-        return $return;
-    }
-
-
 }

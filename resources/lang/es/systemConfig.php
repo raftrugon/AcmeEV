@@ -2,9 +2,10 @@
 
 
 return[
-    'edit.tab1'=>'Edición de parámetros del sistema',
-    'edit.tab2'=>'Acciones del sistema',
+    'edit.tab1'=>'Parámetros del sistema',
+    'edit.tab2'=>'Máquina de Estados',
     'edit.dashboard'=>'Tablón de Estadísticas',
+    'edit.demo'=>'Demostración',
     'success'=>'Parámetros del sistema modificados correctamente.',
     'error'=>'Se ha producido un error al modificar los parámetros del sistema.',
     'increment.success'=>'La máquina de estados ha sido incrementada correctamente.',
