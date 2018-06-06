@@ -19,6 +19,7 @@ return[
     'department'=>'Department',
     'active'=>'Active',
     'coordinator'=>'Coordinator',
+    'announcements'=>'Announcements',
     'select_department'=>'Select a department',
 
 ];

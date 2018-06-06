@@ -41,7 +41,7 @@ messages:{
     name: "{{__('validation.required',['attribute'=>'attributes.name'])}}",
     new_students_limit: {
         required: "{{__('validation.required',['attribute'=>'attributes.new_students_limit'])}}",
-        min: "{{__('validation.min.numeric',['attribute'=>__('attributes.grade'),'min'=>0])}}",
+        min: "{{__('validation.min.numeric',['attribute'=>__('attributes.grade'),'min'=>1])}}",
     },
 }
 });

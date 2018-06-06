@@ -21,4 +21,5 @@ return[
     'deleteConfirm'=>'Are you sure you want to delete this control check?',
     'deleted'=>'Control check deleted successfully',
     'deleteFail'=>'Could not delete the control check',
+    'controlchecks'=>'Control Checks',
 ];
