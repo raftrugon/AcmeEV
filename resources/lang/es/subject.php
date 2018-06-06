@@ -19,4 +19,5 @@ return[
     'department'=>'Departamento',
     'active'=>'Activa',
     'coordinator'=>'Coordinador',
+    'select_department'=>'Seleccione un departamento',
 ];

@@ -8,6 +8,7 @@
         </strong>
     </h1>
     <select class="selectpicker w-100" data-live-search="true" id="select1">
+        <option value=""> @lang('global.choose_one')</option>
         @foreach($department_lecturers as $lecturer)
             <option value="{{$lecturer->getId()}}" @if($theory_lecturer == $lecturer) selected="true" @endif>
                 {{$lecturer->getFullName()}}
@@ -20,6 +21,7 @@
         </strong>
     </h1>
     <select class="selectpicker w-100" data-live-search="true" id="select2">
+        <option value=""> @lang('global.choose_one')</option>
         @foreach($department_lecturers as $lecturer)
             <option value="{{$lecturer->getId()}}" @if($practice_lecturer == $lecturer) selected="true" @endif>
                 {{$lecturer->getFullName()}}
