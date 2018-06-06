@@ -12,6 +12,7 @@ return[
     'state.actual'=>'Actual State',
     'state.next'=>'Next State',
     'state.go'=>'Go',
+    'state.go'=>'Go',
 
 
     'state.0.title'=>'Inscriptions opened.',
