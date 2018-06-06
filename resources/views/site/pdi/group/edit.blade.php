@@ -39,6 +39,9 @@
             let lecturers = [];
             lecturers[0] = $('#select1').selectpicker('val');
             lecturers[1] = $('#select2').selectpicker('val');
+            if(lecturers[0]==="" || lecturers[1]===""){
+                error('@lang('global.warning')','@lang('group.lecturers')');
+            } else {
             $.post('{{route('edit_group_lecturers',['group'=>$group->getId()])}}',{lecturers:lecturers,group:groupId},function(data){
                 if(data==='true'){
                     success('@lang('global.success')','@lang('group.successMessage')');
@@ -46,7 +49,7 @@
                 } else {
                     error('@lang('global.error')','@lang('group.commitError')');
                 }
-            });
+            });}
         });
     </script>
 @endsection
