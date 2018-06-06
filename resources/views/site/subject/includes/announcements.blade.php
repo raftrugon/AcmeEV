@@ -1,8 +1,8 @@
 <div class="p-2 d-flex justify-content-end">
     @role('pdi')
-    <button class="btn btn-success" id="newAnnouncementButton" data-toggle="modal" data-target="#newAnnouncementModal">
-        @lang('announcement.new')
-    </button>
+        <button class="btn btn-success" id="newAnnouncementButton" data-toggle="modal" data-target="#newAnnouncementModal">
+            @lang('announcement.new')
+        </button>
     @endrole
 </div>
 
@@ -13,10 +13,10 @@
                 <h5 class="card-header">
                     <div class="row">
                         <div class="col-6">{{$announcement->getTitle()}}</div>
-                        <div class="col-6" align="right">{{$announcement->getCreationMoment()}}</div>
+                        <div class="col-6" align="right">{{date(__('announcement.date.format'), strtotime($announcement->getCreationMoment()))}}</div>
                     </div>
                 </h5>
-                <div class="card-body col-6">
+                <div class="card-body col-12">
                     <p class="card-text">
                         {{$announcement->getbody()  }}
                     </p>
