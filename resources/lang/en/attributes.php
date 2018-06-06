@@ -36,4 +36,10 @@ return [
     'body'=>'Body',
     'name_es'=>'Spanish University Name',
     'name_en'=>'English University Name',
+    'subject'=>'Subject',
+    'room'=>'Room',
+    'role'=>'Role',
+    'full_name'=>'Full name',
+    'personal_email'=>'Personal e-mail',
+    'permission'=>'Permission',
 ];

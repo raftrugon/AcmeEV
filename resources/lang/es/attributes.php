@@ -36,4 +36,10 @@ return [
     'body'=>'Cuerpo',
     'name_es'=>'Nombre español de la universidad',
     'name_en'=>'Nombre inglés de la universidad',
+    'subject'=>'Asignatura',
+    'room'=>'Aula',
+    'role'=>'Rol',
+    'full_name'=>'Nombre completo',
+    'personal_email'=>'E-mail personal',
+    'permission'=>'Permiso',
 ];

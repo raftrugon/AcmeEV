@@ -16,4 +16,7 @@ return[
     'results-title'=>'Results for your inscription process',
     'success'=>'You have been successfully inscribed.',
     'error'=>'There was a problem committing your inscription. Maybe you have filled an inscription with the same ID number.',
+    'result.accept.credentials'=>'Wrong identification number or password',
+    'agree'=>'Agree',
+
 ];
