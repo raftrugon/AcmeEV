@@ -9,4 +9,5 @@ return[
     'timestamp'=>'Introduce a valid moment (PONER AQUI FORMATO)',
     'name_es'=>'Introduce the Spanish University Name',
     'name_en'=>'Introduce the English University Name',
+    'text'=>'Introduce text',
 ];

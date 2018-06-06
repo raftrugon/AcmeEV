@@ -2,15 +2,17 @@
 
 
 return[
-    'edit.tab1'=>'System parameters edition',
-    'edit.tab2'=>'System actions',
+    'edit.tab1'=>'System Parameters',
+    'edit.tab2'=>'State Machine',
     'edit.dashboard'=>'DashBoard',
+    'edit.demo'=>'Demo Items',
     'success'=>'System parameters successfully modified.',
     'error'=>'There was an error when modifying system parameters.',
     'increment.success'=>'State machine was incremented successfully.',
     'increment.error'=>'There was an error changing the state.',
     'state.actual'=>'Actual State',
     'state.next'=>'Next State',
+    'state.go'=>'Go',
     'state.go'=>'Go',
 
 

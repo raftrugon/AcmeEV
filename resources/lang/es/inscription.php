@@ -16,4 +16,8 @@ return[
     'results-title'=>'Resultados para tu proceso de inscripción',
     'success'=>'Su proceso de inscripción se ha completado satisfactoriamente.',
     'error'=>'Ha habido un fallo. ¿Hizo anteriormente una inscripción con el mismo NIF?.',
+    'result.accept.credentials'=>'Número de identificación o conttraseña incorrectos',
+    'result.accept.error'=>'No fue posible aceptar su adjudicación.',
+    'result.accept.success'=>'Su solicitud fue aceptada con éxito.',
+    'agree'=>'Aceptar',
 ];

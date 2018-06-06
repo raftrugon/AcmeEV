@@ -9,4 +9,5 @@ return[
     'timestamp'=>'Introduzca un momento válido. (PONER AQUI FORMATO)',
     'name_es'=>'Introduzca el nombre español de la universidad',
     'name_en'=>'Introduzca el nombre inglés de la universidad',
+    'text'=>'Introduzca texto',
 ];

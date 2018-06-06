@@ -8,4 +8,6 @@ return[
     'practiceLecturer'=>'Profesor de prácticas',
     'successMessage'=>'Grupo actualizado con éxito',
     'commitError'=>'No se pudo actualizar el grupo',
+    'select.default'=>'Seleccione un grupo',
+    'exchange.new'=>'Nueva permuta',
 ];

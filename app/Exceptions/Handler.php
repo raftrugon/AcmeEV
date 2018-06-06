@@ -49,7 +49,7 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         if ($exception instanceof AuthorizationException || $exception instanceof UnauthorizedException) {
-            return redirect('error/forbidden');
+            return redirect()->action('ErrorController@forbidden');
         }
         return parent::render($request, $exception);
     }

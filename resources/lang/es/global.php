@@ -13,8 +13,10 @@ return[
     'no'=>'No',
     'start'=>'Inicio',
     'end'=>'Fin',
+    'new'=>'Nuevo',
     'edit'=>'Editar',
     'error'=>'Error',
+    'warning'=>'Aviso',
     'success'=>'Éxito',
     'close'=>'Cerrar',
     'cancel'=>'Cancelar',
@@ -25,6 +27,7 @@ return[
     'idNumber'=>'Número de identificación',
     'fullName'=>'Nombre completo',
     'student'=>'Estudiante',
+    'demo.no-info'=>'No hay objetos para mostrar.',
     'welcome-heading'=>'Bienvenido a la Plataforma de Enseñanza Virtual',
     'welcome-body'=>'Esta página web ha sido diseñada para los estudiantes de la universidad
         y para el personal interno para una mejor administración de las asignaturas,

@@ -8,4 +8,6 @@ return[
     'practiceLecturer'=>'Practice lecturer',
     'successMessage'=>'Group updated successfully',
     'commitError'=>'Could not update the group',
+    'select.default'=>'Select a group',
+    'exchange.new'=>'New exchange',
 ];

@@ -63,9 +63,13 @@
                                 </select>
                             </div>
                             @include('global.input',['type'=>'checkbox','value'=>1,'id'=>'active','name'=>'active','checked'=>'checked','label'=>__('subject.active'),'texto'=>''])
-                            @include('global.select',['id'=>'department','objects'=>$departments,'value'=>'id','display'=>'name','label'=>__('subject.department')])
-                            @include('global.select',['id'=>'coordinator','objects'=>$pdis,'value'=>'id','display'=>'full_name','label'=>__('subject.coordinator')])
-                        @endif
+                            @include('global.select',['id'=>'department','objects'=>$departments,'value'=>'id','display'=>'name','label'=>__('subject.department'),'default'=>__('global.choose_one')])
+                            <div class="form-group selectpicker-form-group">
+                               <label class="control-label">@lang('subject.coordinator')</label> @endif
+                                <select class="selectpicker form-control" id="coordinator" name="coordinator">
+                                  <option value="">@lang('subject.select_department')</option>
+                                </select>
+                            </div>
                             <button class="btn btn-success">@lang('global.submit')</button>
                     </div>
                 </div>

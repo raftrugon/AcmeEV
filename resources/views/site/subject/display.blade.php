@@ -35,7 +35,7 @@
         <div class="nav nav-tabs nav-justified" id="nav-tab" role="tablist">
             <a class="nav-item nav-link active" id="nav-announcements-tab" data-toggle="tab" href="#nav-announcements" role="tab" aria-controls="nav-announcements" aria-selected="true">@lang('subject.announcements')</a>
             <a class="nav-item nav-link" id="nav-filesystem-tab" data-toggle="tab" href="#nav-filesystem" role="tab" aria-controls="nav-filesystem" aria-selected="false">@lang('filesystem.tab')</a>
-            <a class="nav-item nav-link" id="nav-controlchecks-tab" data-toggle="tab" href="#nav-controlchecks" role="tab" aria-controls="nav-controlchecks" aria-selected="false">@lang('filesystem.controlchecks')</a>
+            <a class="nav-item nav-link" id="nav-controlchecks-tab" data-toggle="tab" href="#nav-controlchecks" role="tab" aria-controls="nav-controlchecks" aria-selected="false">@lang('controlCheck.controlchecks')</a>
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
