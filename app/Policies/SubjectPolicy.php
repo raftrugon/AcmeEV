@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Repositories\SubjectRepo;
 use App\User;
 use App\Subject;
 use Carbon\Carbon;
@@ -10,6 +11,12 @@ use Illuminate\Auth\Access\HandlesAuthorization;
 class SubjectPolicy
 {
     use HandlesAuthorization;
+
+    protected $subjectRepo;
+
+    public function __construct(SubjectRepo $subjectRepo){
+        $this->subjectRepo = $subjectRepo;
+    }
 
     /**
      * Determine whether the user can view the subject.
@@ -20,7 +27,14 @@ class SubjectPolicy
      */
     public function view(User $user, Subject $subject)
     {
-        //return !is_null($user->getSubjectInstances()->where('academic_year',Carbon::now()->year)->where('subject_id',$subject->getId())->first());
+        if(!is_null($user->getSubjectInstances()->where('academic_year',$this->subjectRepo->getAcademicYear())->where('subject_id',$subject->getId())->first())) {
+            return true;
+        }else if($this->subjectRepo->getSubjectsForTeacher()->pluck('id')->contains($subject->getId())
+        ){
+            return true;
+        }else {
+            return false;
+        }
     }
 
     /**

@@ -6,6 +6,8 @@ use App\ControlCheck;
 use App\ControlCheckInstance;
 use App\Enrollment;
 use App\Minute;
+use App\SubjectInstance;
+use App\SystemConfig;
 use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -35,58 +37,70 @@ class MinuteRepo extends BaseRepo
             ->orderBy('subject_instances.academic_year', 'DESC')
             ->orderBy('subjects.name', 'ASC')
             ->select('minutes.*', 'subject_instances.academic_year')
-            ->where('enrollments.user_id',$user->getId())
-            ->where('minutes.status','0');
+            ->where('enrollments.user_id',$user->getId());
     }
 
     public function minutesFromControlsBatch($summon){
-
-
-        //Control checks instances por cada usuario
-        $control_checks_instances_ordered_by_user_id = ControlCheckInstance::join('users', 'control_check_instances.student_id', '=', 'users.id')
-        ->join('control_checks', 'control_check_instances.control_check_id', '=', 'control_checks.id')
-        ->join('enrollments', 'users.id', '=', 'enrollments.user_id')
-        ->select('control_checks.*', 'control_check_instances.qualification as qualification', 'users.id as user_id', 'enrollments.id as enrollment_id')
-        ->get()->groupBy('user_id');
-
         try {
 
         DB::beginTransaction();
+            $subject_instances = SystemConfig::first()->getActualState() == 7 ?
+                SubjectInstance::where('academic_year',$this->getAcademicYear())
+                    ->join('subjects','subject_instances.subject_id','=','subjects.id')
+                    ->where('subjects.semester',0)
+                    ->select('subject_instances.*')->get()
+            :
+                SubjectInstance::where('academic_year',$this->getAcademicYear())
+                    ->join('subjects','subject_instances.subject_id','=','subjects.id')
+                    ->where(function($sub) {
+                        $sub->where('subjects.semester', 1)
+                            ->orWhereNull('subjects.semester');
+                    })
+                    ->select('subject_instances.*')->get();
 
-            //Por cada User
-            foreach ($control_checks_instances_ordered_by_user_id as $control_checks_instances){
+            foreach($subject_instances as $subject_instance) {
+                //Control checks instances por cada usuario y subject instance de este cuatri
+                $control_checks_instances_ordered_by_user_id = ControlCheckInstance::join('users', 'control_check_instances.student_id', '=', 'users.id')
+                    ->join('control_checks', 'control_check_instances.control_check_id', '=', 'control_checks.id')
+                    ->join('enrollments', 'users.id', '=', 'enrollments.user_id')
+                    ->select('control_checks.*', 'control_check_instances.qualification as qualification', 'users.id as user_id', 'enrollments.id as enrollment_id')
+                    ->where('enrollments.subject_instance_id', $subject_instance)
+                    ->get()->groupBy('user_id');
+                //Por cada User
+                foreach ($control_checks_instances_ordered_by_user_id as $control_checks_instances) {
 
-                $control_checks_instances_ordered_by_enrollment_id = $control_checks_instances->groupBy('enrollment_id');
+                    $control_checks_instances_ordered_by_enrollment_id = $control_checks_instances->groupBy('enrollment_id');
 
-                //Por cada enrollment
-                foreach ($control_checks_instances_ordered_by_enrollment_id as $control_check_instance_2){
+                    //Por cada enrollment
+                    foreach ($control_checks_instances_ordered_by_enrollment_id as $enrollment_id => $control_check_instance_2) {
 
-                    //Variables
-                    $enrollment_id = $control_check_instance_2->enrollment_id;
-                    $minute_qualification = 0;
-
-                    //Por cada control_check_instance se crea la nota del minute
-                    foreach ($control_check_instance_2 as $control_check_instance){
 
                         //Variables
-                        $control_check_qualification = $control_check_instance->qualification;
-                        $minimum_mark = $control_check_instance->minimum_mark;
-                        $weight = $control_check_instance->weight;
+                        $minute_qualification = 0;
 
-                        if($control_check_qualification >= $minimum_mark)
-                            $minute_qualification = $minute_qualification + ($control_check_instance->qualification * $weight);
+                        //Por cada control_check_instance se crea la nota del minute
+                        foreach ($control_check_instance_2 as $control_check_instance) {
+
+                            //Variables
+                            $control_check_qualification = $control_check_instance->qualification;
+                            $minimum_mark = $control_check_instance->minimum_mark;
+                            $weight = $control_check_instance->weight;
+
+                            if ($control_check_qualification >= $minimum_mark)
+                                $minute_qualification = $minute_qualification + ($control_check_instance->qualification * $weight);
+                        }
+
+                        //Creacion del minute
+                        $minute_array = array(
+                            'status' => false,
+                            'qualification' => $minute_qualification,
+                            'summon' => $summon,
+                            'enrollment_id' => $enrollment_id,
+                        );
+
+                        $this->create($minute_array);
+
                     }
-
-                    //Creacion del minute
-                    $minute_array = array(
-                        'status'=>false,
-                        'qualification'=>$minute_qualification,
-                        'summon'=>$summon,
-                        'enrollment_id'=>$enrollment_id,
-                    );
-
-                    $this->create($minute_array);
-
                 }
             }
 

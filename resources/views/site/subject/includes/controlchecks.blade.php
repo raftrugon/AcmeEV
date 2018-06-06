@@ -1,11 +1,9 @@
 @can('teach')
-    @if($canCreateControlChecks===1)
         <div class="">
             <a href="{{URL::to('pdi/control_check/'.$subject->getSubjectInstances()->where('academic_year',\Carbon\Carbon::now()->year)->first()->getId().'/edit')}}" class="btn btn-success float-right mb-2" id="newControlCheckButton">
                 @lang('controlCheck.new')
             </a>
         </div>
-    @endif
     @foreach($controlChecks as $cc)
         <div class="card controlCheck w-100 my-1" data-id="{{$cc->getId()}}">
                 <div class="card-body d-flex justify-content-between">

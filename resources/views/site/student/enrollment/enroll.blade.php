@@ -33,7 +33,7 @@
                             </div>
                         </div>
                     @endforeach
-                    <button>@lang('global.submit')</button>
+                    <button class="btn btn-success">@lang('global.submit')</button>
                 </div>
             </div>
         </div>

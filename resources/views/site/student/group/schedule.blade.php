@@ -53,6 +53,7 @@
             eventAfterAllRender: function (view) {
                 $('[data-toggle="tooltip"]').tooltip();
             },
+            @if($actual_state == 5)
             eventClick(event, jsEvent, view) {
                 $.get('{{URL::to('group/student/exchange/create')}}', {group_id: event.group_id}, function (data) {
                     $('.source-card .card-header').html('@lang('group.number'): ' + data['source_number']);
@@ -65,12 +66,14 @@
                     $('#exchangeModal').modal('show');
                 });
             },
+            @endif
             schedulerLicenseKey: 'CC-Attribution-NonCommercial-NoDerivatives',
             events: '{{URL::to('group/student/schedule/events')}}',
         });
         {{--$('.print-btn').click(function(){--}}
         {{--location.href = '{{URL::to('group/student/schedule/print')}}';--}}
         {{--});--}}
+        @if($actual_state == 5)
         $('.target-card .selectpicker').change(function(){
             let val = $(this).val();
             $.get('{{URL::to('group/student/exchange/data-and-availability')}}',{group_id:val},function(data){
@@ -95,6 +98,7 @@
                }
            });
         });
+        @endif
     });
     </script>
 @endsection

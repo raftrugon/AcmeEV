@@ -42,9 +42,6 @@
         @role('pas')
             @if($actual_state == 1 || $actual_state == 2)
             <li>
-                <a class="text-light nav-link" href="{{URL::to('administration/inscription-list')}}"><i class="fas fa-address-book d-block text-primary"></i><span>{{__('menu.inscriptions.all')}}</span></a>
-            </li>
-            <li>
                 <a href="#" class="text-light nav-link print-inscriptions"><i class="fas fa-address-book d-block text-primary"></i><span>{{__('menu.inscriptions.select')}}</span></a>
             </li>
             <a id="download_link" href="#" download="inscriptions" style="visibility:hidden"></a>
@@ -53,9 +50,16 @@
 
         @role('student')
             @can('current')
-                <li>
-                    <a class="text-light nav-link" href="{{URL::to('student/my-subjects')}}"><i class="fas fa-book d-block text-primary"></i><span>{{__('menu.my.subjects')}}</span></a>
-                </li>
+                @if($actual_state > 2 && $actual_state < 10)
+                    <li>
+                        <a class="text-light nav-link" href="{{URL::to('student/my-subjects')}}"><i class="fas fa-book d-block text-primary"></i><span>{{__('menu.my.subjects')}}</span></a>
+                    </li>
+                @endif
+                @if($actual_state > 4 && $actual_state < 10)
+                    <li>
+                        <a class="text-light nav-link" href="{{URL::to('group/student/schedule')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.student.schedule')}}</span></a>
+                    </li>
+                @endif
                 <li>
                     <a class="text-light nav-link" href="{{URL::to('student/enrollment/my-enrollments')}}"><i class="fas fa-address-card d-block text-primary"></i><span>{{__('menu.enrollments')}}</span></a>
                 </li>
@@ -92,7 +96,7 @@
             <li>
                 <a class="text-light nav-link" href="{{URL::to('degree/all')}}"><i class="fa fa- fa-graduation-cap d-block text-primary"></i><span>{{__('menu.degrees')}}</span></a>
             </li>
-            @if($actual_state == 5 || $actual_state == 7)
+            @if($actual_state == 7 || $actual_state == 9)
                 <li>
                     <a class="text-light nav-link" href="{{URL::to('management/student/list')}}"><i class="fas fa-file-alt d-block text-primary"></i><span>{{__('menu.minutes.edit')}}</span></a>
                 </li>
@@ -102,11 +106,6 @@
                     <a class="text-light nav-link" href="{{URL::to('group/manage/timetable')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.group.timetable')}}</span></a>
                 </li>
             @endif
-        @endcan
-        @can('current')
-            <li>
-                <a class="text-light nav-link" href="{{URL::to('group/student/schedule')}}"><i class="fas fa- fa-calendar d-block text-primary"></i><span>{{__('menu.student.schedule')}}</span></a>
-            </li>
         @endcan
 
 

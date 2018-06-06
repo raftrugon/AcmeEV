@@ -52,9 +52,9 @@ Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){   
     Route::post('/degreeDelete','Admin\DegreeController@deleteDegree')->name('delete_degree')->middleware('can:stateEditDegreesDepartmentsSubjects,App\SystemConfig');  //Correct
 });
 
-/////////////////////////////////////////// Admin & Management ////////////////////////////////////////////////////////
+/////////////////////////////////////////// Admin User Management ////////////////////////////////////////////////////////
 
-Route::group(['prefix'=>'users','middleware'=>['role:admin']],function(){////POLICY
+Route::group(['prefix'=>'users','middleware'=>['role:admin']],function(){
     Route::get('/','UserController@getList');
     Route::get('/data','UserController@getData');
     Route::post('/delete','UserController@postDelete');
@@ -74,22 +74,16 @@ Route::group(['prefix'=>'administration','middleware'=>['role:pas']],function(){
         Route::post('/delete', 'Pas\PasAppointmentsController@postDeleteCalendarDate');                     //Correct
     });
 
-    Route::get('/appointment-info','Pas\PasAppointmentsController@getAppointmentsInfo');
-    Route::get('/inscription-list','Pas\PasController@getPrintAllLists');
-
-    Route::group(['middleware'=>['can:stateListInscriptions,App\SystemConfig']],function() {                    //middleware estado 1 o 2
-        Route::get('/inscription-list', 'Pas\PasController@getPrintAllLists');                              //Verificar
-        Route::get('/', 'Pas\PasController@getDashboard');                                                  //Integrada en principal, verificar y eliminar original
-    });
-
     Route::get('/appointment-info','Pas\PasAppointmentsController@getAppointmentsInfo');                    //Correct
+    Route::get('/inscription-list', 'Pas\PasController@getPrintAllLists')->middleware('can:stateListInscriptions,App\SystemConfig');  //Correct //middleware estado 1 o 2
+
 });
 
 //////////////////////////////////////////////////////// PDI ////////////////////////////////////////////////////////
 
 Route::group(['prefix'=>'management','middleware'=>['permission:manage']],function(){
 
-    Route::group(['middleware'=>['can:stateEditDegreesDepartmentsSubjects,App\SystemConfig']],function() {  //middleware por estado 8 o 0-2
+    Route::group(['middleware'=>['can:stateEditDegreesDepartmentsSubjects,App\SystemConfig']],function() {  //middleware por estado 10 o 0-2
 
         Route::group(['prefix'=>'degree'],function() {
             Route::get('new','DegreeController@getNewDegree');                                                  //Correct
@@ -162,30 +156,31 @@ Route::group(['prefix'=>'pdi','middleware'=>['role:pdi']],function(){
 
 Route::group(['prefix'=>'student','middleware'=>['role:student']],function(){
     Route::group(['prefix'=>'enrollment'],function() {
-        Route::get('my-enrollments', 'Student\EnrollmentController@getMyEnrollments')->middleware('permission:current||old');
-        Route::get('enroll', 'Student\EnrollmentController@getEnroll')->middleware('can:enroll,App\Enrollment');
-        Route::post('post-enroll', 'Student\EnrollmentController@postPostEnroll')->middleware('can:enroll,App\Enrollment');
+        Route::get('my-enrollments', 'Student\EnrollmentController@getMyEnrollments')->middleware('permission:current');        //Correct
+        Route::get('enroll', 'Student\EnrollmentController@getEnroll')->middleware('can:enroll,App\Enrollment');                //Correct
+        Route::post('post-enroll', 'Student\EnrollmentController@postPostEnroll')->middleware('can:enroll,App\Enrollment');     //Correct
     });
 
     Route::group(['prefix'=>'subject'],function() {
-        Route::post('control-check/upload','Student\ControlCheckController@uploadControlCheck')->name('upload_control_check');
+        Route::post('control-check/upload','Student\ControlCheckController@uploadControlCheck')->name('upload_control_check');      //Verificar
     });
 
-    Route::get('my-subjects', 'Student\SubjectInstanceController@getMySubjectInstances');
     Route::group(['prefix'=>'minute'], function() {
-        Route::get('my-minutes','Student\MinuteController@getMinutesForStudent');
+        Route::get('my-minutes','Student\MinuteController@getMinutesForStudent')->middleware('permission:current');             //Correct
     });
+
+    Route::get('my-subjects', 'Student\SubjectInstanceController@getMySubjectInstances')->middleware('permission:current')->middleware('can:stateCanListSubjects,App\SystemConfig');     //Correct
 });
 
 //////////////////////////////////////////////////////// Logged ////////////////////////////////////////////////////////
 
-Route::group(['prefix'=>'logged'/*,'middleware'=>'auth'*/],function(){
+Route::group(['prefix'=>'logged','middleware'=>['can:userLogged,App\SystemConfig']],function(){
     Route::group(['prefix'=>'announcement'],function() {
         Route::get('{subjectInstance}/list', 'Logged\AnnouncementController@getAllBySubjectInstance');
     });
 });
 
-Route::group(['prefix'=>'chat','middleware','middleware'=>'auth'],function(){
+Route::group(['prefix'=>'chat','middleware'=>['can:userLogged,App\SystemConfig']],function(){
     Route::post('new','ChatController@postNewChat');
     Route::get('load','ChatController@getLoadChats');
     Route::post('close','ChatController@postCloseChat');
@@ -199,26 +194,35 @@ Route::group(['prefix'=>'chat','middleware','middleware'=>'auth'],function(){
 
 //////////////////////////////////////////////////////// GRUPOS ////////////////////////////////////////////////////////
 
-Route::group(['prefix'=>'group', 'middleware'=>['can:stateAccessTimeTable,App\SystemConfig']],function(){   //middleware estado 3 - 7
+Route::group(['prefix'=>'group'],function(){
 
-    Route::group(['middleware'=>['role:pdi']],function(){                                       //middleware pdi
-        Route::group(['prefix'=>'manage','middleware'=>['permission:manage']],function(){       //middleware management
-            Route::group(['prefix'=>'timetable'],function(){
-                Route::get('/','Pdi\GroupController@getSchedulingView');                                    //verificar
-                Route::get('data','Pdi\GroupController@getAvailableSubjectsAndRooms');                      //verificar
-                Route::get('resources','Pdi\GroupController@getGroupsForYearAndDegree');                    //verificar
-                Route::get('events','Pdi\GroupController@getScheduledForDegreeAndYear');                    //verificar
-                Route::post('new','Pdi\GroupController@postNewTimetableTime');                              //verificar
+    Route::group(['middleware'=>['can:stateChangeTimeTableAndLecturers,App\SystemConfig']],function(){   //middleware estado 4
+        Route::group(['middleware'=>['role:pdi']],function(){                                            //middleware pdi
+            //Asignar horarios y rooms PUEDE Manager
+            Route::group(['prefix'=>'manage','middleware'=>['permission:manage']],function(){            //middleware management
+                Route::group(['prefix'=>'timetable'],function(){
+                    Route::get('/','Pdi\GroupController@getSchedulingView');                                    //verificar
+                    Route::get('data','Pdi\GroupController@getAvailableSubjectsAndRooms');                      //verificar
+                    Route::get('resources','Pdi\GroupController@getGroupsForYearAndDegree');                    //verificar
+                    Route::get('events','Pdi\GroupController@getScheduledForDegreeAndYear');                    //verificar
+                    Route::post('new','Pdi\GroupController@postNewTimetableTime');                              //verificar
+                });
             });
-        });
 
-        Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');                                //verificar
-        Route::post('/group-save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');     //verificar
+            //Asignación de profesores a grupos PUEDE coordinador
+            Route::group(['middleware'=>['can:exchangeGroup,group']],function(){                     //middleware coordinador
+                Route::get('{group}/edit','Pdi\GroupController@editGroupLecturers');                                //verificar
+                Route::post('{group}/save','Pdi\GroupController@saveGroup')->name('edit_group_lecturers');     //verificar
+            });
+
+        });
     });
+
 
 
     Route::group(['prefix'=>'student','middleware'=>['permission:current']],function(){         //middleware current
 
+        //Horario de clases STUDENT
         Route::group(['prefix'=>'schedule'],function() {
             Route::get('/', 'Student\ScheduleController@getSchedule');                                      //Verificar
             Route::get('events', 'Student\ScheduleController@getScheduleEvents');                           //verificar
@@ -226,6 +230,7 @@ Route::group(['prefix'=>'group', 'middleware'=>['can:stateAccessTimeTable,App\Sy
 //            Route::get('print', 'Student\ScheduleController@getPrint');
         });
 
+        //Permutar STUDENT
         Route::group(['prefix'=>'exchange', 'middleware'=>['can:stateExchangeGroups,App\SystemConfig']],function() {
             Route::get('/create', 'Student\ExchangeController@getCreate');                                  //verificar
             Route::get('/data-and-availability', 'Student\ExchangeController@getTargetDataAndAvailability');//verificar
@@ -238,11 +243,11 @@ Route::group(['prefix'=>'group', 'middleware'=>['can:stateAccessTimeTable,App\Sy
 
 
 Route::group(['prefix'=>'inscription'],function(){
-    Route::get('new','InscriptionController@getNewInscription');
-    Route::post('save','InscriptionController@postSaveInscription');
-    Route::get('/results','InscriptionController@getResultsInscription');
-    Route::post('/results/data','InscriptionController@postGetResultsInscriptionData');
-    Route::post('/results/agree','InscriptionController@postAgreeToInscription');
+    Route::get('new','InscriptionController@getNewInscription')->middleware('can:inscribe,App\SystemConfig');
+    Route::post('save','InscriptionController@postSaveInscription')->middleware('can:inscribe,App\SystemConfig');
+    Route::get('/results','InscriptionController@getResultsInscription')->middleware('can:viewInscriptions,App\SystemConfig');
+    Route::post('/results/data','InscriptionController@postGetResultsInscriptionData')->middleware('can:viewInscriptions,App\SystemConfig');
+    Route::post('/results/agree','InscriptionController@postAgreeToInscription')->middleware('can:viewInscriptions,App\SystemConfig');
 });
 
 
@@ -266,10 +271,13 @@ Route::group(['prefix'=>'calendar'],function() {
     Route::post('/update', 'AppointmentsController@postUpdateAppointment');
 });
 
-Route::group(['prefix'=>'subject'],function(){
-    Route::get('{subject}','SubjectController@getSubjectDisplay')->name('subject-display');
-    Route::get('/filesystem/data','SubjectController@getFileSystemData')->name('filesystem.data');
-    Route::get('file/download/{file}','SubjectController@getDownloadFile');
+
+Route::group(['middleware'=>['can:stateCanListSubjects,App\SystemConfig']],function(){                     //middleware estado 3-9
+    Route::group(['prefix'=>'subject'],function(){
+        Route::get('{subject}','SubjectController@getSubjectDisplay')->name('subject-display')->middleware('can:view,subject');
+        Route::get('/filesystem/data','SubjectController@getFileSystemData')->name('filesystem.data');
+        Route::get('file/download/{file}','SubjectController@getDownloadFile');
+    });
 });
 
 Route::group(['prefix'=>'error'],function(){

@@ -14,20 +14,20 @@
                 <div class="card-body">
                     <p class="card-text">
                         <strong>@lang('subject.code'): </strong>
-                            {{$subject->getCode()}}</br>
+                            {{$subject->getCode()}}<br/>
                         <strong>@lang('subject.type'): </strong>
                             @if($subject->getSubjectType()=='OBLIGATORY')
-                                @lang('subject.obligatory')</br>
+                                @lang('subject.obligatory')<br/>
                             @elseif($subject->getSubjectType()=='BASIC')
-                                @lang('subject.basic')</br>
+                                @lang('subject.basic')<br/>
                             @elseif($subject->getSubjectType()=='OPTATIVE')
-                                @lang('subject.optative')</br>
+                                @lang('subject.optative')<br/>
                             @elseif($subject->getSubjectType()=='EDP')
-                                @lang('subject.dt')</br>
+                                @lang('subject.dt')<br/>
                             @endif
 
                         <strong>@lang('subject.schoolYear'): </strong>
-                            {{$subject->getSchoolYear()}}</br>
+                            {{$subject->getSchoolYear()}}<br/>
                         <strong>@lang('subject.semester'): </strong>
                             @if($subject->getSemester()==null)
                                 @lang('subject.annual')

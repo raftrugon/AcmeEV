@@ -29,7 +29,7 @@ class DegreeRepo extends BaseRepo
             ->join('subjects','degrees.id','=','subjects.degree_id')
             ->join('subject_instances','subjects.id','=','subject_instances.subject_id')
             ->where('degrees.id',$degree->getId())
-            ->where('academic_year',Carbon::now()->year+1)->get() == 0;
+            ->where('academic_year',Carbon::now()->year+1)->get()->count() == 0;
 
     }
 

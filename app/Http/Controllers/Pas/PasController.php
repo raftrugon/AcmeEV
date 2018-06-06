@@ -28,10 +28,5 @@ class PasController extends Controller
         }
     }
 
-    public function getDashboard()
-    {
-        return view('site.pas.dashboard');
-    }
-
 
 }

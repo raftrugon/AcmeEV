@@ -3,7 +3,7 @@
 @section('content')
 
     @can('manage')
-        @if($actual_state == 8 || $actual_state < 3)
+        @if($actual_state == 10 || $actual_state < 3)
             <div class="card border-primary" style="background-color: #6c6b6d;margin-bottom: 40px;">
                 <div class="card-body">
                     <button onclick="location.href='{{URL::to('management/degree/new')}}'"
@@ -27,7 +27,7 @@
                             <p class="card-text">
                                 @lang('degrees.newStudentsLimit'): {{$degree->getNewStudentsLimit()  }}
                             </p>
-                            @if($actual_state == 8 || $actual_state < 3)
+                            @if($actual_state == 10 || $actual_state < 3)
                                 @role('admin')
                                     <button class="btn btn-danger deleteButton" id="{{$degree->getId()}}">
                                         @lang('degrees.delete')

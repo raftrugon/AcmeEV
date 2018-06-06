@@ -31,6 +31,7 @@ return [
     'code' => 'Código',
     'type' => 'Tipo',
     'academic_year'=> 'Año Académico',
+    'active'=>'Activa',
     'title'=>'Título',
     'body'=>'Cuerpo',
     'name_es'=>'Nombre español de la universidad',

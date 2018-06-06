@@ -9,6 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\ControlCheckInstanceRepo;
 use App\Repositories\ControlCheckRepo;
 use App\Repositories\FileRepo;
+use App\Repositories\SubjectInstanceRepo;
 use App\Room;
 use App\SubjectInstance;
 use Carbon\Carbon;
@@ -21,12 +22,14 @@ class ControlCheckController extends Controller
     protected $controlCheckRepo;
     protected $controlCheckInstanceRepo;
     protected $fileRepo;
+    protected $subjectInstanceRepo;
 
-    public function __construct(ControlCheckRepo $controlCheckRepo, ControlCheckInstanceRepo $controlCheckInstanceRepo, FileRepo $fileRepo)
+    public function __construct(ControlCheckRepo $controlCheckRepo, ControlCheckInstanceRepo $controlCheckInstanceRepo, FileRepo $fileRepo, SubjectInstanceRepo $subjectInstanceRepo)
     {
         $this->controlCheckRepo = $controlCheckRepo;
         $this->controlCheckInstanceRepo = $controlCheckInstanceRepo;
         $this->fileRepo = $fileRepo;
+        $this->subjectInstanceRepo=$subjectInstanceRepo;
     }
 
     public function getControlChecksForStudent(Group $group)
@@ -95,10 +98,7 @@ class ControlCheckController extends Controller
             return redirect()->back()->with('error', __('global.post.error'));
         }
 
-        $subject = SubjectInstance::where('id', $request->input('subjectInstance'))->first()->getSubject;
-        $announcements = $subject->getSubjectInstances()->where('academic_year', Carbon::now()->year)->first()->getAnnouncements;
-        $controlChecks = $this->controlCheckRepo->getControlChecksForLecturer($subject)->get();
-        return view('site.subject.display', compact('subject', 'announcements', 'controlChecks'));
+        return redirect()->action('SubjectController@getSubjectDisplay',['subject'=>$subjectInstance->getSubject->getId()]);
     }
 
     public function importGradesFromCsv(Request $request)

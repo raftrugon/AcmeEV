@@ -4,19 +4,30 @@ namespace App\Http\Controllers\Student;
 
 use App\Exchange;
 use App\Group;
+use App\Policies\SystemConfigPolicy;
 use App\Repositories\ExchangeRepo;
+use App\SystemConfig;
 use Exception;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class ExchangeController extends Controller
 {
     protected $exchangeRepo;
+    protected $days;
 
     public function __construct(ExchangeRepo $exchangeRepo){
         $this->exchangeRepo = $exchangeRepo;
+
+        $this->days = array();
+        if(App::getLocale() == 'en'){
+            $this->days = ['M','T','W','Th','F'];
+        }else{
+            $this->days = ['L','M','X','J','V'];
+        }
     }
 
     public function getCreate(Request $request){
@@ -28,8 +39,9 @@ class ExchangeController extends Controller
             $source_id = $source->getId();
             $source_number = $source->getNumber();
             $source_subject = $source->getSubjectInstance->getSubject->getName();
-            $source_period_times = $source->getPeriodTimes->map(function($period){
-               return $period->day . $period->start . $period->end;
+            $days = $this->days;
+            $source_period_times = $source->getPeriodTimes->map(function($period) use ($days){
+               return $days[$period->day] . ': ' . substr($period->start,0,5) . ' - ' . substr($period->end,0,5);
             });
             array_unshift($target_options,'<option value="" selected disabled>'.__('group.select.default').'</option>');
         } catch (\Exception $e) {
@@ -44,8 +56,9 @@ class ExchangeController extends Controller
     public function getTargetDataAndAvailability(Request $request){
         try{
             $target = Group::findOrFail($request->input('group_id'));
-            $target_period_times = $target->getPeriodTimes->map(function($period){
-                return $period->day . $period->start . $period->end;
+            $days = $this->days;
+            $target_period_times = $target->getPeriodTimes->map(function($period) use ($days){
+                return $days[$period->day] . ': ' . substr($period->start,0,5) . ' - ' . substr($period->end,0,5);
             });
             $availability = $target->getMaxStudents() > $target->getStudents->count();
         } catch (\Exception $e) {
@@ -73,17 +86,16 @@ class ExchangeController extends Controller
                                     ->oldest()
                                     ->first();
         DB::beginTransaction();
-        try {
-            $done = true;
+            $done = 'true';
             if (!is_null($permutaExistente)) {
                 $permutaExistente->setIsApproved(1);
                 $this->exchangeRepo->updateWithoutData($permutaExistente);
                 $permutaExistente->getUser->getGroups()->toggle([$target->getId(), $source->getId()]);
                 Auth::user()->getGroups()->toggle([$target->getId(), $source->getId()]);
-            } else if ($target->getMaxStudents() > $target->getStudents->count()) {
+            } else if (SystemConfig::first()->getMaxStudentsPerGroup() > $target->getStudents->count()) {
                 Auth::user()->getGroups()->toggle([$target->getId(), $source->getId()]);
             } else {
-                $done = false;
+                $done = 'false';
                 $permuta = new Exchange();
                 $permuta->setSource($source->getId());
                 $permuta->setTarget($target->getId());
@@ -93,12 +105,6 @@ class ExchangeController extends Controller
             DB::commit();
             if($done) return 'true';
             else return 'waiting';
-        }catch(Exception $e){
-            DB::rollback();
-            return false;
-        }catch(\Throwable $t){
-            DB::rollback();
-            return false;
-        }
+
     }
 }
