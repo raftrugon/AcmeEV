@@ -19,4 +19,5 @@ return[
     'department'=>'Departamento',
     'active'=>'Activa',
     'coordinator'=>'Coordinador',
+    'announcements'=>'Anuncios',
 ];

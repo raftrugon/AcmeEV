@@ -5,27 +5,27 @@
     </button>
     @endrole
 </div>
-<div class="row">
-    <div class="card-deck">
-        @foreach($announcements as $announcement)
-            <div class="col-md-12 col-xl-6" style="padding-bottom: 40px;">
-                <div class="card">
-                    <h5 class="card-header">
-                        <div class="row">
-                            <div class="col-md-6">{{$announcement->getTitle()}}</div>
-                            <div class="col-md-6" align="right">{{$announcement->getCreationMoment()}}</div>
-                        </div>
-                    </h5>
-                    <div class="card-body">
-                        <p class="card-text">
-                            {{$announcement->getbody()  }}
-                        </p>
+
+<div class="card-deck row">
+    @foreach($announcements as $announcement)
+        <div class="col-md-12 col-xl-6" style="padding-bottom: 40px;">
+            <div class="card">
+                <h5 class="card-header">
+                    <div class="row">
+                        <div class="col-6">{{$announcement->getTitle()}}</div>
+                        <div class="col-6" align="right">{{$announcement->getCreationMoment()}}</div>
                     </div>
+                </h5>
+                <div class="card-body col-6">
+                    <p class="card-text">
+                        {{$announcement->getbody()  }}
+                    </p>
                 </div>
             </div>
-        @endforeach
-    </div>
+        </div>
+    @endforeach
 </div>
+
 
 <div class="modal fade" id="newAnnouncementModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
