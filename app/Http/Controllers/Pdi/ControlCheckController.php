@@ -47,7 +47,10 @@ class ControlCheckController extends Controller
 
     public function createOrEdit(SubjectInstance $subjectInstance, ControlCheck $controlCheck = null)
     {
-        $rooms = Room::all();
+        $rooms = Room::all()->transform(function ($room){
+           $room['display_name'] = $room->module . '-' . $room->floor .'.'. $room->number;
+           return $room;
+        });
         return view('site.pdi.controlCheck.create-edit', compact('subjectInstance', 'controlCheck', 'rooms'));
     }
 

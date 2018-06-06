@@ -40,7 +40,7 @@ class MinuteRepo extends BaseRepo
             ->where('enrollments.user_id',$user->getId());
     }
 
-    public function minutesFromControlsBatch($summon){
+    public function minutesFromControlsBatch(){
         try {
 
         DB::beginTransaction();
@@ -60,26 +60,23 @@ class MinuteRepo extends BaseRepo
 
             foreach($subject_instances as $subject_instance) {
                 //Control checks instances por cada usuario y subject instance de este cuatri
-                $control_checks_instances_ordered_by_user_id = ControlCheckInstance::join('users', 'control_check_instances.student_id', '=', 'users.id')
-                    ->join('control_checks', 'control_check_instances.control_check_id', '=', 'control_checks.id')
-                    ->join('enrollments', 'users.id', '=', 'enrollments.user_id')
-                    ->select('control_checks.*', 'control_check_instances.qualification as qualification', 'users.id as user_id', 'enrollments.id as enrollment_id')
-                    ->where('enrollments.subject_instance_id', $subject_instance)
-                    ->get()->groupBy('user_id');
+                $control_checks_instances_ordered_by_user_id =
+                    ControlCheckInstance::join('users', 'control_check_instances.student_id', '=', 'users.id')
+                        ->join('control_checks', 'control_check_instances.control_check_id', '=', 'control_checks.id')
+                        ->join('enrollments', 'users.id', '=', 'enrollments.user_id')
+                        ->select('control_checks.*', 'control_check_instances.qualification as qualification', 'users.id as user_id', 'enrollments.id as enrollment_id')
+                        ->where('enrollments.subject_instance_id', $subject_instance->getId())
+                        ->where('control_checks.subject_instance_id', $subject_instance->getId())
+                        ->groupBy('control_check_instances.id')
+                        ->get()->groupBy('user_id');
+
                 //Por cada User
-                foreach ($control_checks_instances_ordered_by_user_id as $control_checks_instances) {
-
-                    $control_checks_instances_ordered_by_enrollment_id = $control_checks_instances->groupBy('enrollment_id');
-
-                    //Por cada enrollment
-                    foreach ($control_checks_instances_ordered_by_enrollment_id as $enrollment_id => $control_check_instance_2) {
-
-
+                foreach ($control_checks_instances_ordered_by_user_id as $user_id => $control_checks_instances) {
                         //Variables
                         $minute_qualification = 0;
 
                         //Por cada control_check_instance se crea la nota del minute
-                        foreach ($control_check_instance_2 as $control_check_instance) {
+                        foreach ($control_checks_instances as $control_check_instance) {
 
                             //Variables
                             $control_check_qualification = $control_check_instance->qualification;
@@ -88,19 +85,29 @@ class MinuteRepo extends BaseRepo
 
                             if ($control_check_qualification >= $minimum_mark)
                                 $minute_qualification = $minute_qualification + ($control_check_instance->qualification * $weight);
+                            else{
+                                $minute_qualification = 0;
+                                break;
+                            }
                         }
+                        //Calculamos cuantos summons a esta asignatura y le sumamos uno
+                        $summon = Minute::join('enrollments','minutes.enrollment_id','=','enrollments.id')
+                            ->join('subject_instances','enrollments.subject_instance_id','subject_instances.id')
+                            ->where('subject_instances.subject_id',$subject_instance->getId())
+                            ->where('enrollments.user_id',$user_id)
+                            ->get()->count() + 1;
 
                         //Creacion del minute
                         $minute_array = array(
                             'status' => false,
                             'qualification' => $minute_qualification,
                             'summon' => $summon,
-                            'enrollment_id' => $enrollment_id,
+                            'enrollment_id' => $subject_instance->getEnrolments()->where('user_id',$user_id)->first()->getId(),
                         );
 
                         $this->create($minute_array);
 
-                    }
+
                 }
             }
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Group;
 use App\Repositories\InscriptionRepo;
 use App\Repositories\SystemConfigRepo;
 use App\SystemConfig;
@@ -120,6 +121,30 @@ class SystemConfigController extends Controller
             case 2:
                 $inscriptions = $this->systemConfigRepo->getDataDemo1and2();
                 return view('site.admin.demo.2',compact('inscriptions'))->render();
+                break;
+            case 3:
+                return view('site.admin.demo.3')->render();
+                break;
+            case 4:
+                $groups = Group::join('subject_instances','groups.subject_instance_id','=','subject_instances.id')
+                    ->where('subject_instances.academic_year',$this->systemConfigRepo->getAcademicYear())
+                    ->select('groups.*')
+                    ->get();
+                return view('site.admin.demo.4',compact('groups'))->render();
+                break;
+            case 5:
+                $groups = Group::join('subject_instances','groups.subject_instance_id','=','subject_instances.id')
+                    ->where('subject_instances.academic_year',$this->systemConfigRepo->getAcademicYear())
+                    ->select('groups.*')
+                    ->get();
+                return view('site.admin.demo.5',compact('groups'))->render();
+                break;
+            case 6:
+                $groups = Group::join('subject_instances','groups.subject_instance_id','=','subject_instances.id')
+                    ->where('subject_instances.academic_year',$this->systemConfigRepo->getAcademicYear())
+                    ->select('groups.*')
+                    ->get();
+                return view('site.admin.demo.6',compact('groups'))->render();
                 break;
         }
     }

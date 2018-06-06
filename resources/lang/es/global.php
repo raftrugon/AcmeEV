@@ -2,6 +2,7 @@
 
 
 return[
+    'go'=>'Ir',
     'previous'=>'Anterior',
     'next'=>'Siguiente',
     'finish'=>'Terminar',

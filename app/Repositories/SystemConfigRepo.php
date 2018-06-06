@@ -6,6 +6,7 @@ use App\Appointment;
 use App\Enrollment;
 use App\Inscription;
 use App\SystemConfig;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -79,7 +80,7 @@ class SystemConfigRepo extends BaseRepo
 
 
                 case 7:
-                    $this->minuteRepo->minutesFromControlsBatch(1);       //Auto computación de minutes primera convocatoria
+                    $this->minuteRepo->minutesFromControlsBatch();       //Auto computación de minutes primera convocatoria
                     break;
 
                 case 8:
@@ -87,7 +88,7 @@ class SystemConfigRepo extends BaseRepo
                     break;
 
                 case 9:
-                    $this->minuteRepo->minutesFromControlsBatch(2);       //Auto computación de minutes segunda convocatoria
+                    $this->minuteRepo->minutesFromControlsBatch();       //Auto computación de minutes segunda convocatoria
                     break;
 
                 case 10:
@@ -158,6 +159,10 @@ class SystemConfigRepo extends BaseRepo
            return Carbon::createFromFormat('Y-m-d H:i:s',$inscription->created_at)->addMinutes(20)->gte(Carbon::now());
         });
        return $inscriptions;
+    }
+
+    public function getDataDemo3(){
+        $users = User::latest()->get()->take(5);
     }
 
 }
