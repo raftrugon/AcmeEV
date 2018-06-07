@@ -12,4 +12,6 @@
         @php($groupsStr .= '<a href="#" data-id=\''.$conversation->getId().'\' class=\'nav-link chat-tab\'>'.$conversation->getName().'</a>')
     @endif
 @endforeach
-<a tabindex="0" class="groups-tab chat-tab" data-toggle="popover" data-placement="top" data-content="{{$groupsStr}}">@lang('chat.groups.link')</a>
+@hasanyrole('pdi|student')
+    <a tabindex="0" class="groups-tab chat-tab" data-toggle="popover" data-placement="top" data-content="{{$groupsStr}}">@lang('chat.groups.link')</a>
+@endhasanyrole
