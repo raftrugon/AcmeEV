@@ -67,13 +67,14 @@ function addSentMessage(conversation_id,body){
     }
 }
 
-function addReceivedMessage(conversation_id,body,sender_id,sender_name){
+function addReceivedMessage(conversation_id,body,sender_id,sender_name,lecturer){
     let messagesDiv = $('.chat-window[data-id='+conversation_id+']').find('.messages');
     if(messagesDiv.find('.message-received').length === 0 || !messagesDiv.find('.message:last').hasClass('message-received') || messagesDiv.find('.message:last').data('sender-id') !== sender_id) {
         let div = document.importNode(document.getElementById('message_received_template').content.querySelector('div'), true);
         if($('.chat-window[data-id='+conversation_id+']').hasClass('group-chat')) {
             $(div).data('sender-id', sender_id);
-            $(div).find('span').before('<strong>' + sender_name + '</strong><br/>' + body + '<br/>');
+            $(div).find('span').before('<strong>' + sender_name + '</strong>' + lecturer + '<br/>' + body + '<br/>');
+            if(typeof(lecturer) !== 'undefined') $(div).addClass('message-lecturer');
         }else{
             $(div).find('span').before(body + '<br/>');
         }
@@ -111,7 +112,7 @@ function retrieveMessages(){
             }
             if($.inArray(parseInt(value['conversation_id']),getActiveConversationsById())  === -1) retrieveChat(value['sender_id']);
             else {
-                addReceivedMessage(value['conversation_id'], value['body'], value['sender_id'], value['sender_name']);
+                addReceivedMessage(value['conversation_id'], value['body'], value['sender_id'], value['sender_name'],value['lecturer']);
             }
         });
     });

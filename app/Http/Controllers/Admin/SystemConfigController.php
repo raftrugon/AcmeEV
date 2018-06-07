@@ -38,14 +38,13 @@ class SystemConfigController extends Controller
             $state_actual_body = 'systemConfig.state.' . $actual_state . '.body';
             $state_next_title = 'systemConfig.state.' . $next_state . '.title';
             $state_next_body = 'systemConfig.state.' . $next_state . '.body';
-            $demo = $this->getDemo();
         } catch (\Exception $e) {
             return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
         } catch (\Throwable $t) {
             return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
         }
 
-        return view('site.admin.systemConfig.edit', compact('system_config', 'state_actual_title', 'state_actual_body', 'state_next_title', 'state_next_body','demo'), $this->systemConfigRepo->getDashboard());
+        return view('site.admin.systemConfig.edit', compact('system_config', 'state_actual_title', 'state_actual_body', 'state_next_title', 'state_next_body'), $this->systemConfigRepo->getDashboard());
     }
 
     public function postSaveSystemConfig(Request $request)
@@ -106,46 +105,6 @@ class SystemConfigController extends Controller
             return redirect()->back()->with('error', __('systemConfig.increment.error'));
         } catch (\Throwable $t) {
             return redirect()->back()->with('error', __('systemConfig.increment.error'));
-        }
-    }
-
-    public function getDemo(){
-        switch(SystemConfig::first()->getActualState()){
-            case 0:
-                return view('site.admin.demo.0')->render();
-                break;
-            case 1:
-                $inscriptions = $this->systemConfigRepo->getDataDemo1and2();
-                return view('site.admin.demo.1',compact('inscriptions'))->render();
-                break;
-            case 2:
-                $inscriptions = $this->systemConfigRepo->getDataDemo1and2();
-                return view('site.admin.demo.2',compact('inscriptions'))->render();
-                break;
-            case 3:
-                return view('site.admin.demo.3')->render();
-                break;
-            case 4:
-                $groups = Group::join('subject_instances','groups.subject_instance_id','=','subject_instances.id')
-                    ->where('subject_instances.academic_year',$this->systemConfigRepo->getAcademicYear())
-                    ->select('groups.*')
-                    ->get();
-                return view('site.admin.demo.4',compact('groups'))->render();
-                break;
-            case 5:
-                $groups = Group::join('subject_instances','groups.subject_instance_id','=','subject_instances.id')
-                    ->where('subject_instances.academic_year',$this->systemConfigRepo->getAcademicYear())
-                    ->select('groups.*')
-                    ->get();
-                return view('site.admin.demo.5',compact('groups'))->render();
-                break;
-            case 6:
-                $groups = Group::join('subject_instances','groups.subject_instance_id','=','subject_instances.id')
-                    ->where('subject_instances.academic_year',$this->systemConfigRepo->getAcademicYear())
-                    ->select('groups.*')
-                    ->get();
-                return view('site.admin.demo.6',compact('groups'))->render();
-                break;
         }
     }
 

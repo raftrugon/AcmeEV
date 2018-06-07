@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Conversation;
+use App\Group;
 use Illuminate\Support\Facades\Auth;
 
 class ConversationRepo extends BaseRepo
@@ -18,7 +19,7 @@ class ConversationRepo extends BaseRepo
     }
 
     public function getMyConversations(){
-        $myGroups = $this->getMyGroupsForThisYear()->get()->pluck('id')->toArray();
+        $myGroups = $this->getMyGroupsForThisYear()->pluck('id')->toArray();
         return Conversation::where(function($subquery) use ($myGroups){
             $subquery->where('user1_id',Auth::id())
                 ->orWhere('user2_id',Auth::id())
@@ -35,9 +36,25 @@ class ConversationRepo extends BaseRepo
     }
 
     public function getMyGroupsForThisYear(){
-        return Auth::user()->getGroups()
-            ->join('subject_instances','groups.subject_instance_id','=','subject_instances.id')
-            ->where('academic_year',$this->getAcademicYear())
-            ->select('groups.*');
+        if(Auth::user()->hasRole('student')) {
+            return Auth::user()->getGroups()
+                ->join('subject_instances', 'groups.subject_instance_id', '=', 'subject_instances.id')
+                ->where('academic_year', $this->getAcademicYear())
+                ->select('groups.*')
+                ->get();
+        }elseif(Auth::user()->hasRole('pdi')){
+            return Group::where(function($sub) {
+                $sub->where('theory_lecturer_id', Auth::id())
+                    ->orWhere('practice_lecturer_id', Auth::id());
+                })
+                ->join('subject_instances', 'groups.subject_instance_id', '=', 'subject_instances.id')
+                ->where('academic_year', $this->getAcademicYear())
+                ->select('groups.*')
+                ->get();
+
+        }
+        else{
+            return collect(array());
+        }
     }
 }

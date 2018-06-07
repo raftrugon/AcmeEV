@@ -24,7 +24,7 @@ class MessageRepo extends BaseRepo
     }
 
     public function getUnreadMessages(){
-        $myGroups = $this->conversationRepo->getMyGroupsForThisYear()->get()->pluck('id')->toArray();
+        $myGroups = $this->conversationRepo->getMyGroupsForThisYear()->pluck('id')->toArray();
         $messages = Message::
             join('conversations','conversations.id','=','messages.conversation_id')
             ->join('users as senders','messages.sender_id','=','senders.id')
@@ -47,6 +47,14 @@ class MessageRepo extends BaseRepo
             $this->updateWithoutData($mensaje);
             $mensaje['full_name'] = $mensaje->getConversation->getName();
             $mensaje['sender_name'] = $mensaje->getSender->getFullName();
+            if(!is_null($mensaje->getConversation->getGroup)) {
+                if ($mensaje->getSender->getId() == $mensaje->getConversation->getGroup->getTheoryLecturer->getId()) {
+                    $mensaje['lecturer'] .= ' (' . __('group.theoryLecturer') . ')';
+                }
+                if ($mensaje->getSender->getId() == $mensaje->getConversation->getGroup->getPracticeLecturer->getId()) {
+                    $mensaje['lecturer'] .= ' (' . __('group.practiceLecturer') . ')';
+                }
+            }
             return $mensaje;
         });
         return $notread;
