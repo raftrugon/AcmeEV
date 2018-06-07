@@ -27,6 +27,9 @@ return[
     'idNumber'=>'Id number',
     'fullName'=>'Full name',
     'student'=>'Student',
+    'filters'=>'Filters',
+    'minutes'=>'Minutes',
+    'enrollments'=>'Enrollments',
     'demo.no-info'=>'There are no items to show.',
     'welcome-heading'=>'Welcome to the virtual teaching platform',
     'welcome-body'=>'This web page is designed for students and university\'s internal 
