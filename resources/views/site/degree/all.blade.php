@@ -57,10 +57,10 @@
             e.preventDefault();
             $.post('{{route('delete_degree')}}', {id: $(this).attr('id')}, function (data) {
                 if (data === 'true') {
-                    success('@lang('global.success')', '@lang('degree.successDelete')');
+                    success('@lang('global.success')', '@lang('degrees.successDelete')');
                     window.location.replace('{{URL::to('degree/all')}}');
                 } else {
-                    error('@lang('global.error')', '@lang('degree.deleteFailed')');
+                    error('@lang('global.error')', '@lang('degrees.deleteFailed')');
                 }
             });
         });
