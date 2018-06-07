@@ -280,14 +280,10 @@ Route::group(['middleware'=>['can:stateCanListSubjects,App\SystemConfig']],funct
     });
 });
 
-Route::group(['prefix'=>'error'],function(){
+Route::group(['prefix'=>'errors'],function(){
     Route::get('forbidden','ErrorController@forbidden');
 });
 
 
 Route::get('terms','HomeController@terms');
 
-
-Route::get('mailtest',function(){
-   return view('mails.usercreation',['nombre'=>'Pablo Tabares','newEmail'=>'pabtabgar@alum.us.es']);
-});
