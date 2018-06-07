@@ -21,7 +21,7 @@ class MinuteController extends Controller
     public function getMinutesForStudent(User $user)
     {
         try {
-            $academic_years = $this->minuteRepo->getMinutesForStudent($user)->get()->groupBy('academic_year');
+            $academic_years = $this->minuteRepo->getMinutesForStudent($user,0)->get()->groupBy('academic_year');
         } catch (\Exception $e) {
             return redirect()->action('HomeController@index')->with('error', __('global.get.error'));
         } catch (\Throwable $t) {

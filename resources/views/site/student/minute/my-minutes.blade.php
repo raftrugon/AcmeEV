@@ -1,7 +1,6 @@
 @extends('layouts.default')
 
 @section('content')
-
     @foreach($academic_years as $minutes)
         <div class="row">
             <div class="col-lg-8 offset-lg-2 col-md-10 offset-md-1 col-sm-12 " style="padding: 0 0 40px 0;">
