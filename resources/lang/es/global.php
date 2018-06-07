@@ -100,4 +100,5 @@ return[
     'permissions.direct_department'=>'Director de Departamento',
     'permissions.teach'=>'Profesor',
     'permissions.have_appointments'=>'Atención en Secretaría',
+    'users_edit'=>'Editar usuario'
 ];

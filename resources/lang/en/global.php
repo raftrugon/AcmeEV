@@ -99,4 +99,5 @@ return[
     'permissions.direct_department'=>'Department Director',
     'permissions.teach'=>'Teach',
     'permissions.have_appointments'=>'Have Appointments',
+    'users_edit'=>'Edit user'
 ];
