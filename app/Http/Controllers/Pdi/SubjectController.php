@@ -221,7 +221,7 @@ class SubjectController extends Controller
                     'degree_id' => $request->input('degree'),
                     'department_id' => $request->input('department'),
                     'active' => is_null($request->input('active')) ? false : true,
-                    'coordinator_id'=>$request->input('')
+                    'coordinator_id'=>$request->input('coordinator')
                 );
                 $saved = $this->subjectRepo->create($subject);
             } else {

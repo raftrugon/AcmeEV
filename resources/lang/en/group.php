@@ -10,4 +10,5 @@ return[
     'commitError'=>'Could not update the group',
     'select.default'=>'Select a group',
     'exchange.new'=>'New exchange',
+    'lecturers'=>'You have not selected all the teachers'
 ];

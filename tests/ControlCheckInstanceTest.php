@@ -112,11 +112,11 @@ class ControlCheckInstanceTest extends TestCase{
         print("\n");
 
         return [
-            [3, '28287811X', 9, false,
+            [3, '04093414V', 9, false,
                 "Comprobar el próximo examen Laboratory control check de la estudiante Ana Morales."],
-            [1, '54524866M', 10, false,
+            [1, '25687049B', 10, false,
                 "Comprobar el próximo examen First Control Check del estudiante Miguel Hernández."],
-            [1, '28287811X', 10, true,
+            [1, '04093414V', 10, true,
                 "Comprobar el próximo examen First Control Check de Ana Morales esperando recibir el de
                 Miguel Hernández."],
 

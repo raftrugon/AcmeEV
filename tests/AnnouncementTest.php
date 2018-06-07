@@ -9,9 +9,9 @@ use Tests\TestCase;
 use Illuminate\Database\Capsule\Manager as Capsule;
 
 /**
- *    Announcement2Test
+ *    AnnouncementTest
  */
-class Announcement2Test extends TestCase{
+class AnnouncementTest extends TestCase{
 
     public static $capsule;
 
@@ -80,8 +80,8 @@ class Announcement2Test extends TestCase{
 
     public function getAnnouncementsBySubjectInstanceIdProvider()
     {
-        Announcement2Test::$capsule = new Capsule();
-        Announcement2Test::$capsule->addConnection([
+        AnnouncementTest::$capsule = new Capsule();
+        AnnouncementTest::$capsule->addConnection([
             'driver'    => 'mysql',
             'host'      => 'localhost',
             'database'  => 'acmeev_db',
@@ -91,8 +91,8 @@ class Announcement2Test extends TestCase{
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
         ]);
-        Announcement2Test::$capsule->bootEloquent();
-        Announcement2Test::$capsule->setAsGlobal();
+        AnnouncementTest::$capsule->bootEloquent();
+        AnnouncementTest::$capsule->setAsGlobal();
 
         echo("===============================================================================================================\n");
         echo("=====================================TEST GET ANNOUNCEMENT BY SUBJECT_INSTANCE_ID==============================\n");

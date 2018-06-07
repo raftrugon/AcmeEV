@@ -56,15 +56,22 @@ class MessageTest extends TestCase{
         $groupRepo = new groupRepo($conversationRepo);
         $messageRepo = new MessageRepo($conversationRepo, $groupRepo);
 
-        $conversation1 = new Conversation();
+        $conversation1 = $conversationRepo->getModel();
         $conversation1->setUser1(9);
         $conversation1->setUser2(10);
+        $conversation1->getMessages();
         $conversation1->save();
 
-        $conversation2 = new Conversation();
+        $conversation1 = Conversation::find($conversation1->getId());
+
+
+
+        $conversation2 = $conversationRepo->getModel();
         $conversation2->setUser1(10);
         $conversation2->setUser2(11);
         $conversation2->save();
+
+        $conversation2 = Conversation::find($conversation2->getId());
 
         $message1 = new Message();
         $message1->setSender(9);
@@ -80,29 +87,33 @@ class MessageTest extends TestCase{
 
         $message3 = new Message();
         $message3->setSender(9);
-        $message3->setConversation($conversation1);
+        $message3->setConversation($conversation1->getId());
         $message3->setBody("It was a prank bro.");
         $message3->save();
 
         $message4 = new Message();
         $message4->setSender(10);
-        $message4->setConversation($conversation1);
+        $message4->setConversation($conversation1->getId());
         $message4->setBody("OMG OMG OMG.");
         $message4->save();
 
-        $conversations = [$conversation1, $conversation2];
+        //$conversation1->getMessages()->insert([$message1, $message2, $message3, $message4]);
+
+        $conversations = collect([$conversation1, $conversation2]);
 
         $messageRepo->markUnreadAsReadForConversations($conversations);
 
         $results = Message::all();
 
-        $total = $results->count();
+        $total = 0;
 
-        foreach($results->get() as $r){
+        foreach($results as $r){
             echo($r."\n");
+            if($r->getReadBy()!=null)
+                $total++;
         }
 
-        echo("Elementos obtenidos: ".$total." (Esperados: ".$expected_number.")\n");
+        echo("Mensajes leídos: ".$total." (Esperados: ".$expected_number.")\n");
 
         if($expected_exception)
             $this->assertNotEquals($expected_number, $total);
@@ -136,11 +147,11 @@ class MessageTest extends TestCase{
         print("\n");
 
         return [
-            [9, 0, false,
+            [9, 2, false,
                 "Marcar como leído los mensajes de una conversación."],
-            [10, 0, false,
+            [10, 2, false,
                 "Obtener todas las asignaturas matriculadas de Miguel Hernández (de este curso)."],
-            [11, 2, true,
+            [11, 3, true,
                 "Obtener todas las asignaturas matriculadas de Miguela Gómez esperando recibir 2 (de este curso)."],
 
         ];
