@@ -12,5 +12,6 @@ return[
     'nextYear'=>'Create next year',
     'code'=>'Code',
     'successDelete'=>'The degree was deleted',
+    'success.delete'=>'The degree was deleted',
     'deleteFailed'=>'Could not delete the degree',
 ];

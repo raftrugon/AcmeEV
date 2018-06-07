@@ -12,5 +12,6 @@ return[
     'nextYear'=>'Crear próximo año',
     'code'=>'Código',
     'successDelete'=>'El grado fue borrad',
+    'success.delete'=>'El grado fue borrad',
     'deleteFailed'=>'No se pudo borrar el grado',
 ];
