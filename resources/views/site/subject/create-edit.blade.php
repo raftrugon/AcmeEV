@@ -65,11 +65,12 @@
                             @include('global.input',['type'=>'checkbox','value'=>1,'id'=>'active','name'=>'active','checked'=>'checked','label'=>__('subject.active'),'texto'=>''])
                             @include('global.select',['id'=>'department','objects'=>$departments,'value'=>'id','display'=>'name','label'=>__('subject.department'),'default'=>__('global.choose_one')])
                             <div class="form-group selectpicker-form-group">
-                               <label class="control-label">@lang('subject.coordinator')</label> @endif
+                               <label class="control-label">@lang('subject.coordinator')</label>
                                 <select class="selectpicker form-control" id="coordinator" name="coordinator">
                                   <option value="">@lang('subject.select_department')</option>
                                 </select>
                             </div>
+                        @endif
                             <button class="btn btn-success">@lang('global.submit')</button>
                     </div>
                 </div>
