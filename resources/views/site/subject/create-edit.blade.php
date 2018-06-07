@@ -16,17 +16,17 @@
                             <input type="hidden" name="id" value="{{$subject->getId()}}"/>
                             @include('global.input',['type'=>'text','id'=>'name','name'=>'name','label'=>__('attributes.name'),'value'=>$subject->getName()])
                             @include('global.input',['type'=>'number','id'=>'school_year','name'=>'school_year','label'=>__('attributes.school_year'),'value'=>$subject->getSchoolYear()])
-                            <div class="form-group"  style="margin-left:15px;margin-right: 15px;">
+                            <div class="form-group selectpicker-form-group"  style="margin-left:15px;margin-right: 15px;">
                                 <label for="select">@lang('attributes.semester')</label>
-                                <select class="form-control" id="selectSemester" name="semester">
+                                <select class="form-control selectpicker" id="selectSemester" name="semester">
                                     <option value="0" @if($subject->getSemester()===0) selected @endif>@lang('subject.first')</option>
                                     <option value="1" @if($subject->getSemester()===1) selected @endif>@lang('subject.second')</option>
                                     <option value="2" @if(is_null($subject->getSemester())) selected @endif>@lang('subject.annual')</option>
                                 </select>
                             </div>
-                            <div class="form-group"  style="margin-left:15px;margin-right: 15px;">
+                            <div class="form-group selectpicker-form-group"  style="margin-left:15px;margin-right: 15px;">
                                 <label for="select">@lang('attributes.type')</label>
-                                <select class="form-control" id="selectType" name="type">
+                                <select class="form-control selectpicker" id="selectType" name="type">
                                     <option value="0" @if($subject->getSubjectType()==='OBLIGATORY') selected @endif>@lang('subject.obligatory')</option>
                                     <option value="1" @if($subject->getSubjectType()==='BASIC') selected @endif>@lang('subject.basic')</option>
                                     <option value="2" @if($subject->getSubjectType()==='OPTATIVE') selected @endif>@lang('subject.optative')</option>
@@ -47,17 +47,17 @@
                             <input type="hidden" name="id" value="0"/>
                             @include('global.input',['type'=>'text','id'=>'name','name'=>'name','label'=>__('attributes.name')])
                             @include('global.input',['type'=>'number','id'=>'school_year','name'=>'school_year','label'=>__('attributes.school_year')])
-                            <div class="form-group"  style="margin-left:15px;margin-right: 15px;">
+                            <div class="form-group selectpicker-form-group"  style="margin-left:15px;margin-right: 15px;">
                                 <label for="select">@lang('attributes.semester')</label>
-                                <select class="form-control" id="selectSemester" name="semester">
+                                <select class="form-control selectpicker" id="selectSemester" name="semester">
                                     <option value="0">@lang('subject.first')</option>
                                     <option value="1">@lang('subject.second')</option>
                                     <option value="2">@lang('subject.annual')</option>
                                 </select>
                             </div>
-                            <div class="form-group" style="margin-left:15px;margin-right: 15px;">
+                            <div class="form-group selectpicker-form-group" style="margin-left:15px;margin-right: 15px;">
                                 <label for="select">@lang('attributes.type')</label>
-                                <select class="form-control" id="selectType" name="type">
+                                <select class="form-control selectpicker" id="selectType" name="type">
                                     <option value="0">@lang('subject.obligatory')</option>
                                     <option value="1">@lang('subject.basic')</option>
                                     <option value="2">@lang('subject.optative')</option>
@@ -105,10 +105,11 @@
                     active : 'required',
                     coordinator : 'required',
                     degree : 'required',
+                    type : 'required',
                 },
 
                 messages: {
-                    name: "{{__('validation.required',['attribute'=>'attributes.name'])}}",
+                    name: "{{__('validation.required',['attribute'=>__('attributes.name')])}}",
                     school_year:{
                         required: "{{__('validation.required',['attribute'=>__('attributes.school_year')])}}",
                         min: "{{__('validation.min.numeric',['attribute'=>__('attributes.school_year'),'min'=>0])}}",
@@ -133,6 +134,8 @@
                     });
                 });
             });
+
+            $('.selectpicker').selectpicker();
         });
     </script>
 @endsection

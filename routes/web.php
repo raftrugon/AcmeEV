@@ -42,7 +42,7 @@ Route::post('/cookies/accept',function(){
 
 //////////////////////////////////////////////////////// Admin ////////////////////////////////////////////////////////
 
-Route::group(['prefix'=>'admin'/*,'middleware'=>['role:admin']*/],function(){                               //middleware administrador
+Route::group(['prefix'=>'admin','middleware'=>['role:admin']],function(){                               //middleware administrador
     Route::group(['prefix'=>'systemconfig'],function() {
         Route::get('edit', 'Admin\SystemConfigController@getEditSystemConfig');                         //Correct - Modificable
         Route::post('save', 'Admin\SystemConfigController@postSaveSystemConfig');                       //Correct
