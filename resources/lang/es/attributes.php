@@ -43,4 +43,11 @@ return [
     'personal_email'=>'E-mail personal',
     'permission'=>'Permiso',
     'description'=>'Descripción',
+    'degree'=>'Grado',
+    'subject_name'=>'Nombre asignatura',
+    'summon'=>'Convocatoria',
+    'status'=>'Estado',
+    'qualification'=>'Nota',
+    'open'=>'Abierta',
+    'closed'=>'Cerrada',
 ];

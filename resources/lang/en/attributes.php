@@ -43,4 +43,12 @@ return [
     'personal_email'=>'Personal e-mail',
     'permission'=>'Permission',
     'description'=>'Description',
+    'degree'=>'Degree',
+    'subject_name'=>'Subject Name',
+    'summon'=>'Summon',
+    'status'=>'Status',
+    'qualification'=>'Qualification',
+    'open'=>'Open',
+    'closed'=>'Closed',
+
 ];

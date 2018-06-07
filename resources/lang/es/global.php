@@ -27,6 +27,9 @@ return[
     'idNumber'=>'Número de identificación',
     'fullName'=>'Nombre completo',
     'student'=>'Estudiante',
+    'filters'=>'Filtros',
+    'minutes'=>'Actas',
+    'enrollments'=>'Matrículas',
     'demo.no-info'=>'No hay objetos para mostrar.',
     'welcome-heading'=>'Bienvenido a la Plataforma de Enseñanza Virtual',
     'welcome-body'=>'Esta página web ha sido diseñada para los estudiantes de la universidad
