@@ -81,7 +81,7 @@
                                     $('#modal').iziModal('close');
                                     resultsTable.ajax.reload();
                                 } else {
-                                    error('@lang('global.error')', '@lang('users.update.success')');
+                                    error('@lang('global.error')', '@lang('users.update.error')');
                                 }
                             });
                         }
@@ -98,8 +98,18 @@
                            id_number: 'required',
                            'roles[]': 'required',
                            'permissions[]': 'required',
+                           department_id:{
+                               required: function(){
+                                   if($.inArray("2",$('[name="roles[]"]').val()) !== -1) return true;
+                               }
+                           },
                        },
                     });
+                    toggleDepartmentSelectVisibility();
+                    $('[name="roles[]"]').change(function(){
+                        toggleDepartmentSelectVisibility();
+                    });
+
                     modal.stopLoading();
                 }
             });
@@ -168,5 +178,14 @@
                 $('#modal').data('user-id','').iziModal('open');
             });
         });
+
+        function toggleDepartmentSelectVisibility(){
+            if($.inArray("2",$('[name="roles[]"]').val()) === -1){
+                $('#department_id').closest('.department-col').hide();
+                $('#department_id').selectpicker('val','');
+            }else{
+                $('#department_id').closest('.department-col').show();
+            }
+        }
     </script>
 @endsection
