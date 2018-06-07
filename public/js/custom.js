@@ -14,6 +14,8 @@ $(function(){
             messageNative(payload.title,payload.body);
         }
     });
+
+    Push.Permission.request();
 });
 
 function success(title,msg){
@@ -74,30 +76,36 @@ function groupMessageNative(title,msg,sender){
 }
 
 function message(title,msg,id) {
-    Push.create(title, {
-        body: msg,
-        icon: 'img/avatar.png',
-        timeout: 5000,
-        vibrate: [200,100,200],
-        onClick: function () {
-            window.focus();
-            showTab(id);
-            this.close();
-        }
-    });
+    if(Push.Permission.has())
+        Push.create(title, {
+            body: msg,
+            icon: 'img/avatar.png',
+            timeout: 5000,
+            vibrate: [200,100,200],
+            onClick: function () {
+                window.focus();
+                showTab(id);
+                this.close();
+            }
+        });
+    else
+        messageNative(title,msg);
 }
 
 function groupMessage(title,msg,sender,id) {
-    Push.create(title, {
-        body: sender+': '+msg,
-        icon: 'img/avatar-group.png',
-        timeout: 5000,
-        vibrate: [200,100,200],
-        onClick: function () {
-            window.focus();
-            showTab(id);
-            this.close();
-        }
-    });
+    if(Push.Permission.has())
+        Push.create(title, {
+            body: sender+': '+msg,
+            icon: 'img/avatar-group.png',
+            timeout: 5000,
+            vibrate: [200,100,200],
+            onClick: function () {
+                window.focus();
+                showTab(id);
+                this.close();
+            }
+        });
+    else
+        groupMessageNative(title,msg,sender);
 }
 

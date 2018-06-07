@@ -41,7 +41,7 @@ class ChatController extends Controller
 
     public function getLoadChats(){
         $conversations = Conversation::find(Session::get('conversations.'.Auth::id(),array()));
-        $myGroups = $this->conversationRepo->getMyGroupsForThisYear()->get()->pluck('id')->toArray();
+        $myGroups = $this->conversationRepo->getMyGroupsForThisYear()->pluck('id')->toArray();
         $groupConversations = Conversation::whereIn('group_id',$myGroups)
             ->get();
         $conversations = $conversations->merge($groupConversations);

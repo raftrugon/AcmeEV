@@ -11,10 +11,17 @@
                     @if($message->isMine())
                         <div class="message message-sent">
                     @else
-                        <div class="message message-received" data-sender-id="{{$message->sender_id}}">
+                        <div class="message message-received
+                            @if(!is_null($conversation->getGroup) && ($message->getSender->getId() == $conversation->getGroup->getTheoryLecturer->getId() || $message->getSender->getId() == $conversation->getGroup->getPracticeLecturer->getId()))
+                                message-lecturer
+                            @endif
+                            " data-sender-id="{{$message->sender_id}}">
                     @endif
                     @if(!is_null($conversation->getGroup) && !$message->isMine())
-                        <strong>{{$message->getSender->getFullName()}}</strong><br/>
+                        <strong>{{$message->getSender->getFullName()}}</strong>
+                        @if($message->getSender->getId() == $conversation->getGroup->getTheoryLecturer->getId())   (@lang('group.theoryLecturer')) @endif
+                        @if($message->getSender->getId() == $conversation->getGroup->getPracticeLecturer->getId())   (@lang('group.practiceLecturer')) @endif
+                        <br/>
                     @endif
                 @else
                     <br/>

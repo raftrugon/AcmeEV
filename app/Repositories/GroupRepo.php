@@ -29,7 +29,7 @@ class GroupRepo extends BaseRepo {
     public function getMySchedule($start){
         $start = substr($start,0,10);
         $monday = Carbon::createFromFormat('Y-m-d',$start);
-        $groups = $this->conversationRepo->getMyGroupsForThisYear()->get();
+        $groups = $this->conversationRepo->getMyGroupsForThisYear();
         return $groups->map(function($group) use($monday) {
             $subject = $group->getSubjectInstance->getSubject;
             $periods = $group->getPeriodTimes->map(function($period) use ($monday,$subject,$group){

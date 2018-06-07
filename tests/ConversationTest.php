@@ -69,7 +69,7 @@ class ConversationTest extends TestCase{
 
         $total = $results->count();
 
-        foreach($results->get() as $r){
+        foreach($results as $r){
             echo($r."\n");
         }
 
