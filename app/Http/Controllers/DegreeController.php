@@ -62,7 +62,7 @@ class DegreeController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'new_students_limit' => 'required',
+            'new_students_limit' => 'required|min:1',
         ]);
 
         if ($validator->fails()) {

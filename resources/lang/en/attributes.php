@@ -42,4 +42,5 @@ return [
     'full_name'=>'Full name',
     'personal_email'=>'Personal e-mail',
     'permission'=>'Permission',
+    'description'=>'Description',
 ];
