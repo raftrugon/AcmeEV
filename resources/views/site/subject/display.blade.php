@@ -110,6 +110,7 @@
                         e.stopPropagation();
                         let btn = $(this);
                         let form = $('#folder_'+$(this).data('id')+'_form');
+                        if($(form).find('[name="name"]').val() === '' || $(form).find('[name="description"]').val() === '') return false;
                         $.post('{{route('save_folder')}}',form.serialize(),function(response){
                             if(response === 'true'){
                                 success('@lang('global.success')','@lang('filesystem.folder.save.success')');
