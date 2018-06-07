@@ -191,7 +191,7 @@ class SubjectController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required',
-            'school_year' => 'required',
+            'school_year' => 'required|min:1|max:4',
         ]);
 
         if ($validator->fails()) {
