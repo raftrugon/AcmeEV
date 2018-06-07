@@ -17,6 +17,10 @@ use Illuminate\Support\Facades\Auth;
  */
 class SubjectInstanceTest extends TestCase{
 
+    public $database = "acmev_db"; //Cambiar en función de nuestra base de datos
+    public $username = "root"; //Cambiar en función de nuestra base de datos
+    public $password = ""; //Cambiar en función de nuestra base de datos
+
     public static $capsule;
 
     function setUp(){
@@ -35,14 +39,9 @@ class SubjectInstanceTest extends TestCase{
     /**
      * @dataProvider isUserTeacherNOFUNCIONALProvider
      */
-    public function testIsUserTeacherNOFUNCIONAL($user_id, $subject_instance_id, $expected_exception,
+    public function testIsUserTeacherNOFUNCIONAL($user_id, $subject_instance_id,
                                                $explanation){
 
-
-        if(!$expected_exception)
-            echo("---------------------------- POSITIVO ---------------------------\n");
-        else
-            echo("---------------------------- NEGATIVO ---------------------------\n");
 
         echo("Explicación: " . $explanation ."\n");
         echo("User ID: ".$user_id."\n");
@@ -64,13 +63,8 @@ class SubjectInstanceTest extends TestCase{
             $booleano = 'true';
         else
             $booleano = 'false';
-        echo("Elementos obtenidos: ".$booleano."\n");
-
-        if($expected_exception)
-            $this->assertNotTrue($results);
-        else
-            $this->assertTrue($results);
-
+        echo("Resultado obtenido: ".$booleano."\n");
+        echo("______________\n");
     }
 
     public function isUserTeacherNOFUNCIONALProvider()
@@ -81,9 +75,9 @@ class SubjectInstanceTest extends TestCase{
         $this::$capsule->addConnection([
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'acmeev_db',
-            'username'  => 'root',
-            'password'  => '1234',
+            'database'  => $this->database,
+            'username'  => $this->username,
+            'password'  => $this->password,
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
@@ -98,11 +92,11 @@ class SubjectInstanceTest extends TestCase{
         print("\n");
 
         return [
-            [13, 3, false,
+            [13, 3,
                 "Consultar si Marcia Klein es profesor en la asignatura 3."],
-            [15, 4, false,
+            [15, 4,
                 "Consultar si Jovan Buckridge es profesor en la asignatura 4."],
-            [59, 2, true,
+            [59, 2,
                 "Consultar si Camilla Beatty es profesor en la asignatura 2."],
 
         ];
@@ -156,9 +150,9 @@ class SubjectInstanceTest extends TestCase{
         $this::$capsule->addConnection([
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'acmeev_db',
-            'username'  => 'root',
-            'password'  => '1234',
+            'database'  => $this->database,
+            'username'  => $this->username,
+            'password'  => $this->password,
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',

@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\User;
 use App\ControlCheckInstance;
 use App\Repositories\ControlCheckInstanceRepo as ControlCheckInstanceRepo;
 use Tests\TestCase;
@@ -12,6 +13,10 @@ use Illuminate\Support\Facades\Auth;
  *    ControlCheckInstanceTest
  */
 class ControlCheckInstanceTest extends TestCase{
+
+    public $database = "acmev_db"; //Cambiar en función de nuestra base de datos
+    public $username = "root"; //Cambiar en función de nuestra base de datos
+    public $password = ""; //Cambiar en función de nuestra base de datos
 
     public static $capsule;
 
@@ -95,9 +100,9 @@ class ControlCheckInstanceTest extends TestCase{
         $this::$capsule->addConnection([
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'acmeev_db',
-            'username'  => 'root',
-            'password'  => '1234',
+            'database'  => $this->database,
+            'username'  => $this->username,
+            'password'  => $this->password,
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
@@ -112,11 +117,11 @@ class ControlCheckInstanceTest extends TestCase{
         print("\n");
 
         return [
-            [3, '04093414V', 9, false,
+            [3, User::find(9)->getIdNumber(), 9, false,
                 "Comprobar el próximo examen Laboratory control check de la estudiante Ana Morales."],
-            [1, '25687049B', 10, false,
+            [1, User::find(10)->getIdNumber(), 10, false,
                 "Comprobar el próximo examen First Control Check del estudiante Miguel Hernández."],
-            [1, '04093414V', 10, true,
+            [1, User::find(9)->getIdNumber(), 10, true,
                 "Comprobar el próximo examen First Control Check de Ana Morales esperando recibir el de
                 Miguel Hernández."],
 
@@ -205,9 +210,9 @@ class ControlCheckInstanceTest extends TestCase{
         $this::$capsule->addConnection([
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'acmeev_db',
-            'username'  => 'root',
-            'password'  => '1234',
+            'database'  => $this->database,
+            'username'  => $this->username,
+            'password'  => $this->password,
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
