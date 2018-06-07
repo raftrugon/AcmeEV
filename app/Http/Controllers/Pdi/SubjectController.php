@@ -192,6 +192,11 @@ class SubjectController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required',
             'school_year' => 'required|min:1|max:4',
+            'department' => 'required',
+            'semester' => 'required',
+            'active' => 'required',
+            'coordinator' => 'required',
+            'degree' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -238,6 +243,7 @@ class SubjectController extends Controller
             DB::commit();
         } catch (\Exception $e) {
             DB::rollBack();
+            throw $e;
             return redirect()->back()->with('error', __('global.post.error'));
         } catch (\Throwable $t) {
             DB::rollBack();
