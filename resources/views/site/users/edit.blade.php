@@ -16,11 +16,14 @@
         @include('global.input',['type'=>'text','id'=>'id_number','label'=>__('attributes.id_number'),'col'=>'4','value'=>isset($user) ? $user->getIdNumber() : null])
     </div>
     <div class="row">
-        <div class="col-6">
-            @include('global.select',['id'=>'roles','name'=>'roles[]','label'=>__('attributes.role'),'col'=>6,'objects'=>$roles,'value'=>'id','display'=>'name','multiselect'=>true,'selectedOption'=>isset($user) ? $user->roles->pluck('id')->toArray() : null])
+        <div class="col">
+            @include('global.select',['id'=>'roles','name'=>'roles[]','label'=>__('attributes.role'),'objects'=>$roles,'value'=>'id','display'=>'name','multiselect'=>true,'selectedOption'=>isset($user) ? $user->roles->pluck('id')->toArray() : null])
         </div>
-        <div class="col-6">
-            @include('global.select',['id'=>'permissions','name'=>'permissions[]','label'=>__('attributes.permission'),'col'=>6,'objects'=>$permissions,'value'=>'id','display'=>'name','multiselect'=>true,'selectedOption'=>isset($user) ? $user->permissions->pluck('id')->toArray() : null])
+        <div class="col">
+            @include('global.select',['id'=>'permissions','name'=>'permissions[]','label'=>__('attributes.permission'),'objects'=>$permissions,'value'=>'id','display'=>'name','multiselect'=>true,'selectedOption'=>isset($user) ? $user->permissions->pluck('id')->toArray() : null])
+        </div>
+        <div class="col department-col" style="display:none">
+            @include('global.select',['id'=>'department_id','name'=>'department_id','label'=>__('attributes.department'),'objects'=>$departments,'value'=>'id','display'=>'name','selectedOption'=>isset($user) && !is_null($user->getDepartment) ? $user->getDepartment->getId() : null,'default'=>__('global.choose_one')])
         </div>
     </div>
     <div class="row">

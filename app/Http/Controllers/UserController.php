@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Department;
 use App\Repositories\UserRepo;
 use App\User;
 use Illuminate\Http\Request;
@@ -85,7 +86,8 @@ class UserController extends Controller
         else $user = null;
         $roles = Role::all();
         $permissions = Permission::all();
-        return view('site.users.edit',compact('roles','permissions','user'));
+        $departments = Department::all();
+        return view('site.users.edit',compact('roles','permissions','user','departments'));
     }
 
     public function postSave(Request $request){
@@ -103,6 +105,7 @@ class UserController extends Controller
             $user->setAddress($request->input('address'));
             $user->setPhoneNumber($request->input('phone_number'));
             $user->setIdNumber($request->input('id_number'));
+            $user->setDepartment($request->input('department_id'));
             $user = $this->userRepo->updateWithoutData($user);
             $user->syncRoles($request->input('roles'));
             $user->syncPermissions($request->input('permissions'));
