@@ -2,16 +2,20 @@
 
 namespace Tests\Unit;
 
-use App\Enrollment;
-use App\Repositories\EnrollmentRepo as EnrollmentRepo;
+use App\Repositories\SubjectInstanceRepo;
+use App\Repositories\GroupRepo;
+use App\Repositories\SubjectRepo;
+use App\Repositories\ConversationRepo;
+use App\SubjectInstance;
+use App\Subject;
 use Tests\TestCase;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Support\Facades\Auth;
 
 /**
- *    EnrollmentTest
+ *    SubjectInstanceTest
  */
-class EnrollmentTest extends TestCase{
+class SubjectInstanceTest extends TestCase{
 
     public static $capsule;
 
@@ -29,9 +33,9 @@ class EnrollmentTest extends TestCase{
     }
 
     /**
-     * @dataProvider getMyEnrollmentsProvider
+     * @dataProvider isUserTeacherNOFUNCIONALProvider
      */
-    public function testGetMyEnrollments($user_id, $expected_number, $expected_exception,
+    public function testIsUserTeacherNOFUNCIONAL($user_id, $subject_instance_id, $expected_exception,
                                                $explanation){
 
 
@@ -42,32 +46,34 @@ class EnrollmentTest extends TestCase{
 
         echo("Explicación: " . $explanation ."\n");
         echo("User ID: ".$user_id."\n");
-        echo("Expected Number: ".$expected_number."\n");
+        echo("Subject Instance ID: ".$subject_instance_id."\n");
         echo("-----------------------------------------------------------------\n");
 
         Auth::loginUsingId($user_id);
         $this->assertTrue(Auth::check());
 
-        $enrollmentRepo = new EnrollmentRepo();
+        $conversationRepo = new ConversationRepo();
+        $groupRepo = new GroupRepo($conversationRepo);
+        $subjectInstanceRepo = new SubjectInstanceRepo($groupRepo, $conversationRepo);
 
-        $results = $enrollmentRepo->getMyEnrollments();
+        $subject_instance = SubjectInstance::find($subject_instance_id);
+        $results = $subjectInstanceRepo->isUserTeacherNOFUNCIONAL($subject_instance);
 
-        $total = $results->count();
-
-        foreach($results->get() as $r){
-            echo($r."\n");
-        }
-
-        echo("Elementos obtenidos: ".$total." (Esperados: ".$expected_number.")\n");
+        $booleano = null;
+        if($results)
+            $booleano = 'true';
+        else
+            $booleano = 'false';
+        echo("Elementos obtenidos: ".$booleano."\n");
 
         if($expected_exception)
-            $this->assertNotEquals($expected_number, $total);
+            $this->assertNotTrue($results);
         else
-            $this->assertEquals($expected_number, $total);
+            $this->assertTrue($results);
 
     }
 
-    public function getMyEnrollmentsProvider()
+    public function isUserTeacherNOFUNCIONALProvider()
     {
         $this->assertTrue(true);
 
@@ -87,27 +93,27 @@ class EnrollmentTest extends TestCase{
         $this::$capsule->setAsGlobal();
 
         echo("===============================================================================================================\n");
-        echo("=====================================TEST GET MY ENROLLMENTS===================================================\n");
+        echo("=====================================TEST IS USER TEACHER NO FUNCIONAL=========================================\n");
         echo("===============================================================================================================\r");
         print("\n");
 
         return [
-            [9, 12, false,
-                "Obtener todas las asignaturas matriculadas de Ana Morales."],
-            [10, 6, false,
-                "Obtener todas las asignaturas matriculadas de Miguel Hernández."],
-            [11, 2, true,
-                "Obtener todas las asignaturas matriculadas de Miguela Gómez esperando recibir 2."],
+            [13, 3, false,
+                "Consultar si Marcia Klein es profesor en la asignatura 3."],
+            [15, 4, false,
+                "Consultar si Jovan Buckridge es profesor en la asignatura 4."],
+            [59, 2, true,
+                "Consultar si Camilla Beatty es profesor en la asignatura 2."],
 
         ];
 
     }
 
     /**
-     * @dataProvider getMyActualEnrollmentsProvider
+     * @dataProvider getCurrentInstanceProvider
      */
-    public function testGetMyActualEnrollments($user_id, $expected_number, $expected_exception,
-                                          $explanation){
+    public function testGetCurrentInstance($expected_exception,
+                                                 $explanation){
 
 
         if(!$expected_exception)
@@ -116,33 +122,33 @@ class EnrollmentTest extends TestCase{
             echo("---------------------------- NEGATIVO ---------------------------\n");
 
         echo("Explicación: " . $explanation ."\n");
-        echo("User ID: ".$user_id."\n");
-        echo("Expected Number: ".$expected_number."\n");
         echo("-----------------------------------------------------------------\n");
 
-        Auth::loginUsingId($user_id);
-        $this->assertTrue(Auth::check());
+        $subject1 = new Subject();
+        $subject1->setName("Test Subject");
+        $subject1->setDepartment(10);
+        $subject1->setDegree(1);
+        $subject1->save();
 
-        $enrollmentRepo = new EnrollmentRepo();
+        $subject_instance1 = new SubjectInstance();
+        $subject_instance1->setAcademicYear(2018);
+        $subject = Subject::find($subject1->getId());
+        $subject_instance1->setSubject($subject1->getId());
+        $subject_instance1->save();
 
-        $results = $enrollmentRepo->getMyActualEnrollments();
+        $conversationRepo = new ConversationRepo();
+        $groupRepo = new GroupRepo($conversationRepo);
+        $subjectInstanceRepo = new SubjectInstanceRepo($groupRepo, $conversationRepo);
 
-        $total = $results->count();
+        $results = $subjectInstanceRepo->getCurrentInstance($subject->getId());
 
-        foreach($results->get() as $r){
-            echo($r."\n");
-        }
+        echo($results);
 
-        echo("Elementos obtenidos: ".$total." (Esperados: ".$expected_number.")\n");
-
-        if($expected_exception)
-            $this->assertNotEquals($expected_number, $total);
-        else
-            $this->assertEquals($expected_number, $total);
+        $this->assertNotNull($results);
 
     }
 
-    public function getMyActualEnrollmentsProvider()
+    public function getCurrentInstanceProvider()
     {
         $this->assertTrue(true);
 
@@ -162,17 +168,13 @@ class EnrollmentTest extends TestCase{
         $this::$capsule->setAsGlobal();
 
         echo("===============================================================================================================\n");
-        echo("=====================================TEST GET MY ACTUAL ENROLLMENTS============================================\n");
+        echo("=====================================TEST GET CURRENT INSTANCE=================================================\n");
         echo("===============================================================================================================\r");
         print("\n");
 
         return [
-            [9, 0, false,
-                "Obtener todas las asignaturas matriculadas de Ana Morales (de este curso)."],
-            [10, 0, false,
-                "Obtener todas las asignaturas matriculadas de Miguel Hernández (de este curso)."],
-            [11, 2, true,
-                "Obtener todas las asignaturas matriculadas de Miguela Gómez esperando recibir 2 (de este curso)."],
+            [false,
+                "Obtener el Subject Instance correspondiente a este año de la nueva asignatura."]
 
         ];
 

@@ -2,16 +2,21 @@
 
 namespace Tests\Unit;
 
+use App\ControlCheckInstance;
 use App\Enrollment;
-use App\Repositories\EnrollmentRepo as EnrollmentRepo;
+use App\User;
+use App\Minute;
+use App\Repositories\MinuteRepo;
+use App\Repositories\ControlCheckInstanceRepo;
+use App\Repositories\ControlCheckRepo;
 use Tests\TestCase;
 use Illuminate\Database\Capsule\Manager as Capsule;
 use Illuminate\Support\Facades\Auth;
 
 /**
- *    EnrollmentTest
+ *    MinuteTest
  */
-class EnrollmentTest extends TestCase{
+class MinuteTest extends TestCase{
 
     public static $capsule;
 
@@ -29,10 +34,10 @@ class EnrollmentTest extends TestCase{
     }
 
     /**
-     * @dataProvider getMyEnrollmentsProvider
+     * @dataProvider getMinutesForStudentProvider
      */
-    public function testGetMyEnrollments($user_id, $expected_number, $expected_exception,
-                                               $explanation){
+    public function testGetMinutesForStudent($auth_login, $user_id, $expected_number, $expected_exception,
+                                                         $explanation){
 
 
         if(!$expected_exception)
@@ -45,12 +50,19 @@ class EnrollmentTest extends TestCase{
         echo("Expected Number: ".$expected_number."\n");
         echo("-----------------------------------------------------------------\n");
 
-        Auth::loginUsingId($user_id);
-        $this->assertTrue(Auth::check());
+        $controlCheckInstanceRepo = new ControlCheckInstanceRepo();
+        $controlCheckRepo = new ControlCheckRepo($controlCheckInstanceRepo);
+        $minuteRepo = new MinuteRepo($controlCheckRepo, $controlCheckInstanceRepo);
 
-        $enrollmentRepo = new EnrollmentRepo();
-
-        $results = $enrollmentRepo->getMyEnrollments();
+        if($auth_login){
+            Auth::loginUsingId($user_id);
+            $this->assertTrue(Auth::check());
+            $results = $minuteRepo->getMinutesForStudent();
+        }
+        else{
+            $user = User::find($user_id);
+            $results = $minuteRepo->getMinutesForStudent($user);
+        }
 
         $total = $results->count();
 
@@ -58,7 +70,7 @@ class EnrollmentTest extends TestCase{
             echo($r."\n");
         }
 
-        echo("Elementos obtenidos: ".$total." (Esperados: ".$expected_number.")\n");
+        echo("Resultado obtenido: ".$total." (Esperado: ".$expected_number.")\n");
 
         if($expected_exception)
             $this->assertNotEquals($expected_number, $total);
@@ -67,7 +79,7 @@ class EnrollmentTest extends TestCase{
 
     }
 
-    public function getMyEnrollmentsProvider()
+    public function getMinutesForStudentProvider()
     {
         $this->assertTrue(true);
 
@@ -87,27 +99,27 @@ class EnrollmentTest extends TestCase{
         $this::$capsule->setAsGlobal();
 
         echo("===============================================================================================================\n");
-        echo("=====================================TEST GET MY ENROLLMENTS===================================================\n");
+        echo("=====================================TEST MINUTES FOR STUDENT==================================================\n");
         echo("===============================================================================================================\r");
         print("\n");
 
         return [
-            [9, 12, false,
-                "Obtener todas las asignaturas matriculadas de Ana Morales."],
-            [10, 6, false,
-                "Obtener todas las asignaturas matriculadas de Miguel Hernández."],
-            [11, 2, true,
-                "Obtener todas las asignaturas matriculadas de Miguela Gómez esperando recibir 2."],
+            [true, 9, 16, false,
+                "Obtener todas las actas de Ana Morales (usando login)."],
+            [false, 10, 7, false,
+                "Obtener todas las actas de Miguel Hernández (sin usar login)."],
+            [true, 11, 7, true,
+                "Obtener todas las actas de Miguela Gómez esperando obtener 7."],
 
         ];
 
     }
 
     /**
-     * @dataProvider getMyActualEnrollmentsProvider
+     * @dataProvider setAllStatusTrueProvider
      */
-    public function testGetMyActualEnrollments($user_id, $expected_number, $expected_exception,
-                                          $explanation){
+    public function testSetAllStatusTrue($expected_number, $expected_exception,
+                                             $explanation){
 
 
         if(!$expected_exception)
@@ -116,16 +128,39 @@ class EnrollmentTest extends TestCase{
             echo("---------------------------- NEGATIVO ---------------------------\n");
 
         echo("Explicación: " . $explanation ."\n");
-        echo("User ID: ".$user_id."\n");
         echo("Expected Number: ".$expected_number."\n");
         echo("-----------------------------------------------------------------\n");
 
-        Auth::loginUsingId($user_id);
-        $this->assertTrue(Auth::check());
+        $controlCheckInstanceRepo = new ControlCheckInstanceRepo();
+        $controlCheckRepo = new ControlCheckRepo($controlCheckInstanceRepo);
+        $minuteRepo = new MinuteRepo($controlCheckRepo, $controlCheckInstanceRepo);
 
-        $enrollmentRepo = new EnrollmentRepo();
+        $minutes = Minute::all();
 
-        $results = $enrollmentRepo->getMyActualEnrollments();
+        $count = 0;
+        foreach($minutes as $min){
+            $min->setStatus(0);
+            $min->save();
+            $count++;
+            if($count==3)
+                break;
+        }
+
+        $results = Minute::where('status',0);
+
+        $total = $results->count();
+
+        echo("Antes: ".$total.":\n");
+
+        foreach($results->get() as $r){
+            echo($r."\n");
+        }
+
+        $minuteRepo->setAllStatusTrue();
+
+        echo("Antes: ".$total.":\n");
+
+        $results = Minute::where('status',0);
 
         $total = $results->count();
 
@@ -133,7 +168,7 @@ class EnrollmentTest extends TestCase{
             echo($r."\n");
         }
 
-        echo("Elementos obtenidos: ".$total." (Esperados: ".$expected_number.")\n");
+        echo("Después: ".$total." (Esperado: ".$expected_number.")\n");
 
         if($expected_exception)
             $this->assertNotEquals($expected_number, $total);
@@ -142,7 +177,7 @@ class EnrollmentTest extends TestCase{
 
     }
 
-    public function getMyActualEnrollmentsProvider()
+    public function setAllStatusTrueProvider()
     {
         $this->assertTrue(true);
 
@@ -162,17 +197,15 @@ class EnrollmentTest extends TestCase{
         $this::$capsule->setAsGlobal();
 
         echo("===============================================================================================================\n");
-        echo("=====================================TEST GET MY ACTUAL ENROLLMENTS============================================\n");
+        echo("=====================================TEST SET ALL STATUS TRUE==================================================\n");
         echo("===============================================================================================================\r");
         print("\n");
 
         return [
-            [9, 0, false,
-                "Obtener todas las asignaturas matriculadas de Ana Morales (de este curso)."],
-            [10, 0, false,
-                "Obtener todas las asignaturas matriculadas de Miguel Hernández (de este curso)."],
-            [11, 2, true,
-                "Obtener todas las asignaturas matriculadas de Miguela Gómez esperando recibir 2 (de este curso)."],
+            [0, false,
+                "Poner todos los Minutes en estado 1."],
+            [2,true,
+                "Poner todos los Minutes en estado 1 esperando a recibir 2 de estado 0."],
 
         ];
 
