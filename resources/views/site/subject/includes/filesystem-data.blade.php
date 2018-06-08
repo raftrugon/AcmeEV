@@ -33,10 +33,12 @@
     <div class="card file w-100 my-1 btn-outline-info" data-id="{{$file->getId()}}" data-url="{{$file->getUrl()}}">
         <div class="card-body d-flex justify-content-between">
             <h5 class="card-title mb-0"> <i class="fas fa-paperclip"></i> {{$file->getName()}} <a href="#" class="btn btn-outline-light download-file-button"><i class="fas fa-download"></i></a></h5>
-            <div>
-                <a href="#" class="btn btn-outline-danger remove-file-button" data-id="{{$file->getId()}}"> <i class="fas fa-trash"></i></a>
-                <a href="javascript:void(0)" class="btn btn-link btn-sm"> <i class="fas fa-eye text-light"></i></a>
-            </div>
+            @role('pdi')
+                <div>
+                    <a href="#" class="btn btn-outline-danger remove-file-button" data-id="{{$file->getId()}}"> <i class="fas fa-trash"></i></a>
+                    <a href="javascript:void(0)" class="btn btn-link btn-sm"> <i class="fas fa-eye text-light"></i></a>
+                </div>
+            @endrole
         </div>
     </div>
 @endforeach

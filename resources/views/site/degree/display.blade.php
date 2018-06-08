@@ -34,11 +34,11 @@
                                 <th scope="col">@lang('attributes.type')</th>
                                 <th scope="col">@lang('attributes.code')</th>
                                 <th scope="col">@lang('attributes.active')</th>
-                                {{--@if($actual_state < 3 || $actual_state == 10)
-                                    @can('manage')--}}
+                                @if($actual_state < 3 || $actual_state == 10)
+                                    @can('manage')
                                         <th></th>
-                                    {{--@endcan
-                                @endif--}}
+                                    @endcan
+                                @endif
                             </tr>
                             </thead>
                             <tbody>
@@ -84,11 +84,11 @@
                                             @lang('global.no')
                                         @endif
                                     </td>
-                                    {{--@if($actual_state < 3 || $actual_state == 10)
-                                        @can('manage')--}}
+                                    @if($actual_state < 3 || $actual_state == 10)
+                                        @can('manage')
                                             <td><a href="{{URL::to('management/subject/'.$degree->getId().'/edit/'.$subject->getId())}}" class="btn btn-primary">@lang('global.edit')</a></td>
-                                        {{--@endcan
-                                    @endif--}}
+                                        @endcan
+                                    @endif
                                 </tr>
                             @endforeach
                             </tbody>

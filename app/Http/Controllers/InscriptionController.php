@@ -27,13 +27,13 @@ class InscriptionController extends Controller
 
     public function getNewInscription()
     {
-        //$actual_state = SystemConfig::first()->getActualState();
-        //if ($actual_state == 0) {
+        $actual_state = SystemConfig::first()->getActualState();
+        if ($actual_state == 0) {
             $degrees = Degree::all();
             return view('site.inscriptions.create-edit', compact('degrees'));
-        //} else {
-        //    return redirect()->action('ErrorController@forbidden');
-        //}
+        } else {
+            return redirect()->action('ErrorController@forbidden');
+        }
     }
 
     public function postSaveInscription(Request $request)
