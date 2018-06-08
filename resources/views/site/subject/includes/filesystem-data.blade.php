@@ -20,9 +20,11 @@
             </div>
             </form>
             <div class="d-flex align-items-center justify-content-start">
+                @role('pdi')
                 <a href="#" class="ml-1 btn btn-outline-warning edit-folder-button" data-id="{{$folder->getId()}}"> <i class="fas fa-pencil-alt"></i></a>
                 <a href="#" class="ml-1 btn btn-outline-success save-folder-button" data-id="{{$folder->getId()}}" style="display:none"> <i class="far fa-save"></i></a>
                 <a href="#" class="ml-1 btn btn-outline-danger @if($folder->getSubFolders->isEmpty() && $folder->getFiles->isEmpty()) remove-folder-button @else disabled @endif" data-id="{{$folder->getId()}}"> <i class="fas fa-trash"></i></a>
+                @endrole
                 <a href="javascript:void(0)" class="ml-1 btn btn-link btn-sm"> <i class="fas fa-eye text-light"></i></a>
             </div>
         </div>
