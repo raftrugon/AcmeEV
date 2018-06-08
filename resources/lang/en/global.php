@@ -105,5 +105,7 @@ return[
     'permissions.direct_department'=>'Department Director',
     'permissions.teach'=>'Teach',
     'permissions.have_appointments'=>'Have Appointments',
-    'users_edit'=>'Edit user'
+    'users_edit'=>'Edit user',
+    'dropify.default'=>'Drag a file you want tu upload',
+    'dropify.remove'=>'Remove',
 ];
