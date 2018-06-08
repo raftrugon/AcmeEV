@@ -13,6 +13,10 @@ use Illuminate\Database\Capsule\Manager as Capsule;
  */
 class AnnouncementTest extends TestCase{
 
+    public $database = "acmev_db"; //Cambiar en función de nuestra base de datos
+    public $username = "root"; //Cambiar en función de nuestra base de datos
+    public $password = ""; //Cambiar en función de nuestra base de datos
+
     public static $capsule;
 
     function getSubjectInstanceId($subjectId, $year){
@@ -84,9 +88,9 @@ class AnnouncementTest extends TestCase{
         AnnouncementTest::$capsule->addConnection([
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'acmeev_db',
-            'username'  => 'root',
-            'password'  => '1234',
+            'database'  => $this->database,
+            'username'  => $this->username,
+            'password'  => $this->password,
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',

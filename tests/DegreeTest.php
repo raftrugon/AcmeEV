@@ -15,6 +15,10 @@ use Illuminate\Support\Facades\Auth;
  */
 class DegreeTest extends TestCase{
 
+    public $database = "acmev_db"; //Cambiar en función de nuestra base de datos
+    public $username = "root"; //Cambiar en función de nuestra base de datos
+    public $password = ""; //Cambiar en función de nuestra base de datos
+
     public static $capsule;
 
     function setUp(){

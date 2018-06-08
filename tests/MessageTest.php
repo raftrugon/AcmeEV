@@ -16,6 +16,10 @@ use Illuminate\Support\Facades\Auth;
  */
 class MessageTest extends TestCase{
 
+    public $database = "acmev_db"; //Cambiar en función de nuestra base de datos
+    public $username = "root"; //Cambiar en función de nuestra base de datos
+    public $password = ""; //Cambiar en función de nuestra base de datos
+
     public static $capsule;
 
     function setUp(){
@@ -130,9 +134,9 @@ class MessageTest extends TestCase{
         $this::$capsule->addConnection([
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'acmeev_db',
-            'username'  => 'root',
-            'password'  => '1234',
+            'database'  => $this->database,
+            'username'  => $this->username,
+            'password'  => $this->password,
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',

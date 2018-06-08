@@ -13,6 +13,10 @@ use Illuminate\Support\Facades\Auth;
  */
 class EnrollmentTest extends TestCase{
 
+    public $database = "acmev_db"; //Cambiar en función de nuestra base de datos
+    public $username = "root"; //Cambiar en función de nuestra base de datos
+    public $password = ""; //Cambiar en función de nuestra base de datos
+
     public static $capsule;
 
     function setUp(){
@@ -31,18 +35,10 @@ class EnrollmentTest extends TestCase{
     /**
      * @dataProvider getMyEnrollmentsProvider
      */
-    public function testGetMyEnrollments($user_id, $expected_number, $expected_exception,
-                                               $explanation){
-
-
-        if(!$expected_exception)
-            echo("---------------------------- POSITIVO ---------------------------\n");
-        else
-            echo("---------------------------- NEGATIVO ---------------------------\n");
+    public function testGetMyEnrollments($user_id, $explanation){
 
         echo("Explicación: " . $explanation ."\n");
         echo("User ID: ".$user_id."\n");
-        echo("Expected Number: ".$expected_number."\n");
         echo("-----------------------------------------------------------------\n");
 
         Auth::loginUsingId($user_id);
@@ -58,12 +54,7 @@ class EnrollmentTest extends TestCase{
             echo($r."\n");
         }
 
-        echo("Elementos obtenidos: ".$total." (Esperados: ".$expected_number.")\n");
-
-        if($expected_exception)
-            $this->assertNotEquals($expected_number, $total);
-        else
-            $this->assertEquals($expected_number, $total);
+        echo("Elementos obtenidos: ".$total);
 
     }
 
@@ -75,9 +66,9 @@ class EnrollmentTest extends TestCase{
         $this::$capsule->addConnection([
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'acmeev_db',
-            'username'  => 'root',
-            'password'  => '1234',
+            'database'  => $this->database,
+            'username'  => $this->username,
+            'password'  => $this->password,
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
@@ -92,12 +83,9 @@ class EnrollmentTest extends TestCase{
         print("\n");
 
         return [
-            [9, 12, false,
-                "Obtener todas las asignaturas matriculadas de Ana Morales."],
-            [10, 6, false,
-                "Obtener todas las asignaturas matriculadas de Miguel Hernández."],
-            [11, 2, true,
-                "Obtener todas las asignaturas matriculadas de Miguela Gómez esperando recibir 2."],
+            [9, "Obtener todas las asignaturas matriculadas de Ana Morales."],
+            [10, "Obtener todas las asignaturas matriculadas de Miguel Hernández."],
+            [11, "Obtener todas las asignaturas matriculadas de Miguela Gómez esperando recibir 2."],
 
         ];
 
@@ -150,9 +138,9 @@ class EnrollmentTest extends TestCase{
         $this::$capsule->addConnection([
             'driver'    => 'mysql',
             'host'      => 'localhost',
-            'database'  => 'acmeev_db',
-            'username'  => 'root',
-            'password'  => '1234',
+            'database'  => $this->database,
+            'username'  => $this->username,
+            'password'  => $this->password,
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
