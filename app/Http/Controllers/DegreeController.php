@@ -61,8 +61,8 @@ class DegreeController extends Controller
     public function postSaveDegree(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required',
-            'new_students_limit' => 'required|min:1',
+            'name' => 'required|string|min:1',
+            'new_students_limit' => 'required|integer|min:1',
         ]);
 
         if ($validator->fails()) {
